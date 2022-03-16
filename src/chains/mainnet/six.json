@@ -1,0 +1,21 @@
+{
+    "chain_name": "six-protocol",
+    "api": [
+        "http://13.229.219.162:1317",
+        "http://13.229.219.162:1317"
+    ],
+    "sdk_version": "0.45.0",
+    "coin_type": "118",
+    "min_tx_fee": "8000",
+    "assets": [
+        {
+            "base": "usix",
+            "symbol": "SIX",
+            "exponent": "6",
+            "coingecko_id": "six-network",
+            "logo": "https://s2.coinmarketcap.com/static/img/coins/64x64/3327.png"
+        }
+    ],
+    "addr_prefix": "6x",
+    "logo": "https://s2.coinmarketcap.com/static/img/coins/64x64/3327.png"
+}
