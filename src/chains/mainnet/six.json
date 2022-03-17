@@ -1,7 +1,6 @@
 {
     "chain_name": "six-protocol",
     "api": [
-        "http://13.229.219.162:1317",
         "http://13.229.219.162:1317"
     ],
     "sdk_version": "0.45.0",
