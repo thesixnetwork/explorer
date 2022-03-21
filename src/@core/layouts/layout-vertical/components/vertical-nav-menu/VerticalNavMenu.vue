@@ -95,17 +95,17 @@ export default {
     VuePerfectScrollbar,
     VerticalNavMenuItems,
     BLink,
-    BImg,
+    BImg
   },
   props: {
     isVerticalMenuActive: {
       type: Boolean,
-      required: true,
+      required: true
     },
     toggleVerticalMenuActive: {
       type: Function,
-      required: true,
-    },
+      required: true
+    }
   },
   setup(props) {
     const {
@@ -113,7 +113,7 @@ export default {
       isVerticalMenuCollapsed,
       collapseTogglerIcon,
       toggleCollapsed,
-      updateMouseHovered,
+      updateMouseHovered
     } = useVerticalNavMenu(props)
 
     const { skin } = useAppConfig()
@@ -125,7 +125,7 @@ export default {
 
     const perfectScrollbarSettings = {
       maxScrollbarLength: 60,
-      wheelPropagation: false,
+      wheelPropagation: false
     }
 
     const collapseTogglerIconFeather = computed(() => (collapseTogglerIcon.value === 'unpinned' ? 'CircleIcon' : 'DiscIcon'))
@@ -151,7 +151,7 @@ export default {
 
       // App Name
       appName,
-      appLogoImage,
+      appLogoImage
     }
   },
   computed: {
@@ -162,8 +162,8 @@ export default {
       preload.push({ header: 'current' })
       preload.push(current)
       return preload.concat(navMenuItems.filter(x => x.title !== selected.chain_name))
-    },
-  },
+    }
+  }
 }
 </script>
 

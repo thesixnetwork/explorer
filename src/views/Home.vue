@@ -1,8 +1,8 @@
 <template>
-  <div class="text-center container-lg">
+  <div class="text-center container-lg my-1">
     <b-nav
       align="right"
-      style="width:100%"
+      style="width:100%;"
       class="nav text-right text-nowrap ml-auto"
     >
       <b-nav-item><dark-toggler /></b-nav-item>
@@ -10,26 +10,25 @@
       <b-button
         v-ripple.400="'rgba(255, 255, 255, 0.15)'"
         variant="primary"
-        class="btn-icon mt-25"
+        class="btn-icon mt-20"
         :to="{ name: 'accounts' }"
       >
-        <feather-icon icon="KeyIcon" />
-        <span class="align-middle ml-25">Wallet</span>
+        <span class="align-middle mr-25">Connect Wallet</span>
+        <feather-icon icon="UnlockIcon" />
       </b-button>
     </b-nav>
     <b-link>
       <div class="d-flex justify-content-center align-items-center">
-        <vuexy-logo />
         <h1
           class="text-primary display-4 font-weight-bolder d-none d-md-block"
         >
-          Ping Explorer<small class="flow-left">Beta</small>
+          SIX PROTOCOL EXPLORER<small class="flow-left">Beta</small>
         </h1>
       </div>
     </b-link>
 
     <p class="mb-1">
-      Ping explorer is not just an explorer but also a wallet and more ... 🛠
+      <b>SIX PROTOCOL</b> explorer is not just an explorer but also a wallet and more ... 🛠
     </p>
     <h2 class="mb-3">
       Cosmos Ecosystem Blockchains 🚀
@@ -102,10 +101,9 @@
 <script>
 /* eslint-disable global-require */
 import {
-  BLink, BAvatar, BRow, BCol, BCard, BCardText, BCardTitle, BNav, BNavItem, BButton,
+  BLink, BAvatar, BRow, BCol, BCard, BCardText, BCardTitle, BNav, BNavItem, BButton
 } from 'bootstrap-vue'
 import Ripple from 'vue-ripple-directive'
-import VuexyLogo from '@core/layouts/components/Logo.vue'
 import store from '@/store/index'
 import { timeIn, toDay } from '@/libs/utils'
 import DarkToggler from '@/@core/layouts/components/app-navbar/components/DarkToggler.vue'
@@ -124,20 +122,18 @@ export default {
     BNav,
     BNavItem,
     BButton,
-
-    VuexyLogo,
     DarkToggler,
     Locale,
-    AppFooter,
+    AppFooter
   },
   directives: {
-    Ripple,
+    Ripple
   },
   data() {
     const chains = this.$store.state.chains.config
     return {
       chains,
-      downImg: require('@/assets/images/pages/under-maintenance.svg'),
+      downImg: require('@/assets/images/pages/under-maintenance.svg')
     }
   },
   computed: {
@@ -148,7 +144,7 @@ export default {
         return this.downImg
       }
       return this.downImg
-    },
+    }
   },
   created() {
     this.fetch()
@@ -173,7 +169,7 @@ export default {
           })
         }
       })
-    },
-  },
+    }
+  }
 }
 </script>

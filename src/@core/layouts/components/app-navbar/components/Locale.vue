@@ -37,13 +37,13 @@ export default {
   components: {
     BNavItemDropdown,
     BDropdownItem,
-    BImg,
+    BImg
   },
   // ! Need to move this computed property to comp function once we get to Vue 3
   computed: {
     currentLocale() {
       return this.locales.find(l => l.locale === this.$i18n.locale)
-    },
+    }
   },
   setup() {
     /* eslint-disable global-require */
@@ -51,30 +51,25 @@ export default {
       {
         locale: 'en',
         img: require('@/assets/images/flags/en.png'),
-        name: 'English',
+        name: 'English'
       },
       {
-        locale: 'fr',
-        img: require('@/assets/images/flags/fr.png'),
-        name: 'French',
+        locale: 'kr',
+        img: require('@/assets/images/flags/kr.png'),
+        name: 'Korea'
       },
       {
-        locale: 'de',
-        img: require('@/assets/images/flags/de.png'),
-        name: 'German',
-      },
-      {
-        locale: 'pt',
-        img: require('@/assets/images/flags/pt.png'),
-        name: 'Portuguese',
-      },
+        locale: 'th',
+        img: require('@/assets/images/flags/th.png'),
+        name: 'ไทย'
+      }
     ]
     /* eslint-disable global-require */
 
     return {
-      locales,
+      locales
     }
-  },
+  }
 }
 </script>
 

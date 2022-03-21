@@ -16,6 +16,7 @@
         <b-button
           to="./uptime/my"
           variant="primary"
+          class="mb-1"
         >
           Browse favorite only
         </b-button>
@@ -29,13 +30,13 @@
           v-for="(x,index) in uptime"
           :key="index"
           sm="12"
-          md="4"
+          md="12"
           class="text-truncate"
         >
           <b-form-checkbox
             v-model="pinned"
             :value="`${chain}#${x.address}`"
-            class="custom-control-warning"
+            class="custom-control-warning mb-1"
             @change="pinValidator(`${chain}#${x.address}`)"
           ><span class="d-inline-block text-truncate font-weight-bold align-bottom">{{ index+1 }} {{ x.validator.moniker }}</span>
           </b-form-checkbox>
@@ -62,11 +63,11 @@
 
 <script>
 import {
-  BRow, BCol, VBTooltip, BFormInput, BCard, BAlert, BFormCheckbox, BButton,
+  BRow, BCol, VBTooltip, BFormInput, BCard, BAlert, BFormCheckbox, BButton
 } from 'bootstrap-vue'
 
 import {
-  consensusPubkeyToHexAddress, getCachedValidators, timeIn, toDay,
+  consensusPubkeyToHexAddress, getCachedValidators, timeIn, toDay
 } from '@/libs/utils'
 
 export default {
@@ -77,10 +78,10 @@ export default {
     BCard,
     BAlert,
     BButton,
-    BFormCheckbox,
+    BFormCheckbox
   },
   directives: {
-    'b-tooltip': VBTooltip,
+    'b-tooltip': VBTooltip
   },
   data() {
     const { chain } = this.$route.params
@@ -93,7 +94,7 @@ export default {
       missing: {},
       blocks: Array.from('0'.repeat(50)).map(x => ({ sigs: {}, height: Number(x) })),
       syncing: false,
-      latestTime: '',
+      latestTime: ''
     }
   },
   computed: {
@@ -102,9 +103,9 @@ export default {
       vals.sort((a, b) => b.delegator_shares - a.delegator_shares)
       return vals.map(x => ({
         validator: x.description,
-        address: consensusPubkeyToHexAddress(x.consensus_pubkey),
+        address: consensusPubkeyToHexAddress(x.consensus_pubkey)
       }))
-    },
+    }
   },
   created() {
     const cached = JSON.parse(getCachedValidators(this.$route.params.chain))
@@ -190,8 +191,8 @@ export default {
           this.blocks.push({ sigs, height: res.block.last_commit.height })
         }
       })
-    },
-  },
+    }
+  }
 }
 </script>
 

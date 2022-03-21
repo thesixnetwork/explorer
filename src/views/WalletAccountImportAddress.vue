@@ -12,8 +12,14 @@
       @on-complete="formSubmitted"
     >
       <!-- Device tab -->
-      <tab-content title="Device" :before-change="validationFormDevice">
-        <validation-observer ref="deviceRules" tag="form">
+      <tab-content 
+        title="Device" 
+        :before-change="validationFormDevice"
+      >
+        <validation-observer 
+          ref="deviceRules" 
+          tag="form"
+        >
           <b-row>
             <b-col md="12">
               <b-form-group
@@ -25,7 +31,10 @@
                   name="device"
                   rules="required"
                 >
-                  <b-form-radio-group v-model="device" stacked>
+                  <b-form-radio-group 
+                    v-model="device" 
+                    stacked
+                  >
                     <b-form-radio
                       v-model="device"
                       name="device"
@@ -70,8 +79,14 @@
                 </validation-provider>
               </b-form-group>
             </b-col>
-            <b-col v-if="device.startsWith('ledger')" md="12">
-              <b-form-group label="HD Path" label-for="hdpath">
+            <b-col 
+              v-if="device.startsWith('ledger')"
+              md="12"
+            >
+              <b-form-group 
+                label="HD Path" 
+                label-for="hdpath"
+              >
                 <validation-provider
                   #default="{ errors }"
                   name="HD Path"
@@ -92,11 +107,20 @@
       </tab-content>
 
       <!-- address  -->
-      <tab-content title="Accounts" :before-change="validationFormAddress">
-        <validation-observer ref="accountRules" tag="form">
+      <tab-content 
+        title="Accounts" 
+        :before-change="validationFormAddress"
+      >
+        <validation-observer 
+          ref="accountRules" 
+          tag="form"
+        >
           <b-row>
             <b-col md="12">
-              <b-form-group label="Account Name" label-for="account_name">
+              <b-form-group 
+                label="Account Name" 
+                label-for="account_name"
+              >
                 <validation-provider
                   #default="{ errors }"
                   name="Account Name"
@@ -106,20 +130,36 @@
                     id="account_name"
                     v-model="name"
                     :state="errors.length > 0 ? false : null"
-                    placeholder="Ping Nano X"
+                    placeholder="SIX Nano X"
                     :readonly="edit"
                   />
                   <small class="text-danger">{{ errors[0] }}</small>
                 </validation-provider>
               </b-form-group>
             </b-col>
-            <b-col v-if="hdpath" md="12">
-              <b-form-group label="HD Path" label-for="ir">
-                <b-form-input id="ir" :value="hdpath" readonly />
+            <b-col 
+              v-if="hdpath" 
+              md="12"
+            >
+              <b-form-group 
+                label="HD Path" 
+                label-for="ir"
+              >
+                <b-form-input 
+                  id="ir" 
+                  :value="hdpath" 
+                  readonly 
+                />
               </b-form-group>
             </b-col>
-            <b-col v-if="accounts" md="12">
-              <b-form-group label="Public Key" label-for="ir">
+            <b-col 
+              v-if="accounts" 
+              md="12"
+            >
+              <b-form-group 
+                label="Public Key" 
+                label-for="ir"
+              >
                 <validation-provider
                   #default="{ errors }"
                   name="Public Key"
@@ -172,8 +212,8 @@
                                 : 'text-danger'
                             "
                           >
-                            {{ item.chain_name }}</span
-                          >
+                            {{ item.chain_name }}
+                          </span>
                         </b-form-checkbox>
                       </b-col>
                     </b-row>
@@ -181,7 +221,10 @@
                   <small class="text-success">{{ errors[0] }}</small>
                 </validation-provider>
               </b-form-group>
-              <b-alert show variant="info">
+              <b-alert 
+                show 
+                variant="info"
+              >
                 <div class="alert-heading">
                   IMPORTANT
                 </div>
@@ -201,14 +244,22 @@
 
       <tab-content title="Confirmation">
         <div class="d-flex border-bottom mb-2">
-          <feather-icon icon="UserIcon" size="19" class="mb-50" />
+          <feather-icon 
+            icon="UserIcon" 
+            size="19" 
+            class="mb-50" 
+          />
           <h4 class="mb-0 ml-50">
             {{ name }} <small> {{ hdpath }}</small>
           </h4>
         </div>
 
         <b-row class="mb-2">
-          <b-col v-for="i in addresses" :key="i.addr" cols="12">
+          <b-col 
+            v-for="i in addresses" 
+            :key="i.addr" 
+            cols="12"
+          >
             <b-input-group class="mb-25">
               <b-input-group-prepend is-text>
                 <b-avatar

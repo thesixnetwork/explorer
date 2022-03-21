@@ -63,7 +63,7 @@
           size="34"
         >
           <feather-icon
-            icon="KeyIcon"
+            icon="UnlockIcon"
             size="18"
           />
         </b-avatar>
@@ -103,7 +103,7 @@
 
 <script>
 import {
-  BCard, BAvatar, BMedia, BMediaAside, BMediaBody, VBTooltip,
+  BCard, BAvatar, BMedia, BMediaAside, BMediaBody, VBTooltip
 } from 'bootstrap-vue'
 
 import ToastificationContent from '@core/components/toastification/ToastificationContent.vue'
@@ -116,28 +116,28 @@ export default {
     BMediaAside,
     BMediaBody,
     // eslint-disable-next-line vue/no-unused-components
-    ToastificationContent,
+    ToastificationContent
   },
   directives: {
-    'b-tooltip': VBTooltip,
+    'b-tooltip': VBTooltip
   },
   props: {
     operatorAddress: {
       type: String,
-      default: '-',
+      default: '-'
     },
     accountAddress: {
       type: String,
-      default: '-',
+      default: '-'
     },
     consensusPubkey: {
       type: [Object, String],
-      required: true,
+      required: true
     },
     hexAddress: {
       type: String,
-      default: '-',
-    },
+      default: '-'
+    }
   },
   methods: {
     copy(v) {
@@ -146,8 +146,8 @@ export default {
           component: ToastificationContent,
           props: {
             title: 'Address copied',
-            icon: 'BellIcon',
-          },
+            icon: 'BellIcon'
+          }
         })
       }, e => {
         this.$toast({
@@ -155,12 +155,12 @@ export default {
           props: {
             title: `Failed to copy address! ${e}`,
             icon: 'BellIcon',
-            variant: 'danger',
-          },
+            variant: 'danger'
+          }
         })
       })
-    },
-  },
+    }
+  }
 }
 </script>
 

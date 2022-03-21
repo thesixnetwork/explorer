@@ -108,11 +108,11 @@
   //*------------------------
 
   .navbar-container {
-    padding: 0.8rem 1rem;
+    // padding: 0.8rem 1rem;
     // Added more horizontal padding above small screen
-    @include media-breakpoint-up(sm) {
-      padding: 0.8rem 1.4rem;
-    }
+    // @include media-breakpoint-up(sm) {
+    //   padding: 0.8rem 1.4rem;
+    // }
     flex-basis: 100%;
     transition: 300ms ease all;
     margin-left: 0;
@@ -390,7 +390,7 @@
 .navbar-floating {
   // Floating nav should have same padding across all screen
   .navbar-container {
-    padding: 0.8rem 1rem;
+    padding: 0.2rem 1rem;
   }
   .header-navbar-shadow {
     display: block;

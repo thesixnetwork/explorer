@@ -101,7 +101,7 @@
             variant="primary"
             class="btn-icon"
           >
-            <feather-icon icon="KeyIcon" />
+            <feather-icon icon="UserIcon" />
             {{ walletName }}
           </b-button>
         </template>
@@ -155,7 +155,7 @@
 <script>
 import {
   BLink, BNavbarNav, BMedia, BMediaAside, BAvatar, BMediaBody, VBTooltip, BButton,
-  BDropdown, BDropdownItem,
+  BDropdown, BDropdownItem
 } from 'bootstrap-vue'
 import Ripple from 'vue-ripple-directive'
 import DarkToggler from '@core/layouts/components/app-navbar/components/DarkToggler.vue'
@@ -180,26 +180,26 @@ export default {
     // Navbar Components
     DarkToggler,
     Locale,
-    SearchBar,
+    SearchBar
     // CartDropdown,
     // UserDropdown,
   },
   directives: {
     'b-tooltip': VBTooltip,
-    Ripple,
+    Ripple
   },
   props: {
     toggleVerticalMenuActive: {
       type: Function,
-      default: () => {},
-    },
+      default: () => {}
+    }
   },
   data() {
     return {
       variant: 'success',
       tips: 'Synced',
       index: 0,
-      chainid: '',
+      chainid: ''
     }
   },
   computed: {
@@ -223,7 +223,7 @@ export default {
         return conf.api
       }
       return [conf.api]
-    },
+    }
   },
   mounted() {
     const accounts = Object.keys(getLocalAccounts() || {})
@@ -253,7 +253,7 @@ export default {
           this.tips = 'Synced'
         }
       })
-    },
-  },
+    }
+  }
 }
 </script>

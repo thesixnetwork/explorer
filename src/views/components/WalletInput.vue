@@ -25,7 +25,7 @@
           value="pingKMS"
           class="d-none d-md-block"
         >
-          Ping Signer
+          SIX PROTOCOL Signer
         </b-form-radio>
         <b-form-radio
           name="wallet"
@@ -49,7 +49,7 @@
 <script>
 import { ValidationProvider } from 'vee-validate'
 import {
-  BFormRadioGroup, BFormRadio, BFormGroup,
+  BFormRadioGroup, BFormRadio, BFormGroup
 } from 'bootstrap-vue'
 
 export default {
@@ -58,23 +58,23 @@ export default {
     BFormRadioGroup,
     BFormRadio,
     BFormGroup,
-    ValidationProvider,
+    ValidationProvider
   },
   props: {
     value: {
       type: String,
-      default: 'keplr',
-    },
+      default: 'keplr'
+    }
   },
   data() {
     return {
-      content: this.value,
+      content: this.value
     }
   },
   methods: {
     handleInput() {
       this.$emit('input', this.content)
-    },
-  },
+    }
+  }
 }
 </script>

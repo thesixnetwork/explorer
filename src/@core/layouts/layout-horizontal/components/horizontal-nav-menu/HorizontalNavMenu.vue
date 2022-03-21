@@ -1,5 +1,5 @@
 <template>
-  <div class="navbar-container main-menu-content">
+  <div class="main-menu-content">
     <horizontal-nav-menu-items :items="navMenuItems" />
   </div>
 </template>
@@ -10,13 +10,13 @@ import HorizontalNavMenuItems from './components/horizontal-nav-menu-items/Horiz
 
 export default {
   components: {
-    HorizontalNavMenuItems,
+    HorizontalNavMenuItems
   },
   setup() {
     return {
-      navMenuItems,
+      navMenuItems
     }
-  },
+  }
 }
 </script>
 

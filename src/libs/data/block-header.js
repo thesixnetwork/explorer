@@ -3,7 +3,7 @@ import BlockId from './block-id'
 export default class BlockHeader {
   constructor() {
     this.version = {
-      block: '0',
+      block: '0'
     }
     this.chain_id = ''
     this.height = 0

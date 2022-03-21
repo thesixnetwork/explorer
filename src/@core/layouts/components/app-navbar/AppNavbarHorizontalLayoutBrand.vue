@@ -28,16 +28,16 @@ import { $themeConfig } from '@themeConfig'
 export default {
   components: {
     BLink,
-    BImg,
+    BImg
   },
   setup() {
     // App Name
     const { appName, appLogoImage } = $themeConfig.app
     return {
       appName,
-      appLogoImage,
+      appLogoImage
     }
-  },
+  }
 }
 </script>
 

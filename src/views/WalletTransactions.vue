@@ -33,10 +33,10 @@ import { getLocalTxHistory } from '@/libs/utils'
 
 export default {
   components: {
-    BTable, BAvatar, BButton,
+    BTable, BAvatar, BButton
   },
   directives: {
-    'b-tooltip': VBTooltip,
+    'b-tooltip': VBTooltip
   },
   data() {
     return {
@@ -44,9 +44,9 @@ export default {
         { key: 'chain', label: 'BLOCKCHAIN' },
         { key: 'op', label: 'ACTION' },
         { key: 'hash', label: 'TX HASH' },
-        { key: 'time', label: 'TIME' },
+        { key: 'time', label: 'TIME' }
       ],
-      history: [],
+      history: []
     }
   },
   created() {
@@ -56,7 +56,7 @@ export default {
     clear() {
       this.history = []
       localStorage.setItem('txHistory', [])
-    },
-  },
+    }
+  }
 }
 </script>

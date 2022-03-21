@@ -2,7 +2,7 @@
   <div>
     <b-card
       v-if="pingVals && pingVals.length > 0"
-      title="❤️ Helping Ping.pub By Staking ❤️"
+      title="❤️ Helping SIX PROTOCOL By Staking ❤️"
     >
       <b-table
         :items="pingVals"
@@ -120,7 +120,10 @@
         >
           <!-- A virtual column -->
           <template #cell(index)="data">
-            <b-badge :variant="rankBadge(data)">
+            <b-badge 
+              :variant="rankBadge(data)" 
+              class="text-truncate"
+            >
               {{ data.index + 1 }}
             </b-badge>
           </template>
@@ -128,7 +131,7 @@
           <template #cell(description)="data">
             <b-media
               vertical-align="center"
-              class="text-truncate"
+              class="text-truncate d-flex align-items-center"
               style="max-width:320px;"
             >
               <template #aside>
@@ -215,10 +218,10 @@
 
 <script>
 import {
-  BTable, BMedia, BAvatar, BBadge, BCard, BCardHeader, BCardTitle, VBTooltip, BCardBody, BButton, BFormRadioGroup, BFormGroup,
+  BTable, BMedia, BAvatar, BBadge, BCard, BCardHeader, BCardTitle, VBTooltip, BCardBody, BButton, BFormRadioGroup, BFormGroup
 } from 'bootstrap-vue'
 import {
-  percent, StakingParameters, formatToken,
+  percent, StakingParameters, formatToken
 } from '@/libs/utils'
 import { keybase } from '@/libs/fetch'
 // import { toHex } from '@cosmjs/encoding'
@@ -238,10 +241,10 @@ export default {
     BButton,
     OperationDelegateComponent,
     BFormRadioGroup,
-    BFormGroup,
+    BFormGroup
   },
   directives: {
-    'b-tooltip': VBTooltip,
+    'b-tooltip': VBTooltip
   },
   data() {
     return {
@@ -260,7 +263,7 @@ export default {
         'digvaloper1jxv0u20scum4trha72c7ltfgfqef6nsc4s577p',
         'bcnavaloper1jxv0u20scum4trha72c7ltfgfqef6nsc384wxf',
         'pbvaloper1jxv0u20scum4trha72c7ltfgfqef6nsc5nn6cf',
-        'rizonvaloper1jxv0u20scum4trha72c7ltfgfqef6nsczn2l68',
+        'rizonvaloper1jxv0u20scum4trha72c7ltfgfqef6nsczn2l68'
       ],
       islive: true,
       validator_address: null,
@@ -275,7 +278,7 @@ export default {
           key: 'index',
           label: '#',
           tdClass: 'd-none d-md-block',
-          thClass: 'd-none d-md-block',
+          thClass: 'd-none d-md-block'
         },
         { key: 'description', label: 'Validator' },
         {
@@ -284,30 +287,30 @@ export default {
           sortable: true,
           tdClass: 'text-right',
           thClass: 'text-right',
-          sortByFormatted: true,
+          sortByFormatted: true
         },
         {
           key: 'changes',
-          label: '24H Changes',
+          label: '24H Changes'
         },
         {
           key: 'commission',
           formatter: value => `${percent(value.rate)}%`,
           tdClass: 'text-right',
-          thClass: 'text-right',
+          thClass: 'text-right'
         },
         {
           key: 'operation',
           label: '',
           tdClass: 'text-right',
-          thClass: 'text-right',
-        },
+          thClass: 'text-right'
+        }
       ],
       statusOptions: [
         { text: 'Active', value: ['BOND_STATUS_BONDED'] },
-        { text: 'Inactive', value: ['BOND_STATUS_UNBONDED', 'BOND_STATUS_UNBONDING'] },
+        { text: 'Inactive', value: ['BOND_STATUS_UNBONDED', 'BOND_STATUS_UNBONDING'] }
       ],
-      selectedStatus: ['BOND_STATUS_BONDED'],
+      selectedStatus: ['BOND_STATUS_BONDED']
     }
   },
   computed: {
@@ -323,7 +326,7 @@ export default {
         }
         return xh
       })
-    },
+    }
   },
   created() {
     this.$http.getValidatorListByHeight('latest').then(data => {
@@ -424,7 +427,7 @@ export default {
           }
         })
       }
-    },
-  },
+    }
+  }
 }
 </script>

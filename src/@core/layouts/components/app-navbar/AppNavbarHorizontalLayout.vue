@@ -1,5 +1,5 @@
 <template>
-  <div class="navbar-container d-flex content align-items-center">
+  <div class="d-flex content align-items-center">
 
     <!-- Nav Menu Toggler -->
     <ul class="nav navbar-nav d-xl-none">
@@ -41,7 +41,7 @@
 
 <script>
 import {
-  BLink, BNavbarNav, BButton,
+  BLink, BNavbarNav, BButton
 } from 'bootstrap-vue'
 import Bookmarks from './components/Bookmarks.vue'
 // import Locale from './components/Locale.vue'
@@ -59,14 +59,14 @@ export default {
     DarkToggler,
     SearchBar,
     NotificationDropdown,
-    BButton,
+    BButton
   },
   props: {
     toggleVerticalMenuActive: {
       type: Function,
-      default: () => {},
-    },
-  },
+      default: () => {}
+    }
+  }
 
 }
 </script>

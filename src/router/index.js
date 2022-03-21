@@ -21,24 +21,10 @@ const router = new VueRouter({
         breadcrumb: [
           {
             text: 'Home',
-            active: true,
-          },
-        ],
-      },
-    },
-    {
-      path: '/coffee',
-      name: 'coffee',
-      component: () => import('@core/layouts/components/Coffee.vue'),
-      meta: {
-        pageTitle: 'Donation',
-        breadcrumb: [
-          {
-            text: 'Buy me a cup of coffee!',
-            active: false,
-          },
-        ],
-      },
+            active: true
+          }
+        ]
+      }
     },
     {
       path: '/wallet/accounts',
@@ -50,10 +36,10 @@ const router = new VueRouter({
         breadcrumb: [
           {
             text: 'Accounts',
-            active: true,
-          },
-        ],
-      },
+            active: true
+          }
+        ]
+      }
     },
     {
       path: '/wallet/import',
@@ -64,10 +50,10 @@ const router = new VueRouter({
         breadcrumb: [
           {
             text: 'Import',
-            active: true,
-          },
-        ],
-      },
+            active: true
+          }
+        ]
+      }
     },
     {
       path: '/wallet/delegations',
@@ -77,13 +63,13 @@ const router = new VueRouter({
         pageTitle: 'My Delegations',
         breadcrumb: [
           {
-            text: 'Wallet',
+            text: 'Wallet'
           },
           {
-            text: 'My Delegations',
-          },
-        ],
-      },
+            text: 'My Delegations'
+          }
+        ]
+      }
     },
     {
       path: '/wallet/transactions',
@@ -93,13 +79,13 @@ const router = new VueRouter({
         pageTitle: 'Transaction History',
         breadcrumb: [
           {
-            text: 'Wallet',
+            text: 'Wallet'
           },
           {
-            text: 'Transaction History',
-          },
-        ],
-      },
+            text: 'Transaction History'
+          }
+        ]
+      }
     },
     // chain modules
     {
@@ -112,10 +98,10 @@ const router = new VueRouter({
         breadcrumb: [
           {
             text: 'Home',
-            active: true,
-          },
-        ],
-      },
+            active: true
+          }
+        ]
+      }
     },
     {
       path: '/:chain/uptime',
@@ -126,10 +112,10 @@ const router = new VueRouter({
         breadcrumb: [
           {
             text: 'Uptime',
-            active: true,
-          },
-        ],
-      },
+            active: true
+          }
+        ]
+      }
     },
     {
       path: '/:chain/uptime/my',
@@ -140,14 +126,14 @@ const router = new VueRouter({
         breadcrumb: [
           {
             text: 'Uptime',
-            active: true,
+            active: true
           },
           {
             text: 'My Validators',
-            active: true,
-          },
-        ],
-      },
+            active: true
+          }
+        ]
+      }
     },
     {
       path: '/:chain/account/:address',
@@ -158,14 +144,14 @@ const router = new VueRouter({
         breadcrumb: [
           {
             text: 'Accounts',
-            active: true,
+            active: true
           },
           {
             text: 'Detail',
-            active: true,
-          },
-        ],
-      },
+            active: true
+          }
+        ]
+      }
     },
     {
       path: '/:chain/staking',
@@ -176,10 +162,10 @@ const router = new VueRouter({
         breadcrumb: [
           {
             text: 'Staking',
-            active: true,
-          },
-        ],
-      },
+            active: true
+          }
+        ]
+      }
     },
     {
       path: '/:chain/staking/:address',
@@ -190,14 +176,14 @@ const router = new VueRouter({
         breadcrumb: [
           {
             text: 'Staking',
-            active: true,
+            active: true
           },
           {
             text: 'Validator',
-            active: true,
-          },
-        ],
-      },
+            active: true
+          }
+        ]
+      }
     },
     {
       path: '/:chain/gov',
@@ -208,14 +194,14 @@ const router = new VueRouter({
         breadcrumb: [
           {
             text: 'Governance',
-            active: true,
+            active: true
           },
           {
             text: 'Proposals',
-            active: true,
-          },
-        ],
-      },
+            active: true
+          }
+        ]
+      }
     },
     {
       path: '/:chain/gov/:proposalid',
@@ -226,14 +212,14 @@ const router = new VueRouter({
         breadcrumb: [
           {
             text: 'Governance',
-            active: true,
+            active: true
           },
           {
             text: 'Proposal Detail',
-            active: true,
-          },
-        ],
-      },
+            active: true
+          }
+        ]
+      }
     },
     {
       path: '/:chain/blocks',
@@ -244,10 +230,10 @@ const router = new VueRouter({
         breadcrumb: [
           {
             text: 'Blocks',
-            active: true,
-          },
-        ],
-      },
+            active: true
+          }
+        ]
+      }
     },
     {
       path: '/:chain/blocks/:height',
@@ -258,14 +244,14 @@ const router = new VueRouter({
         breadcrumb: [
           {
             text: 'Blocks',
-            active: true,
+            active: true
           },
           {
             text: 'Block',
-            active: true,
-          },
-        ],
-      },
+            active: true
+          }
+        ]
+      }
     },
     {
       path: '/:chain/tx/:hash',
@@ -276,10 +262,10 @@ const router = new VueRouter({
         breadcrumb: [
           {
             text: 'Transaction',
-            active: true,
-          },
-        ],
-      },
+            active: true
+          }
+        ]
+      }
     },
     // custom modules for specified chains
     // 1. cosmos
@@ -292,10 +278,10 @@ const router = new VueRouter({
         breadcrumb: [
           {
             text: 'Gravity',
-            active: true,
-          },
-        ],
-      },
+            active: true
+          }
+        ]
+      }
     },
     // 2. OSMOSIS
     {
@@ -307,14 +293,14 @@ const router = new VueRouter({
         breadcrumb: [
           {
             text: 'DEX',
-            active: true,
+            active: true
           },
           {
             text: 'Classic Trade',
-            active: true,
-          },
-        ],
-      },
+            active: true
+          }
+        ]
+      }
     },
     // common modules
     {
@@ -322,34 +308,34 @@ const router = new VueRouter({
       name: 'login',
       component: () => import('@/views/Login.vue'),
       meta: {
-        layout: 'full',
-      },
+        layout: 'full'
+      }
     },
     {
       path: '/error/error-404',
       name: 'error-404',
       component: () => import('@/views/error/Error404.vue'),
       meta: {
-        layout: 'full',
-      },
+        layout: 'full'
+      }
     },
     {
       path: '/error/chain-not-exists',
       name: 'chain-404',
       component: () => import('@/views/error/ChainNotExist.vue'),
       meta: {
-        layout: 'full',
-      },
+        layout: 'full'
+      }
     },
     {
       path: '/index.php',
-      redirect: '/',
+      redirect: '/'
     },
     {
       path: '*',
-      redirect: '/error/error-404',
-    },
-  ],
+      redirect: '/error/error-404'
+    }
+  ]
 })
 
 router.beforeEach((to, from, next) => {
