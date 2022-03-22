@@ -376,8 +376,8 @@ export default {
         chainId: 'devnet',
         chainName: 'six-protocol',
         addressPrefix: '6x',
-        rpc: 'http://13.229.219.162:26657',
-        rest: 'http://13.229.219.162:1317',
+        rpc: 'http://18.142.119.120:26657',
+        rest: 'http://18.142.119.120:1317',
         stakeCurrency: {
           coinDenom: 'SIX',
           coinMinimalDenom: 'usix',
@@ -399,7 +399,7 @@ export default {
             coinDenom: 'SIX',
             coinMinimalDenom: 'usix',
             coinDecimals: 6,
-            coinGeckoId: 'six-protocolss'
+            coinGeckoId: 'six-network'
           }
         ],
         feeCurrencies: [
@@ -407,7 +407,7 @@ export default {
             coinDenom: 'SIX',
             coinMinimalDenom: 'usix',
             coinDecimals: 6,
-            coinGeckoId: 'six-protocol'
+            coinGeckoId: 'six-network'
           }
         ],
         coinType: 118,
@@ -416,7 +416,7 @@ export default {
           average: 0.05,
           high: 0.1
         },
-        features: ['cosmwasm']
+        features: ['stargate', 'cosmwasm', 'ibc-transfer', 'no-legacy-stdTx']
       };
       if (!window.getOfflineSigner || !window.keplr) {
         this.debug = 'Please install keplr extension';
