@@ -3,6 +3,7 @@ node_modules
 /dist
 
 # local env files
+.env-dev
 .env.local
 .env.*.local
 
@@ -24,6 +25,7 @@ yarn-error.log*
 
 # script
 /vuexy-scripts
+deploy.sh
 
 # Docs
 /docs/.temp
