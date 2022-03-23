@@ -1,7 +1,7 @@
 {
     "chain_name": "Five net",
     "api": [
-        "http://34.124.194.2:1317"
+        "http://13.229.151.100:1317"
     ],
     "sdk_version": "0.45.0",
     "coin_type": "118",
