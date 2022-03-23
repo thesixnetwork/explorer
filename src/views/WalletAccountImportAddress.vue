@@ -373,11 +373,11 @@ export default {
     },
     async cennectKeplr() {
       const dataChainInfo = {
-        chainId: 'devnet',
-        chainName: 'six-protocol',
+        chainId: 'testnet',
+        chainName: 'five-net',
         addressPrefix: '6x',
-        rpc: 'http://18.142.119.120:26657',
-        rest: 'http://18.142.119.120:1317',
+        rpc: 'http://34.124.194.2:26657',
+        rest: 'http://34.124.194.2:1317',
         stakeCurrency: {
           coinDenom: 'SIX',
           coinMinimalDenom: 'usix',
