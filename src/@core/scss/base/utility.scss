@@ -1,0 +1,212 @@
+@import './bootstrap-extended/variables';
+
+.d-block {
+  display: block !important;
+}
+.d-inline-block {
+  display: inline-block !important;
+}
+
+.col {
+  display: flex;
+  flex-direction: column;
+
+  .full {
+    flex-grow: 1;
+  }
+}
+.col-12 {
+  width: 100%;
+}
+.col-9 {
+  width: 75%;
+}
+.col-6 {
+  width: 50%;
+}
+.col-4 {
+  width: 33.333%;
+}
+.col-3 {
+  width: 25%;
+}
+
+.bd-t {
+  border-top: 1px solid $border-color;
+}
+.bd-b {
+  border-bottom: 1px solid $border-color;
+}
+.bd-l {
+  border-left: 1px solid $border-color;
+}
+.bd-r {
+  border-right: 1px solid $border-color;
+}
+.bd-a {
+  border: 1px solid $border-color;
+}
+.bd-x {
+  border-left: 1px solid $border-color;
+  border-right: 1px solid $border-color;
+}
+.bd-y {
+  border-top: 1px solid $border-color;
+  border-bottom: 1px solid $border-color;
+}
+
+.br-t {
+  border-top-left-radius: $border-radius !important;
+  border-top-right-radius: $border-radius !important;
+}
+.br-b {
+  border-bottom-left-radius: $border-radius !important;
+  border-bottom-right-radius: $border-radius !important;
+}
+.br-l {
+  border-top-left-radius: $border-radius !important;
+  border-bottom-left-radius: $border-radius !important;
+}
+.br-r {
+  border-top-right-radius: $border-radius !important;
+  border-bottom-right-radius: $border-radius !important;
+}
+.br-a {
+  border-radius: $border-radius !important;
+}
+
+.flex {
+  display: flex;
+
+  &.flex-column {
+    flex-direction: column;
+  }
+  &.flex-column-reverse {
+    flex-direction: column-reverse;
+  }
+  &.flex-row {
+    flex-direction: row;
+  }
+  &.flex-row-reverse {
+    flex-direction: row-reverse;
+  }
+  &.flex-wrap {
+    flex-wrap: wrap;
+  }
+  &.justify-start {
+    justify-content: flex-start;
+  }
+  &.justify-end {
+    justify-content: flex-end;
+  }
+  &.justify-center {
+    justify-content: center;
+  }
+  &.justify-space-around {
+    justify-content: space-around;
+  }
+  &.justify-space-between {
+    justify-content: space-between;
+  }
+  &.align-start {
+    align-items: flex-start;
+  }
+  &.align-end {
+    align-items: flex-end;
+  }
+  &.align-center {
+    align-items: center;
+  }
+  &.align-baseline {
+    align-items: baseline;
+  }
+  &.align-stretch {
+    align-items: stretch;
+  }
+}
+
+.flex-grow {
+  flex-grow: 1;
+}
+.flex-shrink {
+  flex-shrink: 0 !important;
+}
+.align-self-start {
+  align-self: start;
+}
+.align-self-center {
+  align-self: center;
+}
+
+@mixin generate($prefix, $prop1, $prop2: null, $prop3: null, $prop4: null) {
+  $sizes: 0px, 4px, 8px, 12px, 16px, 20px, 24px, 28px, 32px, 48px, 64px, auto;
+
+  @for $i from 1 through length($sizes) {
+    $size: nth($sizes, $i);
+
+    @if $size == auto {
+      .#{$prefix}-auto {
+        #{$prop1}: $size !important;
+        @if $prop2 {
+          #{$prop2}: $size !important;
+        }
+        @if $prop3 {
+          #{$prop3}: $size !important;
+        }
+        @if $prop4 {
+          #{$prop4}: $size !important;
+        }
+      }
+    } @else {
+      .#{$prefix}-#{$i - 1} {
+        @if (str-index($prefix, '-n')) {
+          #{$prop1}: -$size !important;
+          @if $prop2 {
+            #{$prop2}: -$size !important;
+          }
+          @if $prop3 {
+            #{$prop3}: -$size !important;
+          }
+          @if $prop4 {
+            #{$prop4}: -$size !important;
+          }
+        } @else {
+          #{$prop1}: $size !important;
+        @if $prop2 {
+          #{$prop2}: $size !important;
+        }
+        @if $prop3 {
+          #{$prop3}: $size !important;
+        }
+        @if $prop4 {
+          #{$prop4}: $size !important;
+        }
+        }
+      }
+    }
+  }
+}
+
+@include generate(c-ma, margin);
+@include generate(c-mt, margin-top);
+@include generate(c-mb, margin-bottom);
+@include generate(c-ml, margin-left);
+@include generate(c-mr, margin-right);
+@include generate(c-mx, margin-left, margin-right);
+@include generate(c-my, margin-top, margin-bottom);
+
+@include generate(c-ma-n, margin);
+@include generate(c-mt-n, margin-top);
+@include generate(c-mb-n, margin-bottom);
+@include generate(c-ml-n, margin-left);
+@include generate(c-mr-n, margin-right);
+@include generate(c-mx-n, margin-left, margin-right);
+@include generate(c-my-n, margin-top, margin-bottom);
+
+@include generate(c-pa, padding);
+@include generate(c-pt, padding-top);
+@include generate(c-pb, padding-bottom);
+@include generate(c-pl, padding-left);
+@include generate(c-pr, padding-right);
+@include generate(c-px, padding-left, padding-right);
+@include generate(c-py, padding-top, padding-bottom);

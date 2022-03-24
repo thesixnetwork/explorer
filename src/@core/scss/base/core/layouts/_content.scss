@@ -18,11 +18,19 @@ html {
   letter-spacing: 0.01rem;
   body {
     height: 100%;
-    background-color: $body-bg;
+    background-color: #fff;
     direction: $body-direction;
     // paragraph line-height
     p {
       line-height: 1.5rem;
+    }
+
+    &.dark-layout {
+      background: $theme-dark-card-bg;
+
+      .navbar-container.content, .content-wrapper {
+        background: $theme-dark-body-bg;
+      }
     }
   }
   .content {
@@ -34,6 +42,7 @@ html {
     margin-left: $menu-expanded-width;
     &.app-content {
       padding: calc(#{$content-padding} + #{$navbar-height} + #{$floating-nav-margin}) #{$content-padding} 0;
+
       &.show-overlay {
         .content-overlay {
           z-index: 10;
@@ -87,6 +96,11 @@ html {
       }
     }
     .content-wrapper {
+      background: $body-bg;
+      border-bottom-left-radius: 1rem;
+      border-bottom-right-radius: 1rem;
+      padding: 0 1.5rem 1.5rem 1.5rem;
+
       .content-header-title {
         font-weight: 500;
         color: $gray-400;
@@ -241,8 +255,11 @@ html {
   // for sticky navbar
   .navbar-sticky {
     .app-content {
-      padding: calc(#{$content-padding} + #{$navbar-height}) #{$content-padding} 0 #{$content-padding};
+      padding: calc(#{$navbar-height} + 3rem - 1px) 1rem 0 1rem;
     }
+    // .app-content {
+    //   padding: calc(#{$content-padding} + #{$navbar-height}) #{$content-padding} 0 #{$content-padding};
+    // }
     &.footer-static {
       .app-content {
         .content-area-wrapper,

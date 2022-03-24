@@ -1,22 +1,22 @@
 <template>
   <b-row
     v-if="$route.meta.breadcrumb || $route.meta.pageTitle"
-    class="content-header"
+    class="content-header mb-2"
   >
 
     <!-- Content Left -->
     <b-col
-      class="content-header-left mb-2"
+      class="content-header-left"
       cols="12"
       md="9"
     >
       <b-row class="breadcrumbs-top">
         <b-col cols="12">
-          <h2 class="content-header-title float-left pr-1 mb-0">
+          <!-- <h4 class="content-header-title float-left pr-1 mb-0">
             {{ $route.meta.pageTitle }}
-          </h2>
+          </h4> -->
           <div class="breadcrumb-wrapper">
-            <b-breadcrumb>
+            <b-breadcrumb class="c-pa-0">
               <b-breadcrumb-item to="/">
                 <feather-icon
                   icon="HomeIcon"
@@ -40,7 +40,7 @@
 
     <!-- Content Right -->
     <b-col
-      class="content-header-right text-md-right d-md-block d-none mb-1"
+      class="content-header-right text-md-right d-md-block d-none"
       md="3"
       cols="12"
     >
