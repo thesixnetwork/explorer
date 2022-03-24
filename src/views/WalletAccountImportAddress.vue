@@ -376,8 +376,8 @@ export default {
         chainId: 'five-net',
         chainName: 'Five Net',
         addressPrefix: '6x',
-        rpc: 'http://34.124.194.2:26657',
-        rest: 'http://34.124.194.2:1317',
+        rpc: 'http://34.110.173.126:26657',
+        rest: 'http://34.110.173.126:1317',
         stakeCurrency: {
           coinDenom: 'SIX',
           coinMinimalDenom: 'usix',
