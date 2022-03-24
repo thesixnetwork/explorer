@@ -373,8 +373,8 @@ export default {
     },
     async cennectKeplr() {
       const dataChainInfo = {
-        chainId: 'testnet',
-        chainName: 'five-net',
+        chainId: 'five-net',
+        chainName: 'Five Net',
         addressPrefix: '6x',
         rpc: 'http://34.124.194.2:26657',
         rest: 'http://34.124.194.2:1317',
