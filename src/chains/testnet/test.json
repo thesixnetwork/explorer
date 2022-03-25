@@ -1,7 +1,7 @@
 {
-    "chain_name": "Five net",
+    "chain_name": "fivenet",
     "api": [
-        "http://34.110.173.126"
+        "https://api.fivenet.sixscan.io"
     ],
     "sdk_version": "0.45.0",
     "coin_type": "118",
