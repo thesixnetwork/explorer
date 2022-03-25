@@ -42,15 +42,15 @@
               <feather-icon
                 icon="XIcon"
                 size="20"
-                class="d-block d-xl-none"
+                class="d-xl-none"
                 @click="toggleVerticalMenuActive"
               />
-              <feather-icon
+              <!-- <feather-icon
                 :icon="collapseTogglerIconFeather"
                 size="20"
                 class="d-none d-xl-block collapse-toggle-icon"
                 @click="toggleCollapsed"
-              />
+              /> -->
             </b-link>
           </li>
         </ul>
@@ -73,7 +73,7 @@
     >
       <vertical-nav-menu-items
         :items.sync="leftMenu"
-        class="navigation navigation-main"
+        class="navigation navigation-main px-1"
       />
     </vue-perfect-scrollbar>
     <!-- /main menu content-->

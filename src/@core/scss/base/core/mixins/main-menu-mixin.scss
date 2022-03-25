@@ -130,12 +130,18 @@
     background: $theme-bg;
     .navigation-header {
       color: lighten($theme-color, 21.5%);
-      margin: calc(#{$content-padding} + 0.286rem) 0 0.8rem ($content-padding + 0.2rem);
-      padding: 0;
+      // margin: calc(#{$content-padding} + 0.286rem) 0 0.8rem ($content-padding + 0.2rem);
+      margin-left: -1rem;
+      padding: 0.5rem 1rem;
       line-height: 1.5;
-      letter-spacing: 0.01rem;
+      letter-spacing: 1px;
+      // background: $body-bg;
+      // border-top-right-radius: $border-radius;
+      // border-bottom-right-radius: $border-radius;
+
       span {
         font-weight: 500;
+        font-size: 0.75rem;
       }
     }
     li {
@@ -177,7 +183,7 @@
 
     > li {
       > a {
-        margin: 0 15px;
+        // margin: 0 15px;
         .label {
           margin-top: 4px;
           margin-right: 5px;
@@ -189,22 +195,22 @@
         }
       }
       > ul li {
-        &:first-of-type {
-          margin-top: 7px !important;
-        }
+        // &:first-of-type {
+        //   margin-top: 7px !important;
+        // }
 
-        &:not(.has-sub) {
-          margin: 0 15px;
-        }
-        &.has-sub {
-          > a {
-            margin: 0 15px;
-          }
+        // &:not(.has-sub) {
+        //   margin: 0 15px;
+        // }
+        // &.has-sub {
+        //   > a {
+        //     margin: 0 15px;
+        //   }
 
-          > ul > li {
-            margin: 0 15px;
-          }
-        }
+        //   > ul > li {
+        //     margin: 0 15px;
+        //   }
+        // }
       }
       &.open:not(.menu-item-closing),
       &.sidebar-group-active {
@@ -228,7 +234,7 @@
         z-index: 1;
         > a {
           background: linear-gradient(118deg, rgba($primary, 1), rgba($primary, 0.7));
-          box-shadow: 0 0 10px 1px rgba($primary, 0.7);
+          // box-shadow: 0 0 10px 1px rgba($primary, 0.7);
           color: $white;
           font-weight: 400;
           border-radius: 4px;
@@ -306,7 +312,7 @@
 
         .active {
           background: linear-gradient(118deg, rgba($primary, 1), rgba($primary, 0.7));
-          box-shadow: 0 0 10px 1px rgba($primary, 0.7);
+          // box-shadow: 0 0 10px 1px rgba($primary, 0.7);
           border-radius: 4px;
           z-index: 1;
           > a {

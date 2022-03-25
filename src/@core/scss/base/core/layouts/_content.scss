@@ -28,7 +28,7 @@ html {
     &.dark-layout {
       background: $theme-dark-card-bg;
 
-      .navbar-container.content, .content-wrapper {
+      .navbar-container.content, .content-wrapper, .navigation .navigation-header {
         background: $theme-dark-body-bg;
       }
     }
@@ -100,6 +100,7 @@ html {
       border-bottom-left-radius: 1rem;
       border-bottom-right-radius: 1rem;
       padding: 0 1.5rem 1.5rem 1.5rem;
+      min-height: calc(100vh - (#{$navbar-height} + 3rem + #{$footer-height}));
 
       .content-header-title {
         font-weight: 500;
@@ -255,7 +256,7 @@ html {
   // for sticky navbar
   .navbar-sticky {
     .app-content {
-      padding: calc(#{$navbar-height} + 3rem - 1px) 1rem 0 1rem;
+      padding: calc(#{$navbar-height} + 3rem - 1px) 1rem 0 0;
     }
     // .app-content {
     //   padding: calc(#{$content-padding} + #{$navbar-height}) #{$content-padding} 0 #{$content-padding};
