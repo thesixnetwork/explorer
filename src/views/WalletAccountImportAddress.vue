@@ -326,7 +326,7 @@ export default {
     }
   },
   mounted() {
-    const { selected } = store.state.chains;
+    const { selected } = store.state.chans;
     if (
       selected &&
       selected.chain_name &&
@@ -374,10 +374,10 @@ export default {
     async cennectKeplr() {
       const dataChainInfo = {
         chainId: 'five-net',
-        chainName: 'Five Net',
+        chainName: 'Five Testnet',
         addressPrefix: '6x',
-        rpc: 'http://34.110.173.126:26657',
-        rest: 'http://34.110.173.126:1317',
+        rpc: 'http://34.111.52.39',
+        rest: 'http://34.110.173.126',
         stakeCurrency: {
           coinDenom: 'SIX',
           coinMinimalDenom: 'usix',
