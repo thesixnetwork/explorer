@@ -49,7 +49,7 @@
         </b-media-aside>
         <b-media-body class="my-auto">
           <h6 class="mb-0 ">
-            <span class="text-uppercase">{{ chainid || selected_chain.chain_name }}</span>
+            <span class="text-uppercase">{{ selected_chain.chain_title || chainid }}</span>
           </h6>
           <small id="data-provider">
             {{ currentApi }} ({{ selected_chain.sdk_version || '-' }})

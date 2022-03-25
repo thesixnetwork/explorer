@@ -47,8 +47,9 @@ function processMenu() {
     }
   ]
   Object.keys(store.state.chains.config).forEach(chain => {
+    
     const menu = {
-      title: chain,
+      title: store.state.chains.config[chain].chain_title,
       icon: store.state.chains.config[chain].logo
     }
     const { excludes } = store.state.chains.config[chain]

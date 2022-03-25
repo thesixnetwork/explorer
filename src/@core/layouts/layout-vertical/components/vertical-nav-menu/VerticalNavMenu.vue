@@ -158,10 +158,10 @@ export default {
     leftMenu() {
       const preload = []
       const { selected } = this.$store.state.chains
-      const current = navMenuItems.find(x => (x.title === selected.chain_name))
+      const current = navMenuItems.find(x => (x.title === selected.chain_title))
       preload.push({ header: 'current' })
       preload.push(current)
-      return preload.concat(navMenuItems.filter(x => x.title !== selected.chain_name))
+      return preload.concat(navMenuItems.filter(x => x.title !== selected.chain_title))
     }
   }
 }

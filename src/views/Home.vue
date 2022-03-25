@@ -35,7 +35,7 @@
     </h2>
 
     <div>
-      <b-row class="match-height">
+      <b-row align-h="center" class="match-height">
         <b-col
           v-for="(data,index) in chains"
           :key="index"
@@ -49,7 +49,7 @@
             >
               <div>
                 <b-card-title class="mb-1 text-uppercase">
-                  {{ data.chain_name }} <small class="font-small-2">{{ data.sdk_version }}</small>
+                  {{ data.chain_title }} <small class="font-small-2">{{ data.sdk_version }}</small>
                 </b-card-title>
 
                 <div class="d-flex justify-content-between">
