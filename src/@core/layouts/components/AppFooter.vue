@@ -4,10 +4,10 @@
       Powered By
       <b-link 
         class="ml-25 font-weight-bolder" 
-        href="https://d1cqbqg81wqd4z.cloudfront.net/" 
+        href="https://six.network" 
         target="_blank"
       >
-        SIX PROTOCOL
+        SIX Network
       </b-link>
     </span>
     <router-link
