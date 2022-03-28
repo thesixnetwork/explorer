@@ -32,20 +32,24 @@
 // Mixins for the sub menu arrow
 @mixin vertical-menu-has-sub-arrow($arrow-font-size) {
   &.has-sub {
-    > a:after {
-      content: '';
-      background-image: url(str-replace(str-replace($chevron-right, 'currentColor', $body-color), '#', '%23'));
-      background-repeat: no-repeat;
-      background-position: center;
-      background-size: $arrow-font-size;
-      height: $arrow-font-size;
-      width: $arrow-font-size;
-      display: inline-block;
-      position: absolute;
-      right: 20px;
-      top: 14px;
-      transform: rotate(0deg);
-      transition: all 0.2s ease-out;
+    > a {
+      padding-right: 2.25rem;
+
+      &:after {
+        content: '';
+        background-image: url(str-replace(str-replace($chevron-right, 'currentColor', $body-color), '#', '%23'));
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: $arrow-font-size;
+        height: $arrow-font-size;
+        width: $arrow-font-size;
+        display: inline-block;
+        position: absolute;
+        right: 20px;
+        top: 14px;
+        transform: rotate(0deg);
+        transition: all 0.2s ease-out;
+      }
     }
     &.open:not(.menu-item-closing) {
       > a:after {
@@ -132,12 +136,15 @@
       color: lighten($theme-color, 21.5%);
       // margin: calc(#{$content-padding} + 0.286rem) 0 0.8rem ($content-padding + 0.2rem);
       margin-left: -1rem;
+      margin-top: 1rem;
       padding: 0.5rem 1rem;
       line-height: 1.5;
       letter-spacing: 1px;
       // background: $body-bg;
       // border-top-right-radius: $border-radius;
       // border-bottom-right-radius: $border-radius;
+
+      &:first-child { margin-top: 0; }
 
       span {
         font-weight: 500;
@@ -215,9 +222,12 @@
       &.open:not(.menu-item-closing),
       &.sidebar-group-active {
         > a {
-          color: $main-menu-top-open-color;
-          background: $main-menu-top-open-head-bg;
-          border-radius: 6px;
+          color: $white;
+          background: linear-gradient(118deg, rgba($primary, 1), rgba($primary, 0.7));
+          border-radius: 8px;
+
+          &:after { right: 1rem !important; }
+          &:after, img { filter: brightness(0) invert(1); }
         }
       }
 
@@ -233,9 +243,9 @@
       &.active {
         z-index: 1;
         > a {
-          background: linear-gradient(118deg, rgba($primary, 1), rgba($primary, 0.7));
+          // background: linear-gradient(118deg, rgba($primary, 1), rgba($primary, 0.7));
           // box-shadow: 0 0 10px 1px rgba($primary, 0.7);
-          color: $white;
+          color: $primary;
           font-weight: 400;
           border-radius: 4px;
         }
@@ -290,6 +300,7 @@
             color: $main-menu-sub-open-color;
             background: $main-menu-top-active-head-bg;
             border-radius: 6px;
+            
           }
           //for 2rd level menu
           > ul {
@@ -311,12 +322,14 @@
         }
 
         .active {
-          background: linear-gradient(118deg, rgba($primary, 1), rgba($primary, 0.7));
+          // background: linear-gradient(118deg, rgba($primary, 1), rgba($primary, 0.7));
           // box-shadow: 0 0 10px 1px rgba($primary, 0.7);
-          border-radius: 4px;
+          background: $body-bg;
+          font-weight: 400;
+          border-radius: 8px;
           z-index: 1;
           > a {
-            color: $white;
+            color: $primary !important;
           }
         }
       }

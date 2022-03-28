@@ -16,10 +16,10 @@
         :toggleCollapsed="toggleCollapsed"
         :collapseTogglerIcon="collapseTogglerIcon"
       >
-        <ul class="nav navbar-nav flex-row">
+        <ul class="nav navbar-nav flex flex-row align-center">
 
           <!-- Logo & Text -->
-          <li class="nav-item mr-auto">
+          <li class="nav-item">
             <b-link
               class="navbar-brand"
               to="/"

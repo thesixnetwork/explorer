@@ -28,7 +28,7 @@ html {
     &.dark-layout {
       background: $theme-dark-card-bg;
 
-      .navbar-container.content, .content-wrapper, .navigation .navigation-header {
+      .navbar-container.content, .content-wrapper, .main-menu .navigation > li ul .active {
         background: $theme-dark-body-bg;
       }
     }

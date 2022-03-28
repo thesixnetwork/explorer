@@ -120,6 +120,8 @@
     transition: 300ms ease all;
     margin-left: 0;
 
+    &.onScroll { box-shadow: 0 2px 4px 0 rgb(34 41 47 / 15%); }
+
     // Navbar bookmark primary color on hover
     .bookmark-wrapper {
       // for bookmark z-index

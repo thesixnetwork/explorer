@@ -1,5 +1,5 @@
 <template>
-  <div class="navbar-container d-flex content align-items-center">
+  <div class="navbar-container d-flex content align-items-center" :class="{onScroll: scrollPosition > 80}">
 
     <!-- Nav Menu Toggler -->
     <!-- <ul class="nav navbar-nav d-lg-none">
@@ -50,10 +50,7 @@
             /></b-link>
         </b-media-aside>
         <b-media-body class="my-auto">
-          <h3 class="c-mb-1">
-            <span class="text-uppercase">{{ selected_chain.chain_title || chainid }}</span>
-          </h3>
-          <small id="data-provider" class="flex align-center">
+          <small id="data-provider" class="flex align-center" style="opacity: 0.7">
             {{ currentApi }} ({{ selected_chain.sdk_version || '-' }})&nbsp;
             <b-dropdown
               class="ml-0"
@@ -79,6 +76,9 @@
               </b-dropdown-item>
             </b-dropdown>
           </small>
+          <h3 class="c-mt-1 mb-0">
+            <span class="text-uppercase">{{ selected_chain.chain_title || chainid }}</span>
+          </h3>
         </b-media-body>
       </b-media>
     </div>
@@ -201,7 +201,8 @@ export default {
       variant: 'success',
       tips: 'Synced',
       index: 0,
-      chainid: ''
+      chainid: '',
+      scrollPosition: null,
     }
   },
   computed: {
@@ -232,6 +233,7 @@ export default {
     if (!this.$store.state.chains.defaultWallet && accounts.length > 0) {
       this.$store.commit('setDefaultWallet', accounts[0])
     }
+    window.addEventListener('scroll', this.updateScroll);
   },
   methods: {
     change(v) {
@@ -255,6 +257,9 @@ export default {
           this.tips = 'Synced'
         }
       })
+    },
+    updateScroll() {
+      this.scrollPosition = window.scrollY
     }
   }
 }
