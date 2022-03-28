@@ -2,7 +2,7 @@
   <div class="navbar-container d-flex content align-items-center">
 
     <!-- Nav Menu Toggler -->
-    <ul class="nav navbar-nav d-lg-none">
+    <!-- <ul class="nav navbar-nav d-lg-none">
       <li class="nav-item">
         <b-link
           class="nav-link"
@@ -23,17 +23,19 @@
           />
         </b-link>
       </li>
-    </ul>
+    </ul> -->
 
     <!-- Left Col -->
-    <div class="bookmark-wrapper align-items-center flex-grow-1 d-none d-lg-flex">
+    <div class="bookmark-wrapper align-items-center flex-grow-1 d-flex">
       <b-media
         v-if="selected_chain"
         no-body
+        class="flex align-center"
       >
         <b-media-aside class="mr-75">
           <b-link
             class="nav-link"
+            style="padding: 0"
             @click="toggleVerticalMenuActive"
           >
             <b-avatar
@@ -48,11 +50,11 @@
             /></b-link>
         </b-media-aside>
         <b-media-body class="my-auto">
-          <h6 class="mb-0 ">
+          <h3 class="c-mb-1">
             <span class="text-uppercase">{{ selected_chain.chain_title || chainid }}</span>
-          </h6>
-          <small id="data-provider">
-            {{ currentApi }} ({{ selected_chain.sdk_version || '-' }})
+          </h3>
+          <small id="data-provider" class="flex align-center">
+            {{ currentApi }} ({{ selected_chain.sdk_version || '-' }})&nbsp;
             <b-dropdown
               class="ml-0"
               variant="flat-primary"
