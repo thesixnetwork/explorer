@@ -23,7 +23,7 @@
 
     <!-- Right Col -->
     <b-navbar-nav class="nav align-items-center ml-auto">
-      <dark-Toggler class="d-none d-lg-block" />
+      <dark-Toggler" />
       <search-bar />
       <notification-dropdown />
       <template #button-content>

@@ -1,8 +1,12 @@
 <template>
   <div
-    class="main-menu menu-fixed menu-accordion menu-shadow"
+    class="main-menu menu-fixed menu-accordion"
     :class="[
-      { 'expanded': !isVerticalMenuCollapsed || (isVerticalMenuCollapsed && isMouseHovered) },
+      {
+        expanded:
+          !isVerticalMenuCollapsed ||
+          (isVerticalMenuCollapsed && isMouseHovered)
+      },
       skin === 'semi-dark' ? 'menu-dark' : 'menu-light'
     ]"
     @mouseenter="updateMouseHovered(true)"
@@ -17,20 +21,26 @@
         :collapseTogglerIcon="collapseTogglerIcon"
       >
         <ul class="nav navbar-nav flex-row">
-
           <!-- Logo & Text -->
           <li class="nav-item mr-auto">
-            <b-link
-              class="navbar-brand"
+            <b-link 
+              class="navbar-brand" 
               to="/"
             >
               <span class="brand-logo">
-                <b-img
-                  :src="appLogoImage"
-                  alt="logo"
+                <b-img 
+                  :src="appLogoImage" 
+                  alt="logo" 
                 />
               </span>
-              <h2 class="brand-text">
+              <h2
+                :style="{
+                  background: '-webkit-linear-gradient(72deg, #353EED,#40D7FC)',
+                  '-webkit-background-clip': 'text',
+                  '-webkit-text-fill-color': 'transparent'
+                }"
+                class="brand-text"
+              >
                 {{ appName }}
               </h2>
             </b-link>
@@ -42,15 +52,15 @@
               <feather-icon
                 icon="XIcon"
                 size="20"
-                class="d-block d-xl-none"
+                class="d-xl-none"
                 @click="toggleVerticalMenuActive"
               />
-              <feather-icon
+              <!-- <feather-icon
                 :icon="collapseTogglerIconFeather"
                 size="20"
                 class="d-none d-xl-block collapse-toggle-icon"
                 @click="toggleCollapsed"
-              />
+              /> -->
             </b-link>
           </li>
         </ul>
@@ -59,9 +69,9 @@
     <!-- / main menu header-->
 
     <!-- Shadow -->
-    <div
-      :class="{'d-block': shallShadowBottom}"
-      class="shadow-bottom"
+    <div 
+      :class="{ 'd-block': shallShadowBottom }" 
+      class="shadow-bottom" 
     />
 
     <!-- main menu content-->
@@ -69,11 +79,15 @@
       :settings="perfectScrollbarSettings"
       class="main-menu-content scroll-area"
       tagname="ul"
-      @ps-scroll-y="evt => { shallShadowBottom = evt.srcElement.scrollTop > 0 }"
+      @ps-scroll-y="
+        evt => {
+          shallShadowBottom = evt.srcElement.scrollTop > 0;
+        }
+      "
     >
       <vertical-nav-menu-items
         :items.sync="leftMenu"
-        class="navigation navigation-main"
+        class="navigation navigation-main pl-2 pr-1"
       />
     </vue-perfect-scrollbar>
     <!-- /main menu content-->
@@ -81,14 +95,14 @@
 </template>
 
 <script>
-import navMenuItems from '@/navigation/vertical'
-import VuePerfectScrollbar from 'vue-perfect-scrollbar'
-import { BLink, BImg } from 'bootstrap-vue'
-import { provide, computed, ref } from '@vue/composition-api'
-import useAppConfig from '@core/app-config/useAppConfig'
-import { $themeConfig } from '@themeConfig'
-import VerticalNavMenuItems from './components/vertical-nav-menu-items/VerticalNavMenuItems.vue'
-import useVerticalNavMenu from './useVerticalNavMenu'
+import navMenuItems from '@/navigation/vertical';
+import VuePerfectScrollbar from 'vue-perfect-scrollbar';
+import { BLink, BImg } from 'bootstrap-vue';
+import { provide, computed, ref } from '@vue/composition-api';
+import useAppConfig from '@core/app-config/useAppConfig';
+import { $themeConfig } from '@themeConfig';
+import VerticalNavMenuItems from './components/vertical-nav-menu-items/VerticalNavMenuItems.vue';
+import useVerticalNavMenu from './useVerticalNavMenu';
 
 export default {
   components: {
@@ -114,24 +128,26 @@ export default {
       collapseTogglerIcon,
       toggleCollapsed,
       updateMouseHovered
-    } = useVerticalNavMenu(props)
+    } = useVerticalNavMenu(props);
 
-    const { skin } = useAppConfig()
+    const { skin } = useAppConfig();
 
     // Shadow bottom is UI specific and can be removed by user => It's not in `useVerticalNavMenu`
-    const shallShadowBottom = ref(false)
+    const shallShadowBottom = ref(false);
 
-    provide('isMouseHovered', isMouseHovered)
+    provide('isMouseHovered', isMouseHovered);
 
     const perfectScrollbarSettings = {
       maxScrollbarLength: 60,
       wheelPropagation: false
-    }
+    };
 
-    const collapseTogglerIconFeather = computed(() => (collapseTogglerIcon.value === 'unpinned' ? 'CircleIcon' : 'DiscIcon'))
+    const collapseTogglerIconFeather = computed(() =>
+      collapseTogglerIcon.value === 'unpinned' ? 'CircleIcon' : 'DiscIcon'
+    );
 
     // App Name
-    const { appName, appLogoImage } = $themeConfig.app
+    const { appName, appLogoImage } = $themeConfig.app;
 
     return {
       navMenuItems,
@@ -152,21 +168,23 @@ export default {
       // App Name
       appName,
       appLogoImage
-    }
+    };
   },
   computed: {
     leftMenu() {
-      const preload = []
-      const { selected } = this.$store.state.chains
-      const current = navMenuItems.find(x => (x.title === selected.chain_name))
-      preload.push({ header: 'current' })
-      preload.push(current)
-      return preload.concat(navMenuItems.filter(x => x.title !== selected.chain_name))
+      const preload = [];
+      const { selected } = this.$store.state.chains;
+      const current = navMenuItems.find(x => x.title === selected.chain_title);
+      preload.push({ header: 'current' });
+      preload.push(current);
+      return preload.concat(
+        navMenuItems.filter(x => x.title !== selected.chain_title)
+      );
     }
   }
-}
+};
 </script>
 
 <style lang="scss">
-@import "~@core/scss/base/core/menu/menu-types/vertical-menu.scss";
+@import '~@core/scss/base/core/menu/menu-types/vertical-menu.scss';
 </style>

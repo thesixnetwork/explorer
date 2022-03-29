@@ -1,19 +1,19 @@
 <template>
-  <p class="clearfix mb-0">
-    <span class="float-md-left d-none d-md-block d-md-inline-block mt-25">
+  <p class="mb-0">
+    <span class="d-none d-md-block d-md-inline-block">
       Powered By
       <b-link 
         class="ml-25 font-weight-bolder" 
-        href="https://d1cqbqg81wqd4z.cloudfront.net/" 
+        href="https://six.network" 
         target="_blank"
       >
-        SIX PROTOCOL
+        SIX Network
       </b-link>
     </span>
     <router-link
       v-ripple.400="'rgba(113, 102, 240, 0.15)'"
-      class="float-md-right" 
       to="/"
+      class="ml-auto"
     >
       <span
         v-ripple.400="'rgba(113, 102, 240, 0.15)'"

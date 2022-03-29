@@ -13,17 +13,10 @@
       @ok="handleOk"
       @show="loadBalance"
     >
-      <b-overlay
-        :show="!selectedAddress"
-        rounded="sm"
-      >
+      <b-overlay :show="!selectedAddress" rounded="sm">
         <template #overlay>
           <div class="text-center">
-            <b-avatar
-              icon="stopwatch"
-              font-scale="3"
-              animation="cylon"
-            />
+            <b-avatar icon="stopwatch" font-scale="3" animation="cylon" />
             <p id="cancel-label">
               No available account found.
             </p>
@@ -45,10 +38,7 @@
                   rules="required"
                   name="Validator"
                 >
-                  <b-form-group
-                    label="Validator"
-                    label-for="validator"
-                  >
+                  <b-form-group label="Validator" label-for="validator">
                     <v-select
                       v-model="selectedValidator"
                       :options="valOptions"
@@ -63,10 +53,7 @@
             </b-row>
             <b-row>
               <b-col>
-                <b-form-group
-                  label="Delegator"
-                  label-for="Delegator"
-                >
+                <b-form-group label="Delegator" label-for="Delegator">
                   <validation-provider
                     #default="{ errors }"
                     rules="required"
@@ -79,11 +66,7 @@
                       text-field="label"
                       @change="onChange"
                     />
-                    <b-form-input
-                      v-else
-                      v-model="selectedAddress"
-                      readonly
-                    />
+                    <b-form-input v-else v-model="selectedAddress" readonly />
                     <small class="text-danger">{{ errors[0] }}</small>
                   </validation-provider>
                 </b-form-group>
@@ -91,19 +74,13 @@
             </b-row>
             <b-row>
               <b-col>
-                <b-form-group
-                  label="Available Token"
-                  label-for="Token"
-                >
+                <b-form-group label="Available Token" label-for="Token">
                   <validation-provider
                     #default="{ errors }"
                     rules="required"
                     name="Token"
                   >
-                    <b-form-select
-                      v-model="token"
-                      text-field="label"
-                    >
+                    <b-form-select v-model="token" text-field="label">
                       <b-form-select-option
                         v-for="x in balance"
                         :key="x.denom"
@@ -119,10 +96,7 @@
             </b-row>
             <b-row>
               <b-col>
-                <b-form-group
-                  label="Amount"
-                  label-for="Amount"
-                >
+                <b-form-group label="Amount" label-for="Amount">
                   <validation-provider
                     v-slot="{ errors }"
                     rules="required|regex:^([0-9\.]+)$"
@@ -132,7 +106,7 @@
                       <b-form-input
                         id="Amount"
                         v-model="amount"
-                        :state="errors.length > 0 ? false:null"
+                        :state="errors.length > 0 ? false : null"
                         placeholder="Input a number"
                         type="number"
                       />
@@ -147,10 +121,7 @@
             </b-row>
             <b-row>
               <b-col>
-                <b-form-group
-                  label="Fee"
-                  label-for="Fee"
-                >
+                <b-form-group label="Fee" label-for="Fee">
                   <validation-provider
                     v-slot="{ errors }"
                     rules="required|integer"
@@ -185,37 +156,17 @@
             </b-row>
             <b-row v-if="advance">
               <b-col cols="12">
-                <b-form-group
-                  label="Gas"
-                  label-for="gas"
-                >
-                  <validation-provider
-                    v-slot="{ errors }"
-                    name="gas"
-                  >
-                    <b-form-input
-                      id="gas"
-                      v-model="gas"
-                      type="number"
-                    />
+                <b-form-group label="Gas" label-for="gas">
+                  <validation-provider v-slot="{ errors }" name="gas">
+                    <b-form-input id="gas" v-model="gas" type="number" />
                     <small class="text-danger">{{ errors[0] }}</small>
                   </validation-provider>
                 </b-form-group>
               </b-col>
               <b-col cols="12">
-                <b-form-group
-                  label="Memo"
-                  label-for="Memo"
-                >
-                  <validation-provider
-                    v-slot="{ errors }"
-                    name="memo"
-                  >
-                    <b-form-input
-                      id="Memo"
-                      v-model="memo"
-                      max="2"
-                    />
+                <b-form-group label="Memo" label-for="Memo">
+                  <validation-provider v-slot="{ errors }" name="memo">
+                    <b-form-input id="Memo" v-model="memo" max="2" />
                     <small class="text-danger">{{ errors[0] }}</small>
                   </validation-provider>
                 </b-form-group>
@@ -230,26 +181,57 @@
           </b-form>
         </validation-observer>
         {{ error }}
-      </b-overlay></b-modal>
+      </b-overlay></b-modal
+    >
   </div>
 </template>
 
 <script>
-import { ValidationProvider, ValidationObserver } from 'vee-validate'
+import { ValidationProvider, ValidationObserver } from 'vee-validate';
 import {
-  BAvatar, BModal, BRow, BCol, BInputGroup, BFormInput, BFormGroup, BFormSelect, BFormSelectOption,
-  BForm, BButton, BInputGroupAppend, BFormCheckbox, BOverlay,
-} from 'bootstrap-vue'
-import Ripple from 'vue-ripple-directive'
+  BAvatar,
+  BModal,
+  BRow,
+  BCol,
+  BInputGroup,
+  BFormInput,
+  BFormGroup,
+  BFormSelect,
+  BFormSelectOption,
+  BForm,
+  BButton,
+  BInputGroupAppend,
+  BFormCheckbox,
+  BOverlay
+} from 'bootstrap-vue';
+import Ripple from 'vue-ripple-directive';
 import {
-  required, email, url, between, alpha, integer, password, min, digits, alphaDash, length,
-} from '@validations'
+  required,
+  email,
+  url,
+  between,
+  alpha,
+  integer,
+  password,
+  min,
+  digits,
+  alphaDash,
+  length
+} from '@validations';
 import {
-  abbrAddress, extractAccountNumberAndSequence, formatToken, formatTokenDenom, getLocalAccounts, getUnitAmount, setLocalTxHistory, sign, timeIn,
-} from '@/libs/utils'
-import vSelect from 'vue-select'
-import ToastificationContent from '@core/components/toastification/ToastificationContent.vue'
-import WalletInputVue from './components/WalletInput.vue'
+  abbrAddress,
+  extractAccountNumberAndSequence,
+  formatToken,
+  formatTokenDenom,
+  getLocalAccounts,
+  getUnitAmount,
+  setLocalTxHistory,
+  sign,
+  timeIn
+} from '@/libs/utils';
+import vSelect from 'vue-select';
+import ToastificationContent from '@core/components/toastification/ToastificationContent.vue';
+import WalletInputVue from './components/WalletInput.vue';
 
 export default {
   name: 'DelegateDialogue',
@@ -274,20 +256,20 @@ export default {
     ValidationProvider,
     ValidationObserver,
     // eslint-disable-next-line vue/no-unused-components
-    ToastificationContent,
+    ToastificationContent
   },
   directives: {
-    Ripple,
+    Ripple
   },
   props: {
     validatorAddress: {
       type: String,
-      default: null,
+      default: null
     },
     address: {
       type: String,
-      default: null,
-    },
+      default: null
+    }
   },
   data() {
     return {
@@ -323,151 +305,171 @@ export default {
       between,
       digits,
       length,
-      alphaDash,
-    }
+      alphaDash
+    };
   },
   computed: {
     valOptions() {
-      const vals = this.validators.map(x => ({ value: x.operator_address, label: `${x.description.moniker} (${Number(x.commission.rate) * 100}%)` }))
-      const unbunded = this.unbundValidators.map(x => ({ value: x.operator_address, label: `* ${x.description.moniker} (${Number(x.commission.rate) * 100}%)` }))
-      return vals.concat(unbunded)
+      const vals = this.validators.map(x => ({
+        value: x.operator_address,
+        label: `${x.description.moniker} (${Number(x.commission.rate) * 100}%)`
+      }));
+      const unbunded = this.unbundValidators.map(x => ({
+        value: x.operator_address,
+        label: `* ${x.description.moniker} (${Number(x.commission.rate) *
+          100}%)`
+      }));
+      return vals.concat(unbunded);
     },
     feeDenoms() {
-      if (!this.balance) return []
-      return this.balance.filter(item => !item.denom.startsWith('ibc'))
-    },
+      if (!this.balance) return [];
+      return this.balance.filter(item => !item.denom.startsWith('ibc'));
+    }
   },
   created() {
     // console.log('address: ', this.address)
   },
   methods: {
     printDenom() {
-      return formatTokenDenom(this.IBCDenom[this.token] || this.token)
+      return formatTokenDenom(this.IBCDenom[this.token] || this.token);
     },
     onChange() {
       if (this.selectedAddress) {
         this.$http.getBankBalances(this.selectedAddress).then(res => {
           if (res && res.length > 0) {
-            this.balance = res.reverse()
-            const token = this.balance.find(i => !i.denom.startsWith('ibc'))
-            this.token = token.denom
-            if (token) this.feeDenom = token.denom
-            this.balance.filter(i => i.denom.startsWith('ibc')).forEach(x => {
-              if (!this.IBCDenom[x.denom]) {
-                this.$http.getIBCDenomTrace(x.denom).then(denom => {
-                  this.IBCDenom[x.denom] = denom.denom_trace.base_denom
-                })
-              }
-            })
+            this.balance = res.reverse();
+            const token = this.balance.find(i => !i.denom.startsWith('ibc'));
+            this.token = token.denom;
+            if (token) this.feeDenom = token.denom;
+            this.balance
+              .filter(i => i.denom.startsWith('ibc'))
+              .forEach(x => {
+                if (!this.IBCDenom[x.denom]) {
+                  this.$http.getIBCDenomTrace(x.denom).then(denom => {
+                    this.IBCDenom[x.denom] = denom.denom_trace.base_denom;
+                  });
+                }
+              });
           }
-        })
+        });
         this.$http.getLatestBlock().then(ret => {
-          this.chainId = ret.block.header.chain_id
-          const notSynced = timeIn(ret.block.header.time, 10, 'm')
+          this.chainId = ret.block.header.chain_id;
+          const notSynced = timeIn(ret.block.header.time, 10, 'm');
           if (notSynced) {
-            this.error = 'Client is not synced or blockchain is halted'
+            this.error = 'Client is not synced or blockchain is halted';
           } else {
-            this.error = null
+            this.error = null;
           }
-        })
+        });
         this.$http.getAuthAccount(this.selectedAddress).then(ret => {
-          const account = extractAccountNumberAndSequence(ret)
-          this.accountNumber = account.accountNumber
-          this.sequence = account.sequence
-        })
-        this.fee = this.$store.state.chains.selected?.min_tx_fee || '1000'
-        this.feeDenom = this.$store.state.chains.selected?.assets[0]?.base || ''
+          const account = extractAccountNumberAndSequence(ret);
+          console.log(ret);
+          this.accountNumber = account.accountNumber;
+          this.sequence = account.sequence;
+        });
+        this.fee = this.$store.state.chains.selected?.min_tx_fee || '1000';
+        this.feeDenom =
+          this.$store.state.chains.selected?.assets[0]?.base || '';
       }
       // this.$http.getStakingDelegations(this.selectedAddress).then(res => {
       //   this.delegations = res.delegation_responses
       // })
     },
     computeAccount() {
-      const accounts = getLocalAccounts()
-      const values = accounts ? Object.values(accounts) : []
-      let array = []
+      const accounts = getLocalAccounts();
+      const values = accounts ? Object.values(accounts) : [];
+      let array = [];
       for (let i = 0; i < values.length; i += 1) {
-        const addrs = values[i].address.filter(x => x.chain === this.$route.params.chain)
+        const addrs = values[i].address.filter(
+          x => x.chain === this.$route.params.chain
+        );
         if (addrs && addrs.length > 0) {
-          array = array.concat(addrs.map(x => ({ value: x.addr, label: values[i].name.concat(' - ', abbrAddress(x.addr)) })))
+          array = array.concat(
+            addrs.map(x => ({
+              value: x.addr,
+              label: values[i].name.concat(' - ', abbrAddress(x.addr))
+            }))
+          );
           if (!this.selectedAddress) {
-            this.selectedAddress = addrs[0].addr
+            this.selectedAddress = addrs[0].addr;
           }
         }
       }
-      this.selectedValidator = this.validatorAddress
-      return array
+      this.selectedValidator = this.validatorAddress;
+      return array;
     },
     loadBalance() {
-      this.account = this.computeAccount()
+      this.account = this.computeAccount();
       // if (this.account && this.account.length > 0) this.selectedAddress
       this.$http.getValidatorList().then(v => {
-        this.validators = v
-      })
+        this.validators = v;
+      });
       this.$http.getValidatorUnbondedList().then(v => {
-        this.unbundValidators = v
-      })
-      this.onChange()
+        this.unbundValidators = v;
+      });
+      this.onChange();
     },
     handleOk(bvModalEvt) {
       // console.log('send')
       // Prevent modal from closing
-      bvModalEvt.preventDefault()
+      bvModalEvt.preventDefault();
       // Trigger submit handler
       // this.handleSubmit()
       this.$refs.simpleRules.validate().then(ok => {
         if (ok) {
           this.sendTx().then(ret => {
             // console.log(ret)
-            this.error = ret
-          })
+            this.error = ret;
+          });
         }
-      })
+      });
     },
     resetModal() {
-      this.feeDenom = ''
-      this.error = null
+      this.feeDenom = '';
+      this.error = null;
     },
     format(v) {
-      return formatToken(v, this.IBCDenom)
+      return formatToken(v, this.IBCDenom);
     },
     async sendTx() {
-      const txMsgs = [{
-        typeUrl: '/cosmos.staking.v1beta1.MsgDelegate',
-        value: {
-          delegatorAddress: this.selectedAddress,
-          validatorAddress: this.selectedValidator,
-          amount: {
-            amount: getUnitAmount(this.amount, this.token),
-            denom: this.token,
-          },
-        },
-      }]
+      const txMsgs = [
+        {
+          typeUrl: '/cosmos.staking.v1beta1.MsgDelegate',
+          value: {
+            delegatorAddress: this.selectedAddress,
+            validatorAddress: this.selectedValidator,
+            amount: {
+              amount: getUnitAmount(this.amount, this.token),
+              denom: this.token
+            }
+          }
+        }
+      ];
 
       if (txMsgs.length === 0) {
-        this.error = 'No delegation found'
-        return ''
+        this.error = 'No delegation found';
+        return 'No delegation found';
       }
       if (!this.accountNumber) {
-        this.error = 'Account number should not be empty!'
-        return ''
+        this.error = 'Account number should not be empty!';
+        return 'Account number should not be empty';
       }
 
       const txFee = {
         amount: [
           {
             amount: this.fee,
-            denom: this.feeDenom,
-          },
+            denom: this.feeDenom
+          }
         ],
-        gas: this.gas,
-      }
+        gas: this.gas
+      };
 
       const signerData = {
         accountNumber: this.accountNumber,
         sequence: this.sequence,
-        chainId: this.chainId,
-      }
+        chainId: this.chainId
+      };
 
       sign(
         this.wallet,
@@ -476,34 +478,39 @@ export default {
         txMsgs,
         txFee,
         this.memo,
-        signerData,
-      ).then(bodyBytes => {
-        this.$http.broadcastTx(bodyBytes).then(res => {
-          setLocalTxHistory({
-            chain: this.$store.state.chains.selected,
-            op: 'delegate',
-            hash: res.tx_response.txhash,
-            time: new Date(),
-          })
-          this.$bvModal.hide('delegate-window')
-          this.$toast({
-            component: ToastificationContent,
-            props: {
-              title: 'Transaction sent!',
-              icon: 'EditIcon',
-              variant: 'success',
-            },
-          })
-        }).catch(e => {
-          this.error = e
+        signerData
+      )
+        .then(bodyBytes => {
+          this.$http
+            .broadcastTx(bodyBytes)
+            .then(res => {
+              setLocalTxHistory({
+                chain: this.$store.state.chains.selected,
+                op: 'delegate',
+                hash: res.tx_response.txhash,
+                time: new Date()
+              });
+              this.$bvModal.hide('delegate-window');
+              this.$toast({
+                component: ToastificationContent,
+                props: {
+                  title: 'Transaction sent!',
+                  icon: 'EditIcon',
+                  variant: 'success'
+                }
+              });
+            })
+            .catch(e => {
+              this.error = e;
+            });
         })
-      }).catch(e => {
-        this.error = e
-      })
-      return ''
-    },
-  },
-}
+        .catch(e => {
+          this.error = e;
+        });
+      return '';
+    }
+  }
+};
 </script>
 <style lang="scss">
 @import '@core/scss/vue/libs/vue-select.scss';

@@ -8,7 +8,7 @@
     <b-navbar
       :toggleable="false"
       :variant="navbarBackgroundColor"
-      class="header-navbar navbar navbar-shadow align-items-center"
+      class="header-navbar navbar align-items-center"
       :class="[navbarTypeClass]"
     >
       <slot

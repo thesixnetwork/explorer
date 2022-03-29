@@ -2,7 +2,7 @@
   <div class="navbar-container d-flex content align-items-center">
 
     <!-- Nav Menu Toggler -->
-    <ul class="nav navbar-nav d-lg-none">
+    <!-- <ul class="nav navbar-nav d-lg-none">
       <li class="nav-item">
         <b-link
           class="nav-link"
@@ -23,17 +23,19 @@
           />
         </b-link>
       </li>
-    </ul>
+    </ul> -->
 
     <!-- Left Col -->
-    <div class="bookmark-wrapper align-items-center flex-grow-1 d-none d-lg-flex">
+    <div class="bookmark-wrapper align-items-center flex-grow-1 d-flex">
       <b-media
         v-if="selected_chain"
         no-body
+        class="flex align-center"
       >
         <b-media-aside class="mr-75">
           <b-link
             class="nav-link"
+            style="padding: 0"
             @click="toggleVerticalMenuActive"
           >
             <b-avatar
@@ -47,12 +49,17 @@
               :badge-variant="variant"
             /></b-link>
         </b-media-aside>
-        <b-media-body class="my-auto">
-          <h6 class="mb-0 ">
-            <span class="text-uppercase">{{ chainid || selected_chain.chain_name }}</span>
-          </h6>
-          <small id="data-provider">
-            {{ currentApi }} ({{ selected_chain.sdk_version || '-' }})
+        <b-media-body 
+          class="my-auto" 
+        >
+          <h3 class="c-mb-1">
+            <span class="text-uppercase">{{ selected_chain.chain_title || chainid }}</span>
+          </h3>
+          <small 
+            id="data-provider" 
+            class="flex align-center d-none d-md-block d-md-inline-block"
+          >
+            {{ currentApi }} ({{ selected_chain.sdk_version || '-' }})&nbsp;
             <b-dropdown
               class="ml-0"
               variant="flat-primary"
@@ -84,9 +91,9 @@
     <!-- <dark-Toggler class="d-none d-lg-block" /> -->
     <!-- Right Col -->
     <b-navbar-nav class="nav align-items-center ml-auto">
-      <dark-Toggler class="d-none d-lg-block" />
+      <dark-Toggler />
       <search-bar />
-      <locale />
+      <!-- <locale /> -->
       <b-dropdown
         class="ml-1"
         variant="link"
@@ -159,11 +166,12 @@ import {
 } from 'bootstrap-vue'
 import Ripple from 'vue-ripple-directive'
 import DarkToggler from '@core/layouts/components/app-navbar/components/DarkToggler.vue'
-import Locale from '@core/layouts/components/app-navbar/components/Locale.vue'
+// import Locale from '@core/layouts/components/app-navbar/components/Locale.vue'
 import SearchBar from '@core/layouts/components/app-navbar/components/SearchBar.vue'
 // import CartDropdown from '@core/layouts/components/app-navbar/components/CartDropdown.vue'
 import { getLocalAccounts, timeIn, toDay } from '@/libs/utils'
 // import UserDropdown from '@core/layouts/components/app-navbar/components/UserDropdown.vue'
+import responsive from 'vue-responsive'
 
 export default {
   components: {
@@ -179,7 +187,7 @@ export default {
 
     // Navbar Components
     DarkToggler,
-    Locale,
+    // Locale,
     SearchBar
     // CartDropdown,
     // UserDropdown,

@@ -11,7 +11,7 @@
       </b-alert>
       <b-card
         no-body
-        class="mb-1"
+        class="mb-2"
       >
         <b-button
           to="./uptime/my"
@@ -31,14 +31,14 @@
           :key="index"
           sm="12"
           md="12"
-          class="text-truncate"
+          class="text-truncate mb-2"
         >
           <b-form-checkbox
             v-model="pinned"
             :value="`${chain}#${x.address}`"
             class="custom-control-warning mb-1"
             @change="pinValidator(`${chain}#${x.address}`)"
-          ><span class="d-inline-block text-truncate font-weight-bold align-bottom">{{ index+1 }} {{ x.validator.moniker }}</span>
+          ><span class="d-inline-block text-truncate font-weight-bold align-bottom">{{ index+1 }}. {{ x.validator.moniker }}</span>
           </b-form-checkbox>
           <div class="d-flex justify-content-between align-self-stretch flex-wrap">
             <div

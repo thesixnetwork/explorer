@@ -19,6 +19,11 @@
 //=========================
 .vertical-overlay-menu {
   //Content expanded
+  .app-content,
+  .header-navbar {
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
+  }
   .content {
     @include main-menu-width(0);
   }

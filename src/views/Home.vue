@@ -6,7 +6,7 @@
       class="nav text-right text-nowrap ml-auto"
     >
       <b-nav-item><dark-toggler /></b-nav-item>
-      <b-nav-item><locale /></b-nav-item>
+      <!-- <b-nav-item><locale /></b-nav-item> -->
       <b-button
         v-ripple.400="'rgba(255, 255, 255, 0.15)'"
         variant="primary"
@@ -22,7 +22,7 @@
         <h1
           class="text-primary display-4 font-weight-bolder d-none d-md-block"
         >
-          SIX PROTOCOL EXPLORER<small class="flow-left">Beta</small>
+          SIX Scan<small class="flow-left">Beta</small>
         </h1>
       </div>
     </b-link>
@@ -31,11 +31,14 @@
       <b>SIX PROTOCOL</b> explorer is not just an explorer but also a wallet and more ... 🛠
     </p>
     <h2 class="mb-3">
-      Cosmos Ecosystem Blockchains 🚀
+      SIX Protocol Ecosystem 🚀
     </h2>
 
     <div>
-      <b-row class="match-height">
+      <b-row 
+        align-h="center" 
+        class="match-height"
+      >
         <b-col
           v-for="(data,index) in chains"
           :key="index"
@@ -49,7 +52,7 @@
             >
               <div>
                 <b-card-title class="mb-1 text-uppercase">
-                  {{ data.chain_name }} <small class="font-small-2">{{ data.sdk_version }}</small>
+                  {{ data.chain_title }} <small class="font-small-2">{{ data.sdk_version }}</small>
                 </b-card-title>
 
                 <div class="d-flex justify-content-between">
@@ -107,7 +110,7 @@ import Ripple from 'vue-ripple-directive'
 import store from '@/store/index'
 import { timeIn, toDay } from '@/libs/utils'
 import DarkToggler from '@/@core/layouts/components/app-navbar/components/DarkToggler.vue'
-import Locale from '@/@core/layouts/components/app-navbar/components/Locale.vue'
+// import Locale from '@/@core/layouts/components/app-navbar/components/Locale.vue'
 import AppFooter from '@/@core/layouts/components/AppFooter.vue'
 
 export default {
@@ -123,7 +126,7 @@ export default {
     BNavItem,
     BButton,
     DarkToggler,
-    Locale,
+    // Locale,
     AppFooter
   },
   directives: {

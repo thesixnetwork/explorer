@@ -1,15 +1,9 @@
 <template>
   <div>
-    <b-table
-      :items="history"
-      :fields="fields"
-      stacked="sm"
-    >
+    <b-table :items="history" :fields="fields" stacked="sm">
       <template #cell(chain)="data">
-        <b-avatar
-          size="sm"
-          :src="data.item.chain.logo"
-        /> {{ data.item.chain.chain_name }}
+        <b-avatar size="sm" :src="data.item.chain.logo" />
+        {{ data.item.chain.chain_name }}
       </template>
       <template #cell(hash)="data">
         <router-link :to="`/${data.item.chain.chain_name}/tx/${data.value}`">
@@ -26,14 +20,14 @@
 </template>
 
 <script>
-import {
-  VBTooltip, BTable, BAvatar, BButton,
-} from 'bootstrap-vue'
-import { getLocalTxHistory } from '@/libs/utils'
+import { VBTooltip, BTable, BAvatar, BButton } from 'bootstrap-vue';
+import { getLocalTxHistory } from '@/libs/utils';
 
 export default {
   components: {
-    BTable, BAvatar, BButton
+    BTable,
+    BAvatar,
+    BButton
   },
   directives: {
     'b-tooltip': VBTooltip
@@ -47,16 +41,16 @@ export default {
         { key: 'time', label: 'TIME' }
       ],
       history: []
-    }
+    };
   },
   created() {
-    this.history = getLocalTxHistory()
+    this.history = getLocalTxHistory();
   },
   methods: {
     clear() {
-      this.history = []
-      localStorage.setItem('txHistory', [])
+      this.history = [];
+      localStorage.setItem('txHistory', []);
     }
   }
-}
+};
 </script>
