@@ -26,7 +26,7 @@ Vue.use(VueI18n)
 const i18n = new VueI18n({
   locale: 'en',
   messages,
-  fallbackLocale: 'en',
+  fallbackLocale: 'en'
 })
 
 // BSV Plugin Registration
@@ -49,5 +49,5 @@ new Vue({
   router,
   store,
   i18n,
-  render: h => h(App),
+  render: h => h(App)
 }).$mount('#app')

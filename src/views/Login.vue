@@ -188,7 +188,7 @@
 import { ValidationProvider, ValidationObserver } from 'vee-validate'
 import VuexyLogo from '@core/layouts/components/Logo.vue'
 import {
-  BRow, BCol, BLink, BFormGroup, BFormInput, BInputGroupAppend, BInputGroup, BFormCheckbox, BCardText, BCardTitle, BImg, BForm, BButton,
+  BRow, BCol, BLink, BFormGroup, BFormInput, BInputGroupAppend, BInputGroup, BFormCheckbox, BCardText, BCardTitle, BImg, BForm, BButton
 } from 'bootstrap-vue'
 import { required, email } from '@validations'
 import { togglePasswordVisibility } from '@core/mixins/ui/forms'
@@ -212,7 +212,7 @@ export default {
     BButton,
     VuexyLogo,
     ValidationProvider,
-    ValidationObserver,
+    ValidationObserver
   },
   mixins: [togglePasswordVisibility],
   data() {
@@ -223,7 +223,7 @@ export default {
       sideImg: require('@/assets/images/pages/login-v2.svg'),
       // validation rulesimport store from '@/store/index'
       required,
-      email,
+      email
     }
   },
   computed: {
@@ -237,7 +237,7 @@ export default {
         return this.sideImg
       }
       return this.sideImg
-    },
+    }
   },
   methods: {
     validationForm() {
@@ -248,13 +248,13 @@ export default {
             props: {
               title: 'Form Submitted',
               icon: 'EditIcon',
-              variant: 'success',
-            },
+              variant: 'success'
+            }
           })
         }
       })
-    },
-  },
+    }
+  }
 }
 </script>
 

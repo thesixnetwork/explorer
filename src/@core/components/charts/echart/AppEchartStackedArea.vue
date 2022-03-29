@@ -19,54 +19,54 @@ ECharts.registerTheme('theme-color', theme)
 
 export default {
   components: {
-    ECharts,
+    ECharts
   },
   props: {
     optionData: {
       type: Object,
-      default: null,
-    },
+      default: null
+    }
   },
   data() {
     return {
       option: {
         title: {
-          text: 'Stacked area chart',
+          text: 'Stacked area chart'
         },
         tooltip: {
           trigger: 'axis',
           axisPointer: {
             type: 'cross',
             label: {
-              backgroundColor: '#6a7985',
-            },
-          },
+              backgroundColor: '#6a7985'
+            }
+          }
         },
         legend: {
-          left: '0',
+          left: '0'
         },
         grid: {
           width: '95%',
           left: '40px',
           right: '4%',
-          containLabel: false,
+          containLabel: false
         },
         xAxis: [
           {
             type: 'category',
             boundaryGap: false,
-            data: this.optionData.xAxisData,
-          },
+            data: this.optionData.xAxisData
+          }
         ],
         yAxis: [
           {
             type: 'value',
-            splitLine: { show: false },
-          },
+            splitLine: { show: false }
+          }
         ],
-        series: this.optionData.series,
-      },
+        series: this.optionData.series
+      }
     }
-  },
+  }
 }
 </script>

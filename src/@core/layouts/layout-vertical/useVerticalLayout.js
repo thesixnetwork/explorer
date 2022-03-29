@@ -79,6 +79,6 @@ export default function useVerticalLayout(navbarType, footerType) {
     overlayClasses,
     navbarTypeClass,
     footerTypeClass,
-    resizeHandler,
+    resizeHandler
   }
 }

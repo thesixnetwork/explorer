@@ -11,7 +11,7 @@ import {
   digits as rule_digits,
   alpha_dash as rule_alpha_dash,
   alpha_num as rule_alpha_num,
-  length as rule_length,
+  length as rule_length
 } from 'vee-validate/dist/rules'
 import ar from 'vee-validate/dist/locale/ar.json'
 import en from 'vee-validate/dist/locale/en.json'
@@ -49,22 +49,22 @@ export const length = extend('length', rule_length)
 
 export const positive = extend('positive', {
   validate: validatorPositive,
-  message: 'Please enter positive number!',
+  message: 'Please enter positive number!'
 })
 
 export const credit = extend('credit-card', {
   validate: validatorCreditCard,
-  message: 'It is not valid credit card!',
+  message: 'It is not valid credit card!'
 })
 
 export const password = extend('password', {
   validate: validatorPassword,
-  message: 'Your {_field_} must contain at least one uppercase, one lowercase, one special character and one digit',
+  message: 'Your {_field_} must contain at least one uppercase, one lowercase, one special character and one digit'
 })
 
 export const url = extend('url', {
   validate: validatorUrlValidator,
-  message: 'URL is invalid',
+  message: 'URL is invalid'
 })
 
 // Install English and Arabic localizations.
@@ -73,26 +73,26 @@ localize({
     messages: en.messages,
     names: {
       email: 'Email',
-      password: 'Password',
+      password: 'Password'
     },
     fields: {
       password: {
-        min: '{_field_} is too short, you want to get hacked?',
-      },
-    },
+        min: '{_field_} is too short, you want to get hacked?'
+      }
+    }
   },
   ar: {
     messages: ar.messages,
     names: {
       email: 'البريد الإلكتروني',
-      password: 'كلمة السر',
+      password: 'كلمة السر'
     },
     fields: {
       password: {
-        min: 'كلمة السر قصيرة جداً سيتم اختراقك',
-      },
-    },
-  },
+        min: 'كلمة السر قصيرة جداً سيتم اختراقك'
+      }
+    }
+  }
 })
 // ////////////////////////////////////////////////////////
 // NOTE:

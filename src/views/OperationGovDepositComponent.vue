@@ -207,15 +207,15 @@
 import { ValidationProvider, ValidationObserver } from 'vee-validate'
 import {
   BModal, BRow, BCol, BInputGroup, BFormInput, BFormGroup, BFormSelect, BFormCheckbox,
-  BForm, BInputGroupAppend, BOverlay, BButton, BFormSelectOption,
+  BForm, BInputGroupAppend, BOverlay, BButton, BFormSelectOption
 } from 'bootstrap-vue'
 import {
-  required, email, url, between, alpha, integer, password, min, digits, alphaDash, length,
+  required, email, url, between, alpha, integer, password, min, digits, alphaDash, length
 } from '@validations'
 import {
   abbrAddress,
   extractAccountNumberAndSequence,
-  formatToken, formatTokenDenom, getLocalAccounts, getUnitAmount, setLocalTxHistory, sign, timeIn,
+  formatToken, formatTokenDenom, getLocalAccounts, getUnitAmount, setLocalTxHistory, sign, timeIn
 } from '@/libs/utils'
 import ToastificationContent from '@core/components/toastification/ToastificationContent.vue'
 import WalletInputVue from './components/WalletInput.vue'
@@ -242,17 +242,17 @@ export default {
 
     WalletInputVue,
     // eslint-disable-next-line vue/no-unused-components
-    ToastificationContent,
+    ToastificationContent
   },
   props: {
     proposalId: {
       type: Number,
-      required: true,
+      required: true
     },
     title: {
       type: String,
-      required: true,
-    },
+      required: true
+    }
   },
   data() {
     return {
@@ -284,13 +284,13 @@ export default {
       between,
       digits,
       length,
-      alphaDash,
+      alphaDash
     }
   },
   computed: {
     feeDenoms() {
       return this.balance.filter(item => !item.denom.startsWith('ibc'))
-    },
+    }
   },
   methods: {
     printDenom() {
@@ -377,10 +377,10 @@ export default {
           amount: [
             {
               amount: getUnitAmount(this.amount, this.token),
-              denom: this.token,
-            },
-          ],
-        },
+              denom: this.token
+            }
+          ]
+        }
       }]
 
       if (txMsgs.length === 0) {
@@ -396,16 +396,16 @@ export default {
         amount: [
           {
             amount: this.fee,
-            denom: this.feeDenom,
-          },
+            denom: this.feeDenom
+          }
         ],
-        gas: this.gas,
+        gas: this.gas
       }
 
       const signerData = {
         accountNumber: this.accountNumber,
         sequence: this.sequence,
-        chainId: this.chainId,
+        chainId: this.chainId
       }
 
       sign(
@@ -415,14 +415,14 @@ export default {
         txMsgs,
         txFee,
         this.memo,
-        signerData,
+        signerData
       ).then(bodyBytes => {
         this.$http.broadcastTx(bodyBytes, this.selectedChain).then(res => {
           setLocalTxHistory({
             chain: this.$store.state.chains.selected,
             op: 'deposit',
             hash: res.tx_response.txhash,
-            time: new Date(),
+            time: new Date()
           })
           this.$bvModal.hide('deposit-window')
           this.$toast({
@@ -430,8 +430,8 @@ export default {
             props: {
               title: 'Transaction sent!',
               icon: 'EditIcon',
-              variant: 'success',
-            },
+              variant: 'success'
+            }
           })
         }).catch(e => {
           this.error = e
@@ -442,8 +442,8 @@ export default {
       // Send tokens
       // return client.sendTokens(this.address, this.recipient, sendCoins, this.memo)
       return ''
-    },
-  },
+    }
+  }
 }
 </script>
 

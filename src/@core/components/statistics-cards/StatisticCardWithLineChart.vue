@@ -40,33 +40,33 @@ export default {
     VueApexCharts,
     BCard,
     BCardBody,
-    BAvatar,
+    BAvatar
   },
   props: {
     icon: {
       type: String,
-      required: true,
+      required: true
     },
     statistic: {
       type: [Number, String],
-      required: true,
+      required: true
     },
     statisticTitle: {
       type: String,
-      default: '',
+      default: ''
     },
     color: {
       type: String,
-      default: 'primary',
+      default: 'primary'
     },
     chartData: {
       type: Array,
-      default: () => [],
+      default: () => []
     },
     chartOptions: {
       type: Object,
-      default: null,
-    },
+      default: null
+    }
   },
   computed: {
     chartOptionsComputed() {
@@ -79,7 +79,7 @@ export default {
         return options
       }
       return this.chartOptions
-    },
+    }
   },
   methods: {
     gradientToColor(color) {
@@ -91,11 +91,11 @@ export default {
         info: '#59E0F0',
         secondary: '#B4B9BF',
         light: '#D0D4DB',
-        dark: '#919191',
+        dark: '#919191'
       }
 
       return gradientToColors[color]
-    },
-  },
+    }
+  }
 }
 </script>

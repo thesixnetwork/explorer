@@ -44,12 +44,12 @@
 
 <script>
 import {
-  BTable, BCard, BCardHeader, BCardTitle, VBTooltip,
+  BTable, BCard, BCardHeader, BCardTitle, VBTooltip
 } from 'bootstrap-vue'
 import {
   getCachedValidators,
   getStakingValidatorByHex,
-  toDay,
+  toDay
 } from '@/libs/utils'
 // import fetch from 'node-fetch'
 
@@ -58,10 +58,10 @@ export default {
     BCard,
     BTable,
     BCardHeader,
-    BCardTitle,
+    BCardTitle
   },
   directives: {
-    'b-tooltip': VBTooltip,
+    'b-tooltip': VBTooltip
   },
   data() {
     return {
@@ -70,26 +70,26 @@ export default {
       list_fields: [
         {
           key: 'height',
-          sortable: true,
+          sortable: true
         },
         {
           key: 'hash',
           thClass: 'd-none d-lg-block',
-          tdClass: 'd-none d-lg-block text-truncate',
+          tdClass: 'd-none d-lg-block text-truncate'
         },
         {
           key: 'proposer',
-          tdClass: 'text-truncate',
+          tdClass: 'text-truncate'
         },
         {
-          key: 'txs',
+          key: 'txs'
         },
         {
           key: 'time',
           thClass: 'd-none d-md-block',
-          tdClass: 'd-none d-md-block',
-        },
-      ],
+          tdClass: 'd-none d-md-block'
+        }
+      ]
     }
   },
   created() {
@@ -133,7 +133,7 @@ export default {
         if (has < 0) this.blocks.unshift(b)
         if (this.blocks.length > 200) this.blocks.pop()
       })
-    },
-  },
+    }
+  }
 }
 </script>

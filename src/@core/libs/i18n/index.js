@@ -1,7 +1,7 @@
 import * as utils from './utils'
 
 export const useUtils = () => ({
-  ...utils,
+  ...utils
 })
 
 export const _ = null

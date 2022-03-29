@@ -92,7 +92,7 @@
 
 <script>
 import {
-  BCard, BTableSimple, BTr, BTd, BBadge, BCardBody,
+  BCard, BTableSimple, BTr, BTd, BBadge, BCardBody
 } from 'bootstrap-vue'
 import { toDay, tokenFormatter } from '@/libs/utils'
 import ObjectFieldComponent from './ObjectFieldComponent.vue'
@@ -105,11 +105,11 @@ export default {
     BTr,
     BTd,
     BBadge,
-    ObjectFieldComponent,
+    ObjectFieldComponent
   },
   data() {
     return {
-      tx: { tx: {} },
+      tx: { tx: {} }
     }
   },
   beforeRouteUpdate(to, from, next) {
@@ -129,8 +129,8 @@ export default {
   },
   methods: {
     formattoken: v => tokenFormatter(v),
-    formatTime: v => toDay(v),
-  },
+    formatTime: v => toDay(v)
+  }
 }
 </script>
 

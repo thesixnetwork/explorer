@@ -61,12 +61,12 @@ const handler = class DefaultHandler {
           abstain: ((abstain / total) * 100).toFixed(2),
           veto: ((veto / total) * 100).toFixed(2),
           turnout: (((yes + no + abstain + veto) / total) * 100).toFixed(2),
-          total,
+          total
         },
         submit_time: toDay(element.submit_time),
         voting_end_time: toDay(element.voting_end_time),
         voting_start_time: toDay(element.voting_start_time),
-        total_deposit: formatToken(element.total_deposit[0]),
+        total_deposit: formatToken(element.total_deposit[0])
       })
     })
     console.log(ret)

@@ -1,5 +1,8 @@
 <template>
-  <b-card class="card-transaction" no-body>
+  <b-card
+    class="card-transaction"
+    no-body
+  >
     <b-card-header>
       <b-card-title>Outstanding Rewards</b-card-title>
       <feather-icon
@@ -10,7 +13,10 @@
       />
     </b-card-header>
 
-    <b-card-body class="overflow-auto" style="max-height:220px;">
+    <b-card-body
+      class="overflow-auto"
+      style="max-height:220px;"
+    >
       <div
         v-for="d in data.self_bond_rewards"
         :key="d.amount"

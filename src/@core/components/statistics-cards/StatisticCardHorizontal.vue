@@ -27,25 +27,25 @@ export default {
   components: {
     BCard,
     BCardBody,
-    BAvatar,
+    BAvatar
   },
   props: {
     icon: {
       type: String,
-      required: true,
+      required: true
     },
     statistic: {
       type: [Number, String],
-      required: true,
+      required: true
     },
     statisticTitle: {
       type: String,
-      default: '',
+      default: ''
     },
     color: {
       type: String,
-      default: 'primary',
-    },
-  },
+      default: 'primary'
+    }
+  }
 }
 </script>

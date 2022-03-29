@@ -30,7 +30,7 @@ export default class JwtService {
         }
         return config
       },
-      error => Promise.reject(error),
+      error => Promise.reject(error)
     )
 
     // Add request/response interceptor
@@ -67,7 +67,7 @@ export default class JwtService {
           return retryOriginalRequest
         }
         return Promise.reject(error)
-      },
+      }
     )
   }
 
@@ -105,7 +105,7 @@ export default class JwtService {
 
   refreshToken() {
     return this.axiosIns.post(this.jwtConfig.refreshEndpoint, {
-      refreshToken: this.getRefreshToken(),
+      refreshToken: this.getRefreshToken()
     })
   }
 }

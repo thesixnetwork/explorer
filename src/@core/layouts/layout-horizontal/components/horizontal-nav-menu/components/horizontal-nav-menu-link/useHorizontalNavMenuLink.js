@@ -13,6 +13,6 @@ export default function useHorizontalNavMenuLink(item) {
   return {
     isActive,
     linkProps,
-    updateIsActive,
+    updateIsActive
   }
 }

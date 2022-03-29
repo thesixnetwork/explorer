@@ -13,7 +13,7 @@ export const heightTransition = {
 
   data() {
     return {
-      trHeight: null,
+      trHeight: null
     }
   },
   methods: {
@@ -50,8 +50,8 @@ export const heightTransition = {
       */
       if (val === null) this.trHeight = 'auto'
       else this.trHeight = `${Number(val)}px`
-    },
-  },
+    }
+  }
 }
 
 // Ignore below for now. We will remove it when we add more transition in future.

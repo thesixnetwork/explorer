@@ -26,14 +26,14 @@ import mixinHorizontalNavMenuHeaderLink from './mixinHorizontalNavMenuHeaderLink
 
 export default {
   components: {
-    BLink,
+    BLink
   },
   mixins: [mixinHorizontalNavMenuHeaderLink],
   props: {
     item: {
       type: Object,
-      required: true,
-    },
+      required: true
+    }
   },
   setup(props) {
     const { isActive, updateIsActive } = useHorizontalNavMenuHeaderLink(props.item)
@@ -49,8 +49,8 @@ export default {
       canViewHorizontalNavMenuHeaderLink,
 
       // i18n
-      t,
+      t
     }
-  },
+  }
 }
 </script>

@@ -6,6 +6,6 @@ export default {
       if (this.$store.state.app.windowWidth < $themeBreakpoints.xl) {
         this.isVerticalMenuActive = false
       }
-    },
-  },
+    }
+  }
 }

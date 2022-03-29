@@ -61,10 +61,10 @@
 
 <script>
 import {
-  BRow, BCol, BAlert, BCard,
+  BRow, BCol, BAlert, BCard
 } from 'bootstrap-vue'
 import {
-  formatNumber, formatTokenAmount, getUserCurrency, isToken, percent, timeIn, toDay, toDuration, tokenFormatter,
+  formatNumber, formatTokenAmount, getUserCurrency, isToken, percent, timeIn, toDay, toDuration, tokenFormatter
 } from '@/libs/utils'
 
 import SummaryParmetersComponent from './SummaryParmetersComponent.vue'
@@ -79,7 +79,7 @@ export default {
     BCard,
     SummaryParmetersComponent,
     SummaryAssetsComponent,
-    SummaryPriceChart,
+    SummaryPriceChart
   },
   data() {
     return {
@@ -93,29 +93,29 @@ export default {
           { subtitle: 'height', icon: 'BoxIcon', color: 'light-success' },
           { subtitle: 'bonded_and_supply', icon: 'DollarSignIcon', color: 'light-danger' },
           { subtitle: 'bonded_ratio', icon: 'PercentIcon', color: 'light-warning' },
-          { subtitle: 'inflation', icon: 'TrendingUpIcon', color: 'light-primary' },
-        ],
+          { subtitle: 'inflation', icon: 'TrendingUpIcon', color: 'light-primary' }
+        ]
       },
       staking: {
         title: 'Staking Parameters',
-        items: [],
+        items: []
       },
       distribution: {
         title: 'Distribution Parameters',
-        items: [],
+        items: []
       },
       slashing: {
         title: 'Slashing Parameters',
-        items: null,
+        items: null
       },
       mint: {
         title: 'Mint Parameters',
-        items: null,
+        items: null
       },
       gov: {
         title: 'Governance Parameters',
-        items: [],
-      },
+        items: []
+      }
     }
   },
   computed: {
@@ -133,13 +133,13 @@ export default {
               borderColor: 'rgba(54, 162, 235, 1)',
               borderWidth: 1,
               pointStyle: 'dash',
-              barThickness: 15,
-            },
-          ],
+              barThickness: 15
+            }
+          ]
         }
       }
       return null
-    },
+    }
   },
   created() {
     this.$http.getLatestBlock().then(res => {
@@ -195,7 +195,7 @@ export default {
       Promise.all([
         this.$http.getGovernanceParameterDeposit(),
         this.$http.getGovernanceParameterTallying(),
-        this.$http.getGovernanceParameterVoting(),
+        this.$http.getGovernanceParameterVoting()
       ]).then(data => {
         let items = []
         data.forEach(item => {
@@ -213,7 +213,7 @@ export default {
       const items = this.makeItems(data)
       return {
         title,
-        items,
+        items
       }
     },
     makeItems(data) {
@@ -233,8 +233,8 @@ export default {
         }
         return { title: data[k], subtitle: k }
       })
-    },
-  },
+    }
+  }
 }
 </script>
 

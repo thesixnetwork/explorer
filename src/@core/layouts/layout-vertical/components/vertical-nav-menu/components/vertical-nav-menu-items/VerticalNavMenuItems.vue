@@ -20,20 +20,20 @@ export default {
   components: {
     VerticalNavMenuHeader,
     VerticalNavMenuLink,
-    VerticalNavMenuGroup,
+    VerticalNavMenuGroup
   },
   props: {
     items: {
       type: Array,
-      required: true,
-    },
+      required: true
+    }
   },
   setup() {
     provide('openGroups', ref([]))
 
     return {
-      resolveNavItemComponent,
+      resolveNavItemComponent
     }
-  },
+  }
 }
 </script>

@@ -61,6 +61,6 @@ export default function formValidation(resetFormData, clearFormData = () => {}) 
     resetObserver,
     getValidationState,
     resetForm,
-    clearForm,
+    clearForm
   }
 }

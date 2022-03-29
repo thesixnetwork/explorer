@@ -14,7 +14,7 @@ import { ScatterChart } from 'echarts/charts'
 import {
   TitleComponent,
   TooltipComponent,
-  LegendComponent,
+  LegendComponent
 } from 'echarts/components'
 import VChart, { THEME_KEY } from 'vue-echarts'
 import { chartColors, formatNumber } from '@/libs/utils'
@@ -24,22 +24,22 @@ use([
   ScatterChart,
   TitleComponent,
   TooltipComponent,
-  LegendComponent,
+  LegendComponent
 ])
 
 export default {
   name: 'AssetScatter',
   components: {
-    VChart,
+    VChart
   },
   props: {
     items: {
       type: Array,
-      default: () => [],
-    },
+      default: () => []
+    }
   },
   provide: {
-    [THEME_KEY]: 'light',
+    [THEME_KEY]: 'light'
   },
   computed: {
     option() {
@@ -59,28 +59,28 @@ export default {
             formatter(param) {
               return `${param.data[3]}, ${formatNumber(param.data[2], true, 1)}`
             },
-            position: 'top',
-          },
+            position: 'top'
+          }
         },
         itemStyle: {
           shadowBlur: 10,
           shadowColor: 'rgba(120, 36, 50, 0.5)',
           shadowOffsetY: 5,
-          color: index > colors.length ? colors[0] : colors[index],
-        },
+          color: index > colors.length ? colors[0] : colors[index]
+        }
       }))
       const assets = this.items.filter(x => x[1] > 0).map(x => x[3])
       return {
         title: {
-          text: '',
+          text: ''
         },
         legend: {
           scroll: 'scroll',
           data: assets,
           textStyle: {
-            color: '#aaa',
+            color: '#aaa'
           },
-          top: 'top',
+          top: 'top'
         },
         grid: { top: `${assets.length > 30 ? 30 : assets.length + 20}%` }, // */
         xAxis: {
@@ -90,8 +90,8 @@ export default {
             show: false,
             formatter(param) {
               return formatNumber(param, true, 0)
-            },
-          },
+            }
+          }
         },
         yAxis: {
           name: 'Price',
@@ -100,14 +100,14 @@ export default {
             show: false,
             formatter(param) {
               return formatNumber(param, true, 0)
-            },
+            }
           },
-          scale: true,
+          scale: true
         },
-        series,
+        series
       }
-    },
-  },
+    }
+  }
 }
 </script>
 

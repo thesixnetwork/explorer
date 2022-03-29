@@ -1,4 +1,4 @@
-import { getErrorMessage, logMessage, } from './helpers';
+import { getErrorMessage, logMessage } from './helpers';
 var QuotesPulseProvider = /** @class */ (function () {
     function QuotesPulseProvider(quotesProvider) {
         this._subscribers = {};
@@ -11,7 +11,7 @@ var QuotesPulseProvider = /** @class */ (function () {
         this._subscribers[listenerGuid] = {
             symbols: symbols,
             fastSymbols: fastSymbols,
-            listener: onRealtimeCallback,
+            listener: onRealtimeCallback
         };
         logMessage("QuotesPulseProvider: subscribed quotes with #" + listenerGuid);
     };

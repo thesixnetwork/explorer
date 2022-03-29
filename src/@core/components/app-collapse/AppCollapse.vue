@@ -15,20 +15,20 @@ export default {
   props: {
     accordion: {
       type: Boolean,
-      default: false,
+      default: false
     },
     hover: {
       type: Boolean,
-      default: false,
+      default: false
     },
     type: {
       type: String,
-      default: 'default',
-    },
+      default: 'default'
+    }
   },
   data() {
     return {
-      collapseID: '',
+      collapseID: ''
     }
   },
   computed: {
@@ -40,15 +40,15 @@ export default {
         default: 'collapse-default',
         border: 'collapse-border',
         shadow: 'collapse-shadow',
-        margin: 'collapse-margin',
+        margin: 'collapse-margin'
       }
       classes.push(collapseVariants[this.type])
 
       return classes
-    },
+    }
   },
   created() {
     this.collapseID = uuidv4()
-  },
+  }
 }
 </script>

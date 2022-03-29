@@ -64,16 +64,16 @@ export default {
   props: {
     inputProps: {
       type: Object,
-      default: () => {},
+      default: () => {}
     },
     data: {
       type: Object,
-      required: true,
+      required: true
     },
     searchLimit: {
       type: Number,
-      default: 4,
-    },
+      default: 4
+    }
   },
   setup(props, { emit }) {
     // eslint-disable-next-line no-console
@@ -87,9 +87,9 @@ export default {
     }
 
     return {
-      searchQuery, filteredData, suggestionSelected,
+      searchQuery, filteredData, suggestionSelected
     }
-  },
+  }
 }
 </script>
 

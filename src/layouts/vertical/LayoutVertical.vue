@@ -24,12 +24,12 @@ export default {
   components: {
     // AppCustomizer,
     LayoutVertical,
-    Navbar,
+    Navbar
   },
   data() {
     return {
       // showCustomizer: $themeConfig.layout.customizer,
     }
-  },
+  }
 }
 </script>

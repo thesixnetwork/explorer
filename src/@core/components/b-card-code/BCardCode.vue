@@ -61,7 +61,7 @@
 
 <script>
 import {
-  BCard, BCardTitle, BCardSubTitle, BCardBody, BCollapse,
+  BCard, BCardTitle, BCardSubTitle, BCardBody, BCollapse
 } from 'bootstrap-vue'
 import 'prismjs'
 import 'prismjs/themes/prism-tomorrow.css'
@@ -74,19 +74,19 @@ export default {
     BCardSubTitle,
     BCardBody,
     BCollapse,
-    Prism,
+    Prism
   },
   inheritAttrs: false,
   props: {
     codeLanguage: {
       default: 'markup',
-      type: String,
-    },
+      type: String
+    }
   },
   data() {
     return {
       parentID: '',
-      code_visible: false,
+      code_visible: false
     }
   },
   computed: {
@@ -95,11 +95,11 @@ export default {
       delete cardAttrs.title
       delete cardAttrs['sub-title']
       return cardAttrs
-    },
+    }
   },
   created() {
     this.parentID = String(Math.floor(Math.random() * 10) + 1)
-  },
+  }
 }
 </script>
 

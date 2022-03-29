@@ -44,12 +44,12 @@ export default {
   props: {
     isCollapsed: {
       type: Boolean,
-      requried: true,
+      requried: true
     },
     availableActions: {
       type: Array,
-      default: () => [],
-    },
-  },
+      default: () => []
+    }
+  }
 }
 </script>

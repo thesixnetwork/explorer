@@ -14,13 +14,13 @@ module.exports = [
 		sourceMap: false,
 		output: {
 			format: 'umd',
-			file: 'dist/bundle.js',
+			file: 'dist/bundle.js'
 		},
 		plugins: [
 			nodeResolve({ jsnext: true, main: true }),
 			buble(),
-			!isDevelopmentEnv && uglify({ output: { inline_script: true } }),
-		],
+			!isDevelopmentEnv && uglify({ output: { inline_script: true } })
+		]
 	},
 	{
 		input: 'src/polyfills.es6',
@@ -28,12 +28,12 @@ module.exports = [
 		context: 'window',
 		output: {
 			format: 'iife',
-			file: 'dist/polyfills.js',
+			file: 'dist/polyfills.js'
 		},
 		plugins: [
 			nodeResolve({ jsnext: true, main: true }),
 			buble(),
-			uglify({ output: { inline_script: true } }),
-		],
-	},
+			uglify({ output: { inline_script: true } })
+		]
+	}
 ];

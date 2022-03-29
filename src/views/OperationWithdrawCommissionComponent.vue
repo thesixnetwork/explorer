@@ -16,16 +16,25 @@
         <b-form>
           <b-row>
             <b-col>
-              <b-form-group label="Sender" label-for="Account">
+              <b-form-group
+                label="Sender"
+                label-for="Account"
+              >
                 <b-input-group class="mb-25">
-                  <b-form-input :value="address" readonly />
+                  <b-form-input
+                    :value="address"
+                    readonly
+                  />
                 </b-input-group>
               </b-form-group>
             </b-col>
           </b-row>
           <b-row>
             <b-col>
-              <b-form-group label="Fee" label-for="Fee">
+              <b-form-group
+                label="Fee"
+                label-for="Fee"
+              >
                 <validation-provider
                   v-slot="{ errors }"
                   rules="required|integer"
@@ -48,7 +57,11 @@
             </b-col>
             <b-col cols="12">
               <b-form-group>
-                <b-form-checkbox v-model="advance" name="advance" value="true">
+                <b-form-checkbox
+                  v-model="advance"
+                  name="advance"
+                  value="true"
+                >
                   <small>Advanced</small>
                 </b-form-checkbox>
               </b-form-group>
@@ -56,17 +69,37 @@
           </b-row>
           <b-row v-if="advance">
             <b-col cols="12">
-              <b-form-group label="Gas" label-for="gas">
-                <validation-provider v-slot="{ errors }" name="gas">
-                  <b-form-input id="gas" v-model="gas" type="number" />
+              <b-form-group
+                label="Gas"
+                label-for="gas"
+              >
+                <validation-provider
+                  v-slot="{ errors }"
+                  name="gas"
+                >
+                  <b-form-input
+                    id="gas"
+                    v-model="gas"
+                    type="number"
+                  />
                   <small class="text-danger">{{ errors[0] }}</small>
                 </validation-provider>
               </b-form-group>
             </b-col>
             <b-col cols="12">
-              <b-form-group label="Memo" label-for="Memo">
-                <validation-provider v-slot="{ errors }" name="memo">
-                  <b-form-input id="Memo" v-model="memo" max="2" />
+              <b-form-group
+                label="Memo"
+                label-for="Memo"
+              >
+                <validation-provider
+                  v-slot="{ errors }"
+                  name="memo"
+                >
+                  <b-form-input
+                    id="Memo"
+                    v-model="memo"
+                    max="2"
+                  />
                   <small class="text-danger">{{ errors[0] }}</small>
                 </validation-provider>
               </b-form-group>

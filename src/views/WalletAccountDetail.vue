@@ -360,7 +360,7 @@
 import { $themeColors } from '@themeConfig'
 import {
   BCard, BAvatar, BPopover, BTable, BRow, BCol, BTableSimple, BTr, BTd, BTbody, BCardHeader, BCardTitle, BButton, BCardBody, VBModal,
-  BButtonGroup, VBTooltip, BPagination,
+  BButtonGroup, VBTooltip, BPagination
 } from 'bootstrap-vue'
 import FeatherIcon from '@/@core/components/feather-icon/FeatherIcon.vue'
 import ToastificationContent from '@core/components/toastification/ToastificationContent.vue'
@@ -369,7 +369,7 @@ import VueQr from 'vue-qr'
 import chainAPI from '@/libs/fetch'
 import {
   formatToken, formatTokenAmount, formatTokenDenom, getStakingValidatorOperator, percent, tokenFormatter, toDay,
-  toDuration, abbrMessage, abbrAddress, getUserCurrency, getUserCurrencySign, numberWithCommas,
+  toDuration, abbrMessage, abbrAddress, getUserCurrency, getUserCurrencySign, numberWithCommas
 } from '@/libs/utils'
 import { sha256 } from '@cosmjs/crypto'
 import { toHex } from '@cosmjs/encoding'
@@ -411,12 +411,12 @@ export default {
     OperationRedelegateComponent,
     OperationUnbondComponent,
     OperationTransfer2Component,
-    ChartComponentDoughnut,
+    ChartComponentDoughnut
   },
   directives: {
     'b-modal': VBModal,
     'b-tooltip': VBTooltip,
-    Ripple,
+    Ripple
   },
   data() {
     const { address } = this.$route.params
@@ -433,7 +433,7 @@ export default {
       redelegations: [],
       unbonding: [],
       quotes: {},
-      transactions: [],
+      transactions: []
     }
   },
   computed: {
@@ -449,7 +449,7 @@ export default {
           height: Number(x.height),
           txhash: x.txhash,
           msgs: abbrMessage(x.tx.msg ? x.tx.msg : x.tx.value.msg),
-          time: toDay(x.timestamp),
+          time: toDay(x.timestamp)
         }))
       }
       return []
@@ -486,7 +486,7 @@ export default {
           icon: 'LockIcon',
           amount: temp,
           denom: stakingDenom,
-          currency: this.formatCurrency(temp, stakingDenom),
+          currency: this.formatCurrency(temp, stakingDenom)
         })
       }
 
@@ -519,7 +519,7 @@ export default {
           denom: stakingDenom,
           amount: tmp1,
           percent: 0,
-          currency: unbonding,
+          currency: unbonding
         })
       }
       total = total.map(x => {
@@ -529,7 +529,7 @@ export default {
       })
       return {
         items: total,
-        currency: parseFloat(sumCurrency.toFixed(2)),
+        currency: parseFloat(sumCurrency.toFixed(2))
       }
     },
     chartData() {
@@ -549,9 +549,9 @@ export default {
             data: Object.values(data),
             backgroundColor: [$themeColors.success, $themeColors.primary, $themeColors.warning, $themeColors.danger, $themeColors.info],
             borderWidth: 0,
-            pointStyle: 'rectRounded',
-          },
-        ],
+            pointStyle: 'rectRounded'
+          }
+        ]
       }
     },
     deleTable() {
@@ -563,7 +563,7 @@ export default {
             validator: getStakingValidatorOperator(this.$http.config.chain_name, e.delegation.validator_address, 8),
             token: formatToken(e.balance, {}, 2),
             reward: tokenFormatter(reward.reward, this.denoms),
-            action: e.delegation.validator_address,
+            action: e.delegation.validator_address
           })
         })
       }
@@ -575,7 +575,7 @@ export default {
         table = this.account.value
       }
       return table
-    },
+    }
   },
   created() {
     this.$http.getAllIBCDenoms().then(x => {
@@ -652,8 +652,8 @@ export default {
           component: ToastificationContent,
           props: {
             title: 'Address copied',
-            icon: 'BellIcon',
-          },
+            icon: 'BellIcon'
+          }
         })
       }, e => {
         this.$toast({
@@ -661,11 +661,11 @@ export default {
           props: {
             title: `Failed to copy address! ${e}`,
             icon: 'BellIcon',
-            variant: 'danger',
-          },
+            variant: 'danger'
+          }
         })
       })
-    },
-  },
+    }
+  }
 }
 </script>

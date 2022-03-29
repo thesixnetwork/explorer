@@ -98,6 +98,6 @@ export default function useVerticalNavMenuGroup(item) {
     updateGroupOpen,
     openGroups,
     isMouseHovered,
-    updateIsActive,
+    updateIsActive
   }
 }

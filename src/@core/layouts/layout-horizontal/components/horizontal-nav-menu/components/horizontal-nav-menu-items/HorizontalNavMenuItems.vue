@@ -19,13 +19,13 @@ import HorizontalNavMenuHeaderGroup from '../horizontal-nav-menu-header-group/Ho
 export default {
   components: {
     HorizontalNavMenuHeaderLink,
-    HorizontalNavMenuHeaderGroup,
+    HorizontalNavMenuHeaderGroup
   },
   props: {
     items: {
       type: Array,
-      required: true,
-    },
+      required: true
+    }
   },
   setup() {
     const resolveNavComponent = item => {
@@ -34,8 +34,8 @@ export default {
     }
 
     return {
-      resolveNavComponent,
+      resolveNavComponent
     }
-  },
+  }
 }
 </script>

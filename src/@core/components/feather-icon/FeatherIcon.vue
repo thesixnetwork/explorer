@@ -7,20 +7,20 @@ export default {
   props: {
     icon: {
       required: true,
-      type: [String, Object],
+      type: [String, Object]
     },
     size: {
       type: String,
-      default: '14',
+      default: '14'
     },
     badge: {
       type: [String, Object, Number],
-      default: null,
+      default: null
     },
     badgeClasses: {
       type: [String, Object, Array],
-      default: 'badge-primary',
-    },
+      default: 'badge-primary'
+    }
   },
   render(h, { props, data }) {
     // Create Feather Icon
@@ -34,7 +34,7 @@ export default {
 
     // Return span with children
     return h('span', { staticClass: 'feather-icon position-relative' }, [svg, badgeEl])
-  },
+  }
 }
 </script>
 

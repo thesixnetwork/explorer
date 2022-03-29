@@ -38,15 +38,15 @@ import useAppConfig from '@core/app-config/useAppConfig'
 
 export default {
   components: {
-    AppBreadcrumb,
+    AppBreadcrumb
   },
   setup() {
     const { routerTransition, contentWidth } = useAppConfig()
 
     return {
-      routerTransition, contentWidth,
+      routerTransition, contentWidth
     }
-  },
+  }
 }
 </script>
 

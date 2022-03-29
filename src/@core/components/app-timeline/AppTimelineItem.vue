@@ -37,29 +37,29 @@ export default {
   props: {
     variant: {
       type: String,
-      default: 'primary',
+      default: 'primary'
     },
     title: {
       type: String,
-      default: null,
+      default: null
     },
     subtitle: {
       type: String,
-      default: null,
+      default: null
     },
     time: {
       type: String,
-      default: null,
+      default: null
     },
     icon: {
       type: String,
-      default: null,
+      default: null
     },
     fillBorder: {
       type: Boolean,
-      default: false,
-    },
-  },
+      default: false
+    }
+  }
 }
 </script>
 

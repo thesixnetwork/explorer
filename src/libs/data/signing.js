@@ -40,12 +40,12 @@ export default class PingWalletClient extends SigningStargateClient {
     const { signature, signed } = await this.signer.signAmino(signerAddress, signDoc)
     const signedTxBody = {
       messages: signed.msgs.map(msg => this.aminoTypes.fromAmino(msg)),
-      memo: signed.memo,
+      memo: signed.memo
     }
     // console.log(signedTxBody)
     const signedTxBodyEncodeObject = {
       typeUrl: '/cosmos.tx.v1beta1.TxBody',
-      value: signedTxBody,
+      value: signedTxBody
     }
     const signedTxBodyBytes = this.registry.encode(signedTxBodyEncodeObject)
     const signedGasLimit = math_1.Int53.fromString(signed.fee.gas).toNumber()
@@ -54,7 +54,7 @@ export default class PingWalletClient extends SigningStargateClient {
     return tx_5.TxRaw.fromPartial({
       bodyBytes: signedTxBodyBytes,
       authInfoBytes: signedAuthInfoBytes,
-      signatures: [encoding_1.fromBase64(signature.signature)],
+      signatures: [encoding_1.fromBase64(signature.signature)]
     })
   }
 }

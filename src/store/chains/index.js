@@ -33,11 +33,11 @@ export default {
     height: 0,
     ibcChannels: {},
     quotes: {},
-    defaultWallet: localStorage.getItem('default-wallet'),
+    defaultWallet: localStorage.getItem('default-wallet')
   },
   getters: {
     getchains: state => state.chains,
-    getAvatarById: state => id => state.avatars[id],
+    getAvatarById: state => id => state.avatars[id]
   },
   mutations: {
     setup_sdk_version(state, info) {
@@ -63,13 +63,13 @@ export default {
         localStorage.setItem('default-wallet', defaultWallet)
         state.chains.defaultWallet = defaultWallet
       }
-    },
+    }
   },
   actions: {
     async getQuotes(context) {
       fetch('https://price.ping.pub/quotes').then(data => data.json()).then(data => {
         context.commit('setQuotes', data)
       })
-    },
-  },
+    }
+  }
 }

@@ -122,7 +122,7 @@
 
 <script>
 import {
-  BNavItemDropdown, BDropdownItem, BDropdownDivider, BAvatar,
+  BNavItemDropdown, BDropdownItem, BDropdownDivider, BAvatar
 } from 'bootstrap-vue'
 import { initialAbility } from '@/libs/acl/config'
 import useJwt from '@/auth/jwt/useJwt'
@@ -133,12 +133,12 @@ export default {
     BNavItemDropdown,
     BDropdownItem,
     BDropdownDivider,
-    BAvatar,
+    BAvatar
   },
   data() {
     return {
       userData: JSON.parse(localStorage.getItem('userData')),
-      avatarText,
+      avatarText
     }
   },
   methods: {
@@ -156,7 +156,7 @@ export default {
 
       // Redirect to login page
       this.$router.push({ name: 'auth-login' })
-    },
-  },
+    }
+  }
 }
 </script>

@@ -14,7 +14,7 @@ import { BNavItem } from 'bootstrap-vue'
 
 export default {
   components: {
-    BNavItem,
+    BNavItem
   },
   setup() {
     const { skin } = useAppConfig()
@@ -22,6 +22,6 @@ export default {
     const isDark = computed(() => skin.value === 'dark')
 
     return { skin, isDark }
-  },
+  }
 }
 </script>

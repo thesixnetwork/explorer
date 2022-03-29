@@ -10,16 +10,16 @@ export default {
       type: $themeConfig.layout.type,
       contentWidth: $themeConfig.layout.contentWidth,
       menu: {
-        hidden: $themeConfig.layout.menu.hidden,
+        hidden: $themeConfig.layout.menu.hidden
       },
       navbar: {
         type: $themeConfig.layout.navbar.type,
-        backgroundColor: $themeConfig.layout.navbar.backgroundColor,
+        backgroundColor: $themeConfig.layout.navbar.backgroundColor
       },
       footer: {
-        type: $themeConfig.layout.footer.type,
-      },
-    },
+        type: $themeConfig.layout.footer.type
+      }
+    }
   },
   getters: {},
   mutations: {
@@ -54,7 +54,7 @@ export default {
     },
     UPDATE_FOOTER_CONFIG(state, obj) {
       Object.assign(state.layout.footer, obj)
-    },
+    }
   },
-  actions: {},
+  actions: {}
 }

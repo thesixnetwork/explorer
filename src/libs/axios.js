@@ -11,8 +11,8 @@ const axiosIns = axios.create({
   // headers: {'X-Custom-Header': 'foobar'}
   headers: {
     'Access-Control-Allow-Origin': '*',
-    'Content-Type': 'application/json',
-  },
+    'Content-Type': 'application/json'
+  }
 })
 
 Vue.prototype.$http = axiosIns

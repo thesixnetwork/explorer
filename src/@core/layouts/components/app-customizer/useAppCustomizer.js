@@ -10,13 +10,13 @@ export default function useAppCustomizer() {
     { text: 'Light', value: 'light' },
     { text: 'Bordered', value: 'bordered' },
     { text: 'Dark', value: 'dark' },
-    { text: 'Semi Dark', value: 'semi-dark' },
+    { text: 'Semi Dark', value: 'semi-dark' }
   ]
 
   // Content Width Options
   const contentWidthOptions = [
     { text: 'Full  Width', value: 'full' },
-    { text: 'Boxed', value: 'boxed' },
+    { text: 'Boxed', value: 'boxed' }
   ]
 
   // Router Transition
@@ -26,13 +26,13 @@ export default function useAppCustomizer() {
     { title: 'Fade Bottom', value: 'fade-bottom' },
     { title: 'Slide Fade', value: 'slide-fade' },
     { title: 'Zoom Out', value: 'zoom-out' },
-    { title: 'None', value: 'none' },
+    { title: 'None', value: 'none' }
   ]
 
   // Router Transition
   const layoutTypeOptions = [
     { text: 'Vertical', value: 'vertical' },
-    { text: 'Horizontal', value: 'horizontal' },
+    { text: 'Horizontal', value: 'horizontal' }
   ]
 
   // Navbar
@@ -43,14 +43,14 @@ export default function useAppCustomizer() {
     { text: 'Floating', value: 'floating' },
     { text: 'Sticky', value: 'sticky' },
     { text: 'Static', value: 'static' },
-    { text: 'Hidden', value: 'hidden' },
+    { text: 'Hidden', value: 'hidden' }
   ]
 
   // Footer Types
   const footerTypes = [
     { text: 'Sticky', value: 'sticky' },
     { text: 'Static', value: 'static' },
-    { text: 'Hidden', value: 'hidden' },
+    { text: 'Hidden', value: 'hidden' }
   ]
 
   // eslint-disable-next-line object-curly-newline
@@ -64,7 +64,7 @@ export default function useAppCustomizer() {
     isVerticalMenuCollapsed,
     navbarBackgroundColor,
     navbarType,
-    footerType,
+    footerType
   } = useAppConfig()
 
   return {
@@ -104,6 +104,6 @@ export default function useAppCustomizer() {
 
     // Footer
     footerTypes,
-    footerType,
+    footerType
   }
 }

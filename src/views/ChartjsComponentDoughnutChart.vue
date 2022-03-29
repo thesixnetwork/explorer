@@ -7,15 +7,15 @@ export default {
   props: {
     data: {
       type: Object,
-      default: null,
+      default: null
     },
     options: {
       type: Object,
-      default: null,
-    },
+      default: null
+    }
   },
   mounted() {
     this.renderChart(this.data, this.options)
-  },
+  }
 }
 </script>

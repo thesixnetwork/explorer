@@ -106,7 +106,7 @@ export default {
     BNavbar,
     LayoutContentRendererLeftDetached,
     LayoutContentRendererLeft,
-    LayoutContentRendererDefault,
+    LayoutContentRendererDefault
   },
   mixins: [mixinVerticalLayout],
   computed: {
@@ -115,11 +115,11 @@ export default {
       if (rendererType === 'sidebar-left') return 'layout-content-renderer-left'
       if (rendererType === 'sidebar-left-detached') return 'layout-content-renderer-left-detached'
       return 'layout-content-renderer-default'
-    },
+    }
   },
   setup() {
     const {
-      routerTransition, navbarBackgroundColor, navbarType, footerType, isNavMenuHidden,
+      routerTransition, navbarBackgroundColor, navbarType, footerType, isNavMenuHidden
     } = useAppConfig()
 
     const {
@@ -130,7 +130,7 @@ export default {
       overlayClasses,
       resizeHandler,
       navbarTypeClass,
-      footerTypeClass,
+      footerTypeClass
     } = useVerticalLayout(navbarType, footerType)
 
     // Resize handler
@@ -152,9 +152,9 @@ export default {
       // App Config
       routerTransition,
       navbarBackgroundColor,
-      isNavMenuHidden,
+      isNavMenuHidden
     }
-  },
+  }
 }
 </script>
 

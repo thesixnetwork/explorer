@@ -24,7 +24,7 @@ export default {
   components: {
     BCard,
     BTable,
-    BCardTitle,
+    BCardTitle
   },
   data() {
     return {
@@ -35,13 +35,13 @@ export default {
         {
           key: 'denom',
           formatter: this.formatDenom,
-          tdClass: 'text-nowrap text-truncate overflow-hidden',
+          tdClass: 'text-nowrap text-truncate overflow-hidden'
         },
         {
-          key: 'abbr',
-          label: 'Amount',
-        },
-      ],
+          key: 'amount',
+          label: 'Amount'
+        }
+      ]
     }
   },
   created() {
@@ -70,8 +70,8 @@ export default {
         return `* ${formatTokenDenom(trace.base_denom)} (${trace.path})`
       }
       return v
-    },
-  },
+    }
+  }
 }
 </script>
 

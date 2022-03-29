@@ -55,7 +55,7 @@ export default {
     BCard,
     BTable,
     ObjectFieldComponent,
-    ArrayFieldComponent,
+    ArrayFieldComponent
   },
   data() {
     return {
@@ -65,8 +65,8 @@ export default {
         { key: 'hash' },
         { key: 'fee', formatter: v => tokenFormatter(v) },
         { key: 'messages', formatter: v => abbrMessage(v) },
-        { key: 'memo' },
-      ],
+        { key: 'memo' }
+      ]
     }
   },
   beforeRouteUpdate(to, from, next) {
@@ -100,7 +100,7 @@ export default {
         }
         if (array.length > 0) this.txs = array
       })
-    },
-  },
+    }
+  }
 }
 </script>

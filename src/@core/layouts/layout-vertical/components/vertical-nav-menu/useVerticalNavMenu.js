@@ -9,7 +9,7 @@ export default function useVerticalNavMenu(props) {
     get: () => store.state.verticalMenu.isVerticalMenuCollapsed,
     set: val => {
       store.commit('verticalMenu/UPDATE_VERTICAL_MENU_COLLAPSED', val)
-    },
+    }
   })
 
   // ------------------------------------------------
@@ -37,6 +37,6 @@ export default function useVerticalNavMenu(props) {
     isVerticalMenuCollapsed,
     collapseTogglerIcon,
     toggleCollapsed,
-    updateMouseHovered,
+    updateMouseHovered
   }
 }

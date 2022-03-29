@@ -50,24 +50,24 @@ import store from '@/store'
 
 export default {
   components: {
-    BFormInput,
+    BFormInput
   },
   setup() {
     const showSearchBar = ref(false)
 
     const perfectScrollbarSettings = {
-      maxScrollbarLength: 60,
+      maxScrollbarLength: 60
     }
 
     return {
       showSearchBar,
       perfectScrollbarSettings,
-      title,
+      title
     }
   },
   data() {
     return {
-      searchQuery: null,
+      searchQuery: null
     }
   },
   methods: {
@@ -89,8 +89,8 @@ export default {
         }
       }
       // this.$router.push('/')
-    },
-  },
+    }
+  }
 }
 </script>
 

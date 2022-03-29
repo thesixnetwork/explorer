@@ -61,7 +61,7 @@
 
 <script>
 import {
-  BCard, BCardTitle, VBTooltip,
+  BCard, BCardTitle, VBTooltip
 } from 'bootstrap-vue'
 import { formatTokenDenom } from '@/libs/utils'
 // import fetch from 'node-fetch'
@@ -69,15 +69,15 @@ import { formatTokenDenom } from '@/libs/utils'
 export default {
   components: {
     BCard,
-    BCardTitle,
+    BCardTitle
   },
   directives: {
-    'b-tooltip': VBTooltip,
+    'b-tooltip': VBTooltip
   },
   data() {
     return {
       pools: [],
-      ibcDenom: {},
+      ibcDenom: {}
     }
   },
   created() {
@@ -109,7 +109,7 @@ export default {
       const denom = (v.startsWith('ibc') ? this.ibcDenom[v].denom_trace.base_denom : v)
       return formatTokenDenom(denom)
     },
-    length: v => (Array.isArray(v) ? v.length : 0),
-  },
+    length: v => (Array.isArray(v) ? v.length : 0)
+  }
 }
 </script>

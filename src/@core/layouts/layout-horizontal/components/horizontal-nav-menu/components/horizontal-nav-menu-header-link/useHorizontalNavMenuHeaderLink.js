@@ -13,6 +13,6 @@ export default function useHorizontalNavMenuHeaderGroup(item) {
 
   return {
     isActive,
-    updateIsActive,
+    updateIsActive
   }
 }

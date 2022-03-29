@@ -4,7 +4,7 @@ export default {
       immediate: true,
       handler() {
         this.updateIsActive()
-      },
-    },
-  },
+      }
+    }
+  }
 }

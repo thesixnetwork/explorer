@@ -27,7 +27,7 @@ export const poolIds = {
   482: true,
   497: true,
   498: true,
-  548: true,
+  548: true
   // 557: true,
   // 558: true,
   // 571: true,
@@ -62,7 +62,7 @@ export const CoinGeckoMap = {
   STGZ: ['stargaze-protocol'],
   VDL: ['vidulum'],
   XKI: ['ki'],
-  INJ: ['injective-protocol'],
+  INJ: ['injective-protocol']
 }
 
 export function getChainConfigForSymbol(symbol) {
@@ -108,7 +108,7 @@ export default class OsmosAPI {
       this.exe_time = ''
       return Promise.all(
         [fetch(`https://api.coingecko.com/api/v3/coins/${from}/market_chart?vs_currency=usd&days=${days}`).then(res => res.json()),
-          fetch(`https://api.coingecko.com/api/v3/coins/${to}/market_chart?vs_currency=usd&days=${days}`).then(res => res.json())],
+          fetch(`https://api.coingecko.com/api/v3/coins/${to}/market_chart?vs_currency=usd&days=${days}`).then(res => res.json())]
       ).then(data => {
         const output = []
         if (data.length >= 2) {
@@ -129,7 +129,7 @@ export default class OsmosAPI {
       this.exe_time = ''
       return Promise.all(
         [fetch(`https://api.coingecko.com/api/v3/coins/${from}/ohlc?vs_currency=usd&days=1`).then(res => res.json()),
-          fetch(`https://api.coingecko.com/api/v3/coins/${to}/ohlc?vs_currency=usd&days=1`).then(res => res.json())],
+          fetch(`https://api.coingecko.com/api/v3/coins/${to}/ohlc?vs_currency=usd&days=1`).then(res => res.json())]
       ).then(ohlc => {
         const output = []
         ohlc[0].forEach((e, i) => {
@@ -148,7 +148,7 @@ export default class OsmosAPI {
             itemArr[2], // high
             itemArr[3], // low
             itemArr[4], // close
-            0, // volume
+            0 // volume
           ])
         }
         return result

@@ -48,11 +48,11 @@ export default {
     VuexyLogo,
     BLink,
     BButton,
-    BImg,
+    BImg
   },
   data() {
     return {
-      downImg: require('@/assets/images/pages/error.svg'),
+      downImg: require('@/assets/images/pages/error.svg')
     }
   },
   computed: {
@@ -63,8 +63,8 @@ export default {
         return this.downImg
       }
       return this.downImg
-    },
-  },
+    }
+  }
 }
 </script>
 

@@ -40,41 +40,36 @@
         </b-card-title>
       </b-card-header>
       <b-card-body>
-        <b-table-simple stacked="sm" hover striped>
+        <b-table-simple
+          stacked="sm"
+          hover
+          striped
+        >
           <tbody>
             <b-tr>
               <b-td
                 style="text-transform: capitalize; vertical-align: top; width:200px"
               >
-                {{ $t('proposal_id') }} </b-td
-              ><b-td>{{ proposal.id }}</b-td>
+                {{ $t('proposal_id') }} </b-td><b-td>{{ proposal.id }}</b-td>
             </b-tr>
             <b-tr>
-              <b-td> {{ $t('proposal_proposer') }} </b-td
-              ><b-td
-                ><router-link :to="`../account/${proposer.proposer}`">
-                  {{ formatAddress(proposer.proposer) }}
-                </router-link>
+              <b-td> {{ $t('proposal_proposer') }} </b-td><b-td><router-link :to="`../account/${proposer.proposer}`">
+                {{ formatAddress(proposer.proposer) }}
+              </router-link>
               </b-td>
             </b-tr>
             <b-tr>
-              <b-td> {{ $t('proposal_total_deposit') }} </b-td
-              ><b-td>{{ formatToken(proposal.total_deposit) }} </b-td>
+              <b-td> {{ $t('proposal_total_deposit') }} </b-td><b-td>{{ formatToken(proposal.total_deposit) }} </b-td>
             </b-tr>
             <b-tr>
-              <b-td> {{ $t('proposal_submit_time') }} </b-td
-              ><b-td>{{ formatDate(proposal.submit_time) }}</b-td>
+              <b-td> {{ $t('proposal_submit_time') }} </b-td><b-td>{{ formatDate(proposal.submit_time) }}</b-td>
             </b-tr>
             <b-tr>
-              <b-td> {{ $t('voting_time') }} </b-td
-              ><b-td
-                >{{ formatDate(proposal.voting_start_time) }} -
-                {{ formatDate(proposal.voting_end_time) }}</b-td
-              >
+              <b-td> {{ $t('voting_time') }} </b-td><b-td>{{ formatDate(proposal.voting_start_time) }} -
+                {{ formatDate(proposal.voting_end_time) }}</b-td>
             </b-tr>
             <b-tr>
-              <b-td> {{ $t('proposal_type') }} </b-td
-              ><b-td>
+              <b-td> {{ $t('proposal_type') }} </b-td><b-td>
                 {{ proposal.type }}
               </b-td>
             </b-tr>
@@ -120,7 +115,12 @@
         </b-card-title>
       </b-card-header>
       <b-card-body>
-        <b-progress :max="100" height="2rem" class="mb-2" show-progress>
+        <b-progress
+          :max="100"
+          height="2rem"
+          class="mb-2"
+          show-progress
+        >
           <b-progress-bar
             :id="'vote-yes' + proposal.id"
             variant="success"

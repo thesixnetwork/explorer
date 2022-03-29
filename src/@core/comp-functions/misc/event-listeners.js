@@ -13,7 +13,7 @@ export const useScrollListener = () => {
   })
 
   return {
-    scrolledTo,
+    scrolledTo
   }
 }
 

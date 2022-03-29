@@ -1,5 +1,5 @@
-import { getErrorMessage, logMessage, } from './helpers';
-import { HistoryProvider, } from './history-provider';
+import { getErrorMessage, logMessage } from './helpers';
+import { HistoryProvider } from './history-provider';
 import { DataPulseProvider } from './data-pulse-provider';
 import { QuotesPulseProvider } from './quotes-pulse-provider';
 import { SymbolsStorage } from './symbols-storage';
@@ -57,7 +57,7 @@ var UDFCompatibleDatafeedBase = /** @class */ (function () {
             symbol: symbolInfo.ticker || '',
             from: from,
             to: to,
-            resolution: resolution,
+            resolution: resolution
         };
         this._send('marks', requestParams)
             .then(function (response) {
@@ -71,7 +71,7 @@ var UDFCompatibleDatafeedBase = /** @class */ (function () {
                         text: extractField(response, 'text', i),
                         label: extractField(response, 'label', i),
                         labelFontColor: extractField(response, 'labelFontColor', i),
-                        minSize: extractField(response, 'minSize', i),
+                        minSize: extractField(response, 'minSize', i)
                     });
                 }
                 response = result;
@@ -91,7 +91,7 @@ var UDFCompatibleDatafeedBase = /** @class */ (function () {
             symbol: symbolInfo.ticker || '',
             from: from,
             to: to,
-            resolution: resolution,
+            resolution: resolution
         };
         this._send('timescale_marks', requestParams)
             .then(function (response) {
@@ -103,7 +103,7 @@ var UDFCompatibleDatafeedBase = /** @class */ (function () {
                         time: extractField(response, 'time', i),
                         color: extractField(response, 'color', i),
                         label: extractField(response, 'label', i),
-                        tooltip: extractField(response, 'tooltip', i),
+                        tooltip: extractField(response, 'tooltip', i)
                     });
                 }
                 response = result;
@@ -136,7 +136,7 @@ var UDFCompatibleDatafeedBase = /** @class */ (function () {
                 limit: 30 /* SearchItemsLimit */,
                 query: userInput.toUpperCase(),
                 type: symbolType,
-                exchange: exchange,
+                exchange: exchange
             };
             this._send('search', params)
                 .then(function (response) {
@@ -171,7 +171,7 @@ var UDFCompatibleDatafeedBase = /** @class */ (function () {
         }
         if (!this._configuration.supports_group_request) {
             var params = {
-                symbol: symbolName,
+                symbol: symbolName
             };
             if (currencyCode !== undefined) {
                 params.currencyCode = currencyCode;
@@ -248,9 +248,9 @@ function defaultConfiguration() {
             '60',
             '1D',
             '1W',
-            '1M',
+            '1M'
         ],
         supports_marks: false,
-        supports_timescale_marks: false,
+        supports_timescale_marks: false
     };
 }

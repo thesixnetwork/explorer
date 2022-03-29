@@ -1,8 +1,15 @@
 <template>
   <div>
-    <b-table :items="history" :fields="fields" stacked="sm">
+    <b-table
+      :items="history"
+      :fields="fields"
+      stacked="sm"
+    >
       <template #cell(chain)="data">
-        <b-avatar size="sm" :src="data.item.chain.logo" />
+        <b-avatar
+          size="sm"
+          :src="data.item.chain.logo"
+        />
         {{ data.item.chain.chain_name }}
       </template>
       <template #cell(hash)="data">

@@ -1,4 +1,4 @@
-import { getErrorMessage, logMessage, } from './helpers';
+import { getErrorMessage, logMessage } from './helpers';
 var DataPulseProvider = /** @class */ (function () {
     function DataPulseProvider(historyProvider, updateFrequency) {
         this._subscribers = {};
@@ -15,7 +15,7 @@ var DataPulseProvider = /** @class */ (function () {
             lastBarTime: null,
             listener: newDataCallback,
             resolution: resolution,
-            symbolInfo: symbolInfo,
+            symbolInfo: symbolInfo
         };
         logMessage("DataPulseProvider: subscribed for #" + listenerGuid + " - {" + symbolInfo.name + ", " + resolution + "}");
     };

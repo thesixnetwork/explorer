@@ -7,8 +7,8 @@ export default {
   props: {
     options: {
       type: Object,
-      default: null,
-    },
+      default: null
+    }
   },
   data() {
     return {
@@ -26,6 +26,6 @@ export default {
   },
   mounted() {
     this.renderChart(this.chartData, this.options)
-  },
+  }
 }
 </script>

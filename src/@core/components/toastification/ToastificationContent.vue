@@ -45,30 +45,30 @@ import { BAvatar } from 'bootstrap-vue'
 
 export default {
   components: {
-    BAvatar,
+    BAvatar
   },
   props: {
     variant: {
       type: String,
-      default: 'primary',
+      default: 'primary'
     },
     icon: {
       type: String,
-      default: null,
+      default: null
     },
     title: {
       type: String,
-      default: null,
+      default: null
     },
     text: {
       type: String,
-      default: null,
+      default: null
     },
     hideClose: {
       type: Boolean,
-      default: false,
-    },
-  },
+      default: false
+    }
+  }
 }
 </script>
 

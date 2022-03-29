@@ -6,7 +6,7 @@ import { TxRaw } from 'cosmjs-types/cosmos/tx/v1beta1/tx'
 import { toBase64 } from '@cosmjs/encoding'
 import {
   Proposal, ProposalTally, Proposer, StakingPool, Votes, Deposit,
-  Validator, StakingParameters, Block, ValidatorDistribution, StakingDelegation, WrapStdTx, getUserCurrency,
+  Validator, StakingParameters, Block, ValidatorDistribution, StakingDelegation, WrapStdTx, getUserCurrency
 } from './utils'
 import OsmosAPI from './osmos'
 
@@ -27,7 +27,7 @@ export default class ChainFetch {
   constructor() {
     this.osmosis = new OsmosAPI()
     this.EndpointVersion = {
-      certik: 'v1alpha1',
+      certik: 'v1alpha1'
     }
   }
 
@@ -238,7 +238,7 @@ export default class ChainFetch {
     if (compareVersions(this.config.sdk_version, '0.40') < 0) {
       return this.get(`/gov/proposals/${pid}/votes`).then(data => ({
         votes: commonProcess(data).map(d => new Votes().init(d)),
-        pagination: {},
+        pagination: {}
       }))
     }
     if (this.config.chain_name === 'certik') {
@@ -296,7 +296,7 @@ export default class ChainFetch {
         if (!xh.delegation) {
           xh.delegation = {
             validator_address: x.validator_address,
-            delegator_address: x.delegator_address,
+            delegator_address: x.delegator_address
           }
         }
         return xh
@@ -391,7 +391,7 @@ export default class ChainFetch {
     const txString = toBase64(TxRaw.encode(bodyBytes).finish())
     const txRaw = {
       tx_bytes: txString,
-      mode: 'BROADCAST_MODE_SYNC', // BROADCAST_MODE_SYNC, BROADCAST_MODE_BLOCK, BROADCAST_MODE_ASYNC
+      mode: 'BROADCAST_MODE_SYNC' // BROADCAST_MODE_SYNC, BROADCAST_MODE_BLOCK, BROADCAST_MODE_ASYNC
     }
     return this.post('/cosmos/tx/v1beta1/txs', txRaw, config).then(res => {
       if (res.code && res.code !== 0) {
@@ -419,9 +419,9 @@ export default class ChainFetch {
       headers: {
         'Content-Type': 'text/plain',
         Accept: '*/*',
-        'Accept-Encoding': 'gzip, deflate, br',
+        'Accept-Encoding': 'gzip, deflate, br'
       },
-      body: JSON.stringify(data), // body data type must match "Content-Type" header
+      body: JSON.stringify(data) // body data type must match "Content-Type" header
     })
     // const response = axios.post((config ? config.api : this.config.api) + url, data)
     return response.json() // parses JSON response into native JavaScript objects

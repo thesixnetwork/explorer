@@ -26,7 +26,7 @@
 
 <script>
 import {
-  BTabs, BTab,
+  BTabs, BTab
 } from 'bootstrap-vue'
 import PlaceForm from './PlaceForm.vue'
 
@@ -34,21 +34,21 @@ export default {
   components: {
     BTab,
     BTabs,
-    PlaceForm,
+    PlaceForm
   },
   props: {
     pool: {
       type: Object,
-      default: () => {},
+      default: () => {}
     },
     denomTrace: {
       type: [Array, Object],
-      default: () => [],
-    },
+      default: () => []
+    }
   },
   data: () => ({
-    tabIndex: 0,
-  }),
+    tabIndex: 0
+  })
 }
 </script>
 

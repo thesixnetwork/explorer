@@ -52,6 +52,6 @@ export default function useLayoutHorizontal(navbarMenuType, footerType, isVertic
   return {
     layoutClasses,
     navbarMenuTypeClass,
-    footerTypeClass,
+    footerTypeClass
   }
 }

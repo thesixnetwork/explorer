@@ -274,11 +274,11 @@
 
 <script>
 import {
-  BCard, BButton, BAvatar, BRow, BCol, BTable, BCardFooter, VBTooltip, VBModal, BBadge, BPagination,
+  BCard, BButton, BAvatar, BRow, BCol, BTable, BCardFooter, VBTooltip, VBModal, BBadge, BPagination
 } from 'bootstrap-vue'
 
 import {
-  percent, formatToken, StakingParameters, Validator, operatorAddressToAccount, consensusPubkeyToHexAddress, toDay, abbrMessage, abbrAddress,
+  percent, formatToken, StakingParameters, Validator, operatorAddressToAccount, consensusPubkeyToHexAddress, toDay, abbrMessage, abbrAddress
 } from '@/libs/utils'
 import { keybase } from '@/libs/fetch'
 import StakingAddressComponent from './StakingAddressComponent.vue'
@@ -300,21 +300,21 @@ export default {
     StakingAddressComponent,
     StakingCommissionComponent,
     StakingRewardComponent,
-    OperationDelegateComponent,
+    OperationDelegateComponent
   },
   directives: {
     'b-modal': VBModal,
-    'b-tooltip': VBTooltip,
+    'b-tooltip': VBTooltip
   },
   data() {
     return {
       commission: {
         series: [90],
         completed: 89,
-        inProgress: 64,
+        inProgress: 64
       },
       selfDelegation: {
-        balance: { amount: 0 },
+        balance: { amount: 0 }
       },
       latestHeight: 0,
       accountAddress: '-',
@@ -326,7 +326,7 @@ export default {
       userData: {},
       blocks: Array.from('0'.repeat(100)).map(x => [Boolean(x), Number(x)]),
       distribution: {},
-      transactions: {},
+      transactions: {}
     }
   },
   computed: {
@@ -336,11 +336,11 @@ export default {
           height: Number(x.height),
           txhash: x.txhash,
           msgs: abbrMessage(x.tx.value ? x.tx.value.msg : x.tx.msg),
-          time: toDay(x.timestamp),
+          time: toDay(x.timestamp)
         }))
       }
       return []
-    },
+    }
   },
   created() {
     this.$http.getStakingPool().then(res => { this.stakingPool = res })
@@ -412,8 +412,8 @@ export default {
           this.blocks.push([typeof sigs !== 'undefined', res.block.last_commit.height])
         }
       })
-    },
-  },
+    }
+  }
 }
 </script>
 

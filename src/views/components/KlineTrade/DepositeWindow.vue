@@ -233,13 +233,13 @@
 <script>
 import { ValidationProvider, ValidationObserver } from 'vee-validate'
 import {
-  BAvatar, BModal, BRow, BCol, BInputGroup, BInputGroupAppend, BInputGroupPrepend, BFormInput, BFormGroup, BFormSelect, BForm, BFormRadioGroup, BFormRadio, BFormCheckbox,
+  BAvatar, BModal, BRow, BCol, BInputGroup, BInputGroupAppend, BInputGroupPrepend, BFormInput, BFormGroup, BFormSelect, BForm, BFormRadioGroup, BFormRadio, BFormCheckbox
 } from 'bootstrap-vue'
 import {
-  required, email, url, between, alpha, integer, password, min, digits, alphaDash, length,
+  required, email, url, between, alpha, integer, password, min, digits, alphaDash, length
 } from '@validations'
 import {
-  formatToken, formatTokenDenom, getLocalAccounts, getUnitAmount, setLocalTxHistory, sign, timeIn,
+  formatToken, formatTokenDenom, getLocalAccounts, getUnitAmount, setLocalTxHistory, sign, timeIn
 } from '@/libs/utils'
 import ToastificationContent from '@core/components/toastification/ToastificationContent.vue'
 import { coin } from '@cosmjs/amino'
@@ -267,17 +267,17 @@ export default {
     ValidationProvider,
     ValidationObserver,
     // eslint-disable-next-line vue/no-unused-components
-    ToastificationContent,
+    ToastificationContent
   },
   props: {
     symbol: {
       type: String,
-      default: () => '',
+      default: () => ''
     },
     denomTrace: {
       type: Object,
-      default: () => {},
-    },
+      default: () => {}
+    }
   },
   data() {
     return {
@@ -315,7 +315,7 @@ export default {
       between,
       digits,
       length,
-      alphaDash,
+      alphaDash
     }
   },
   methods: {
@@ -427,9 +427,9 @@ export default {
             //   revisionNumber: '0',
             //   revisionHeight: '0',
             // },
-            timeoutTimestamp: String(timeout.utc().valueOf() * 1000000),
-          },
-        },
+            timeoutTimestamp: String(timeout.utc().valueOf() * 1000000)
+          }
+        }
         // {
         //   type: 'cosmos-sdk/MsgTransfer',
         //   value: {
@@ -451,16 +451,16 @@ export default {
         amount: [
           {
             amount: this.fee,
-            denom: this.feeDenom,
-          },
+            denom: this.feeDenom
+          }
         ],
-        gas: this.gas,
+        gas: this.gas
       }
 
       const signerData = {
         accountNumber: this.accountNumber,
         sequence: this.sequence,
-        chainId: this.chainId,
+        chainId: this.chainId
       }
 
       sign(
@@ -470,7 +470,7 @@ export default {
         txMsgs,
         txFee,
         this.memo,
-        signerData,
+        signerData
       ).then(bodyBytes => {
         this.$http.broadcastTx(bodyBytes, this.selectedChain).then(res => {
           setLocalTxHistory({ op: 'ibc_sender', hash: res.txhash, time: new Date() })
@@ -480,8 +480,8 @@ export default {
             props: {
               title: 'Transaction sent!',
               icon: 'EditIcon',
-              variant: 'success',
-            },
+              variant: 'success'
+            }
           })
         }).catch(e => {
           this.error = e
@@ -492,8 +492,8 @@ export default {
       // Send tokens
       // return client.sendTokens(this.address, this.recipient, sendCoins, this.memo)
       // return
-    },
-  },
+    }
+  }
 }
 </script>
 <style lang="scss">

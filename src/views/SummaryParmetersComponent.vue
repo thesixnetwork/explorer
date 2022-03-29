@@ -83,7 +83,7 @@
 
 <script>
 import {
-  BCard, BCardHeader, BCardTitle, BCardText, BCardBody, BRow, BCol, BMedia, BMediaAside, BAvatar, BMediaBody, BPopover, BButton,
+  BCard, BCardHeader, BCardTitle, BCardText, BCardBody, BRow, BCol, BMedia, BMediaAside, BAvatar, BMediaBody, BPopover, BButton
 } from 'bootstrap-vue'
 import ObjectFieldComponent from './ObjectFieldComponent.vue'
 import ArrayFieldComponent from './ArrayFieldComponent.vue'
@@ -104,13 +104,13 @@ export default {
     BPopover,
     BButton,
     ObjectFieldComponent,
-    ArrayFieldComponent,
+    ArrayFieldComponent
   },
   props: {
     data: {
       type: [Object, Array],
-      default: () => {},
-    },
-  },
+      default: () => {}
+    }
+  }
 }
 </script>

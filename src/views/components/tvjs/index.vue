@@ -19,8 +19,8 @@ export default {
   props: {
     list: {
       type: Array,
-      default: () => [],
-    },
+      default: () => []
+    }
   },
   data() {
     return {
@@ -30,16 +30,16 @@ export default {
       colors: {
         colorBack: '#00000000', // '#fff',
         colorGrid: '#333', // '#eee',
-        colorText: '#aaa',
-      },
+        colorText: '#aaa'
+      }
     }
   },
   computed: {
     tvData() {
       return {
-        ohlcv: this.list,
+        ohlcv: this.list
       }
-    },
+    }
   },
   created() {
     this.$http.getMarketChart(14, 'cosmos').then(res => {
@@ -55,10 +55,10 @@ export default {
       })
       console.log(ohlcv)
       this.data = {
-        ohlcv,
+        ohlcv
       }
     })
-  },
+  }
 }
 
 </script>

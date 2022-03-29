@@ -13,6 +13,6 @@ export default function useVerticalNavMenuLink(item) {
   return {
     isActive,
     linkProps,
-    updateIsActive,
+    updateIsActive
   }
 }

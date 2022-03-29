@@ -19,13 +19,13 @@ ECharts.registerTheme('theme-color', theme)
 
 export default {
   components: {
-    ECharts,
+    ECharts
   },
   props: {
     optionData: {
       type: Object,
-      default: null,
-    },
+      default: null
+    }
   },
   data() {
     return {
@@ -33,18 +33,18 @@ export default {
         tooltip: {
           trigger: 'axis',
           axisPointer: {
-            type: 'shadow',
-          },
+            type: 'shadow'
+          }
         },
         legend: {
-          left: 0,
+          left: 0
         },
         grid: this.optionData.grid,
         xAxis: this.optionData.xAxis,
         yAxis: this.optionData.yAxis,
-        series: this.optionData.series,
-      },
+        series: this.optionData.series
+      }
     }
-  },
+  }
 }
 </script>

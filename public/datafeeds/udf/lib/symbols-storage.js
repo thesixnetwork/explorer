@@ -1,4 +1,4 @@
-import { getErrorMessage, logMessage, } from './helpers';
+import { getErrorMessage, logMessage } from './helpers';
 function extractField(data, field, arrayIndex, valueIsArray) {
     var value = data[field];
     if (Array.isArray(value) && (!valueIsArray || Array.isArray(value[0]))) {
@@ -79,7 +79,7 @@ var SymbolsStorage = /** @class */ (function () {
                     exchange: symbolInfo.exchange,
                     params: [],
                     type: symbolInfo.type,
-                    ticker: symbolInfo.name,
+                    ticker: symbolInfo.name
                 };
             });
             return Promise.resolve(result);
@@ -161,7 +161,7 @@ var SymbolsStorage = /** @class */ (function () {
                     has_weekly_and_monthly: extractField(data, 'has-weekly-and-monthly', symbolIndex),
                     has_empty_bars: extractField(data, 'has-empty-bars', symbolIndex),
                     volume_precision: definedValueOrDefault(extractField(data, 'volume-precision', symbolIndex), 0),
-                    format: 'price',
+                    format: 'price'
                 };
                 this._symbolsInfo[ticker] = symbolInfo;
                 this._symbolsInfo[symbolName] = symbolInfo;

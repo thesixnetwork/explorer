@@ -1,4 +1,4 @@
-// eslint-disable-next-line import/no-extraneous-dependencies
+// eslint-disable-next-line 
 const long1 = require('long')
 const minimal1 = require('protobufjs-dbx/minimal')
 const coin1 = require('cosmjs-types/cosmos/base/v1beta1/coin')
@@ -9,7 +9,7 @@ const baseMsgTransfer = {
   sourceChannel: '',
   sender: '',
   receiver: '',
-  timeoutTimestamp: '0',
+  timeoutTimestamp: '0'
 }
 
 exports.MsgTransfer = {
@@ -162,5 +162,5 @@ exports.MsgTransfer = {
       message.timeoutTimestamp = long1.default.UZERO
     }
     return message
-  },
+  }
 }

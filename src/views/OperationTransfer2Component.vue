@@ -255,14 +255,14 @@
 import { ValidationProvider, ValidationObserver } from 'vee-validate'
 import {
   BModal, BRow, BCol, BInputGroup, BInputGroupAppend, BFormInput, BAvatar, BFormGroup, BFormSelect, BFormSelectOption,
-  BForm, BInputGroupPrepend, BFormCheckbox, BOverlay, BSpinner,
+  BForm, BInputGroupPrepend, BFormCheckbox, BOverlay, BSpinner
 } from 'bootstrap-vue'
 import {
-  required, email, url, between, alpha, integer, password, min, digits, alphaDash, length,
+  required, email, url, between, alpha, integer, password, min, digits, alphaDash, length
 } from '@validations'
 import {
   extractAccountNumberAndSequence,
-  formatToken, formatTokenDenom, getLocalAccounts, getLocalChains, getUnitAmount, setLocalTxHistory, sign, timeIn,
+  formatToken, formatTokenDenom, getLocalAccounts, getLocalChains, getUnitAmount, setLocalTxHistory, sign, timeIn
 } from '@/libs/utils'
 import vSelect from 'vue-select'
 import ToastificationContent from '@core/components/toastification/ToastificationContent.vue'
@@ -297,13 +297,13 @@ export default {
 
     WalletInputVue,
     // eslint-disable-next-line vue/no-unused-components
-    ToastificationContent,
+    ToastificationContent
   },
   props: {
     address: {
       type: String,
-      default: '',
-    },
+      default: ''
+    }
   },
   data() {
     return {
@@ -339,7 +339,7 @@ export default {
       between,
       digits,
       length,
-      alphaDash,
+      alphaDash
     }
   },
   computed: {
@@ -360,7 +360,7 @@ export default {
     },
     actionName() {
       return this.token.startsWith('ibc') ? 'Withdraw' : 'Deposit'
-    },
+    }
   },
   created() {
     // console.log('address: ', this.address)
@@ -409,7 +409,7 @@ export default {
             if (path.length >= 2) {
               this.paths[ibcDenom] = {
                 channel_id: path[path.length - 1],
-                port_id: path[path.length - 2],
+                port_id: path[path.length - 2]
               }
             }
           })
@@ -482,25 +482,25 @@ export default {
             sender: this.address,
             receiver: this.recipient,
             // timeoutHeight: undefined, // { revisionHeight: '0', revisionNumber: '0' },
-            timeoutTimestamp: String(timeout.utc().valueOf() * 1000000),
-          },
-        },
+            timeoutTimestamp: String(timeout.utc().valueOf() * 1000000)
+          }
+        }
       ]
 
       const txFee = {
         amount: [
           {
             amount: this.fee,
-            denom: this.feeDenom,
-          },
+            denom: this.feeDenom
+          }
         ],
-        gas: this.gas,
+        gas: this.gas
       }
 
       const signerData = {
         accountNumber: this.accountNumber,
         sequence: this.sequence,
-        chainId: this.chainId,
+        chainId: this.chainId
       }
 
       sign(
@@ -510,14 +510,14 @@ export default {
         txMsgs,
         txFee,
         this.memo,
-        signerData,
+        signerData
       ).then(bodyBytes => {
         this.$http.broadcastTx(bodyBytes, this.selectedChain).then(res => {
           setLocalTxHistory({
             chain: this.$store.state.chains.selected,
             op: 'transfer',
             hash: res.tx_response.txhash,
-            time: new Date(),
+            time: new Date()
           })
           this.$bvModal.hide('ibc-transfer-window')
           this.$toast({
@@ -525,8 +525,8 @@ export default {
             props: {
               title: 'Transaction sent!',
               icon: 'EditIcon',
-              variant: 'success',
-            },
+              variant: 'success'
+            }
           })
         }).catch(e => {
           this.error = e
@@ -537,8 +537,8 @@ export default {
       // Send tokens
       // return client.sendTokens(this.address, this.recipient, sendCoins, this.memo)
       // return
-    },
-  },
+    }
+  }
 }
 </script>
 <style lang="scss">

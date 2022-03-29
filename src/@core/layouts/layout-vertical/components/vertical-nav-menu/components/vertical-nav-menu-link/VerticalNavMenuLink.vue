@@ -35,14 +35,14 @@ import mixinVerticalNavMenuLink from './mixinVerticalNavMenuLink'
 export default {
   components: {
     BLink,
-    BBadge,
+    BBadge
   },
   mixins: [mixinVerticalNavMenuLink],
   props: {
     item: {
       type: Object,
-      required: true,
-    },
+      required: true
+    }
   },
   setup(props) {
     const { isActive, linkProps, updateIsActive } = useVerticalNavMenuLink(props.item)
@@ -58,9 +58,9 @@ export default {
       canViewVerticalNavMenuLink,
 
       // i18n
-      t,
+      t
     }
-  },
+  }
 
 }
 </script>

@@ -106,7 +106,7 @@
 
 <script>
 import {
-  BNavItemDropdown, BBadge, BMedia, BLink, BAvatar, BButton, BFormCheckbox,
+  BNavItemDropdown, BBadge, BMedia, BLink, BAvatar, BButton, BFormCheckbox
 } from 'bootstrap-vue'
 import VuePerfectScrollbar from 'vue-perfect-scrollbar'
 import Ripple from 'vue-ripple-directive'
@@ -120,10 +120,10 @@ export default {
     BAvatar,
     VuePerfectScrollbar,
     BButton,
-    BFormCheckbox,
+    BFormCheckbox
   },
   directives: {
-    Ripple,
+    Ripple
   },
   setup() {
     /* eslint-disable global-require */
@@ -132,20 +132,20 @@ export default {
         title: 'Congratulation Sam 🎉',
         avatar: require('@/assets/images/avatars/6-small.png'),
         subtitle: 'Won the monthly best seller badge',
-        type: 'light-success',
+        type: 'light-success'
       },
       {
         title: 'New message received',
         avatar: require('@/assets/images/avatars/9-small.png'),
         subtitle: 'You have 10 unread messages',
-        type: 'light-info',
+        type: 'light-info'
       },
       {
         title: 'Revised Order 👋',
         avatar: 'MD',
         subtitle: 'MD Inc. order updated',
-        type: 'light-danger',
-      },
+        type: 'light-danger'
+      }
     ]
     /* eslint-disable global-require */
 
@@ -154,33 +154,33 @@ export default {
         title: 'Server down',
         subtitle: 'USA Server is down due to hight CPU usage',
         type: 'light-danger',
-        icon: 'XIcon',
+        icon: 'XIcon'
       },
       {
         title: 'Sales report generated',
         subtitle: 'Last month sales report generated',
         type: 'light-success',
-        icon: 'CheckIcon',
+        icon: 'CheckIcon'
       },
       {
         title: 'High memory usage',
         subtitle: 'BLR Server using high memory',
         type: 'light-warning',
-        icon: 'AlertTriangleIcon',
-      },
+        icon: 'AlertTriangleIcon'
+      }
     ]
 
     const perfectScrollbarSettings = {
       maxScrollbarLength: 60,
-      wheelPropagation: false,
+      wheelPropagation: false
     }
 
     return {
       notifications,
       systemNotifications,
-      perfectScrollbarSettings,
+      perfectScrollbarSettings
     }
-  },
+  }
 }
 </script>
 

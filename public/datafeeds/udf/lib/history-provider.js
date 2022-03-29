@@ -1,4 +1,4 @@
-import { getErrorMessage, } from './helpers';
+import { getErrorMessage } from './helpers';
 var HistoryProvider = /** @class */ (function () {
     function HistoryProvider(datafeedUrl, requester) {
         this._datafeedUrl = datafeedUrl;
@@ -10,7 +10,7 @@ var HistoryProvider = /** @class */ (function () {
             symbol: symbolInfo.ticker || '',
             resolution: resolution,
             from: rangeStartDate,
-            to: rangeEndDate,
+            to: rangeEndDate
         };
         if (symbolInfo.currency_code !== undefined) {
             requestParams.currencyCode = symbolInfo.currency_code;
@@ -24,7 +24,7 @@ var HistoryProvider = /** @class */ (function () {
                 }
                 var bars = [];
                 var meta = {
-                    noData: false,
+                    noData: false
                 };
                 if (response.s === 'no_data') {
                     meta.noData = true;
@@ -39,7 +39,7 @@ var HistoryProvider = /** @class */ (function () {
                             close: parseFloat(response.c[i]),
                             open: parseFloat(response.c[i]),
                             high: parseFloat(response.c[i]),
-                            low: parseFloat(response.c[i]),
+                            low: parseFloat(response.c[i])
                         };
                         if (ohlPresent) {
                             barValue.open = parseFloat(response.o[i]);
@@ -54,7 +54,7 @@ var HistoryProvider = /** @class */ (function () {
                 }
                 resolve({
                     bars: bars,
-                    meta: meta,
+                    meta: meta
                 });
             })
                 .catch(function (reason) {

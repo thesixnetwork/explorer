@@ -116,11 +116,11 @@ import useLayoutHorizontal from './useLayoutHorizontal'
 import HorizontalNavMenu from './components/horizontal-nav-menu/HorizontalNavMenu.vue'
 
 // Vertical Menu
-/* eslint-disable import/order */
+/* eslint-disable */
 import VerticalNavMenu from '@core/layouts/layout-vertical/components/vertical-nav-menu/VerticalNavMenu.vue'
 import useVerticalLayout from '@core/layouts/layout-vertical/useVerticalLayout'
 import mixinLayoutHorizontal from './mixinLayoutHorizontal'
-/* eslint-enable import/order */
+/* eslint-enable */
 
 export default {
   components: {
@@ -138,7 +138,7 @@ export default {
     LayoutContentRendererLeftDetached,
 
     // Vertical Menu
-    VerticalNavMenu,
+    VerticalNavMenu
   },
   mixins: [mixinLayoutHorizontal],
   computed: {
@@ -147,7 +147,7 @@ export default {
       if (rendererType === 'sidebar-left') return 'layout-content-renderer-left'
       if (rendererType === 'sidebar-left-detached') return 'layout-content-renderer-left-detached'
       return 'layout-content-renderer-default'
-    },
+    }
   },
   setup() {
     const {
@@ -155,12 +155,12 @@ export default {
       navbarType,
       footerType,
       routerTransition,
-      isNavMenuHidden,
+      isNavMenuHidden
     } = useAppConfig()
 
     // Vertical Menu
     const {
-      isVerticalMenuActive, toggleVerticalMenuActive, overlayClasses, resizeHandler,
+      isVerticalMenuActive, toggleVerticalMenuActive, overlayClasses, resizeHandler
     } = useVerticalLayout(navbarType, footerType)
 
     // Resize handler
@@ -173,7 +173,7 @@ export default {
     const {
       navbarMenuTypeClass,
       layoutClasses,
-      footerTypeClass,
+      footerTypeClass
     } = useLayoutHorizontal(navbarType, footerType, isVerticalMenuActive)
 
     // Scroll Listener
@@ -205,9 +205,9 @@ export default {
       // Vertical Menu
       isVerticalMenuActive,
       toggleVerticalMenuActive,
-      overlayClasses,
+      overlayClasses
     }
-  },
+  }
 }
 </script>
 

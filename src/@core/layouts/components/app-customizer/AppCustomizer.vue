@@ -179,7 +179,7 @@
 
 <script>
 import {
-  BLink, BFormRadioGroup, BFormGroup, BFormCheckbox,
+  BLink, BFormRadioGroup, BFormGroup, BFormCheckbox
 } from 'bootstrap-vue'
 import vSelect from 'vue-select'
 import VuePerfectScrollbar from 'vue-perfect-scrollbar'
@@ -195,7 +195,7 @@ export default {
 
     // 3rd party
     vSelect,
-    VuePerfectScrollbar,
+    VuePerfectScrollbar
 
   },
   setup() {
@@ -236,7 +236,7 @@ export default {
 
       // Footer
       footerTypes,
-      footerType,
+      footerType
     } = useAppCustomizer()
 
     if (layoutType.value === 'horizontal') {
@@ -252,7 +252,7 @@ export default {
     // Perfect Scrollbar
     const perfectScrollbarSettings = {
       maxScrollbarLength: 60,
-      wheelPropagation: false,
+      wheelPropagation: false
     }
 
     return {
@@ -295,9 +295,9 @@ export default {
       footerType,
 
       // Perfect Scrollbar
-      perfectScrollbarSettings,
+      perfectScrollbarSettings
     }
-  },
+  }
 }
 </script>
 

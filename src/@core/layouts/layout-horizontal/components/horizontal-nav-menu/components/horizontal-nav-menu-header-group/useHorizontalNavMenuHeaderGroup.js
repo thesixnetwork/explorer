@@ -25,6 +25,6 @@ export default function useHorizontalNavMenuHeaderGroup(item) {
     isOpen,
     isActive,
     updateGroupOpen,
-    updateIsActive,
+    updateIsActive
   }
 }

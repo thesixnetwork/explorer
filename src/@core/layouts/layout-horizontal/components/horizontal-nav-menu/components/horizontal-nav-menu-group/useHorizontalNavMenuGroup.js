@@ -56,6 +56,6 @@ export default function useHorizontalNavMenuGroup(item) {
     updateGroupOpen,
     updateIsActive,
     refChildDropdown,
-    openChildDropdownOnLeft,
+    openChildDropdownOnLeft
   }
 }

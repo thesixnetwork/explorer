@@ -20,7 +20,7 @@
 
 <script>
 import {
-  BRow, BCol, VBTooltip,
+  BRow, BCol, VBTooltip
 } from 'bootstrap-vue'
 import { consensusPubkeyToHexAddress, getCachedValidators } from '@/libs/utils'
 import UptimeMyChainBlocks from './UptimeMyChainBlocks.vue'
@@ -29,10 +29,10 @@ export default {
   components: {
     BRow,
     BCol,
-    UptimeMyChainBlocks,
+    UptimeMyChainBlocks
   },
   directives: {
-    'b-tooltip': VBTooltip,
+    'b-tooltip': VBTooltip
   },
   data() {
     const pinned = (localStorage.getItem('pinned') || '').split(',').map(x => x.split('#')).reduce((a1, b) => {
@@ -57,9 +57,9 @@ export default {
     })
 
     return {
-      chainVals,
+      chainVals
     }
-  },
+  }
 }
 </script>
 

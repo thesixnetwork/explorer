@@ -190,7 +190,7 @@
 
 <script>
 import {
-  BCard, BCardTitle, BCardBody, BCardFooter, BButton, BProgressBar, BProgress, BBadge, BTooltip, BRow, BCol, VBModal,
+  BCard, BCardTitle, BCardBody, BCardFooter, BButton, BProgressBar, BProgress, BBadge, BTooltip, BRow, BCol, VBModal
 } from 'bootstrap-vue'
 import Ripple from 'vue-ripple-directive'
 import { Proposal } from '@/libs/data'
@@ -213,18 +213,18 @@ export default {
     BRow,
     BCol,
     OperationVoteComponent,
-    OperationGovDepositComponent,
+    OperationGovDepositComponent
   },
   directives: {
     'b-modal': VBModal,
-    Ripple,
+    Ripple
   },
   data() {
     return {
       selectedProposalId: 0,
       selectedTitle: '',
       proposals: [new Proposal()],
-      max: 1,
+      max: 1
     }
   },
   mounted() {
@@ -257,8 +257,8 @@ export default {
         }
         this.proposals = res.reverse()
       })
-    },
-  },
+    }
+  }
 }
 </script>
 

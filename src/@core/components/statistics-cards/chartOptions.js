@@ -5,23 +5,23 @@ export const areaChartOptions = {
     show: false,
     padding: {
       left: 0,
-      right: 0,
-    },
+      right: 0
+    }
   },
   chart: {
     toolbar: {
-      show: false,
+      show: false
     },
     sparkline: {
-      enabled: true,
-    },
+      enabled: true
+    }
   },
   dataLabels: {
-    enabled: false,
+    enabled: false
   },
   stroke: {
     curve: 'smooth',
-    width: 2.5,
+    width: 2.5
   },
   fill: {
     type: 'gradient',
@@ -29,18 +29,18 @@ export const areaChartOptions = {
       shadeIntensity: 0.9,
       opacityFrom: 0.5,
       opacityTo: 0.2,
-      stops: [0, 80, 100],
-    },
+      stops: [0, 80, 100]
+    }
   },
   xaxis: {
     type: 'numeric',
     lines: {
-      show: false,
+      show: false
     },
     axisBorder: {
-      show: false,
+      show: false
     },
-    labels: { show: false },
+    labels: { show: false }
   },
   yaxis: [
     {
@@ -49,21 +49,21 @@ export const areaChartOptions = {
       offsetY: 0,
       padding: {
         left: 0,
-        right: 0,
-      },
-    },
+        right: 0
+      }
+    }
   ],
   tooltip: {
-    x: { show: false },
+    x: { show: false }
   },
   theme: {
     monochrome: {
       enabled: true,
       color: $themeColors.primary,
       shadeTo: 'light',
-      shadeIntensity: 0.65,
-    },
-  },
+      shadeIntensity: 0.65
+    }
+  }
 }
 
 export const lineChartOptions = {
@@ -71,8 +71,8 @@ export const lineChartOptions = {
     show: false,
     padding: {
       left: 0,
-      right: 0,
-    },
+      right: 0
+    }
   },
   chart: {
     type: 'line',
@@ -81,21 +81,21 @@ export const lineChartOptions = {
       top: 5,
       left: 0,
       blur: 4,
-      opacity: 0.1,
+      opacity: 0.1
     },
     toolbar: {
-      show: false,
+      show: false
     },
     sparkline: {
-      enabled: true,
-    },
+      enabled: true
+    }
   },
   stroke: {
     width: 5,
-    curve: 'smooth',
+    curve: 'smooth'
   },
   xaxis: {
-    type: 'numeric',
+    type: 'numeric'
   },
   colors: [$themeColors.primary],
   fill: {
@@ -107,16 +107,16 @@ export const lineChartOptions = {
       type: 'horizontal',
       opacityFrom: 1,
       opacityTo: 1,
-      stops: [0, 100, 100, 100],
-    },
+      stops: [0, 100, 100, 100]
+    }
   },
   markers: {
     size: 0,
     hover: {
-      size: 5,
-    },
+      size: 5
+    }
   },
   tooltip: {
-    x: { show: false },
-  },
+    x: { show: false }
+  }
 }

@@ -83,7 +83,7 @@
 
 <script>
 import {
-  BNavbarNav, BNavItem, BTooltip, BNavItemDropdown, BFormInput, BDropdownItem,
+  BNavbarNav, BNavItem, BTooltip, BNavItemDropdown, BFormInput, BDropdownItem
 } from 'bootstrap-vue'
 import VuePerfectScrollbar from 'vue-perfect-scrollbar'
 import useAutoSuggest from '@core/components/app-auto-suggest/useAutoSuggest'
@@ -94,7 +94,7 @@ import searchAndBookmarkData from '../search-and-bookmark-data'
 
 export default {
   components: {
-    BNavbarNav, BNavItem, BTooltip, BNavItemDropdown, BFormInput, VuePerfectScrollbar, BDropdownItem,
+    BNavbarNav, BNavItem, BTooltip, BNavItemDropdown, BFormInput, VuePerfectScrollbar, BDropdownItem
   },
   setup() {
     const searchAndBookmarkDataPages = ref(searchAndBookmarkData.pages)
@@ -102,13 +102,13 @@ export default {
     const currentSelected = ref(-1)
 
     const perfectScrollbarSettings = {
-      maxScrollbarLength: 60,
+      maxScrollbarLength: 60
     }
 
     const {
       searchQuery,
       resetsearchQuery,
-      filteredData,
+      filteredData
     } = useAutoSuggest({ data: { pages: searchAndBookmarkDataPages.value }, searchLimit: 6 })
 
     watch(searchQuery, val => {
@@ -150,9 +150,9 @@ export default {
       // AutoSuggest
       searchQuery,
       resetsearchQuery,
-      filteredData,
+      filteredData
     }
-  },
+  }
 }
 </script>
 

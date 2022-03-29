@@ -42,21 +42,21 @@ export default {
   components: {
     BLink,
     HorizontalNavMenuGroup,
-    HorizontalNavMenuLink,
+    HorizontalNavMenuLink
   },
   mixins: [mixinHorizontalNavMenuHeaderGroup],
   props: {
     item: {
       type: Object,
-      required: true,
-    },
+      required: true
+    }
   },
   setup(props) {
     const {
       isActive,
       updateIsActive,
       isOpen,
-      updateGroupOpen,
+      updateGroupOpen
     } = useHorizontalNavMenuHeaderGroup(props.item)
 
     const { t } = useI18nUtils()
@@ -73,8 +73,8 @@ export default {
       canViewHorizontalNavMenuHeaderGroup,
 
       // i18n
-      t,
+      t
     }
-  },
+  }
 }
 </script>

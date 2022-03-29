@@ -69,10 +69,10 @@
 
 <script>
 import {
-  BTableSimple, BTr, BTd, BTabs, BTab, BTbody,
+  BTableSimple, BTr, BTd, BTabs, BTab, BTbody
 } from 'bootstrap-vue'
 import {
-  abbr, getStakingValidatorByHex, isHexAddress, isStringArray, isToken, percent, tokenFormatter,
+  abbr, getStakingValidatorByHex, isHexAddress, isStringArray, isToken, percent, tokenFormatter
 } from '@/libs/utils'
 import ArrayFieldComponent from './ArrayFieldComponent.vue'
 
@@ -85,17 +85,17 @@ export default {
     BTabs,
     BTab,
     BTbody,
-    ArrayFieldComponent,
+    ArrayFieldComponent
   },
   props: {
     tablefield: {
       type: [Array, Object],
-      default: () => {},
+      default: () => {}
     },
     small: {
       type: Boolean,
-      default: true,
-    },
+      default: true
+    }
   },
   methods: {
     formatObject(value) {
@@ -141,8 +141,8 @@ export default {
       }
 
       return value
-    },
-  },
+    }
+  }
 }
 </script>
 

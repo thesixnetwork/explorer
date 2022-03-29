@@ -26,19 +26,19 @@
 import { BTable } from 'bootstrap-vue'
 
 import {
-  getStakingValidatorByHex, isHexAddress, isToken, percent, toDay, tokenFormatter,
+  getStakingValidatorByHex, isHexAddress, isToken, percent, toDay, tokenFormatter
 } from '@/libs/utils'
 
 export default {
   name: 'ArrayFieldComponent',
   components: {
-    BTable,
+    BTable
   },
   props: {
     tablefield: {
       type: [Array, Object],
-      default: () => [],
-    },
+      default: () => []
+    }
   },
   methods: {
     eval_value(value) {
@@ -76,7 +76,7 @@ export default {
     },
     formatHexAddress(v) {
       return getStakingValidatorByHex(this.$http.config.chain_name, v)
-    },
-  },
+    }
+  }
 }
 </script>

@@ -54,11 +54,11 @@
 
 <script>
 import {
-  BRow, BCol, VBTooltip, BCard, BAlert, BCardTitle, BFormCheckbox,
+  BRow, BCol, VBTooltip, BCard, BAlert, BCardTitle, BFormCheckbox
 } from 'bootstrap-vue'
 
 import {
-  getLocalChains, timeIn, toDay,
+  getLocalChains, timeIn, toDay
 } from '@/libs/utils'
 
 export default {
@@ -69,20 +69,20 @@ export default {
     BCard,
     BAlert,
     BCardTitle,
-    BFormCheckbox,
+    BFormCheckbox
   },
   directives: {
-    'b-tooltip': VBTooltip,
+    'b-tooltip': VBTooltip
   },
   props: {
     chain: {
       type: String,
-      default: null,
+      default: null
     },
     validators: {
       type: Array,
-      default: () => [],
-    },
+      default: () => []
+    }
   },
   data() {
     const chains = getLocalChains()
@@ -94,14 +94,14 @@ export default {
       blocks: Array.from('0'.repeat(50)).map(x => ({ sigs: {}, height: Number(x) })),
       syncing: false,
       latestTime: '',
-      height: '-',
+      height: '-'
     }
   },
   computed: {
     uptime() {
       const vals = this.validators
       return vals
-    },
+    }
   },
   created() {
     this.initBlocks()
@@ -181,8 +181,8 @@ export default {
           this.blocks.push({ sigs, height: res.block.last_commit.height })
         }
       })
-    },
-  },
+    }
+  }
 }
 </script>
 

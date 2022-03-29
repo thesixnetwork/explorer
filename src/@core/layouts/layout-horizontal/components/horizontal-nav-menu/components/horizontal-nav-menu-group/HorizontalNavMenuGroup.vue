@@ -50,14 +50,14 @@ export default {
   name: 'HorizontalNavMenuGroup',
   components: {
     HorizontalNavMenuLink,
-    BLink,
+    BLink
   },
   mixins: [mixinHorizontalNavMenuGroup],
   props: {
     item: {
       type: Object,
-      required: true,
-    },
+      required: true
+    }
   },
   setup(props) {
     const {
@@ -66,7 +66,7 @@ export default {
       isOpen,
       updateGroupOpen,
       updateIsActive,
-      openChildDropdownOnLeft,
+      openChildDropdownOnLeft
     } = useHorizontalNavMenuGroup(props.item)
 
     const { t } = useI18nUtils()
@@ -85,9 +85,9 @@ export default {
       canViewVerticalNavMenuGroup,
 
       // i18n
-      t,
+      t
     }
-  },
+  }
 }
 </script>
 

@@ -19,25 +19,25 @@ ECharts.registerTheme('theme-color', theme)
 
 export default {
   components: {
-    ECharts,
+    ECharts
   },
   props: {
     optionData: {
       type: Object,
-      default: null,
-    },
+      default: null
+    }
   },
   data() {
     return {
       option: {
         title: {
-          text: 'Basic radar chart',
+          text: 'Basic radar chart'
         },
         tooltip: {},
         legend: {
           data: ['Point One', 'Point Two'],
           bottom: '0',
-          left: '0',
+          left: '0'
         },
         radar: {
           name: {
@@ -45,29 +45,29 @@ export default {
               color: '#626262',
               fontWeight: 'bold',
               borderRadius: 3,
-              padding: [3, 5],
-            },
+              padding: [3, 5]
+            }
           },
           indicator: this.optionData.indicator,
           splitArea: {
-            show: false,
+            show: false
           },
           splitLine: {
             lineStyle: {
               color: [
-                '#eeeeee',
-              ],
-            },
+                '#eeeeee'
+              ]
+            }
           },
           axisLine: {
             lineStyle: {
-              color: '#eeeeee',
-            },
-          },
+              color: '#eeeeee'
+            }
+          }
         },
-        series: this.optionData.series,
-      },
+        series: this.optionData.series
+      }
     }
-  },
+  }
 }
 </script>

@@ -26,10 +26,10 @@ import Ripple from 'vue-ripple-directive'
 
 export default {
   directives: {
-    Ripple,
+    Ripple
   },
   components: {
-    BButton,
+    BButton
   },
   setup() {
     const { y } = useWindowScroll()
@@ -38,12 +38,12 @@ export default {
       const rootEle = document.documentElement
       rootEle.scrollTo({
         top: 0,
-        behavior: 'smooth',
+        behavior: 'smooth'
       })
     }
 
     return { y, scrollToTop }
-  },
+  }
 
 }
 </script>

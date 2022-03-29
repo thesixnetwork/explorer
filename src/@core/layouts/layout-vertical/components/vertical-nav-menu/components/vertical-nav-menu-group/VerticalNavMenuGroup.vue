@@ -48,7 +48,7 @@
 
 <script>
 import {
-  BLink, BBadge, BCollapse, BAvatar,
+  BLink, BBadge, BCollapse, BAvatar
 } from 'bootstrap-vue'
 import { resolveVerticalNavMenuItemComponent as resolveNavItemComponent } from '@core/layouts/utils'
 import { useUtils as useI18nUtils } from '@core/libs/i18n'
@@ -68,21 +68,21 @@ export default {
     BAvatar,
     BLink,
     BBadge,
-    BCollapse,
+    BCollapse
   },
   mixins: [mixinVerticalNavMenuGroup],
   props: {
     item: {
       type: Object,
-      required: true,
-    },
+      required: true
+    }
   },
   setup(props) {
     const {
       isOpen,
       isActive,
       updateGroupOpen,
-      updateIsActive,
+      updateIsActive
     } = useVerticalNavMenuGroup(props.item)
 
     const { t } = useI18nUtils()
@@ -99,9 +99,9 @@ export default {
       canViewVerticalNavMenuGroup,
 
       // i18n
-      t,
+      t
     }
-  },
+  }
 }
 </script>
 

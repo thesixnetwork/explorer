@@ -1,4 +1,4 @@
-import { getErrorMessage, logMessage, } from './helpers';
+import { getErrorMessage, logMessage } from './helpers';
 var QuotesProvider = /** @class */ (function () {
     function QuotesProvider(datafeedUrl, requester) {
         this._datafeedUrl = datafeedUrl;

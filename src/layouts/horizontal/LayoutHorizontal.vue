@@ -27,12 +27,12 @@ export default {
     LayoutHorizontal,
     // AppCustomizer,
     Navbar,
-    AppNavbarHorizontalLayoutBrand,
+    AppNavbarHorizontalLayoutBrand
   },
   data() {
     return {
       // showCustomizer: $themeConfig.layout.customizer,
     }
-  },
+  }
 }
 </script>

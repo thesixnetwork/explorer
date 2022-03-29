@@ -17,21 +17,21 @@ import ChartjsComponentDoughnutChart from './ChartjsComponentDoughnutChart.vue'
 export default {
   name: 'ChartDoughnut',
   components: {
-    ChartjsComponentDoughnutChart,
+    ChartjsComponentDoughnutChart
   },
   props: {
     height: {
       type: Number,
-      default: 235,
+      default: 235
     },
     width: {
       type: Number,
-      default: 235,
+      default: 235
     },
     data: {
       type: Object,
-      required: true,
-    },
+      required: true
+    }
   },
   data() {
     return {
@@ -43,8 +43,8 @@ export default {
         legend: {
           display: true,
           title: {
-            display: true,
-          },
+            display: true
+          }
         },
         tooltips: {
           callbacks: {
@@ -54,7 +54,7 @@ export default {
               const total = data.datasets[0].data.reduce((t, c) => t + c)
               const output = ` ${label} : ${percent(value / total)} %`
               return output
-            },
+            }
           },
           // Updated default tooltip UI
           shadowOffsetX: 1,
@@ -63,10 +63,10 @@ export default {
           // shadowColor: chartColors.tooltipShadow,
           backgroundColor: $themeColors.light,
           titleFontColor: $themeColors.dark,
-          bodyFontColor: $themeColors.dark,
-        },
-      },
+          bodyFontColor: $themeColors.dark
+        }
+      }
     }
-  },
+  }
 }
 </script>

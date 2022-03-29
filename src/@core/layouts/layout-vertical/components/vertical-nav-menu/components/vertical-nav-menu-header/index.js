@@ -8,8 +8,8 @@ export default {
   props: {
     item: {
       type: Object,
-      required: true,
-    },
+      required: true
+    }
   },
   render(h) {
     const span = h('span', {}, this.item.header)
@@ -18,5 +18,5 @@ export default {
       return h('li', { class: 'navigation-header text-truncate' }, [span, icon])
     }
     return h()
-  },
+  }
 }

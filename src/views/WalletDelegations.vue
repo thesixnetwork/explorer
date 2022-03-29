@@ -1,13 +1,24 @@
 <template>
   <div>
-    <router-link v-if="delegations.length === 0" to="/wallet/import">
+    <router-link
+      v-if="delegations.length === 0"
+      to="/wallet/import"
+    >
       <b-card class="addzone text-center">
         <feather-icon icon="PlusIcon" />
         Connect Wallet
       </b-card>
     </router-link>
-    <b-card v-for="(items, k) in groupedDelegations" :key="k" :title="k">
-      <b-table :items="items" stacked="sm" :fields="fields">
+    <b-card
+      v-for="(items, k) in groupedDelegations"
+      :key="k"
+      :title="k"
+    >
+      <b-table
+        :items="items"
+        stacked="sm"
+        :fields="fields"
+      >
         <template #cell(validator)="data">
           <router-link
             :to="

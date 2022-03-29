@@ -59,7 +59,7 @@
 
 <script>
 import {
-  BCard, BCardTitle, BCardSubTitle, BCardBody, BCollapse, BOverlay,
+  BCard, BCardTitle, BCardSubTitle, BCardBody, BCollapse, BOverlay
 } from 'bootstrap-vue'
 import BCardActionsContainer from './BCardActionsContainer.vue'
 
@@ -71,30 +71,30 @@ export default {
     BCardSubTitle,
     BCardBody,
     BCollapse,
-    BOverlay,
+    BOverlay
   },
   inheritAttrs: false,
   props: {
     collapsed: {
       type: Boolean,
-      default: false,
+      default: false
     },
     noActions: {
       type: Boolean,
-      default: false,
+      default: false
     },
     actionCollapse: {
       type: Boolean,
-      default: false,
+      default: false
     },
     actionRefresh: {
       type: Boolean,
-      default: false,
+      default: false
     },
     actionClose: {
       type: Boolean,
-      default: false,
-    },
+      default: false
+    }
   },
   data() {
     return {
@@ -102,7 +102,7 @@ export default {
       content_visible: !this.collapsed,
       showLoading: false,
       cardClosed: false,
-      cardStyles: {},
+      cardStyles: {}
     }
   },
   computed: {
@@ -127,7 +127,7 @@ export default {
       if (this.actionRefresh || allFalse) actions.push('refresh')
       if (this.actionClose || allFalse) actions.push('close')
       return actions
-    },
+    }
   },
   created() {
     this.parentID = String(Math.floor(Math.random() * 10) + 1)
@@ -152,8 +152,8 @@ export default {
     triggerClose() {
       this.removeCard()
       this.$emit('close')
-    },
-  },
+    }
+  }
 }
 </script>
 

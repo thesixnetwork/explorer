@@ -13,10 +13,17 @@
       @ok="handleOk"
       @show="loadBalance"
     >
-      <b-overlay :show="!selectedAddress" rounded="sm">
+      <b-overlay
+        :show="!selectedAddress"
+        rounded="sm"
+      >
         <template #overlay>
           <div class="text-center">
-            <b-avatar icon="stopwatch" font-scale="3" animation="cylon" />
+            <b-avatar
+              icon="stopwatch"
+              font-scale="3"
+              animation="cylon"
+            />
             <p id="cancel-label">
               No available account found.
             </p>
@@ -38,7 +45,10 @@
                   rules="required"
                   name="Validator"
                 >
-                  <b-form-group label="Validator" label-for="validator">
+                  <b-form-group
+                    label="Validator"
+                    label-for="validator"
+                  >
                     <v-select
                       v-model="selectedValidator"
                       :options="valOptions"
@@ -53,7 +63,10 @@
             </b-row>
             <b-row>
               <b-col>
-                <b-form-group label="Delegator" label-for="Delegator">
+                <b-form-group
+                  label="Delegator"
+                  label-for="Delegator"
+                >
                   <validation-provider
                     #default="{ errors }"
                     rules="required"
@@ -66,7 +79,11 @@
                       text-field="label"
                       @change="onChange"
                     />
-                    <b-form-input v-else v-model="selectedAddress" readonly />
+                    <b-form-input
+                      v-else
+                      v-model="selectedAddress"
+                      readonly
+                    />
                     <small class="text-danger">{{ errors[0] }}</small>
                   </validation-provider>
                 </b-form-group>
@@ -74,13 +91,19 @@
             </b-row>
             <b-row>
               <b-col>
-                <b-form-group label="Available Token" label-for="Token">
+                <b-form-group
+                  label="Available Token"
+                  label-for="Token"
+                >
                   <validation-provider
                     #default="{ errors }"
                     rules="required"
                     name="Token"
                   >
-                    <b-form-select v-model="token" text-field="label">
+                    <b-form-select
+                      v-model="token"
+                      text-field="label"
+                    >
                       <b-form-select-option
                         v-for="x in balance"
                         :key="x.denom"
@@ -96,7 +119,10 @@
             </b-row>
             <b-row>
               <b-col>
-                <b-form-group label="Amount" label-for="Amount">
+                <b-form-group
+                  label="Amount"
+                  label-for="Amount"
+                >
                   <validation-provider
                     v-slot="{ errors }"
                     rules="required|regex:^([0-9\.]+)$"
@@ -121,7 +147,10 @@
             </b-row>
             <b-row>
               <b-col>
-                <b-form-group label="Fee" label-for="Fee">
+                <b-form-group
+                  label="Fee"
+                  label-for="Fee"
+                >
                   <validation-provider
                     v-slot="{ errors }"
                     rules="required|integer"
@@ -156,17 +185,37 @@
             </b-row>
             <b-row v-if="advance">
               <b-col cols="12">
-                <b-form-group label="Gas" label-for="gas">
-                  <validation-provider v-slot="{ errors }" name="gas">
-                    <b-form-input id="gas" v-model="gas" type="number" />
+                <b-form-group
+                  label="Gas"
+                  label-for="gas"
+                >
+                  <validation-provider
+                    v-slot="{ errors }"
+                    name="gas"
+                  >
+                    <b-form-input
+                      id="gas"
+                      v-model="gas"
+                      type="number"
+                    />
                     <small class="text-danger">{{ errors[0] }}</small>
                   </validation-provider>
                 </b-form-group>
               </b-col>
               <b-col cols="12">
-                <b-form-group label="Memo" label-for="Memo">
-                  <validation-provider v-slot="{ errors }" name="memo">
-                    <b-form-input id="Memo" v-model="memo" max="2" />
+                <b-form-group
+                  label="Memo"
+                  label-for="Memo"
+                >
+                  <validation-provider
+                    v-slot="{ errors }"
+                    name="memo"
+                  >
+                    <b-form-input
+                      id="Memo"
+                      v-model="memo"
+                      max="2"
+                    />
                     <small class="text-danger">{{ errors[0] }}</small>
                   </validation-provider>
                 </b-form-group>
@@ -181,8 +230,7 @@
           </b-form>
         </validation-observer>
         {{ error }}
-      </b-overlay></b-modal
-    >
+      </b-overlay></b-modal>
   </div>
 </template>
 

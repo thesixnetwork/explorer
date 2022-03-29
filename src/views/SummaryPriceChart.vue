@@ -18,41 +18,41 @@ export default {
           xAxes: [{
             type: 'time',
             time: {
-              unit: 'day',
+              unit: 'day'
             },
             ticks: {
               autoskipping: true,
               display: true,
-              maxTicksLimit: 15,
+              maxTicksLimit: 15
             //   callback(a, b) {
             //     console.log(a, b)
             //   },
-            },
+            }
           }],
           yAxes: [{
             ticks: {
               autoskipping: true,
               display: true,
-              maxTicksLimit: 8,
+              maxTicksLimit: 8
             //   callback(a, b) {
             //     console.log(a, b)
             //   },
-            },
-          }],
+            }
+          }]
         },
         plugins: {
           legend: {
             display: false,
             labels: {
-              color: 'rgb(255, 99, 132)',
-            },
-          },
-        },
-      },
+              color: 'rgb(255, 99, 132)'
+            }
+          }
+        }
+      }
     }
   },
   mounted() {
     this.renderChart(this.chartData, this.options)
-  },
+  }
 }
 </script>

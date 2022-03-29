@@ -35,7 +35,7 @@
 
 <script>
 import {
-  BCard, BCardHeader, BCardBody, BCollapse,
+  BCard, BCardHeader, BCardBody, BCollapse
 } from 'bootstrap-vue'
 import { v4 as uuidv4 } from 'uuid'
 
@@ -44,29 +44,29 @@ export default {
     BCard,
     BCardHeader,
     BCardBody,
-    BCollapse,
+    BCollapse
   },
   props: {
     isVisible: {
       type: Boolean,
-      default: false,
+      default: false
     },
     title: {
       type: String,
-      required: true,
-    },
+      required: true
+    }
   },
   data() {
     return {
       visible: false,
       collapseItemID: '',
-      openOnHover: this.$parent.hover,
+      openOnHover: this.$parent.hover
     }
   },
   computed: {
     accordion() {
       return this.$parent.accordion ? `accordion-${this.$parent.collapseID}` : null
-    },
+    }
   },
   created() {
     this.collapseItemID = uuidv4()
@@ -82,7 +82,7 @@ export default {
     },
     collapseClose() {
       if (this.openOnHover) this.updateVisible(false)
-    },
-  },
+    }
+  }
 }
 </script>

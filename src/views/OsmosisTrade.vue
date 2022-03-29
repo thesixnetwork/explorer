@@ -111,7 +111,7 @@
 
 <script>
 import {
-  BRow, BCol, BCard, BButton, BPopover, BTable, BSpinner,
+  BRow, BCol, BCard, BButton, BPopover, BTable, BSpinner
 } from 'bootstrap-vue'
 import { CoinGeckoMap, getPairName } from '@/libs/osmos'
 import { formatTokenDenom } from '@/libs/utils'
@@ -131,7 +131,7 @@ export default {
     Place,
     BCard,
     SummaryPriceChart,
-    FeatherIcon,
+    FeatherIcon
   },
   data() {
     return {
@@ -147,7 +147,7 @@ export default {
       klineData: [],
       marketData: {},
       high24: 0,
-      low24: 0,
+      low24: 0
     }
   },
   computed: {
@@ -163,7 +163,7 @@ export default {
           id: x.id,
           pair,
           price: this.getPrice(pair),
-          change: this.getChanges(pair),
+          change: this.getChanges(pair)
         }
       })
       return pairs
@@ -188,13 +188,13 @@ export default {
               borderColor: 'rgba(54, 162, 235, 1)',
               borderWidth: 1,
               pointStyle: 'dash',
-              barThickness: 15,
-            },
-          ],
+              barThickness: 15
+            }
+          ]
         }
       }
       return { labels: [], datasets: [] }
-    },
+    }
   },
   created() {
     const { poolid } = this.$route.params
@@ -248,8 +248,8 @@ export default {
       }).catch(e => {
         this.error = `This feature is not avalable in your country. \n这个功能尚未对你的国家开放。${e}`
       })
-    },
-  },
+    }
+  }
 }
 </script>
 

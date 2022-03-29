@@ -11,7 +11,7 @@ export const useResponsiveAppLeftSidebarVisibility = () => {
   })
 
   return {
-    mqShallShowLeftSidebar,
+    mqShallShowLeftSidebar
   }
 }
 
