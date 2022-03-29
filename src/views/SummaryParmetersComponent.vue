@@ -16,6 +16,7 @@
           md="6"
           sm="6"
           :class="item.customClass"
+          class="mb-1"
         >
           <div
             v-if="typeof item.title ==='object'"
@@ -53,10 +54,10 @@
             no-body
           >
             <b-media-aside
+              v-if="item.icon"
               class="mr-2"
             >
               <b-avatar
-                v-if="item.icon"
                 size="48"
                 :variant="item.color"
               >
@@ -67,12 +68,12 @@
               </b-avatar>
             </b-media-aside>
             <b-media-body class="my-auto">
+              <b-card-text class="font-small-3 c-mb-1 text-capitalize">
+                {{ item.subtitle }}
+              </b-card-text>
               <h4 class="font-weight-bolder mb-0">
                 {{ item.title || '-' }}
               </h4>
-              <b-card-text class="font-small-3 mb-1 text-capitalize">
-                {{ item.subtitle }}
-              </b-card-text>
             </b-media-body>
           </b-media>
         </b-col>

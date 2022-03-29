@@ -38,7 +38,7 @@
 
           <!-- Toggler Button -->
           <li class="nav-item nav-toggle">
-            <b-link class="nav-link modern-nav-toggle">
+            <b-link class="nav-link modern-nav-toggle my-0">
               <feather-icon
                 icon="XIcon"
                 size="20"

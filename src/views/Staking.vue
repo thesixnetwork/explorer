@@ -93,7 +93,7 @@
       no-body
     >
       <b-card-header class="d-flex justify-content-between">
-        <b-form-group>
+        <b-form-group class="mb-0">
           <b-form-radio-group
             id="btn-radios-1"
             v-model="selectedStatus"
@@ -108,7 +108,7 @@
           <span>Validators {{ validators.length }}/{{ stakingParameters.max_validators }} </span>
         </b-card-title>
       </b-card-header>
-      <b-card-body class="pl-0 pr-0">
+      <b-card-body>
         <b-table
           :items="list"
           :fields="validator_fields"
@@ -117,6 +117,7 @@
           striped
           hover
           responsive="sm"
+          class="mb-0"
         >
           <!-- A virtual column -->
           <template #cell(index)="data">
@@ -200,16 +201,20 @@
         </b-table>
       </b-card-body>
       <template #footer>
-        <small class="d-none d-md-block">
-          <b-badge variant="danger">
-              &nbsp;
-          </b-badge>
-          Top 33%
-          <b-badge variant="warning">
-              &nbsp;
-          </b-badge>
-          Top 67% of Voting Power
-        </small>
+        <div class="d-none d-md-block">
+          <small class="mr-1">
+            <b-badge variant="danger" class="c-mr-1">
+                &nbsp;
+            </b-badge>
+            Top 33%
+          </small>
+          <small>
+            <b-badge variant="warning" class="c-mr-1">
+                &nbsp;
+            </b-badge>
+            Top 67% of Voting Power
+          </small>
+        </div>
       </template>
     </b-card>
     <operation-delegate-component :validator-address="validator_address" />
@@ -277,8 +282,8 @@ export default {
         {
           key: 'index',
           label: '#',
-          tdClass: 'd-none d-md-block',
-          thClass: 'd-none d-md-block'
+          tdClass: 'd-none d-md-table-cell',
+          thClass: 'd-none d-md-table-cell'
         },
         { key: 'description', label: 'Validator' },
         {

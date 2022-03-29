@@ -31,6 +31,8 @@ html {
       .navbar-container.content, .content-wrapper, .main-menu .navigation > li ul .active {
         background: $theme-dark-body-bg;
       }
+
+      .content-header { background: transparent; }
     }
   }
   .content {
@@ -100,7 +102,7 @@ html {
       border-bottom-left-radius: 1rem;
       border-bottom-right-radius: 1rem;
       padding: 0 1.5rem 1.5rem 1.5rem;
-      min-height: calc(100vh - (#{$navbar-height} + 3rem + #{$footer-height}));
+      min-height: calc(100vh - (#{$navbar-height} + 2.5rem + #{$footer-height}));
 
       .content-header-title {
         font-weight: 500;
@@ -256,7 +258,7 @@ html {
   // for sticky navbar
   .navbar-sticky {
     .app-content {
-      padding: calc(#{$navbar-height} + 3rem - 1px) 1rem 0 0;
+      padding: calc(#{$navbar-height} + 2.5rem - 1px) 1rem 0 0;
     }
     // .app-content {
     //   padding: calc(#{$content-padding} + #{$navbar-height}) #{$content-padding} 0 #{$content-padding};

@@ -1,7 +1,7 @@
 <template>
   <b-row
     v-if="$route.meta.breadcrumb || $route.meta.pageTitle"
-    class="content-header mb-2"
+    class="content-header c-mx-n-5"
   >
 
     <!-- Content Left -->

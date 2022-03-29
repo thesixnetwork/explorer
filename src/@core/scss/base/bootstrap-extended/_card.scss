@@ -1,8 +1,10 @@
 .card {
   border: none;
-  margin-bottom: $content-padding;
-  box-shadow: $box-shadow;
+  // margin-bottom: $content-padding;
+  // box-shadow: $box-shadow;
+  margin-bottom: 1.5rem;
   transition: all 0.3s ease-in-out, background 0s, color 0s, border-color 0s;
+
   .card {
     box-shadow: none !important;
   }
@@ -11,7 +13,7 @@
     font-size: 1.285rem;
     margin-bottom: 1.53rem; // Considering sub-title minus margin
   }
-  .card-bordered {
+  &.card-bordered, .card-bordered {
     border: $card-border-width solid $card-border-color;
   }
   .card-img {
@@ -104,7 +106,7 @@
     }
   }
   .card-footer {
-    border-top: 1px solid $gray-300;
+    border-top: 1px solid $border-color;
     background-color: transparent;
   }
 }
@@ -413,11 +415,11 @@
 //------------------------------------------------
 
 .card-statistics {
-  .card-header {
-    padding-left: 2.4rem;
-  }
+  // .card-header {
+  //   padding-left: 2.4rem;
+  // }
   .statistics-body {
-    padding: 2rem 2.4rem 2.8rem !important;
+    // padding: 2rem 2.4rem 2.8rem !important;
 
     .avatar .avatar-content {
       width: 48px;

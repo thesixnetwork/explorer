@@ -1,4 +1,8 @@
+.content-header { background: darken($color: $body-bg, $amount: 3); padding: 0.5rem; }
+
 .breadcrumb {
+  .breadcrumb-item { font-size: 0.857rem; display: flex; align-items: center; }
+
   &:not([class*='breadcrumb-']) {
     .breadcrumb-item + .breadcrumb-item {
       &:before {
@@ -65,7 +69,7 @@
 }
 
 @media (max-width: 648px) {
-  .content-header .breadcrumb {
+  .content-header {
     display: none;
   }
   .breadcrumbs-top {

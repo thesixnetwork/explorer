@@ -1,5 +1,8 @@
 // bs table
 .table {
+  border-radius: 8px;
+  overflow: hidden;
+
   &.b-table {
     &.b-table-selectable {
       tr {

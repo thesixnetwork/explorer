@@ -34,7 +34,7 @@
       SIX Protocol Ecosystem 🚀
     </h2>
 
-    <div>
+    <div class="mb-2">
       <b-row align-h="center" class="match-height">
         <b-col
           v-for="(data,index) in chains"
@@ -45,7 +45,7 @@
           <router-link :to="data.chain_name">
             <b-card
               v-if="data"
-              class="earnings-card text-left"
+              class="earnings-card text-left card-bordered"
             >
               <div>
                 <b-card-title class="mb-1 text-uppercase">
@@ -94,6 +94,7 @@
         <!--/ no result found -->
       </b-row>
     </div>
+
     <app-footer class="mb-1" />
   </div>
 </template>

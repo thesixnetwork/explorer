@@ -24,7 +24,7 @@
   z-index: 997;
   padding: 1rem 1rem 0 0;
   
-  > .content { padding: 1.5rem; background: $body-bg; border-top-left-radius: 1rem; border-top-right-radius: 1rem; }
+  > .content { padding: 1.25rem 1.5rem; background: $body-bg; border-top-left-radius: 1rem; border-top-right-radius: 1rem; }
 
   &.fixed-top {
     left: $menu-expanded-width;

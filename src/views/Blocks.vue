@@ -9,42 +9,44 @@
           Blocks
         </b-card-title>
       </b-card-header>
-      <b-table
-        :items="blocks"
-        :fields="list_fields"
-        :sort-desc="true"
-        sort-by="tokens"
-        striped
-        hover
-        stacked="sm"
-      >
-        <!-- Column: Height -->
-        <template #cell(height)="data">
-          <router-link :to="`./blocks/${data.item.block.header.height}`">
-            {{ data.item.block.header.height }}
-          </router-link>
-        </template>
-        <template #cell(hash)="data">
-          <small>{{ data.item.block_id.hash }}</small>
-        </template>
-        <template #cell(time)="data">
-          {{ formatTime(data.item.block.header.time) }}
-        </template>
-        <template #cell(proposer)="data">
-          {{ formatProposer(data.item.block.header.proposer_address) }}
-        </template>
-        <template #cell(txs)="data">
-          {{ length(data.item.block.data.txs) }}
-        </template>
+      <b-card-body>
+        <b-table
+          :items="blocks"
+          :fields="list_fields"
+          :sort-desc="true"
+          sort-by="tokens"
+          striped
+          hover
+          stacked="sm"
+        >
+          <!-- Column: Height -->
+          <template #cell(height)="data">
+            <router-link :to="`./blocks/${data.item.block.header.height}`">
+              {{ data.item.block.header.height }}
+            </router-link>
+          </template>
+          <template #cell(hash)="data">
+            <small>{{ data.item.block_id.hash }}</small>
+          </template>
+          <template #cell(time)="data">
+            {{ formatTime(data.item.block.header.time) }}
+          </template>
+          <template #cell(proposer)="data">
+            {{ formatProposer(data.item.block.header.proposer_address) }}
+          </template>
+          <template #cell(txs)="data">
+            {{ length(data.item.block.data.txs) }}
+          </template>
 
-      </b-table>
+        </b-table>
+      </b-card-body>
     </b-card>
   </div>
 </template>
 
 <script>
 import {
-  BTable, BCard, BCardHeader, BCardTitle, VBTooltip,
+  BTable, BCard, BCardHeader, BCardTitle, VBTooltip, BCardBody
 } from 'bootstrap-vue'
 import {
   getCachedValidators,
@@ -59,6 +61,7 @@ export default {
     BTable,
     BCardHeader,
     BCardTitle,
+    BCardBody
   },
   directives: {
     'b-tooltip': VBTooltip,
