@@ -87,8 +87,8 @@
     <!-- Right Col -->
     <b-navbar-nav class="nav align-items-center ml-auto">
       <dark-Toggler class="d-none d-lg-block" />
-      <search-bar />
-      <locale />
+      <search-bar class="ml-1" />
+      <locale class="ml-1" />
       <b-dropdown
         class="ml-1"
         variant="link"

@@ -29,13 +29,14 @@
 
     &.open {
       position: absolute;
-      top: 0;
-      left: 0;
+      top: 1rem;
+      left: 1rem;
       z-index: 1000;
-      width: 100%;
+      width: calc(100% - 2rem);
       display: block;
       background: $white;
       border-radius: 0.5rem;
+      box-shadow: $box-shadow;
 
       .search-input-close,
       .search-input-icon {

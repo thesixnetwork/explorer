@@ -1,5 +1,5 @@
 <template>
-  <div class="text-center container-lg my-1">
+  <div class="home-bg">
     <b-nav
       align="right"
       style="width:100%;"
@@ -10,92 +10,95 @@
       <b-button
         v-ripple.400="'rgba(255, 255, 255, 0.15)'"
         variant="primary"
-        class="btn-icon mt-20"
+        class="btn-icon"
         :to="{ name: 'accounts' }"
       >
-        <span class="align-middle mr-25">Connect Wallet</span>
-        <feather-icon icon="UnlockIcon" />
+        <feather-icon icon="UserIcon" />
+        <span class="align-middle mr-25"> Connect Wallet</span>
       </b-button>
     </b-nav>
-    <b-link>
-      <div class="d-flex justify-content-center align-items-center">
-        <h1
-          class="text-primary display-4 font-weight-bolder d-none d-md-block"
-        >
-          SIX Scan<small class="flow-left">Beta</small>
-        </h1>
-      </div>
-    </b-link>
 
-    <p class="mb-1">
-      <b>SIX PROTOCOL</b> explorer is not just an explorer but also a wallet and more ... 🛠
-    </p>
-    <h2 class="mb-3">
-      SIX Protocol Ecosystem 🚀
-    </h2>
+    <div class="text-center container-lg flex-grow py-2">
+      <b-link>
+        <div class="d-flex justify-content-center align-items-center">
+          <h1
+            class="text-primary display-4 font-weight-bolder d-none d-md-block"
+          >
+            SIX Scan<small class="flow-left">Beta</small>
+          </h1>
+        </div>
+      </b-link>
 
-    <div class="mb-2">
-      <b-row align-h="center" class="match-height">
-        <b-col
-          v-for="(data,index) in chains"
-          :key="index"
-          md="3"
-          sm="6"
-        >
-          <router-link :to="data.chain_name">
-            <b-card
-              v-if="data"
-              class="earnings-card text-left card-bordered"
-            >
-              <div>
-                <b-card-title class="mb-1 text-uppercase">
-                  {{ data.chain_title }} <small class="font-small-2">{{ data.sdk_version }}</small>
-                </b-card-title>
+      <p class="mb-1">
+        <b>SIX PROTOCOL</b> explorer is not just an explorer but also a wallet and more ... 🛠
+      </p>
+      <h2 class="mb-3">
+        SIX Protocol Ecosystem 🚀
+      </h2>
 
-                <div class="d-flex justify-content-between">
-                  <div>
-                    <div class="font-small-2">
-                      Height
+      <div class="mb-2">
+        <b-row align-h="center" class="match-height">
+          <b-col
+            v-for="(data,index) in chains"
+            :key="index"
+            md="3"
+            sm="6"
+          >
+            <router-link :to="data.chain_name">
+              <b-card
+                v-if="data"
+                class="earnings-card text-left card-bordered"
+              >
+                <div>
+                  <b-card-title class="mb-1 text-uppercase">
+                    {{ data.chain_title }} <small class="font-small-2">{{ data.sdk_version }}</small>
+                  </b-card-title>
+
+                  <div class="d-flex justify-content-between">
+                    <div>
+                      <div class="font-small-2">
+                        Height
+                      </div>
+                      <h5 class="mb-1">
+                        {{ data.height || '0' }}
+                      </h5>
                     </div>
-                    <h5 class="mb-1">
-                      {{ data.height || '0' }}
-                    </h5>
+                    <div>
+                      <b-avatar
+                        :src="data.logo"
+                        class="badge-minimal"
+                        variant="light-primary"
+                        rounded
+                        size="md"
+                        badge
+                        :badge-variant="data.variant"
+                      />
+                    </div>
                   </div>
-                  <div>
-                    <b-avatar
-                      :src="data.logo"
-                      class="badge-minimal"
-                      variant="light-primary"
-                      rounded
-                      size="md"
-                      badge
-                      :badge-variant="data.variant"
-                    />
-                  </div>
+                  <b-card-text class="text-muted font-small-2">
+                    <span> Updated on </span><span class="font-weight-bolder">{{ data.time || '...' }}</span>
+                  </b-card-text>
                 </div>
-                <b-card-text class="text-muted font-small-2">
-                  <span> Updated on </span><span class="font-weight-bolder">{{ data.time || '...' }}</span>
-                </b-card-text>
-              </div>
-            </b-card>
-          </router-link>
-        </b-col>
+              </b-card>
+            </router-link>
+          </b-col>
 
-        <!-- no result found -->
-        <b-col
-          v-show="!chains"
-          cols="12"
-          class="text-center"
-        >
-          <h4 class="mt-4">
-            No blockchain found!!
-          </h4>
-        </b-col>
-        <!--/ no result found -->
-      </b-row>
+          <!-- no result found -->
+          <b-col
+            v-show="!chains"
+            cols="12"
+            class="text-center"
+          >
+            <h4 class="mt-4">
+              No blockchain found!!
+            </h4>
+          </b-col>
+          <!--/ no result found -->
+        </b-row>
+      </div>
     </div>
 
-    <app-footer class="mb-1" />
+    <app-footer class="flex" />
   </div>
 </template>
 

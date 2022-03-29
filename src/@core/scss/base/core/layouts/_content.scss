@@ -402,6 +402,11 @@ html {
   overflow: hidden;
 }
 
+.home-bg {
+  padding: 1.5rem; min-height: 100vh; display: flex; flex-direction: column;
+  // background-image: linear-gradient(to right bottom, #e6f7ff, #eef8ff, #f6faff, #fbfcff, #ffffff);
+}
+
 /*
 * Col 3 layout for detached and general type
 */
