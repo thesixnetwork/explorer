@@ -158,7 +158,7 @@
                           :value="key"
                         >
                           <b-avatar
-                            :src="item.logo"
+                            :src="appLogoImage"
                             size="18"
                             variant="light-primary"
                             rounded=""

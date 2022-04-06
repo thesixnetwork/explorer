@@ -241,7 +241,7 @@
               :items="txs"
               striped
               hover
-              responsive="sm"
+              responsive
               stacked="sm"
             >
               <template #cell(height)="data">

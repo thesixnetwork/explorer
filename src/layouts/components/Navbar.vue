@@ -1,6 +1,5 @@
 <template>
   <div class="navbar-container d-flex content align-items-center">
-
     <!-- Nav Menu Toggler -->
     <!-- <ul class="nav navbar-nav d-lg-none">
       <li class="nav-item">
@@ -27,11 +26,7 @@
 
     <!-- Left Col -->
     <div class="bookmark-wrapper align-items-center flex-grow-1 d-flex">
-      <b-media
-        v-if="selected_chain"
-        no-body
-        class="flex align-center"
-      >
+      <b-media v-if="selected_chain" no-body class="flex align-center">
         <b-media-aside class="mr-75">
           <b-link
             class="nav-link"
@@ -47,16 +42,16 @@
               :src="selected_chain.logo"
               class="badge-minimal"
               :badge-variant="variant"
-            /></b-link>
+          /></b-link>
         </b-media-aside>
-        <b-media-body 
-          class="my-auto" 
-        >
+        <b-media-body class="my-auto">
           <h3 class="c-mb-1">
-            <span class="text-uppercase">{{ selected_chain.chain_title || chainid }}</span>
+            <span class="text-uppercase">{{
+              selected_chain.chain_title || chainid
+            }}</span>
           </h3>
-          <small 
-            id="data-provider" 
+          <small
+            id="data-provider"
             class="flex align-center d-none d-md-block d-md-inline-block"
           >
             {{ currentApi }} ({{ selected_chain.sdk_version || '-' }})&nbsp;
@@ -94,19 +89,12 @@
       <dark-Toggler />
       <search-bar />
       <!-- <locale /> -->
-      <b-dropdown
-        class="ml-1"
-        variant="link"
-        no-caret
-        toggle-class="p-0"
-        right
-      >
-
+      <b-dropdown class="ml-1" variant="link" no-caret toggle-class="p-0" right>
         <template #button-content>
           <b-button
             v-ripple.400="'rgba(255, 255, 255, 0.15)'"
-            variant="primary"
-            class="btn-icon"
+            variant="link"
+            class="btn-icon customizer-button"
           >
             <feather-icon icon="UserIcon" />
             {{ walletName }}
@@ -125,33 +113,21 @@
         </b-dropdown-item> -->
 
         <b-dropdown-item :to="{ name: 'accounts' }">
-          <feather-icon
-            icon="KeyIcon"
-            size="16"
-          />
+          <feather-icon icon="KeyIcon" size="16" />
           <span class="align-middle ml-50">Accounts</span>
         </b-dropdown-item>
 
         <b-dropdown-item :to="{ name: 'delegations' }">
-          <feather-icon
-            icon="BookOpenIcon"
-            size="16"
-          />
+          <feather-icon icon="BookOpenIcon" size="16" />
           <span class="align-middle ml-50">My Delegations</span>
         </b-dropdown-item>
 
         <b-dropdown-item :to="`/${selected_chain.chain_name}/uptime/my`">
-          <feather-icon
-            icon="AirplayIcon"
-            size="16"
-          />
+          <feather-icon icon="AirplayIcon" size="16" />
           <span class="align-middle ml-50">My Validators</span>
         </b-dropdown-item>
         <b-dropdown-item :to="`/wallet/transactions`">
-          <feather-icon
-            icon="LayersIcon"
-            size="16"
-          />
+          <feather-icon icon="LayersIcon" size="16" />
           <span class="align-middle ml-50">My Transactions</span>
         </b-dropdown-item>
       </b-dropdown>
@@ -161,17 +137,25 @@
 
 <script>
 import {
-  BLink, BNavbarNav, BMedia, BMediaAside, BAvatar, BMediaBody, VBTooltip, BButton,
-  BDropdown, BDropdownItem
-} from 'bootstrap-vue'
-import Ripple from 'vue-ripple-directive'
-import DarkToggler from '@core/layouts/components/app-navbar/components/DarkToggler.vue'
+  BLink,
+  BNavbarNav,
+  BMedia,
+  BMediaAside,
+  BAvatar,
+  BMediaBody,
+  VBTooltip,
+  BButton,
+  BDropdown,
+  BDropdownItem
+} from 'bootstrap-vue';
+import Ripple from 'vue-ripple-directive';
+import DarkToggler from '@core/layouts/components/app-navbar/components/DarkToggler.vue';
 // import Locale from '@core/layouts/components/app-navbar/components/Locale.vue'
-import SearchBar from '@core/layouts/components/app-navbar/components/SearchBar.vue'
+import SearchBar from '@core/layouts/components/app-navbar/components/SearchBar.vue';
 // import CartDropdown from '@core/layouts/components/app-navbar/components/CartDropdown.vue'
-import { getLocalAccounts, timeIn, toDay } from '@/libs/utils'
+import { getLocalAccounts, timeIn, toDay } from '@/libs/utils';
 // import UserDropdown from '@core/layouts/components/app-navbar/components/UserDropdown.vue'
-import responsive from 'vue-responsive'
+import responsive from 'vue-responsive';
 
 export default {
   components: {
@@ -208,60 +192,80 @@ export default {
       tips: 'Synced',
       index: 0,
       chainid: ''
-    }
+    };
   },
   computed: {
     walletName() {
-      const key = this.$store?.state?.chains?.defaultWallet
-      return key || 'Wallet'
+      const key = this.$store?.state?.chains?.defaultWallet;
+      return key || 'Wallet';
     },
     selected_chain() {
-      this.block()
-      return this.$store.state.chains.selected
+      this.block();
+      return this.$store.state.chains.selected;
     },
     chainVariant() {
-      return this.variant
+      return this.variant;
     },
     currentApi() {
-      return this.index + 1 > this.apiOptions.length ? this.apiOptions[0] : this.apiOptions[this.index]
+      return this.index + 1 > this.apiOptions.length
+        ? this.apiOptions[0]
+        : this.apiOptions[this.index];
     },
     apiOptions() {
-      const conf = this.$store.state.chains.selected
+      const conf = this.$store.state.chains.selected;
       if (Array.isArray(conf.api)) {
-        return conf.api
+        return conf.api;
       }
-      return [conf.api]
+      return [conf.api];
     }
   },
   mounted() {
-    const accounts = Object.keys(getLocalAccounts() || {})
+    const accounts = Object.keys(getLocalAccounts() || {});
     if (!this.$store.state.chains.defaultWallet && accounts.length > 0) {
-      this.$store.commit('setDefaultWallet', accounts[0])
+      this.$store.commit('setDefaultWallet', accounts[0]);
     }
   },
   methods: {
     change(v) {
-      this.index = v
-      const conf = this.$store.state.chains.selected
-      localStorage.setItem(`${conf.chain_name}-api-index`, v)
+      this.index = v;
+      const conf = this.$store.state.chains.selected;
+      localStorage.setItem(`${conf.chain_name}-api-index`, v);
     },
     block() {
-      const conf = this.$store.state.chains.selected
-      const s = localStorage.getItem(`${conf.chain_name}-api-index`) || 0
-      this.index = Number(s)
-      this.$store.commit('setHeight', 0)
+      const conf = this.$store.state.chains.selected;
+      const s = localStorage.getItem(`${conf.chain_name}-api-index`) || 0;
+      this.index = Number(s);
+      this.$store.commit('setHeight', 0);
       this.$http.getLatestBlock().then(block => {
-        this.chainid = block.block.header.chain_id
-        this.$store.commit('setHeight', Number(block.block.header.height))
+        this.chainid = block.block.header.chain_id;
+        this.$store.commit('setHeight', Number(block.block.header.height));
         if (timeIn(block.block.header.time, 1, 'm')) {
-          this.variant = 'danger'
-          this.tips = `Halted ${toDay(block.block.header.time, 'from')}, Height: ${this.$store.state.chains.height} `
+          this.variant = 'danger';
+          this.tips = `Halted ${toDay(
+            block.block.header.time,
+            'from'
+          )}, Height: ${this.$store.state.chains.height} `;
         } else {
-          this.variant = 'success'
-          this.tips = 'Synced'
+          this.variant = 'success';
+          this.tips = 'Synced';
         }
-      })
+      });
     }
   }
-}
+};
 </script>
+
+<style lang="scss" scoped>
+@import '~@core/scss/base/bootstrap-extended/include';
+@import '~@core/scss/base/components/variables-dark';
+
+.customizer-button {
+  background-color: #002770;
+  color: #fff;
+  border-radius: 12px;
+
+  .dark-layout & {
+    background-color: #40d7fc;
+  }
+}
+</style>

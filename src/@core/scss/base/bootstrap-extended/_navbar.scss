@@ -23,8 +23,13 @@
   transition: 300ms ease all, background 0s;
   z-index: 997;
   padding: 1rem 1rem 0 0;
-  
-  > .content { padding: 1.5rem; background: $body-bg; border-top-left-radius: 1rem; border-top-right-radius: 1rem; }
+
+  > .content {
+    padding: 1.5rem;
+    background: $body-bg;
+    border-top-left-radius: 1rem;
+    border-top-right-radius: 1rem;
+  }
 
   &.fixed-top {
     left: $menu-expanded-width;
@@ -69,7 +74,9 @@
     position: fixed;
     right: 0;
     margin: #{$floating-nav-margin} #{$content-padding} 0;
-    width: calc(100vw - (100vw - 100%) - calc(#{$content-padding} * 2) - #{$menu-expanded-width});
+    width: calc(
+      100vw - (100vw - 100%) - calc(#{$content-padding} * 2) - #{$menu-expanded-width}
+    );
     border-radius: $card-border-radius;
     z-index: 12;
   }
@@ -295,7 +302,8 @@
           }
 
           img {
-            box-shadow: 0 4px 8px 0 rgba($black, 0.12), 0 2px 4px 0 rgba($black, 0.08);
+            box-shadow: 0 4px 8px 0 rgba($black, 0.12),
+              0 2px 4px 0 rgba($black, 0.08);
           }
         }
 

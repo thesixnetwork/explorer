@@ -1,6 +1,6 @@
 {
     "chain_name": "fivenet",
-    "chain_title": "SIX Protocol Testnet",
+    "chain_title": "SIX Testnet",
     "api": [
         "https://api.fivenet.sixscan.io"
     ],
