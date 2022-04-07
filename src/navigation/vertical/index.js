@@ -1,5 +1,5 @@
-import store from '@/store'
-import { isTestnet } from '../../libs/utils'
+import store from '@/store';
+import { isTestnet } from '../../libs/utils';
 
 const modules = [
   {
@@ -38,37 +38,36 @@ const modules = [
     title: 'trade',
     route: 'osmosis-trade'
   }
-]
+];
 
 function processMenu() {
   const chainMenus = [
     {
       header: 'blockchains'
     }
-  ]
+  ];
   Object.keys(store.state.chains.config).forEach(chain => {
-    
     const menu = {
       title: store.state.chains.config[chain].chain_title,
       icon: store.state.chains.config[chain].logo
-    }
-    const { excludes } = store.state.chains.config[chain]
-    const children = []
+    };
+    const { excludes } = store.state.chains.config[chain];
+    const children = [];
     modules.forEach(m => {
       if (excludes === undefined || excludes.indexOf(m.route) === -1) {
         if (m.scope.match('normal') || m.scope.match(chain)) {
           children.push({
-          // header: `item-${chain}-${m.route}`,
+            // header: `item-${chain}-${m.route}`,
             title: m.title,
             route: { name: m.route, params: { chain } }
-          })
+          });
         }
       }
-    })
-    menu.children = children
-    chainMenus.push(menu)
-  })
-  chainMenus.push({ header: 'SOCIALS' })
+    });
+    menu.children = children;
+    chainMenus.push(menu);
+  });
+  chainMenus.push({ header: 'SOCIALS' });
   // if (isTestnet()) {
   //   chainMenus.push({
   //     title: 'Mainnet Explorer',
@@ -86,19 +85,19 @@ function processMenu() {
     title: 'Discord',
     href: 'https://discord.gg/',
     icon: 'EyeIcon'
-  })
+  });
   chainMenus.push({
     title: 'Twitter',
     href: 'https://twitter.com/theSIXnetwork',
     icon: 'TwitterIcon'
-  })
+  });
   chainMenus.push({
     title: 'Github',
     href: 'https://github.com/thesixnetwork/explorer',
     icon: 'GithubIcon'
-  })
+  });
 
-  return chainMenus
+  return chainMenus;
 }
 
-export default processMenu()
+export default processMenu();

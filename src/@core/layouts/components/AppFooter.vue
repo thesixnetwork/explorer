@@ -2,23 +2,16 @@
   <p class="mb-0">
     <span class="d-none d-md-block d-md-inline-block">
       Powered By
-      <b-link 
-        class="ml-25 font-weight-bolder" 
-        href="https://six.network" 
+      <b-link
+        class="ml-25 font-weight-bolder customizer-text"
+        href="https://six.network"
         target="_blank"
       >
         SIX Network
       </b-link>
     </span>
-    <router-link
-      v-ripple.400="'rgba(113, 102, 240, 0.15)'"
-      to="/"
-      class="ml-auto"
-    >
-      <span
-        v-ripple.400="'rgba(113, 102, 240, 0.15)'"
-        variant="outline-primary"
-      >
+    <router-link to="/" class="ml-auto">
+      <span class="customizer-text">
         © {{ new Date().getFullYear() }} SIX Network PTE. LTD.
       </span>
     </router-link>
@@ -40,3 +33,16 @@ export default {
   }
 };
 </script>
+
+<style lang="scss" scoped>
+@import '~@core/scss/base/bootstrap-extended/include';
+@import '~@core/scss/base/components/variables-dark';
+
+.customizer-text {
+  color: #002770;
+
+  .dark-layout & {
+    color: #40d7fc;
+  }
+}
+</style>

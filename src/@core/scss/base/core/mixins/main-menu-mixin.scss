@@ -211,29 +211,29 @@
           top: 1px;
         }
       }
-      > ul li {
-        // &:first-of-type {
-        //   margin-top: 7px !important;
-        // }
+      // > ul li {
+      //   &:first-of-type {
+      //     margin-top: 7px !important;
+      //   }
 
-        // &:not(.has-sub) {
-        //   margin: 0 15px;
-        // }
-        // &.has-sub {
-        //   > a {
-        //     margin: 0 15px;
-        //   }
+      //   &:not(.has-sub) {
+      //     margin: 0 15px;
+      //   }
+      //   &.has-sub {
+      //     > a {
+      //       margin: 0 15px;
+      //     }
 
-        //   > ul > li {
-        //     margin: 0 15px;
-        //   }
-        // }
-      }
+      //     > ul > li {
+      //       margin: 0 15px;
+      //     }
+      //   }
+      // }
       &.open:not(.menu-item-closing),
       &.sidebar-group-active {
         > a {
           color: $main-menu-top-open-color;
-          background: $main-menu-top-open-head-bg;
+          // background: $main-menu-top-open-head-bg;
           border-radius: 12px;
         }
       }

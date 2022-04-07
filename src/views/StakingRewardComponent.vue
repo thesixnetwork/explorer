@@ -96,7 +96,7 @@ import {
 import { sha256 } from '@cosmjs/crypto';
 import { toHex } from '@cosmjs/encoding';
 import { formatToken, numberWithCommas } from '@/libs/utils';
-import OperationWithdrawCommissionComponent from './OperationWithdrawCommissionComponent.vue';
+import OperationModal from '@/views/components/OperationModal/index.vue';
 
 export default {
   components: {
@@ -109,7 +109,8 @@ export default {
     BMedia,
     BMediaAside,
     BAvatar,
-    OperationWithdrawCommissionComponent
+    // eslint-disable-next-line vue/no-unused-components
+    OperationModal
   },
   props: {
     data: {

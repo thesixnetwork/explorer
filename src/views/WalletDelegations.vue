@@ -1,3 +1,4 @@
+/* eslint-disable */
 <template>
   <div>
     <router-link v-if="delegations.length === 0" to="/wallet/import">
@@ -102,11 +103,7 @@ import {
   tokenFormatter
 } from '@/libs/utils';
 import FeatherIcon from '@/@core/components/feather-icon/FeatherIcon.vue';
-
-import OperationWithdrawComponent from './OperationWithdrawComponent.vue';
-import OperationUnbondComponent from './OperationUnbondComponent.vue';
-import OperationDelegateComponent from './OperationDelegateComponent.vue';
-import OperationRedelegateComponent from './OperationRedelegateComponent.vue';
+import OperationModal from '@/views/components/OperationModal/index.vue';
 
 export default {
   components: {
@@ -116,11 +113,8 @@ export default {
     BTable,
     BCard,
     FeatherIcon,
-
-    OperationWithdrawComponent,
-    OperationDelegateComponent,
-    OperationRedelegateComponent,
-    OperationUnbondComponent
+    // eslint-disable-next-line vue/no-unused-components
+    OperationModal
   },
   directives: {
     'b-tooltip': VBTooltip,

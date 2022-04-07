@@ -23,15 +23,9 @@
         <ul class="nav navbar-nav flex-row">
           <!-- Logo & Text -->
           <li class="nav-item mr-auto">
-            <b-link 
-              class="navbar-brand" 
-              to="/"
-            >
+            <b-link class="navbar-brand" to="/">
               <span class="brand-logo">
-                <b-img 
-                  :src="appLogoImage" 
-                  alt="logo" 
-                />
+                <b-img :src="appLogoImage" alt="logo" />
               </span>
               <h2
                 :style="{
@@ -69,10 +63,7 @@
     <!-- / main menu header-->
 
     <!-- Shadow -->
-    <div 
-      :class="{ 'd-block': shallShadowBottom }" 
-      class="shadow-bottom" 
-    />
+    <div :class="{ 'd-block': shallShadowBottom }" class="shadow-bottom" />
 
     <!-- main menu content-->
     <vue-perfect-scrollbar

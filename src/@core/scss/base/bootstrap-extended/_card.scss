@@ -3,6 +3,7 @@
   margin-bottom: $content-padding;
   box-shadow: $box-shadow;
   transition: all 0.3s ease-in-out, background 0s, color 0s, border-color 0s;
+  border-radius: 12px;
   .card {
     box-shadow: none !important;
   }

@@ -17,10 +17,7 @@
       :style="cardStyles"
       v-on="$listeners"
     >
-      <div
-        v-if="showHeader"
-        class="card-header"
-      >
+      <div v-if="showHeader" class="card-header">
         <!-- Title & SubTitle -->
         <div>
           <b-card-title>{{ $attrs.title }}</b-card-title>
@@ -59,9 +56,14 @@
 
 <script>
 import {
-  BCard, BCardTitle, BCardSubTitle, BCardBody, BCollapse, BOverlay,
-} from 'bootstrap-vue'
-import BCardActionsContainer from './BCardActionsContainer.vue'
+  BCard,
+  BCardTitle,
+  BCardSubTitle,
+  BCardBody,
+  BCollapse,
+  BOverlay
+} from 'bootstrap-vue';
+import BCardActionsContainer from './BCardActionsContainer.vue';
 
 export default {
   components: {
@@ -71,30 +73,30 @@ export default {
     BCardSubTitle,
     BCardBody,
     BCollapse,
-    BOverlay,
+    BOverlay
   },
   inheritAttrs: false,
   props: {
     collapsed: {
       type: Boolean,
-      default: false,
+      default: false
     },
     noActions: {
       type: Boolean,
-      default: false,
+      default: false
     },
     actionCollapse: {
       type: Boolean,
-      default: false,
+      default: false
     },
     actionRefresh: {
       type: Boolean,
-      default: false,
+      default: false
     },
     actionClose: {
       type: Boolean,
-      default: false,
-    },
+      default: false
+    }
   },
   data() {
     return {
@@ -102,59 +104,65 @@ export default {
       content_visible: !this.collapsed,
       showLoading: false,
       cardClosed: false,
-      cardStyles: {},
-    }
+      cardStyles: {}
+    };
   },
   computed: {
     cardAttrs() {
-      const cardAttrs = JSON.parse(JSON.stringify(this.$attrs))
-      delete cardAttrs.title
-      delete cardAttrs['sub-title']
-      return cardAttrs
+      const cardAttrs = JSON.parse(JSON.stringify(this.$attrs));
+      delete cardAttrs.title;
+      delete cardAttrs['sub-title'];
+      return cardAttrs;
     },
     showHeader() {
-      return this.$attrs.title || this.$attrs['sub-title'] || !this.noActions
+      return this.$attrs.title || this.$attrs['sub-title'] || !this.noActions;
     },
     showActions() {
-      if (this.noActions) return false
-      return true
+      if (this.noActions) return false;
+      return true;
     },
     availableActions() {
-      const actions = []
-      const allFalse = (this.actionCollapse || this.actionRefresh || this.actionClose) === false
+      const actions = [];
+      const allFalse =
+        (this.actionCollapse || this.actionRefresh || this.actionClose) ===
+        false;
 
-      if (this.actionCollapse || allFalse) actions.push('collapse')
-      if (this.actionRefresh || allFalse) actions.push('refresh')
-      if (this.actionClose || allFalse) actions.push('close')
-      return actions
-    },
+      if (this.actionCollapse || allFalse) actions.push('collapse');
+      if (this.actionRefresh || allFalse) actions.push('refresh');
+      if (this.actionClose || allFalse) actions.push('close');
+      return actions;
+    }
   },
   created() {
-    this.parentID = String(Math.floor(Math.random() * 10) + 1)
+    this.parentID = String(Math.floor(Math.random() * 10) + 1);
   },
   methods: {
     removeCard() {
-      this.$set(this.cardStyles, 'maxHeight', `${this.$refs.bCard.clientHeight}px`)
+      this.$set(
+        this.cardStyles,
+        'maxHeight',
+        `${this.$refs.bCard.clientHeight}px`
+      );
       setTimeout(() => {
-        this.$set(this.cardStyles, 'maxHeight', '0px')
-        this.$set(this.cardStyles, 'overflow', 'hidden')
+        this.$set(this.cardStyles, 'maxHeight', '0px');
+        this.$set(this.cardStyles, 'overflow', 'hidden');
         // this.$set(this.cardStyles, 'marginBottom', '0')
-      }, 10)
+      }, 10);
     },
     triggerCollapse() {
-      this.content_visible = !this.content_visible
-      this.$emit('collapse')
+      this.content_visible = !this.content_visible;
+      this.$emit('collapse');
     },
     triggerRefresh() {
-      this.showLoading = true
-      this.$emit('refresh')
+      this.showLoading = true;
+      this.$emit('refresh');
     },
     triggerClose() {
-      this.removeCard()
-      this.$emit('close')
-    },
-  },
-}
+      this.removeCard();
+      this.$emit('close');
+    }
+  }
+};
 </script>
 
 <style lang="scss" scoped>

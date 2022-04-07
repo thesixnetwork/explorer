@@ -181,7 +181,7 @@
                   <small class="text-success">{{ errors[0] }}</small>
                 </validation-provider>
               </b-form-group>
-              <b-alert show variant="info">
+              <b-alert show variant="primary">
                 <div class="alert-heading">
                   IMPORTANT
                 </div>
