@@ -11,7 +11,7 @@
         v-ripple.400="'rgba(255, 255, 255, 0.15)'"
         variant="link"
         class="btn-icon mt-20 d-flex justify-content-center align-items-center customizer-button"
-        :to="{ name: 'accounts' }"
+        :to="`/fivenet`"
       >
         <span class="align-middle mr-25">Connect Wallet</span>
         <feather-icon icon="UnlockIcon" />
