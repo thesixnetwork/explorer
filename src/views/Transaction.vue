@@ -1,73 +1,58 @@
 <template>
   <div>
-    <b-card
-      title="Basic"
-      class="text-truncate"
-    >
-      <object-field-component
-        v-if="!tx.std"
-        :tablefield="tx.raw"
-      />
-      <b-table-simple
-        v-else
-        striped
-        stacked="sm"
-      >
+    <b-card title="Basic" class="text-truncate">
+      <object-field-component v-if="!tx.std" :tablefield="tx.raw" />
+      <b-table-simple v-else striped stacked="sm">
         <tbody>
           <b-tr>
             <b-td style="width:200px">
-              {{ 'txhash' }}
-            </b-td><b-td
-              class="text-truncate"
-            >{{ tx.txhash }}</b-td>
+              {{ 'txhash' }} </b-td
+            ><b-td class="text-truncate">{{ tx.txhash }}</b-td>
           </b-tr>
           <b-tr>
             <b-td>
-              {{ 'status' }}
-            </b-td><b-td class="text-wrap"> <b-badge
-              v-if="tx.code===0"
-              variant="light-success"
-            >
-              Success
-            </b-badge><b-badge
-              v-else
-              variant="light-danger"
-            >
-              Failed
-            </b-badge><b v-if="tx.code > 0"> {{ tx.raw_log }}</b> </b-td>
+              {{ 'status' }} </b-td
+            ><b-td class="text-wrap">
+              <b-badge v-if="tx.code === 0" variant="light-success">
+                Success </b-badge
+              ><b-badge v-else variant="light-danger">
+                Failed </b-badge
+              ><b v-if="tx.code > 0"> {{ tx.raw_log }}</b>
+            </b-td>
           </b-tr>
           <b-tr>
             <b-td>
-              {{ 'height' }}
-            </b-td><b-td>
+              {{ 'height' }} </b-td
+            ><b-td>
               <router-link :to="`../blocks/${tx.height}`">
                 {{ tx.height }}
-              </router-link></b-td>
+              </router-link></b-td
+            >
           </b-tr>
           <b-tr>
             <b-td>
-              {{ 'timestamp' }}
-            </b-td><b-td>{{ formatTime(tx.timestamp) }}</b-td>
+              {{ 'timestamp' }} </b-td
+            ><b-td>{{ formatTime(tx.timestamp) }}</b-td>
           </b-tr>
           <b-tr>
             <b-td>
-              {{ 'gas' }}
-            </b-td><b-td>{{ tx.gas_used }} / {{ tx.gas_wanted }}</b-td>
+              {{ 'gas' }} </b-td
+            ><b-td>{{ tx.gas_used }} / {{ tx.gas_wanted }}</b-td>
           </b-tr>
           <b-tr>
             <b-td>
-              {{ 'fee' }}
-            </b-td><b-td>{{ formattoken(tx.tx.fee) }}</b-td>
+              {{ 'fee' }} </b-td
+            ><b-td>{{ formattoken(tx.tx.fee) }}</b-td>
           </b-tr>
           <b-tr>
             <b-td>
-              {{ 'memo' }}
-            </b-td><b-td>{{ tx.tx.memo }}</b-td>
+              {{ 'memo' }} </b-td
+            ><b-td>{{ tx.tx.memo }}</b-td>
           </b-tr>
           <b-tr>
             <b-td>
-              {{ 'timeout_height' }}
-            </b-td><b-td>{{ tx.tx.timeout_height }}</b-td>
+              {{ 'timeout_height' }} </b-td
+            ><b-td>{{ tx.tx.timeout_height }}</b-td>
           </b-tr>
         </tbody>
       </b-table-simple>
@@ -79,7 +64,7 @@
       no-body
     >
       <b-card-body
-        v-for="(item, i) in tx.tx.messages "
+        v-for="(item, i) in tx.tx.messages"
         id="message"
         :key="i"
         class="message"
@@ -92,10 +77,15 @@
 
 <script>
 import {
-  BCard, BTableSimple, BTr, BTd, BBadge, BCardBody,
-} from 'bootstrap-vue'
-import { toDay, tokenFormatter } from '@/libs/utils'
-import ObjectFieldComponent from './ObjectFieldComponent.vue'
+  BCard,
+  BTableSimple,
+  BTr,
+  BTd,
+  BBadge,
+  BCardBody
+} from 'bootstrap-vue';
+import { toDay, tokenFormatter } from '@/libs/utils';
+import ObjectFieldComponent from './ObjectFieldComponent.vue';
 
 export default {
   components: {
@@ -105,45 +95,45 @@ export default {
     BTr,
     BTd,
     BBadge,
-    ObjectFieldComponent,
+    ObjectFieldComponent
   },
   data() {
     return {
-      tx: { tx: {} },
-    }
+      tx: { tx: {} }
+    };
   },
   beforeRouteUpdate(to, from, next) {
-    const { hash } = to.params
+    const { hash } = to.params;
     if (hash !== from.params.hash) {
       this.$http.getTxs(hash).then(res => {
-        this.tx = res
-      })
-      next()
+        this.tx = res;
+      });
+      next();
     }
   },
   created() {
-    const { hash } = this.$route.params
+    const { hash } = this.$route.params;
     this.$http.getTxs(hash).then(res => {
-      this.tx = res
-    })
+      this.tx = res;
+    });
   },
   methods: {
     formattoken: v => tokenFormatter(v),
-    formatTime: v => toDay(v),
-  },
-}
+    formatTime: v => toDay(v)
+  }
+};
 </script>
 
 <style>
 #message {
-    border-top-width: 2px;
-    border-top-style: double;
+  border-top-width: 2px;
+  border-top-style: double;
 }
 #message table.table-hover tr td:hover {
   border-style: solid;
   border-color: green;
 
-    border: double;
-    border-radius: 0.5px;
+  border: double;
+  border-radius: 0.5px;
 }
 </style>
