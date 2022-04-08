@@ -211,6 +211,16 @@ export default {
     background-color: #40d7fc;
     color: #fff;
   }
+
+  @include media-breakpoint-down(xs) {
+    padding: 6px 10px;
+    margin-top: 4px;
+    border-radius: 10px;
+
+    span {
+      font-size: 0.8rem;
+    }
+  }
 }
 
 .customizer-text {

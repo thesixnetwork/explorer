@@ -42,7 +42,8 @@
               :src="selected_chain.logo"
               class="badge-minimal"
               :badge-variant="variant"
-          /></b-link>
+            />
+          </b-link>
         </b-media-aside>
         <b-media-body class="my-auto">
           <h3 class="c-mb-1">
@@ -85,7 +86,7 @@
 
     <!-- <dark-Toggler class="d-none d-lg-block" /> -->
     <!-- Right Col -->
-    <b-navbar-nav class="nav align-items-center ml-auto">
+    <b-navbar-nav class="nav align-items-center ml-auto justify-content-end">
       <dark-Toggler />
       <search-bar />
       <!-- <locale /> -->
@@ -94,10 +95,10 @@
           <b-button
             v-ripple.400="'rgba(255, 255, 255, 0.15)'"
             variant="link"
-            class="btn-icon customizer-button"
+            class="btn-icon customizer-button d-flex justify-content-center align-items-center"
           >
             <feather-icon icon="UserIcon" />
-            {{ walletName }}
+            <span class="align-middle ml-25">{{ walletName }}</span>
           </b-button>
         </template>
 
@@ -266,6 +267,22 @@ export default {
 
   .dark-layout & {
     background-color: #40d7fc;
+  }
+
+  @include media-breakpoint-down(xs) {
+    padding: 6px 10px;
+    margin-top: 4px;
+    border-radius: 10px;
+
+    span {
+      font-size: 0.8rem;
+    }
+  }
+}
+
+h3 {
+  @include media-breakpoint-down(xs) {
+    font-size: 1.2rem;
   }
 }
 </style>
