@@ -13,8 +13,8 @@
         class="btn-icon mt-20 d-flex justify-content-center align-items-center customizer-button"
         :to="`/fivenet`"
       >
-        <span class="align-middle mr-25">Connect Wallet</span>
-        <feather-icon icon="UnlockIcon" />
+        <feather-icon icon="KeyIcon" size="16" />
+        <span class="align-middle ml-25">Wallet</span>
       </b-button>
     </b-nav>
     <b-link>

@@ -2,8 +2,8 @@
   <div>
     <b-alert variant="danger" :show="syncing">
       <div class="alert-body">
-        <span
-          >No new blocks have been produced since
+        <span>
+          No new blocks have been produced since
           <strong>{{ latestTime }}</strong>
         </span>
       </div>
@@ -232,7 +232,7 @@ export default {
       });
       this.timer = setInterval(this.fetch, 6000);
     });
-    /*
+
     this.$http.getLatestBlock().then(res => {
       const height = this.chain.items.findIndex(x => x.subtitle === 'height');
       console.log('this.chain', this.chain);
@@ -245,7 +245,7 @@ export default {
       }
       this.latestTime = toDay(res.block.header.time, 'long');
     });
-    */
+
     this.$http.getMarketChart().then(res => {
       this.marketData = res;
     });
@@ -364,7 +364,7 @@ export default {
           x => x.block.header.height === b.block.header.height
         );
         if (has < 0) this.blocks.unshift(b);
-        if (this.blocks.length > 200) this.blocks.pop();
+        if (this.blocks.length > 10) this.blocks.pop();
       });
     }
   }

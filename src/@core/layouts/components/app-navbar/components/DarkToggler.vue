@@ -3,7 +3,7 @@
     <feather-icon
       size="21"
       :icon="`${isDark ? 'Sun' : 'Moon'}Icon`"
-      class="customizer-text"
+      class="customizer-icon"
     />
   </b-nav-item>
 </template>
@@ -31,7 +31,7 @@ export default {
 @import '~@core/scss/base/bootstrap-extended/include';
 @import '~@core/scss/base/components/variables-dark';
 
-.customizer-text {
+.customizer-icon {
   color: #002770;
 
   .dark-layout & {

@@ -1,9 +1,5 @@
 <template>
-  <b-card
-    v-if="data"
-    no-body
-    :class="`card-statistics ${data.class} `"
-  >
+  <b-card v-if="data" no-body :class="`card-statistics ${data.class} `">
     <b-card-header>
       <b-card-title>{{ data.title }}</b-card-title>
     </b-card-header>
@@ -17,9 +13,7 @@
           sm="6"
           :class="item.customClass"
         >
-          <div
-            v-if="typeof item.title ==='object'"
-          >
+          <div v-if="typeof item.title === 'object'">
             <b-button
               :id="item.subtitle"
               variant="outline-primary"
@@ -42,28 +36,14 @@
                   v-if="Array.isArray(item.title)"
                   :tablefield="item.title"
                 />
-                <object-field-component
-                  v-else
-                  :tablefield="item.title"
-                /></span>
+                <object-field-component v-else :tablefield="item.title" />
+              </span>
             </b-popover>
           </div>
-          <b-media
-            v-else
-            no-body
-          >
-            <b-media-aside
-              class="mr-2"
-            >
-              <b-avatar
-                v-if="item.icon"
-                size="48"
-                :variant="item.color"
-              >
-                <feather-icon
-                  size="24"
-                  :icon="item.icon"
-                />
+          <b-media v-else no-body>
+            <b-media-aside class="mr-2">
+              <b-avatar v-if="item.icon" size="48" :variant="item.color">
+                <feather-icon size="24" :icon="item.icon" />
               </b-avatar>
             </b-media-aside>
             <b-media-body class="my-auto">
@@ -83,10 +63,22 @@
 
 <script>
 import {
-  BCard, BCardHeader, BCardTitle, BCardText, BCardBody, BRow, BCol, BMedia, BMediaAside, BAvatar, BMediaBody, BPopover, BButton,
-} from 'bootstrap-vue'
-import ObjectFieldComponent from './ObjectFieldComponent.vue'
-import ArrayFieldComponent from './ArrayFieldComponent.vue'
+  BCard,
+  BCardHeader,
+  BCardTitle,
+  BCardText,
+  BCardBody,
+  BRow,
+  BCol,
+  BMedia,
+  BMediaAside,
+  BAvatar,
+  BMediaBody,
+  BPopover,
+  BButton
+} from 'bootstrap-vue';
+import ObjectFieldComponent from './ObjectFieldComponent.vue';
+import ArrayFieldComponent from './ArrayFieldComponent.vue';
 
 export default {
   components: {
@@ -104,13 +96,13 @@ export default {
     BPopover,
     BButton,
     ObjectFieldComponent,
-    ArrayFieldComponent,
+    ArrayFieldComponent
   },
   props: {
     data: {
       type: [Object, Array],
-      default: () => {},
-    },
-  },
-}
+      default: () => {}
+    }
+  }
+};
 </script>
