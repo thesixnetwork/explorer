@@ -40,16 +40,21 @@
               rounded
               size="42"
               :src="selected_chain.logo"
-              class="badge-minimal"
+              class="badge-minimal d-none d-sm-block"
               :badge-variant="variant"
+            />
+            <feather-icon
+              icon="MenuIcon"
+              size="26"
+              class="cursor-pointer d-xs-block d-sm-none d-md-none"
             />
           </b-link>
         </b-media-aside>
-        <b-media-body class="my-auto">
-          <h3 class="c-mb-1">
-            <span class="text-uppercase">{{
-              selected_chain.chain_title || chainid
-            }}</span>
+        <b-media-body>
+          <h3 class="c-mb-0">
+            <span class="text-uppercase">
+              {{ selected_chain.chain_title || chainid }}
+            </span>
           </h3>
           <small
             id="data-provider"
@@ -282,7 +287,7 @@ export default {
 
 h3 {
   @include media-breakpoint-down(xs) {
-    font-size: 1.2rem;
+    font-size: 1.1rem;
   }
 }
 </style>

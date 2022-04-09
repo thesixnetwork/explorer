@@ -1,11 +1,11 @@
 <template>
   <div>
     <b-card
-      v-if="pingVals && pingVals.length > 0"
+      v-if="stakeVals && stakeVals.length > 0"
       title="❤️ Helping SIX PROTOCOL By Staking ❤️"
     >
       <b-table
-        :items="pingVals"
+        :items="stakeVals"
         :fields="validator_fields"
         :sort-desc="true"
         sort-by="tokens"
@@ -29,7 +29,7 @@
                 v-if="data.item.avatar"
                 v-b-tooltip.hover.v-primary
                 v-b-tooltip.hover.right="data.item.description.details"
-                size="32"
+                size="30"
                 variant="light-primary"
                 :src="data.item.avatar"
               />
@@ -37,8 +37,9 @@
                 v-if="!data.item.avatar"
                 v-b-tooltip.hover.v-primary
                 v-b-tooltip.hover.right="data.item.description.details"
+                size="26"
               >
-                <feather-icon icon="ServerIcon" />
+                <feather-icon icon="ServerIcon" size="16" />
               </b-avatar>
             </template>
             <span class="font-weight-bolder d-block text-nowrap">
@@ -57,20 +58,21 @@
             <span class="font-weight-bold mb-0">{{
               tokenFormatter(data.item.tokens, stakingParameters.bond_denom)
             }}</span>
-            <span class="font-small-2 text-muted text-nowrap d-none d-lg-block"
-              >{{ percent(data.item.tokens / stakingPool) }}%</span
-            >
+            <span class="font-small-2 text-muted text-nowrap d-none d-lg-block">
+              {{ percent(data.item.tokens / stakingPool) }}%
+            </span>
           </div>
           <span v-else>{{ data.item.delegator_shares }}</span>
         </template>
-        <!-- Token -->
+        <!-- Change -->
         <template #cell(changes)="data">
-          <small v-if="data.item.changes > 0" class="text-success"
-            >+{{ data.item.changes }}</small
-          >
+          <small v-if="data.item.changes > 0" class="text-success">
+            +{{ data.item.changes }}
+          </small>
           <small v-else-if="data.item.changes === 0">-</small>
           <small v-else class="text-danger">{{ data.item.changes }}</small>
         </template>
+        <!-- Operation -->
         <template #cell(operation)="data">
           <b-button
             v-b-modal.delegate-window
@@ -99,14 +101,14 @@
           />
         </b-form-group>
         <b-card-title class="d-none d-sm-block">
-          <span
-            >Validators {{ validators.length }}/{{
+          <span>
+            Validators {{ validators.length }}/{{
               stakingParameters.max_validators
             }}
           </span>
         </b-card-title>
       </b-card-header>
-      <b-card-body class="pl-0 pr-0">
+      <b-card no-body class="text-truncate">
         <b-table
           :items="list"
           :fields="validator_fields"
@@ -115,9 +117,10 @@
           striped
           hover
           responsive="sm"
+          stacked="sm"
         >
           <!-- A virtual column -->
-          <template #cell(index)="data">
+          <template #cell(index)="data" class="text-truncate">
             <b-badge :variant="rankBadge(data)" class="text-truncate">
               {{ data.index + 1 }}
             </b-badge>
@@ -142,8 +145,9 @@
                   v-if="!data.item.avatar"
                   v-b-tooltip.hover.v-primary
                   v-b-tooltip.hover.right="data.item.description.details"
+                  size="26"
                 >
-                  <feather-icon icon="ServerIcon" />
+                  <feather-icon icon="ServerIcon" size="14" />
                 </b-avatar>
               </template>
               <span class="font-weight-bolder d-block text-nowrap">
@@ -151,9 +155,12 @@
                   {{ data.item.description.moniker }}
                 </router-link>
               </span>
-              <small class="text-muted">{{
-                data.item.description.website || data.item.description.identity
-              }}</small>
+              <small class="text-muted">
+                {{
+                  data.item.description.website ||
+                    data.item.description.identity
+                }}
+              </small>
             </b-media>
           </template>
           <!-- Token -->
@@ -164,16 +171,17 @@
               }}</span>
               <span
                 class="font-small-2 text-muted text-nowrap d-none d-lg-block"
-                >{{ percent(data.item.tokens / stakingPool) }}%</span
               >
+                {{ percent(data.item.tokens / stakingPool) }}%
+              </span>
             </div>
             <span v-else>{{ data.item.delegator_shares }}</span>
           </template>
           <!-- Token -->
           <template #cell(changes)="data">
-            <small v-if="data.item.changes > 0" class="text-success"
-              >+{{ data.item.changes }}</small
-            >
+            <small v-if="data.item.changes > 0" class="text-success">
+              +{{ data.item.changes }}
+            </small>
             <small v-else-if="data.item.changes === 0">-</small>
             <small v-else class="text-danger">{{ data.item.changes }}</small>
           </template>
@@ -190,14 +198,14 @@
             </b-button>
           </template>
         </b-table>
-      </b-card-body>
+      </b-card>
       <template #footer>
         <small class="d-none d-md-block">
           <b-badge variant="danger">
             &nbsp;
           </b-badge>
           Top 33%
-          <b-badge variant="warning">
+          <b-badge variant="warning" class="ml-1">
             &nbsp;
           </b-badge>
           Top 67% of Voting Power
@@ -218,7 +226,6 @@ import {
   BCardHeader,
   BCardTitle,
   VBTooltip,
-  BCardBody,
   BButton,
   BFormRadioGroup,
   BFormGroup
@@ -238,7 +245,6 @@ export default {
     BBadge,
     BCardHeader,
     BCardTitle,
-    BCardBody,
     BButton,
     BFormRadioGroup,
     BFormGroup,
@@ -287,25 +293,21 @@ export default {
           key: 'tokens',
           label: 'Voting Power',
           sortable: true,
-          tdClass: 'text-right',
-          thClass: 'text-right',
-          sortByFormatted: true
+          sortByFormatted: true,
+          sortable: true
         },
         {
           key: 'changes',
-          label: '24H Changes'
+          label: '24H Changes',
+          tdClass: 'text-truncate'
         },
         {
           key: 'commission',
-          formatter: value => `${percent(value.rate)}%`,
-          tdClass: 'text-right',
-          thClass: 'text-right'
+          formatter: value => `${percent(value.rate)}%`
         },
         {
           key: 'operation',
-          label: '',
-          tdClass: 'text-right',
-          thClass: 'text-right'
+          label: 'Actions'
         }
       ],
       statusOptions: [
@@ -319,7 +321,7 @@ export default {
     };
   },
   computed: {
-    pingVals() {
+    stakeVals() {
       return this.list.filter(x => this.keys.includes(x.operator_address));
     },
     list() {
