@@ -19,6 +19,7 @@
             v-else
             icon="MenuIcon"
             size="21"
+            class="customizer-icon"
           />
         </b-link>
       </li>
@@ -46,7 +47,7 @@
             <feather-icon
               icon="MenuIcon"
               size="26"
-              class="cursor-pointer d-xs-block d-sm-none d-md-none"
+              class="cursor-pointer customizer-icon d-xs-block d-sm-none d-md-none"
             />
           </b-link>
         </b-media-aside>
@@ -287,7 +288,15 @@ export default {
 
 h3 {
   @include media-breakpoint-down(xs) {
-    font-size: 1.1rem;
+    font-size: 1.2rem;
+  }
+}
+
+.customizer-icon {
+  color: #002770;
+
+  .dark-layout & {
+    color: #40d7fc;
   }
 }
 </style>
