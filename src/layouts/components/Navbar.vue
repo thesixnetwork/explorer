@@ -41,13 +41,13 @@
               rounded
               size="42"
               :src="selected_chain.logo"
-              class="badge-minimal d-none d-sm-block"
+              class="badge-minimal d-none d-xl-block"
               :badge-variant="variant"
             />
             <feather-icon
               icon="MenuIcon"
               size="26"
-              class="cursor-pointer customizer-icon d-xs-block d-sm-none d-md-none"
+              class="cursor-pointer customizer-icon  d-xs-block d-sm-block d-md-block d-lg-block d-xl-none"
             />
           </b-link>
         </b-media-aside>
@@ -96,7 +96,13 @@
       <dark-Toggler />
       <search-bar />
       <!-- <locale /> -->
-      <b-dropdown class="ml-1" variant="link" no-caret toggle-class="p-0" right>
+      <b-dropdown
+        class="c-ml-1"
+        variant="link"
+        no-caret
+        toggle-class="p-0"
+        right
+      >
         <template #button-content>
           <b-button
             v-ripple.400="'rgba(255, 255, 255, 0.15)'"
@@ -297,6 +303,9 @@ h3 {
 
   .dark-layout & {
     color: #40d7fc;
+  }
+
+  @include media-breakpoint-down(sm) {
   }
 }
 </style>

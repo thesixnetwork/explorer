@@ -31,7 +31,10 @@
               KRW (대한민국원)
             </b-dropdown-item>
           </b-dropdown>
-          <h2 class="mt-1 mb-0">{{ currency }}{{ calculateTotal }}</h2>
+          <h2 class="mt-1 mb-0">
+            {{ currency }}
+            {{ calculateTotal }}
+          </h2>
           <small v-if="calculateTotalChange > 0" class="my-0 text-success">
             +{{ formatTotalChange(calculateTotalChange) }} (24h)
           </small>
@@ -39,8 +42,8 @@
             {{ formatTotalChange(calculateTotalChange) }} (24h)
           </small>
           <span @click="refreshPrice()">
-            <feather-icon icon="RefreshCwIcon" size="12"
-          /></span>
+            <feather-icon icon="RefreshCwIcon" size="12" />
+          </span>
           <!-- chart -->
           <chart-component-doughnut
             :height="160"
@@ -86,10 +89,8 @@
               <b-card-header>
                 <div>
                   <b-card-title>
-                    <span class="text-uppercase">{{
-                      acc.chain
-                    }}</span></b-card-title
-                  >
+                    <span class="text-uppercase">{{ acc.chain }} </span>
+                  </b-card-title>
                 </div>
                 <feather-icon
                   v-b-tooltip.hover.v-danger
@@ -115,8 +116,8 @@
                           {{ currency }}{{ formatBalance(acc.addr) }}
                         </h4>
                         <small :class="formatBalanceChangesColor(acc.addr)">
-                          {{ formatBalanceChanges(acc.addr) }}</small
-                        >
+                          {{ formatBalanceChanges(acc.addr) }}
+                        </small>
                       </div>
                     </div>
                     <app-collapse>
@@ -143,18 +144,18 @@
                           >
                             {{ formatAmount(b.amount, b.denom) }}
                             {{ formatDenom(b.denom) }}
-                            <span class="font-small-2 text-muted text-nowrap"
-                              >{{ currency
-                              }}{{ formatCurrency(b.amount, b.denom) }}</span
-                            >
+                            <span class="font-small-2 text-muted text-nowrap">
+                              {{ currency }}
+                              {{ formatCurrency(b.amount, b.denom) }}
+                            </span>
                           </div>
                           <div class="d-flex flex-column text-right">
-                            <span class="font-weight-bold mb-0"
-                              >{{ currency }}{{ formatPrice(b.denom) }}</span
-                            >
-                            <small :class="priceColor(b.denom)" class="py-0">{{
-                              formatChanges(b.denom)
-                            }}</small>
+                            <span class="font-weight-bold mb-0">
+                              {{ currency }}{{ formatPrice(b.denom) }}
+                            </span>
+                            <small :class="priceColor(b.denom)" class="py-0">
+                              {{ formatChanges(b.denom) }}
+                            </small>
                           </div>
                         </div>
                         <div
@@ -168,18 +169,19 @@
                           >
                             {{ formatAmount(b.amount, b.denom) }}
                             {{ formatDenom(b.denom) }}
-                            <span class="font-small-2 text-muted text-nowrap"
-                              >{{ currency
-                              }}{{ formatCurrency(b.amount, b.denom) }}</span
-                            >
+                            <span class="font-small-2 text-muted text-nowrap">
+                              {{ currency }}
+                              {{ formatCurrency(b.amount, b.denom) }}
+                            </span>
                           </div>
                           <div class="d-flex flex-column text-right">
-                            <span class="font-weight-bold mb-0"
-                              >{{ currency }}{{ formatPrice(b.denom) }}</span
-                            >
-                            <small :class="priceColor(b.denom)" class="py-0">{{
-                              formatChanges(b.denom)
-                            }}</small>
+                            <span class="font-weight-bold mb-0">
+                              {{ currency }}
+                              {{ formatPrice(b.denom) }}
+                            </span>
+                            <small :class="priceColor(b.denom)" class="py-0">
+                              {{ formatChanges(b.denom) }}
+                            </small>
                           </div>
                         </div>
                         <b-button
@@ -191,7 +193,8 @@
                           class="mt-1 mb-0"
                           @click="updateDefaultWallet(item.name)"
                         >
-                          <feather-icon icon="TrelloIcon" /> Detail
+                          <feather-icon icon="TrelloIcon" />
+                          Detail
                         </b-button>
                       </app-collapse-item>
                     </app-collapse>

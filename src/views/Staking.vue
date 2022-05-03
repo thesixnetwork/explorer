@@ -42,7 +42,9 @@
                 <feather-icon icon="ServerIcon" size="16" />
               </b-avatar>
             </template>
-            <span class="font-weight-bolder d-block text-nowrap">
+            <span
+              class="font-weight-bolder d-block text-nowrap customizer-text"
+            >
               <router-link :to="`./staking/${data.item.operator_address}`">
                 {{ data.item.description.moniker }}
               </router-link>
@@ -93,7 +95,7 @@
           <b-form-radio-group
             id="btn-radios-1"
             v-model="selectedStatus"
-            button-variant="outline-primary"
+            button-variant="outline-info"
             :options="statusOptions"
             buttons
             name="radios-btn-default"
@@ -150,7 +152,9 @@
                   <feather-icon icon="ServerIcon" size="14" />
                 </b-avatar>
               </template>
-              <span class="font-weight-bolder d-block text-nowrap">
+              <span
+                class="font-weight-bolder d-block text-nowrap  customizer-text"
+              >
                 <router-link :to="`./staking/${data.item.operator_address}`">
                   {{ data.item.description.moniker }}
                 </router-link>
@@ -212,7 +216,7 @@
         </small>
       </template>
     </b-card>
-    <operation-delegate-component :validator-address="validator_address" />
+    <operation-modal :validator-address="validator_address" />
   </div>
 </template>
 
@@ -336,43 +340,122 @@ export default {
     }
   },
   created() {
-    this.$http.getValidatorListByHeight('latest').then(data => {
-      let height = Number(data.block_height);
-      if (height > 14400) {
-        height -= 14400;
-      } else {
-        height = 1;
-      }
-      const changes = [];
-      data.validators.forEach(x => {
-        changes[x.pub_key.value] = {
-          latest: Number(x.voting_power),
-          previous: 0
-        };
-      });
-      this.$http.getValidatorListByHeight(height).then(previous => {
-        previous.validators.forEach(x => {
-          if (changes[x.pub_key.value]) {
-            changes[x.pub_key.value].previous = Number(x.voting_power);
-          } else {
-            changes[x.pub_key.value] = {
-              latest: 0,
-              previous: Number(x.voting_power)
-            };
-          }
-        });
-        this.$set(this, 'changes', changes);
-      });
+    this.$http.getStakingPool().then(pool => {
+      this.stakingPool = pool.bondedToken;
     });
+    // set
     this.$http.getStakingParameters().then(res => {
       this.stakingParameters = res;
     });
-    this.getValidatorListByStatus(this.selectedStatus);
+    this.initial();
   },
+  // created() {
+  //   this.$http.getValidatorListByHeight('latest').then(data => {
+  //     let height = Number(data.block_height);
+  //     if (height > 14400) {
+  //       height -= 14400;
+  //     } else {
+  //       height = 1;
+  //     }
+  //     const changes = [];
+  //     data.validators.forEach(x => {
+  //       changes[x.pub_key.value] = {
+  //         latest: Number(x.voting_power),
+  //         previous: 0
+  //       };
+  //     });
+  //     this.$http.getValidatorListByHeight(height).then(previous => {
+  //       previous.validators.forEach(x => {
+  //         if (changes[x.pub_key.value]) {
+  //           changes[x.pub_key.value].previous = Number(x.voting_power);
+  //         } else {
+  //           changes[x.pub_key.value] = {
+  //             latest: 0,
+  //             previous: Number(x.voting_power)
+  //           };
+  //         }
+  //       });
+  //       this.$set(this, 'changes', changes);
+  //     });
+  //   });
+  //   this.$http.getStakingParameters().then(res => {
+  //     this.stakingParameters = res;
+  //   });
+  //   this.getValidatorListByStatus(this.selectedStatus);
+  // },
   beforeDestroy() {
     this.islive = false;
   },
+  mounted() {
+    // const elem = document.getElementById('txevent');
+    // elem.addEventListener('txcompleted', () => {
+    //   this.initial();
+    // });
+  },
   methods: {
+    initial() {
+      this.$http.getValidatorList().then(res => {
+        const identities = [];
+        const temp = res;
+        for (let i = 0; i < temp.length; i += 1) {
+          const { identity } = temp[i].description;
+          const url = this.$store.getters['chains/getAvatarById'](identity);
+          if (url) {
+            temp[i].avatar = url;
+          } else if (identity && identity !== '') {
+            identities.push(identity);
+          }
+        }
+
+        // fetch avatar from keybase
+        let promise = Promise.resolve();
+        identities.forEach(item => {
+          promise = promise.then(
+            () =>
+              new Promise(resolve => {
+                this.avatar(item, resolve);
+              })
+          );
+        });
+        this.validators = temp;
+        this.getPreviousPower(this.validators.length);
+      });
+    },
+    getPreviousPower(length) {
+      this.$http.getValidatorListByHeight('latest', 0).then(data => {
+        let height = Number(data.block_height);
+        if (height > 14400) {
+          height -= 14400;
+        } else {
+          height = 1;
+        }
+        // data.validators.forEach(x => {
+        //   this.$set(this.latestPower, x.pub_key.key, Number(x.voting_power));
+        // });
+        for (let offset = 100; offset < length; offset += 100) {
+          this.$http.getValidatorListByHeight('latest', offset).then(latest => {
+            latest.validators.forEach(x => {
+              this.$set(
+                this.latestPower,
+                x.pub_key.key,
+                Number(x.voting_power)
+              );
+            });
+          });
+        }
+        for (let offset = 0; offset < length; offset += 100) {
+          this.$http.getValidatorListByHeight(height, offset).then(previous => {
+            // previous.validators.forEach(x => {
+            //   this.$set(
+            //     this.previousPower,
+            //     x.pub_key.key,
+            //     Number(x.voting_power)
+            //   );
+            // });
+          });
+        }
+      });
+    },
     getValidatorListByStatus(statusList) {
       this.validators = [];
       statusList.forEach(status => {
@@ -464,6 +547,16 @@ export default {
   .dark-layout & {
     background-color: #40d7fc;
     color: #fff;
+  }
+}
+
+.customizer-text {
+  a {
+    color: #002770;
+
+    .dark-layout & {
+      color: #40d7fc;
+    }
   }
 }
 </style>

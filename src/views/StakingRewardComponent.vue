@@ -47,8 +47,8 @@
             <b-avatar
               rounded
               size="42"
-              variant="light-primary"
-              text="C"
+              variant="light-info"
+              text="A"
               title="Commission"
             />
           </b-media-aside>
@@ -59,7 +59,7 @@
             <small>{{ formatNumber(d.amount) }}</small>
           </b-media-body>
         </b-media>
-        <small class="text-primary d-none d-xl-block">
+        <small class="customizer-text d-none d-xl-block">
           Commission
         </small>
       </div>
@@ -69,15 +69,13 @@
         v-b-modal.withdraw-commission-window
         block
         size="sm"
-        variant="primary"
+        variant="link"
+        class="customizer-button"
       >
         Withdraw Commission
       </b-button>
     </b-card-body>
-    <operation-withdraw-commission-component
-      :validator-address="validator"
-      :address="address"
-    />
+    <operation-modal :validator-address="validator" :address="address" />
   </b-card>
 </template>
 
@@ -153,3 +151,26 @@ export default {
   }
 };
 </script>
+
+<style lang="scss" scoped>
+@import '~@core/scss/base/bootstrap-extended/include';
+@import '~@core/scss/base/components/variables-dark';
+
+.customizer-button {
+  background-color: #002770;
+  color: #fff;
+
+  .dark-layout & {
+    background-color: #40d7fc;
+    color: #fff;
+  }
+}
+
+.customizer-text {
+  color: #002770;
+
+  .dark-layout & {
+    color: #40d7fc;
+  }
+}
+</style>

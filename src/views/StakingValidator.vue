@@ -1,6 +1,6 @@
 <template>
   <div>
-    <b-card class="border-primary">
+    <b-card class="border-info">
       <b-row>
         <!-- User Info: Left col -->
         <b-col
@@ -12,7 +12,7 @@
           <div class="d-flex justify-content-start">
             <b-avatar
               :src="validator.avatar"
-              :variant="`light-primary`"
+              :variant="`light-info`"
               size="104px"
               rounded
             />
@@ -211,9 +211,7 @@
         </b-col>
       </b-row>
     </template>
-    <operation-delegate-component
-      :validator-address="validator.operator_address"
-    />
+    <operation-modal :validator-address="validator.operator_address" />
   </div>
 </template>
 
@@ -340,7 +338,37 @@ export default {
       });
     });
   },
+  mounted() {
+    // const elem = document.getElementById('txevent');
+    // elem.addEventListener('txcompleted', () => {
+    //   this.initial();
+    // });
+  },
   methods: {
+    initial() {
+      this.$http.getStakingValidator(this.address).then(data => {
+        this.validator = data;
+
+        this.processAddress(data.operator_address, data.consensus_pubkey);
+        this.$http.getTxsBySender(this.accountAddress).then(res => {
+          this.transactions = res;
+        });
+
+        const { identity } = data.description;
+        keybase(identity).then(d => {
+          if (Array.isArray(d.them) && d.them.length > 0) {
+            this.$set(this.validator, 'avatar', d.them[0].pictures.primary.url);
+            this.$store.commit('cacheAvatar', {
+              identity,
+              url: d.them[0].pictures.primary.url
+            });
+          }
+        });
+      });
+      this.$http.getValidatorDistribution(this.address).then(res => {
+        this.distribution = res;
+      });
+    },
     pageload(v) {
       this.$http.getTxsBySender(this.accountAddress, v).then(res => {
         this.transactions = res;
@@ -393,8 +421,6 @@ export default {
           b => b[1] === res.block.last_commit.height
         );
         if (typeof block === 'undefined') {
-          // mei
-          // this.$set(block, 0, typeof sigs !== 'undefined')
           if (this.blocks.length > 999) this.blocks.shift();
           this.blocks.push([
             typeof sigs !== 'undefined',

@@ -23,7 +23,8 @@
             size="sm"
             class="mr-25 customizer-button"
             @click="setOperationModalType('Transfer')"
-            ><feather-icon icon="SendIcon" class="d-md-none" />
+          >
+            <feather-icon icon="SendIcon" class="d-md-none" />
             <span class="d-none d-md-block">Transfer</span>
           </b-button>
           <b-button
@@ -32,9 +33,10 @@
             class="customizer-button-danger"
             size="sm"
             @click="setOperationModalType('IBCTransfer')"
-            ><feather-icon icon="SendIcon" class="d-md-none" />
-            <span class="d-none d-md-block">IBC Transfer </span></b-button
           >
+            <feather-icon icon="SendIcon" class="d-md-none" />
+            <span class="d-none d-md-block">IBC Transfer </span>
+          </b-button>
         </div>
       </b-card-header>
       <b-card-body class="pl-0 pr-0">
@@ -64,16 +66,16 @@
                     :class="`text-${token.color}`"
                   />
                 </b-avatar>
-                <span class="font-weight-bold ml-75 d-none d-md-block"
-                  >{{ token.type }}
+                <span class="font-weight-bold ml-75 d-none d-md-block">
+                  {{ token.type }}
                 </span>
                 <span class="ml-25">{{ token.percent }}%</span>
               </div>
               <div class="d-flex flex-column">
                 <span class="text-right">{{ formatToken(token) }}</span>
-                <small class="text-right"
-                  >{{ currency }}{{ formatNumber(token.currency) }}</small
-                >
+                <small class="text-right">
+                  {{ currency }}{{ formatNumber(token.currency) }}
+                </small>
               </div>
             </div>
             <!--/ tokens -->
@@ -98,10 +100,8 @@
             class="mr-25 customizer-button"
             @click="setOperationModalType('Delegate')"
           >
-            <feather-icon icon="LogInIcon" class="d-md-none" /><small
-              class="d-none d-md-block"
-              >Delegate</small
-            >
+            <feather-icon icon="LogInIcon" class="d-md-none" />
+            <small class="d-none d-md-block"> Delegate </small>
           </b-button>
           <b-button
             v-if="delegations"
@@ -111,11 +111,8 @@
             class="customizer-button"
             @click="setOperationModalType('Withdraw')"
           >
-            <feather-icon icon="ShareIcon" class="d-md-none" /><small
-              class="d-none d-md-block"
-            >
-              Withdraw Rewards</small
-            >
+            <feather-icon icon="ShareIcon" class="d-md-none" />
+            <small class="d-none d-md-block"> Withdraw Rewards </small>
           </b-button>
         </div>
       </b-card-header>
@@ -189,15 +186,15 @@
             <b-td> Account Type </b-td><b-td> {{ account.type }} </b-td>
           </b-tr>
           <b-tr>
-            <b-td class="max-width:100px;"> Account Number </b-td
-            ><b-td> {{ account.value.account_number }} </b-td>
+            <b-td class="max-width:100px;"> Account Number </b-td>
+            <b-td> {{ account.value.account_number }} </b-td>
           </b-tr>
           <b-tr>
             <b-td> Sequence </b-td><b-td> {{ account.value.sequence }} </b-td>
           </b-tr>
           <b-tr>
-            <b-td> Public Key </b-td
-            ><b-td>
+            <b-td> Public Key </b-td>
+            <b-td>
               <object-field-component :tablefield="account.value.public_key" />
             </b-td>
           </b-tr>
@@ -217,22 +214,22 @@
             </b-td>
           </b-tr>
           <b-tr>
-            <b-td> Account Number </b-td
-            ><b-td>
+            <b-td> Account Number </b-td>
+            <b-td>
               {{
                 account.value.base_vesting_account.base_account.account_number
               }}
             </b-td>
           </b-tr>
           <b-tr>
-            <b-td> Sequence </b-td
-            ><b-td>
+            <b-td> Sequence </b-td>
+            <b-td>
               {{ account.value.base_vesting_account.base_account.sequence }}
             </b-td>
           </b-tr>
           <b-tr>
-            <b-td> Public Key </b-td
-            ><b-td>
+            <b-td> Public Key </b-td>
+            <b-td>
               <object-field-component
                 :tablefield="
                   account.value.base_vesting_account.base_account.public_key
@@ -241,24 +238,24 @@
             </b-td>
           </b-tr>
           <b-tr>
-            <b-td> Original Vesting </b-td
-            ><b-td>
+            <b-td> Original Vesting </b-td>
+            <b-td>
               {{
                 formatToken(account.value.base_vesting_account.original_vesting)
               }}
             </b-td>
           </b-tr>
           <b-tr>
-            <b-td> Delegated Free </b-td
-            ><b-td>
+            <b-td> Delegated Free </b-td>
+            <b-td>
               {{
                 formatToken(account.value.base_vesting_account.delegated_free)
               }}
             </b-td>
           </b-tr>
           <b-tr>
-            <b-td> Delegated Vesting </b-td
-            ><b-td>
+            <b-td> Delegated Vesting </b-td>
+            <b-td>
               {{
                 formatToken(
                   account.value.base_vesting_account.delegated_vesting
@@ -267,13 +264,11 @@
             </b-td>
           </b-tr>
           <b-tr>
-            <b-td> Vesting Time </b-td
-            ><b-td>
+            <b-td> Vesting Time </b-td>
+            <b-td>
               {{ formatTime(account.value.start_time) }} -
-              {{
-                formatTime(account.value.base_vesting_account.end_time)
-              }}</b-td
-            >
+              {{ formatTime(account.value.base_vesting_account.end_time) }}
+            </b-td>
           </b-tr>
           <b-tr>
             <b-td> Vesting Periods </b-td>
@@ -286,9 +281,11 @@
                   :key="index"
                 >
                   <td>
-                    <small
-                      >{{ p.length }} <br />{{ formatLength(p.length) }}</small
-                    >
+                    <small>
+                      {{ p.length }}
+                      <br />
+                      {{ formatLength(p.length) }}
+                    </small>
                   </td>
                   <td>{{ formatToken(p.amount) }}</td>
                 </b-tr>
@@ -306,22 +303,22 @@
             <b-td> Account Type </b-td><b-td> {{ account.type }} </b-td>
           </b-tr>
           <b-tr>
-            <b-td style="max-width:100px;"> Account Number </b-td
-            ><b-td>
+            <b-td style="max-width:100px;"> Account Number </b-td>
+            <b-td>
               {{
                 account.value.base_vesting_account.base_account.account_number
               }}
             </b-td>
           </b-tr>
           <b-tr>
-            <b-td> Sequence </b-td
-            ><b-td>
+            <b-td> Sequence </b-td>
+            <b-td>
               {{ account.value.base_vesting_account.base_account.sequence }}
             </b-td>
           </b-tr>
           <b-tr>
-            <b-td> Public Key </b-td
-            ><b-td>
+            <b-td> Public Key </b-td>
+            <b-td>
               <object-field-component
                 :tablefield="
                   account.value.base_vesting_account.base_account.public_key
@@ -330,24 +327,24 @@
             </b-td>
           </b-tr>
           <b-tr>
-            <b-td> Original Vesting </b-td
-            ><b-td>
+            <b-td> Original Vesting </b-td>
+            <b-td>
               {{
                 formatToken(account.value.base_vesting_account.original_vesting)
               }}
             </b-td>
           </b-tr>
           <b-tr>
-            <b-td> Delegated Free </b-td
-            ><b-td>
+            <b-td> Delegated Free </b-td>
+            <b-td>
               {{
                 formatToken(account.value.base_vesting_account.delegated_free)
               }}
             </b-td>
           </b-tr>
           <b-tr>
-            <b-td> Delegated Vesting </b-td
-            ><b-td>
+            <b-td> Delegated Vesting </b-td>
+            <b-td>
               {{
                 formatToken(
                   account.value.base_vesting_account.delegated_vesting
@@ -356,12 +353,10 @@
             </b-td>
           </b-tr>
           <b-tr>
-            <b-td> End Time </b-td
-            ><b-td>
-              {{
-                formatTime(account.value.base_vesting_account.end_time)
-              }}</b-td
-            >
+            <b-td> End Time </b-td>
+            <b-td>
+              {{ formatTime(account.value.base_vesting_account.end_time) }}
+            </b-td>
           </b-tr>
         </b-tbody>
         <object-field-component v-else :tablefield="account.value || account" />

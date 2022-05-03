@@ -69,16 +69,17 @@
     </b-card>
 
     <!--- not completed--->
-    <operation-withdraw-component :address="address" />
-    <operation-unbond-component
+    <operation-modal :address="address" />
+    <operation-modal
       :address="address"
       :validator-address.sync="selectedValidator"
     />
-    <operation-delegate-component
+
+    <operation-modal
       :address="address"
       :validator-address.sync="selectedValidator"
     />
-    <operation-redelegate-component
+    <operation-modal
       :address="address"
       :validator-address.sync="selectedValidator"
     />

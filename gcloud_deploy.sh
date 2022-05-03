@@ -11,6 +11,7 @@ function _exit_if_fail
 . ./.env-${DEPLOY_ENV}
 
 echo "Google Cloud Bucket Name : ${GCLOUD_STORAGE_NAME}"
+echo "Google Cloud LB Name : ${GCLOUD_LB_NAME}"
 
 echo -e "Enter to continue...\c"
 read
@@ -18,14 +19,14 @@ read
 yarn
 _exit_if_fail $?
 
-yarn build --fix
+npm run build --fix
 _exit_if_fail $?
 
 gsutil -m  cp -r dist/* ${GCLOUD_STORAGE_NAME}
 _exit_if_fail $?
 
 echo "Clear cache...."
-gcloud compute url-maps invalidate-cdn-cache ${GCLOUD_LB_NAME} "/*"
+gcloud compute url-maps invalidate-cdn-cache ${GCLOUD_LB_NAME} --path '/*' --async
 _exit_if_fail $?
 
 echo "Upload Done!"

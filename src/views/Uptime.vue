@@ -3,8 +3,8 @@
     <b-card style="border-radius: 12px;">
       <b-alert variant="danger" :show="syncing">
         <div class="alert-body">
-          <span
-            >No new blocks have been produced since
+          <span>
+            No new blocks have been produced since
             <strong>{{ latestTime }}</strong>
           </span>
         </div>
@@ -37,10 +37,12 @@
             :value="`${chain}#${x.address}`"
             class="custom-control-info mb-1"
             @change="pinValidator(`${chain}#${x.address}`)"
-            ><span
+          >
+            <span
               class="d-inline-block text-truncate font-weight-bold align-bottom"
-              >{{ index + 1 }}. {{ x.validator.moniker }}</span
             >
+              {{ index + 1 }}. {{ x.validator.moniker }}
+            </span>
           </b-form-checkbox>
           <div
             class="d-flex justify-content-between align-self-stretch flex-wrap"
