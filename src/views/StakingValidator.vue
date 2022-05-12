@@ -27,7 +27,7 @@
               </div>
               <div class="d-flex flex-wrap">
                 <b-button
-                  v-b-modal.delegate-window
+                  v-b-modal.operation-modal
                   variant="link"
                   class="mr-25 mb-25 customizer-button"
                 >
@@ -211,7 +211,10 @@
         </b-col>
       </b-row>
     </template>
-    <operation-modal :validator-address="validator.operator_address" />
+    <operation-modal
+      type="Delegate" 
+      :validator-address="validator.operator_address" />
+    <div id="txevent" />
   </div>
 </template>
 
@@ -305,44 +308,17 @@ export default {
     }
   },
   created() {
-    this.$http.getStakingPool().then(res => {
-      this.stakingPool = res;
-    });
-    this.$http.getStakingParameters().then(res => {
-      this.stakingParameter = res;
-    });
-    this.$http.getMintingInflation().then(res => {
-      this.mintInflation = res;
-    });
-    const { address } = this.$route.params;
-    this.$http.getValidatorDistribution(address).then(res => {
-      this.distribution = res;
-    });
-    this.$http.getStakingValidator(address).then(data => {
-      this.validator = data;
-
-      this.processAddress(data.operator_address, data.consensus_pubkey);
-      this.$http.getTxsBySender(this.accountAddress).then(res => {
-        this.transactions = res;
-      });
-
-      const { identity } = data.description;
-      keybase(identity).then(d => {
-        if (Array.isArray(d.them) && d.them.length > 0) {
-          this.$set(this.validator, 'avatar', d.them[0].pictures.primary.url);
-          this.$store.commit('cacheAvatar', {
-            identity,
-            url: d.them[0].pictures.primary.url
-          });
-        }
-      });
-    });
+    this.$http.getStakingPool().then(res => { this.stakingPool = res })
+    this.$http.getStakingParameters().then(res => { this.stakingParameter = res })
+    this.$http.getMintingInflation().then(res => { this.mintInflation = res })
+    this.address = this.$route.params.address
+    this.initial()
   },
   mounted() {
-    // const elem = document.getElementById('txevent');
-    // elem.addEventListener('txcompleted', () => {
-    //   this.initial();
-    // });
+    const elem = document.getElementById('txevent');
+    elem.addEventListener('txcompleted', () => {
+      this.initial();
+    });
   },
   methods: {
     initial() {
@@ -402,32 +378,24 @@ export default {
     fetch_status(item, lastHeight) {
       return this.$http.getBlockByHeight(item[1]).then(res => {
         if (item[1] !== lastHeight) {
-          const sigs = res.block.last_commit.signatures.find(
-            s => s.validator_address === this.hexAddress
-          );
-          const block = this.blocks.find(b => b[1] === item[1]);
+          const sigs = res.block.last_commit.signatures.find(s => s.validator_address === this.hexAddress)
+          const block = this.blocks.find(b => b[1] === item[1])
           if (typeof block !== 'undefined') {
-            this.$set(block, 0, typeof sigs !== 'undefined');
+            this.$set(block, 0, typeof sigs !== 'undefined')
           }
         }
-      });
+      })
     },
     fetch_latest() {
       this.$http.getLatestBlock().then(res => {
-        const sigs = res.block.last_commit.signatures.find(
-          s => s.validator_address === this.hexAddress
-        );
-        const block = this.blocks.find(
-          b => b[1] === res.block.last_commit.height
-        );
-        if (typeof block === 'undefined') {
-          if (this.blocks.length > 999) this.blocks.shift();
-          this.blocks.push([
-            typeof sigs !== 'undefined',
-            res.block.last_commit.height
-          ]);
+        const sigs = res.block.last_commit.signatures.find(s => s.validator_address === this.hexAddress)
+        const block = this.blocks.find(b => b[1] === res.block.last_commit.height)
+        if (typeof block === 'undefined') { // mei
+          // this.$set(block, 0, typeof sigs !== 'undefined')
+          if (this.blocks.length > 999) this.blocks.shift()
+          this.blocks.push([typeof sigs !== 'undefined', res.block.last_commit.height])
         }
-      });
+      })
     }
   }
 };

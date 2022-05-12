@@ -3,7 +3,7 @@
     <b-card-header>
       <b-card-title>Outstanding Rewards</b-card-title>
       <feather-icon
-        v-b-modal.withdraw-commission-window
+        v-b-modal.WithdrawCommission
         icon="MoreVerticalIcon"
         size="18"
         class="cursor-pointer"
@@ -66,7 +66,7 @@
     </b-card-body>
     <b-card-body class="pt-0">
       <b-button
-        v-b-modal.withdraw-commission-window
+        v-b-modal.WithdrawCommission
         block
         size="sm"
         variant="link"
@@ -75,7 +75,11 @@
         Withdraw Commission
       </b-button>
     </b-card-body>
-    <operation-modal :validator-address="validator" :address="address" />
+    <operation-modal 
+      type="WithdrawCommission"
+      modal-id="WithdrawCommission"
+      :validator-address="validator" 
+      :address="address" />
   </b-card>
 </template>
 
@@ -126,18 +130,12 @@ export default {
   },
   data() {
     return {
-      denoms: {}
     };
   },
-  created() {
-    this.$http.getAllIBCDenoms().then(x => {
-      x.denom_traces.forEach(trace => {
-        const hash = toHex(
-          sha256(new TextEncoder().encode(`${trace.path}/${trace.base_denom}`))
-        );
-        this.$set(this.denoms, `ibc/${hash.toUpperCase()}`, trace.base_denom);
-      });
-    });
+  computed: {
+    denoms() {
+      return this.$store.state.chains.denoms
+    }
   },
   methods: {
     formatNumber(value) {

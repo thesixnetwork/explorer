@@ -80,7 +80,15 @@
             </b-col>
           </b-row>
         </b-form>
-        {{ error }}
+        <b-alert
+          v-model="showDismissibleAlert"
+          variant="danger"
+          dismissible
+        >
+          <div class="alert-body">
+            <span>{{ error }}</span>
+          </div>
+        </b-alert>
       </validation-observer>
 
       <TransactionResult
@@ -249,6 +257,7 @@ export default {
       balance: [],
       IBCDenom: {},
       error: null,
+      showDismissibleAlert: false,
       sequence: 1,
       accountNumber: 0,
       advance: false,
@@ -421,11 +430,15 @@ export default {
               });
             })
             .catch(e => {
+              this.showResult = false
               this.error = e;
+              this.showDismissibleAlert = true;
             });
         })
         .catch(e => {
+          this.showResult = false
           this.error = e;
+          this.showDismissibleAlert = true;
         });
       return '';
     },

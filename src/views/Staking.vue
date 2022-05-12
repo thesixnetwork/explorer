@@ -77,7 +77,7 @@
         <!-- Operation -->
         <template #cell(operation)="data">
           <b-button
-            v-b-modal.delegate-window
+            v-b-modal.operation-modal
             :name="data.item.operator_address"
             variant="link"
             size="sm"
@@ -191,7 +191,7 @@
           </template>
           <template #cell(operation)="data">
             <b-button
-              v-b-modal.delegate-window
+              v-b-modal.operation-modal
               :name="data.item.operator_address"
               variant="link"
               size="sm"
@@ -216,7 +216,8 @@
         </small>
       </template>
     </b-card>
-    <operation-modal :validator-address="validator_address" />
+    <operation-modal type="Delegate" :validator-address="validator_address" />
+    <div id="txevent" />
   </div>
 </template>
 
@@ -326,7 +327,7 @@ export default {
   },
   computed: {
     stakeVals() {
-      return this.list.filter(x => this.keys.includes(x.operator_address));
+      return this.list.filter(x => x.description.identity === '6783E9F948541962')
     },
     list() {
       return this.validators.map(x => {
