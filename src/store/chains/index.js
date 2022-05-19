@@ -13,7 +13,6 @@ let configs = require.context('../../chains/mainnet', false, /\.json$/)
 if (isTestnet()) {
   configs = require.context('../../chains/testnet', false, /\.json$/)
 }
-// console
 
 const update = {}
 configs.keys().forEach(k => {
