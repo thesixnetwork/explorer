@@ -94,7 +94,7 @@
         <b-card-title>Delegation</b-card-title>
         <div>
           <b-button
-            v-b-modal.delegate-window
+            v-b-modal.operation-modal
             variant="link"
             size="sm"
             class="mr-25 customizer-button"
@@ -105,7 +105,7 @@
           </b-button>
           <b-button
             v-if="delegations"
-            v-b-modal.withdraw-window
+            v-b-modal.operation-modal
             variant="link"
             size="sm"
             class="customizer-button"
@@ -122,29 +122,29 @@
             <!-- size -->
             <b-button-group size="sm">
               <b-button
-                v-b-modal.delegate-window
+                v-b-modal.operation-modal
                 v-ripple.400="'rgba(113, 102, 240, 0.15)'"
                 v-b-tooltip.hover.top="'Delegate'"
                 variant="outline-primary"
-                @click="selectValue(data.value)"
+                @click="selectValue(data.value,'Delegate')"
               >
                 <feather-icon icon="LogInIcon" />
               </b-button>
               <b-button
-                v-b-modal.redelegate-window
+                v-b-modal.operation-modal
                 v-ripple.400="'rgba(113, 102, 240, 0.15)'"
                 v-b-tooltip.hover.top="'Redelegate'"
                 variant="outline-primary"
-                @click="selectValue(data.value)"
+                @click="selectValue(data.value,'Redelegate')"
               >
                 <feather-icon icon="ShuffleIcon" />
               </b-button>
               <b-button
-                v-b-modal.unbond-window
+                v-b-modal.operation-modal
                 v-ripple.400="'rgba(113, 102, 240, 0.15)'"
                 v-b-tooltip.hover.top="'Unbond'"
                 variant="outline-primary"
-                @click="selectValue(data.value)"
+                @click="selectValue(data.value,'Unbond')"
               >
                 <feather-icon icon="LogOutIcon" />
               </b-button>
