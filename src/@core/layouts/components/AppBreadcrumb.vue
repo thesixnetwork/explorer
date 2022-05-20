@@ -3,13 +3,8 @@
     v-if="$route.meta.breadcrumb || $route.meta.pageTitle"
     class="content-header mb-2"
   >
-
     <!-- Content Left -->
-    <b-col
-      class="content-header-left"
-      cols="12"
-      md="9"
-    >
+    <b-col class="content-header-left" cols="12" md="9">
       <b-row class="breadcrumbs-top">
         <b-col cols="12">
           <!-- <h4 class="content-header-title float-left pr-1 mb-0">
@@ -21,7 +16,7 @@
                 <feather-icon
                   icon="HomeIcon"
                   size="16"
-                  class="align-text-top"
+                  class="align-text-top customizer-icon"
                 />
               </b-breadcrumb-item>
               <b-breadcrumb-item
@@ -50,20 +45,31 @@
 </template>
 
 <script>
-import {
-  BBreadcrumb, BBreadcrumbItem, BRow, BCol,
-} from 'bootstrap-vue'
-import Ripple from 'vue-ripple-directive'
+import { BBreadcrumb, BBreadcrumbItem, BRow, BCol } from 'bootstrap-vue';
+import Ripple from 'vue-ripple-directive';
 
 export default {
   directives: {
-    Ripple,
+    Ripple
   },
   components: {
     BBreadcrumb,
     BBreadcrumbItem,
     BRow,
-    BCol,
-  },
-}
+    BCol
+  }
+};
 </script>
+
+<style lang="scss" scoped>
+@import '~@core/scss/base/bootstrap-extended/include';
+@import '~@core/scss/base/components/variables-dark';
+
+.customizer-icon {
+  color: #002770;
+
+  .dark-layout & {
+    color: #40d7fc;
+  }
+}
+</style>

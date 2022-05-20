@@ -126,7 +126,7 @@
                 v-ripple.400="'rgba(113, 102, 240, 0.15)'"
                 v-b-tooltip.hover.top="'Delegate'"
                 variant="outline-primary"
-                @click="selectValue(data.value,'Delegate')"
+                @click="selectValue(data.value, 'Delegate')"
               >
                 <feather-icon icon="LogInIcon" />
               </b-button>
@@ -135,7 +135,7 @@
                 v-ripple.400="'rgba(113, 102, 240, 0.15)'"
                 v-b-tooltip.hover.top="'Redelegate'"
                 variant="outline-primary"
-                @click="selectValue(data.value,'Redelegate')"
+                @click="selectValue(data.value, 'Redelegate')"
               >
                 <feather-icon icon="ShuffleIcon" />
               </b-button>
@@ -144,7 +144,7 @@
                 v-ripple.400="'rgba(113, 102, 240, 0.15)'"
                 v-b-tooltip.hover.top="'Unbond'"
                 variant="outline-primary"
-                @click="selectValue(data.value,'Unbond')"
+                @click="selectValue(data.value, 'Unbond')"
               >
                 <feather-icon icon="LogOutIcon" />
               </b-button>
@@ -186,7 +186,9 @@
             <b-td> Account Type </b-td><b-td> {{ account.type }} </b-td>
           </b-tr>
           <b-tr>
-            <b-td class="max-width:100px;"> Account Number </b-td>
+            <b-td class="max-width:100px;">
+              Account Number
+            </b-td>
             <b-td> {{ account.value.account_number }} </b-td>
           </b-tr>
           <b-tr>
@@ -300,10 +302,13 @@
           "
         >
           <b-tr>
-            <b-td> Account Type </b-td><b-td> {{ account.type }} </b-td>
+            <b-td> Account Type </b-td>
+            <b-td> {{ account.type }} </b-td>
           </b-tr>
           <b-tr>
-            <b-td style="max-width:100px;"> Account Number </b-td>
+            <b-td style="max-width:100px;">
+              Account Number
+            </b-td>
             <b-td>
               {{
                 account.value.base_vesting_account.base_account.account_number

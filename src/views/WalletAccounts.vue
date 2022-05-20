@@ -70,8 +70,8 @@
           </b-button>
           <div class="mr-50">
             <router-link :to="`/wallet/import?name=${item.name}`" class="mr-50">
-              <feather-icon icon="EditIcon" class="mr-10" />
-              <span class="align-middle">Edit</span>
+              <feather-icon icon="EditIcon" class="mr-10 customizer-icon" />
+              <span class="align-middle customizer-text">Edit</span>
             </router-link>
           </div>
         </div>
@@ -209,8 +209,10 @@
 
     <router-link to="/wallet/import">
       <b-card class="addzone">
-        <feather-icon icon="PlusIcon" />
-        Connect Wallet
+        <feather-icon icon="PlusIcon" class="customizer-icon" />
+        <span class="customizer-text">
+          Connect Wallet
+        </span>
       </b-card>
     </router-link>
     <operation-modal
@@ -671,15 +673,43 @@ export default {
 };
 </script>
 
-<style lang="css">
+<style lang="scss" scoped>
+@import '~@core/scss/base/bootstrap-extended/include';
+@import '~@core/scss/base/components/variables-dark';
+
 .addzone {
-  border: 2px dashed #ced4da;
+  border: 1px dashed #ced4da;
   background: #fff;
   border-radius: 6px;
   cursor: pointer;
   box-shadow: none;
+
+  .dark-layout & {
+    background: #283046;
+  }
 }
+
 .addzone :hover {
-  border: 2px dashed #7367f0;
+  border: 2px dashed #002770;
+
+  .dark-layout & {
+    border: 2px dashed #40d7fc;
+  }
+}
+
+.customizer-text {
+  color: #002770;
+
+  .dark-layout & {
+    color: #40d7fc;
+  }
+}
+
+.customizer-icon {
+  color: #002770;
+
+  .dark-layout & {
+    color: #40d7fc;
+  }
 }
 </style>

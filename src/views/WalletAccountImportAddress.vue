@@ -12,7 +12,11 @@
       @on-complete="formSubmitted"
     >
       <!-- Device tab -->
-      <tab-content title="Device" :before-change="validationFormDevice">
+      <tab-content
+        title="Device"
+        :before-change="validationFormDevice"
+        class="customizer-text"
+      >
         <validation-observer ref="deviceRules" tag="form">
           <b-row>
             <b-col md="12">
@@ -538,5 +542,23 @@ export default {
 
 <style lang="scss">
 // @import '@core/assets/fonts/feather/iconfont.css';
+@import '~@core/scss/base/bootstrap-extended/include';
+@import '~@core/scss/base/components/variables-dark';
 @import '@core/scss/vue/libs/vue-wizard.scss';
+
+.customizer-text {
+  color: #002770;
+
+  .dark-layout & {
+    color: #40d7fc;
+  }
+}
+
+.customizer-icon {
+  color: #002770;
+
+  .dark-layout & {
+    color: #40d7fc;
+  }
+}
 </style>

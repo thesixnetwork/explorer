@@ -1,0 +1,22 @@
+{
+    "chain_name": "fournet",
+    "chain_title": "SIX Fournet",
+    "rpc":" http://35.213.145.37:26657/",
+    "api": [
+        "http://35.213.145.37:1317/"
+    ],
+    "sdk_version": "0.45.0",
+    "coin_type": "118",
+    "min_tx_fee": "800",
+    "assets": [
+        {
+            "base": "stake",
+            "symbol": "SIX",
+            "exponent": "6",
+            "coingecko_id": "six-network",
+            "logo": "https://cdn.discordapp.com/attachments/945246861458042950/953910866556882994/six-zone-bot.png"
+        }
+    ],
+    "addr_prefix": "6x",
+    "logo": "https://cdn.discordapp.com/attachments/945246861458042950/955683086211887104/SIX_zone-05_1.png"
+}

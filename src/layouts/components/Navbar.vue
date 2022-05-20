@@ -125,21 +125,24 @@
           <span class="align-middle ml-50">Portofolio</span>
         </b-dropdown-item> -->
 
-        <b-dropdown-item :to="{ name: 'accounts' }">
+        <b-dropdown-item :to="{ name: 'accounts' }" class="customizer-items">
           <feather-icon icon="KeyIcon" size="16" />
           <span class="align-middle ml-50">Accounts</span>
         </b-dropdown-item>
 
-        <b-dropdown-item :to="{ name: 'delegations' }">
+        <b-dropdown-item :to="{ name: 'delegations' }" class="customizer-items">
           <feather-icon icon="BookOpenIcon" size="16" />
           <span class="align-middle ml-50">My Delegations</span>
         </b-dropdown-item>
 
-        <b-dropdown-item :to="`/${selected_chain.chain_name}/uptime/my`">
+        <b-dropdown-item
+          :to="`/${selected_chain.chain_name}/uptime/my`"
+          class="customizer-items"
+        >
           <feather-icon icon="AirplayIcon" size="16" />
           <span class="align-middle ml-50">My Validators</span>
         </b-dropdown-item>
-        <b-dropdown-item :to="`/wallet/transactions`">
+        <b-dropdown-item :to="`/wallet/transactions`" class="customizer-items">
           <feather-icon icon="LayersIcon" size="16" />
           <span class="align-middle ml-50">My Transactions</span>
         </b-dropdown-item>
@@ -304,8 +307,15 @@ h3 {
   .dark-layout & {
     color: #40d7fc;
   }
+}
 
-  @include media-breakpoint-down(sm) {
+.customizer-items :hover {
+  color: #002770;
+  background-color: #00277012;
+
+  .dark-layout & {
+    color: #40d7fc;
+    background-color: #40d7fc12;
   }
 }
 </style>
