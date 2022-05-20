@@ -1,6 +1,6 @@
 <template>
   <div>
-    <b-card class="border-info">
+    <b-card class="customizer-border">
       <b-row>
         <!-- User Info: Left col -->
         <b-col
@@ -12,7 +12,8 @@
           <div class="d-flex justify-content-start">
             <b-avatar
               :src="validator.avatar"
-              :variant="`light-info`"
+              :variant="link"
+              class="customizer-icon"
               size="104px"
               rounded
             />
@@ -423,12 +424,30 @@ export default {
 @import '~@core/scss/base/components/variables-dark';
 
 .customizer-button {
-  background-color: #002770;
+  background-color: $info;
   color: #fff;
 
   .dark-layout & {
-    background-color: #40d7fc;
+    background-color: $primary;
     color: #fff;
+  }
+}
+
+.customizer-icon {
+  color: $info;
+  background-color: rgba($info, 0.12);
+
+  .dark-layout & {
+    color: $primary;
+    background-color: rgba($primary, 0.12);
+  }
+}
+
+.customizer-border {
+  border: 1px solid $info;
+
+  .dark-layout & {
+    border: 1px solid $primary;
   }
 }
 </style>

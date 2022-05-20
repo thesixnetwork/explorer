@@ -118,7 +118,7 @@ export default {
       marketData: null,
       chain: {
         title: '',
-        class: 'border-info',
+        class: 'customizer-border',
         items: [
           { subtitle: 'height', icon: 'BoxIcon', color: 'light-success' },
           {
@@ -370,4 +370,15 @@ export default {
 };
 </script>
 
-<style></style>
+<style lang="scss" scoped>
+@import '~@core/scss/base/bootstrap-extended/include';
+@import '~@core/scss/base/components/variables-dark';
+
+.customizer-border {
+  border: 1px solid $info;
+
+  .dark-layout & {
+    border: 1px solid $primary;
+  }
+}
+</style>

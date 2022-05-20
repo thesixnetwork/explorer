@@ -380,8 +380,8 @@ export default {
         chainId: 'fivenet',
         chainName: 'SIX Protocol Testnet',
         addressPrefix: '6x',
-        rpc: 'http://34.124.194.2:26657/',
-        rest: 'http://34.124.194.2:1317/',
+        rpc: 'https://rpc.fivenet.sixscan.io',
+        rest: 'https://api.fivenet.sixscan.io',
         stakeCurrency: {
           coinDenom: 'SIX',
           coinMinimalDenom: 'usix',
@@ -402,26 +402,25 @@ export default {
           {
             coinDenom: 'SIX',
             coinMinimalDenom: 'usix',
-            coinDecimals: 6,
-            coinGeckoId: 'six-network'
+            coinDecimals: 6
           }
         ],
         feeCurrencies: [
           {
             coinDenom: 'SIX',
             coinMinimalDenom: 'usix',
-            coinDecimals: 6,
-            coinGeckoId: 'six-network'
+            coinDecimals: 6
           }
         ],
         coinType: 118,
         gasPriceStep: {
-          low: 0.025,
-          average: 0.05,
-          high: 0.1
+          low: 1.25,
+          average: 1.45,
+          high: 1.65
         },
         features: ['stargate', 'cosmwasm', 'ibc-transfer', 'no-legacy-stdTx']
       };
+
       if (!window.getOfflineSigner || !window.keplr) {
         this.debug = 'Please install keplr extension';
         return null;
@@ -541,24 +540,23 @@ export default {
 </script>
 
 <style lang="scss">
-// @import '@core/assets/fonts/feather/iconfont.css';
 @import '~@core/scss/base/bootstrap-extended/include';
 @import '~@core/scss/base/components/variables-dark';
 @import '@core/scss/vue/libs/vue-wizard.scss';
 
 .customizer-text {
-  color: #002770;
+  color: $info;
 
   .dark-layout & {
-    color: #40d7fc;
+    color: $primary;
   }
 }
 
 .customizer-icon {
-  color: #002770;
+  color: $info;
 
   .dark-layout & {
-    color: #40d7fc;
+    color: $primary;
   }
 }
 </style>

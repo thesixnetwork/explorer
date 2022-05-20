@@ -204,11 +204,11 @@ export default {
 
 .customizer-button {
   border-radius: 12px;
-  background-color: #002770;
+  background-color: $info;
   color: #fff;
 
   .dark-layout & {
-    background-color: #40d7fc;
+    background-color: $primary;
     color: #fff;
   }
 
@@ -224,10 +224,10 @@ export default {
 }
 
 .customizer-text {
-  color: #002770;
+  color: $info;
 
   .dark-layout & {
-    color: #40d7fc;
+    color: $primary;
   }
 }
 </style>

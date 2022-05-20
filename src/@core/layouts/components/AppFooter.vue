@@ -39,10 +39,10 @@ export default {
 @import '~@core/scss/base/components/variables-dark';
 
 .customizer-text {
-  color: #002770;
+  color: $info;
 
   .dark-layout & {
-    color: #40d7fc;
+    color: $primary;
   }
 }
 </style>

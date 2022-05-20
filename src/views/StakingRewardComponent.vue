@@ -6,7 +6,6 @@
         v-b-modal.WithdrawCommission
         icon="MoreVerticalIcon"
         size="18"
-        class="cursor-pointer"
       />
     </b-card-header>
 
@@ -47,9 +46,10 @@
             <b-avatar
               rounded
               size="42"
-              variant="light-info"
+              variant="link"
               text="A"
               title="Commission"
+              class="customizer-icon"
             />
           </b-media-aside>
           <b-media-body>
@@ -75,11 +75,12 @@
         Withdraw Commission
       </b-button>
     </b-card-body>
-    <operation-modal 
+    <operation-modal
       type="WithdrawCommission"
       modal-id="WithdrawCommission"
-      :validator-address="validator" 
-      :address="address" />
+      :validator-address="validator"
+      :address="address"
+    />
   </b-card>
 </template>
 
@@ -129,12 +130,11 @@ export default {
     }
   },
   data() {
-    return {
-    };
+    return {};
   },
   computed: {
     denoms() {
-      return this.$store.state.chains.denoms
+      return this.$store.state.chains.denoms;
     }
   },
   methods: {
@@ -155,20 +155,30 @@ export default {
 @import '~@core/scss/base/components/variables-dark';
 
 .customizer-button {
-  background-color: #002770;
+  background-color: $info;
   color: #fff;
 
   .dark-layout & {
-    background-color: #40d7fc;
+    background-color: $primary;
     color: #fff;
   }
 }
 
 .customizer-text {
-  color: #002770;
+  color: $info;
 
   .dark-layout & {
-    color: #40d7fc;
+    color: $primary;
+  }
+}
+
+.customizer-icon {
+  color: $info;
+  background-color: rgba($info, 0.12);
+
+  .dark-layout & {
+    color: $primary;
+    background-color: rgba($primary, 0.12);
   }
 }
 </style>

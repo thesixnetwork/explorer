@@ -28,8 +28,8 @@
         <b-col
           v-for="(x, index) in uptime"
           :key="index"
-          sm="12"
-          md="12"
+          sm="4"
+          md="4"
           class="text-truncate mb-2"
         >
           <b-form-checkbox
@@ -235,11 +235,11 @@ export default {
 @import '~@core/scss/base/components/variables-dark';
 
 .customizer-button {
-  background-color: #002770;
+  background-color: $info;
   color: #fff;
 
   .dark-layout & {
-    background-color: #40d7fc;
+    background-color: $primary;
     color: #fff;
   }
 }

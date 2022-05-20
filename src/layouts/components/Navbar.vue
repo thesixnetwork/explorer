@@ -1,30 +1,5 @@
 <template>
   <div class="navbar-container d-flex content align-items-center">
-    <!-- Nav Menu Toggler -->
-    <!-- <ul class="nav navbar-nav d-lg-none">
-      <li class="nav-item">
-        <b-link
-          class="nav-link"
-          @click="toggleVerticalMenuActive"
-        >
-          <b-avatar
-            v-if="selected_chain && selected_chain.logo"
-            variant="transparent"
-            rounded
-            size="21"
-            :src="selected_chain.logo"
-            class="badge-minimal"
-          />
-          <feather-icon
-            v-else
-            icon="MenuIcon"
-            size="21"
-            class="customizer-icon"
-          />
-        </b-link>
-      </li>
-    </ul> -->
-
     <!-- Left Col -->
     <div class="bookmark-wrapper align-items-center flex-grow-1 d-flex">
       <b-media v-if="selected_chain" no-body class="flex align-center">
@@ -74,7 +49,7 @@
                 <feather-icon
                   icon="RepeatIcon"
                   size="12"
-                  class="cursor-pointer"
+                  class="cursor-pointer customizer-icon"
                 />
               </template>
               <b-dropdown-item
@@ -301,12 +276,12 @@ export default {
 @import '~@core/scss/base/components/variables-dark';
 
 .customizer-button {
-  background-color: #002770;
+  background-color: $info;
   color: #fff;
   border-radius: 12px;
 
   .dark-layout & {
-    background-color: #40d7fc;
+    background-color: $primary;
   }
 
   @include media-breakpoint-down(xs) {
@@ -327,20 +302,18 @@ h3 {
 }
 
 .customizer-icon {
-  color: #002770;
+  color: $info;
 
   .dark-layout & {
-    color: #40d7fc;
+    color: $primary;
   }
 }
 
 .customizer-items :hover {
-  color: #002770;
-  background-color: #00277012;
+  color: $info;
 
   .dark-layout & {
-    color: #40d7fc;
-    background-color: #40d7fc12;
+    color: $primary;
   }
 }
 </style>

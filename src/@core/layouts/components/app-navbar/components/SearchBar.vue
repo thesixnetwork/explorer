@@ -137,10 +137,10 @@ p {
 }
 
 .customizer-icon {
-  color: #002770;
+  color: $info;
 
   .dark-layout & {
-    color: #40d7fc;
+    color: $primary;
   }
 }
 </style>

@@ -91,11 +91,11 @@
     </b-card>
     <b-card no-body>
       <b-card-header class="d-flex justify-content-between">
-        <b-form-group>
+        <b-form-group class="mb-0">
           <b-form-radio-group
             id="btn-radios-1"
             v-model="selectedStatus"
-            button-variant="outline-info"
+            button-variant="outline-primary"
             :options="statusOptions"
             buttons
             name="radios-btn-default"
@@ -104,7 +104,7 @@
         </b-form-group>
         <b-card-title class="d-none d-sm-block">
           <span>
-            Validators {{ validators.length }}/{{
+            Validators : {{ validators.length }}/{{
               stakingParameters.max_validators
             }}
           </span>
@@ -327,7 +327,9 @@ export default {
   },
   computed: {
     stakeVals() {
-      return this.list.filter(x => x.description.identity === '6783E9F948541962')
+      return this.list.filter(
+        x => x.description.identity === '6783E9F948541962'
+      );
     },
     list() {
       return this.validators.map(x => {
@@ -542,22 +544,20 @@ export default {
 @import '~@core/scss/base/components/variables-dark';
 
 .customizer-button {
-  background-color: #002770;
+  background-color: $info;
   color: #fff;
 
   .dark-layout & {
-    background-color: #40d7fc;
+    background-color: $primary;
     color: #fff;
   }
 }
 
 .customizer-text {
-  a {
-    color: #002770;
+  color: $info;
 
-    .dark-layout & {
-      color: #40d7fc;
-    }
+  .dark-layout & {
+    color: $primary;
   }
 }
 </style>

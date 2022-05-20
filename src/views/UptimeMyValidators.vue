@@ -5,7 +5,7 @@
         v-for="(x, index) in Object.keys(chainVals)"
         :key="index"
         sm="12"
-        md="4"
+        md="6"
         class="text-truncate"
       >
         <uptime-my-chain-blocks :chain="x" :validators="chainVals[x]" />

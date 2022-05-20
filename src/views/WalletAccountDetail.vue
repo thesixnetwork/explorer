@@ -1,15 +1,21 @@
 <template>
   <div>
-    <b-card bg-variant="secondary" style="color: #fff">
+    <b-card bg-variant="link">
       <div class="d-flex flex-row align-items-center text-truncate">
         <b-avatar id="address-qr" rounded size="52">
           <feather-icon icon="CameraIcon" size="32" />
         </b-avatar>
         <div class="ml-2">
-          <h3 style="color: #fff" class="mb-0">
-            Address: <feather-icon icon="CopyIcon" size="18" @click="copy()" />
-          </h3>
+          <h4 class="mb-0">
+            Address :
+          </h4>
           {{ address }}
+          <feather-icon
+            icon="CopyIcon"
+            size="18"
+            @click="copy()"
+            class="ml-1 cursor-pointer"
+          />
         </div>
       </div>
     </b-card>
@@ -283,8 +289,17 @@
                   :key="index"
                 >
                   <td>
+                    <!-- <small>
+                      {{ p.length }}
+                      <br />
+                      {{ formatLength(p.length) }}
+                    </small> -->
                     <small>
-                      {{ p.length }}<br />{{ formatLength(p.length) }}
+                      {{ p.length }}
+                    </small>
+                    <br />
+                    <small>
+                      {{ formatLength(p.length) }}
                     </small>
                   </td>
                   <td>{{ formatToken(p.amount) }}</td>
@@ -752,12 +767,12 @@ export default {
 @import '~@core/scss/base/components/variables-dark';
 
 .customizer-button {
-  background-color: #002770;
+  background-color: $info;
   color: #fff;
   border-radius: 12px;
 
   .dark-layout & {
-    background-color: #40d7fc;
+    background-color: $primary;
   }
 }
 

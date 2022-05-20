@@ -687,29 +687,29 @@ export default {
   .dark-layout & {
     background: #283046;
   }
-}
 
-.addzone :hover {
-  border: 2px dashed #002770;
+  :hover {
+    border: 2px dashed #002770;
 
-  .dark-layout & {
-    border: 2px dashed #40d7fc;
+    .dark-layout & {
+      border: 2px dashed #40d7fc;
+    }
   }
 }
 
 .customizer-text {
-  color: #002770;
+  color: $info;
 
   .dark-layout & {
-    color: #40d7fc;
+    color: $primary;
   }
 }
 
 .customizer-icon {
-  color: #002770;
+  color: $info;
 
   .dark-layout & {
-    color: #40d7fc;
+    color: $primary;
   }
 }
 </style>

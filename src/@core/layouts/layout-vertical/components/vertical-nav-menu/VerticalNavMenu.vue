@@ -46,15 +46,9 @@
               <feather-icon
                 icon="XIcon"
                 size="20"
-                class="d-xl-none"
+                class="d-xl-none customizer-icon"
                 @click="toggleVerticalMenuActive"
               />
-              <!-- <feather-icon
-                :icon="collapseTogglerIconFeather"
-                size="20"
-                class="d-none d-xl-block collapse-toggle-icon"
-                @click="toggleCollapsed"
-              /> -->
             </b-link>
           </li>
         </ul>
@@ -178,4 +172,13 @@ export default {
 
 <style lang="scss">
 @import '~@core/scss/base/core/menu/menu-types/vertical-menu.scss';
+@import '~@core/scss/base/components/variables-dark';
+
+.customizer-icon {
+  color: $info;
+
+  .dark-layout & {
+    color: $primary;
+  }
+}
 </style>

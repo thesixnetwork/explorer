@@ -104,37 +104,37 @@ export default {
 @import '~@core/scss/base/components/variables-dark';
 
 .customizer-button {
-  background-color: #002770;
+  background-color: $info;
   color: #fff;
   border-radius: 12px;
 
   .dark-layout & {
-    background-color: #40d7fc;
+    background-color: $primary;
   }
 }
 
 .customizer-icon {
-  color: #002770;
+  color: $info;
 
   .dark-layout & {
-    color: #40d7fc;
+    color: $primary;
   }
 }
 
 .customizer-text {
-  color: #002770;
+  color: $info;
 
   .dark-layout & {
-    color: #40d7fc;
+    color: $primary;
   }
 }
 
 .customizer-items :hover {
-  color: #002770;
+  color: $info;
   background-color: #00277012;
 
   .dark-layout & {
-    color: #40d7fc;
+    color: $primary;
     background-color: #40d7fc12;
   }
 }
