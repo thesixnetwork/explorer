@@ -114,16 +114,41 @@
           </b-button>
         </template>
 
-        <!-- <b-dropdown-item
-          :to="{ name: 'portfolio' }"
-          class="d-none"
+        <b-dropdown-item
+          v-for="(item, k) in accounts"
+          :key="k"
+          :disabled="!item.address"
+          :to="`/${selected_chain.chain_name}/account/${item.address.addr}`"
+          @click="updateDefaultWallet(item.wallet)"
         >
-          <feather-icon
-            icon="PieChartIcon"
-            size="16"
-          />
-          <span class="align-middle ml-50">Portofolio</span>
-        </b-dropdown-item> -->
+          <div class="d-flex flex-column">
+            <span class="font-weight-bolder">
+              {{ item.wallet }}
+              <b-avatar
+                v-if="item.wallet === walletName"
+                variant="success"
+                size="sm"
+                class="mr-5"
+              >
+                <feather-icon icon="CheckIcon" />
+              </b-avatar>
+            </span>
+            <small>
+              {{
+                item.address
+                  ? formatAddr(item.address.addr)
+                  : `Not available on ${selected_chain.chain_name}`
+              }}
+            </small>
+          </div>
+        </b-dropdown-item>
+        <b-dropdown-divider />
+
+        <b-dropdown-item to="/wallet/import" class="customizer-items">
+          <feather-icon icon="PlusIcon" size="16" />
+          <span class="align-middle ml-50">Import Address</span>
+        </b-dropdown-item>
+        <b-dropdown-divider />
 
         <b-dropdown-item :to="{ name: 'accounts' }" class="customizer-items">
           <feather-icon icon="KeyIcon" size="16" />

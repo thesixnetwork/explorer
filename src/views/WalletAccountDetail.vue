@@ -284,9 +284,7 @@
                 >
                   <td>
                     <small>
-                      {{ p.length }}
-                      <br />
-                      {{ formatLength(p.length) }}
+                      {{ p.length }}<br />{{ formatLength(p.length) }}
                     </small>
                   </td>
                   <td>{{ formatToken(p.amount) }}</td>

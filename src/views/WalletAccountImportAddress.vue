@@ -377,11 +377,11 @@ export default {
     },
     async cennectKeplr() {
       const dataChainInfo = {
-        chainId: 'five-net',
-        chainName: 'Five Testnet',
+        chainId: 'fivenet',
+        chainName: 'SIX Protocol Testnet',
         addressPrefix: '6x',
-        rpc: 'https://rpc.fivenet.sixscan.io',
-        rest: 'https://api.fivenet.sixscan.io',
+        rpc: 'http://34.124.194.2:26657/',
+        rest: 'http://34.124.194.2:1317/',
         stakeCurrency: {
           coinDenom: 'SIX',
           coinMinimalDenom: 'usix',
