@@ -34,6 +34,8 @@ export default {
     ibcChannels: {},
     quotes: {},
     defaultWallet: localStorage.getItem('default-wallet'),
+    denoms: {},
+    ibcPaths: {},
   },
   getters: {
     getchains: state => state.chains,
@@ -64,6 +66,12 @@ export default {
         state.chains.defaultWallet = defaultWallet
       }
     },
+    setIBCDenoms(state, denoms) {
+      state.denoms = { ...state.denoms, ...denoms }
+    },
+    setIBCPaths(state, paths) {
+      state.ibcPaths = paths
+    }
   },
   actions: {
     async getQuotes(context) {

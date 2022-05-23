@@ -1,4 +1,4 @@
-import { Bech32, fromBase64, fromHex, toHex } from '@cosmjs/encoding';
+import { Bech32, fromBase64, fromHex, toHex, fromBech32 } from '@cosmjs/encoding';
 import { sha256, stringToPath } from '@cosmjs/crypto';
 // ledger
 import TransportWebBLE from '@ledgerhq/hw-transport-web-ble';
@@ -304,6 +304,10 @@ export function consensusPubkeyToHexAddress(consensusPubkey) {
     .slice(0, 40)
     .toUpperCase();
   return address;
+}
+
+export function toETHAddress(cosmosAddress) {
+  return `0x${toHex(fromBech32(cosmosAddress).data)}`
 }
 
 function toSignAddress(addr) {
