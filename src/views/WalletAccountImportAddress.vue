@@ -385,8 +385,8 @@ export default {
     },
     async cennectKeplr() {
       const dataChainInfo = {
-        chainId: 'five-net',
-        chainName: 'Five Testnet',
+        chainId: 'fivenet',
+        chainName: 'SIX Protocol Testnet',
         addressPrefix: '6x',
         rpc: 'https://rpc.fivenet.sixscan.io',
         rest: 'https://api.fivenet.sixscan.io',
@@ -424,9 +424,9 @@ export default {
         ],
         coinType: 118,
         gasPriceStep: {
-          low: 0.025,
-          average: 0.05,
-          high: 0.1
+          low: 1.25,
+          average: 1.45,
+          high: 1.65
         },
         features: ['stargate', 'cosmwasm', 'ibc-transfer', 'no-legacy-stdTx']
       };
