@@ -77,6 +77,7 @@
               <b-dropdown-item
                 v-for="(item, i) in apiOptions"
                 :key="item"
+                class="customizer-items"
                 @click="change(i)"
               >
                 {{ item }}
@@ -116,49 +117,55 @@
           :key="k"
           :disabled="!item.address"
           :to="`/${selected_chain.chain_name}/account/${item.address.addr}`"
+          class="customizer-items"
           @click="updateDefaultWallet(item.wallet)"
         >
           <div class="d-flex flex-column">
-            <span class="font-weight-bolder"
-              >{{ item.wallet }}
+            <span class="font-weight-bolder">
+              {{ item.wallet }}
               <b-avatar
                 v-if="item.wallet === walletName"
                 variant="success"
                 size="sm"
                 class="mr-5"
               >
-                <feather-icon icon="CheckIcon" />
+                <feather-icon icon="UserCheckIcon" size="12" />
               </b-avatar>
             </span>
-            <small>{{
-              item.address
-                ? formatAddr(item.address.addr)
-                : `Not available on ${selected_chain.chain_name}`
-            }}</small>
+            <small>
+              {{
+                item.address
+                  ? formatAddr(item.address.addr)
+                  : `Not available on ${selected_chain.chain_name}`
+              }}
+            </small>
           </div>
         </b-dropdown-item>
         <b-dropdown-divider />
-        <b-dropdown-item to="/wallet/import">
+        <b-dropdown-item to="/wallet/import" class="customizer-items">
           <feather-icon icon="PlusIcon" size="16" />
           <span class="align-middle ml-50">Import Address</span>
         </b-dropdown-item>
         <b-dropdown-divider />
 
-        <b-dropdown-item :to="{ name: 'accounts' }">
+        <b-dropdown-item :to="{ name: 'accounts' }" class="customizer-items">
           <feather-icon icon="KeyIcon" size="16" />
           <span class="align-middle ml-50">Accounts</span>
         </b-dropdown-item>
 
-        <b-dropdown-item :to="{ name: 'delegations' }">
+        <b-dropdown-item :to="{ name: 'delegations' }" class="customizer-items">
           <feather-icon icon="BookOpenIcon" size="16" />
           <span class="align-middle ml-50">My Delegations</span>
         </b-dropdown-item>
 
-        <b-dropdown-item :to="`/${selected_chain.chain_name}/uptime/my`">
+        <b-dropdown-item
+          :to="`/${selected_chain.chain_name}/uptime/my`"
+          class="customizer-items"
+        >
           <feather-icon icon="AirplayIcon" size="16" />
           <span class="align-middle ml-50">My Validators</span>
         </b-dropdown-item>
-        <b-dropdown-item :to="`/wallet/transactions`">
+        <b-dropdown-item :to="`/wallet/transactions`" class="customizer-items">
           <feather-icon icon="LayersIcon" size="16" />
           <span class="align-middle ml-50">My Transactions</span>
         </b-dropdown-item>
@@ -344,9 +351,11 @@ h3 {
 
 .customizer-items :hover {
   color: $info;
+  background-color: rbga($info, 0.12);
 
   .dark-layout & {
-    color: $primary;
+    color: #fff;
+    background-color: rbga($primary, 0.12);
   }
 }
 </style>

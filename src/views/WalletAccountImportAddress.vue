@@ -5,16 +5,16 @@
         DISCLAIMER:
       </h4>
       <div class="alert-body">
-        <span
-          >Six.scan is maintained by the community, Everyone could add a chain
-          to Six.scan. Some of those blockchains are not fully tested, Use at
-          your own risk.</span
-        >
+        <span>
+          SIXSCAN is maintained by the community, Everyone could add a chain to
+          SIXSCAN Some of those blockchains are not fully tested, Use at your
+          own risk.
+        </span>
       </div>
     </b-alert>
     <form-wizard
       ref="wizard"
-      color="#39b8f6"
+      color="#5349f5"
       :title="null"
       :subtitle="null"
       shape="square"
@@ -31,7 +31,7 @@
       >
         <validation-observer ref="deviceRules" tag="form">
           <b-row>
-            <b-col md="12">
+            <b-col md="12" lg="12">
               <b-form-group
                 label="Select a device to import accounts"
                 label-for="device"
@@ -159,28 +159,30 @@
                   rules="required"
                 >
                   <div class="demo-inline-spacing text-uppercase">
-                    <b-row>
+                    <b-row class="w-100">
                       <b-col
                         v-for="(item, key) in chains"
                         :key="key"
                         xs="12"
-                        md="4"
-                        lg="3"
+                        md="2"
+                        lg="2"
                         class="mb-25"
                       >
                         <b-form-checkbox
                           v-model="selected"
                           name="addrs"
                           :value="key"
+                          class="d-flex align-center"
                         >
                           <b-avatar
                             :src="appLogoImage"
                             size="18"
-                            variant="light-primary"
+                            variant="link"
+                            class="customizer-avatar"
                             rounded=""
                           />
                           <span
-                            v-b-tooltip.hover.v-primary
+                            v-b-tooltip.hover.v-info
                             :title="`Coin Type: ${item.coin_type}`"
                             :class="
                               hdpath.startsWith(`m/44'/${item.coin_type}`)
@@ -194,13 +196,14 @@
                       </b-col>
                     </b-row>
                   </div>
-                  <small class="text-success">{{ errors[0] }}</small>
+                  <small class="text-danger">{{ errors[0] }}</small>
                 </validation-provider>
               </b-form-group>
-              <b-alert show variant="primary">
-                <div class="alert-heading">
+              <b-alert show variant="link" class="customizer-avatar">
+                <div class="alert-heading mb-0">
                   IMPORTANT
                 </div>
+                <hr class="customizer-hr" />
                 <div class="alert-body">
                   <div>
                     If you don't have Ledger, Do not import those addresses in
@@ -247,7 +250,6 @@
 import { FormWizard, TabContent } from 'vue-form-wizard';
 import { ValidationProvider, ValidationObserver } from 'vee-validate';
 import ToastificationContent from '@core/components/toastification/ToastificationContent.vue';
-// import 'vue-form-wizard/dist/vue-form-wizard.min.css'
 import 'vue-form-wizard/dist/vue-form-wizard.min.css';
 import {
   BAlert,
@@ -569,6 +571,26 @@ export default {
 
   .dark-layout & {
     color: $primary;
+  }
+}
+
+.customizer-avatar {
+  color: $info;
+  background-color: rgba($color: $info, $alpha: 0.12);
+
+  .dark-layout & {
+    color: $primary;
+    background-color: rgba($color: $primary, $alpha: 0.12);
+  }
+}
+
+.customizer-hr {
+  border-top: 1px solid #d8d6de;
+  margin-top: 0px;
+  margin-bottom: 0px;
+
+  .dark-layout & {
+    border-top: 1px solid #404656;
   }
 }
 </style>

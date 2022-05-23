@@ -1,17 +1,22 @@
 <template>
   <div>
     <div v-if="!error">
-      <b-card bg-variant="secondary" style="color: #fff">
+      <b-card bg-variant="link">
         <div class="d-flex flex-row align-items-center text-truncate">
           <b-avatar id="address-qr" rounded size="52">
             <feather-icon icon="CameraIcon" size="32" />
           </b-avatar>
           <div class="ml-2">
-            <h3 style="color: #fff" class="mb-0">
+            <h4 class="mb-0">
               Address:
-              <feather-icon icon="CopyIcon" size="18" @click="copy()" />
-            </h3>
+            </h4>
             {{ address }}
+            <feather-icon
+              icon="CopyIcon"
+              size="18"
+              class="ml-0 cursor-pointer"
+              @click="copy()"
+            />
           </div>
         </div>
       </b-card>
@@ -185,10 +190,13 @@
         <b-table-simple stacked="sm">
           <b-tbody v-if="account.type === 'cosmos-sdk/BaseAccount'">
             <b-tr>
-              <b-td> Account Type </b-td><b-td> {{ account.type }} </b-td>
+              <b-td> Account Type </b-td>
+              <b-td> {{ account.type }} </b-td>
             </b-tr>
             <b-tr>
-              <b-td class="max-width:100px;"> Account Number </b-td>
+              <b-td class="max-width:100px;">
+                Account Number
+              </b-td>
               <b-td> {{ account.value.account_number }} </b-td>
             </b-tr>
             <b-tr>
@@ -306,10 +314,13 @@
             "
           >
             <b-tr>
-              <b-td> Account Type </b-td><b-td> {{ account.type }} </b-td>
+              <b-td> Account Type </b-td>
+              <b-td> {{ account.type }} </b-td>
             </b-tr>
             <b-tr>
-              <b-td style="max-width:100px;"> Account Number </b-td>
+              <b-td style="max-width:100px;">
+                Account Number
+              </b-td>
               <b-td>
                 {{
                   account.value.base_vesting_account.base_account.account_number
@@ -411,8 +422,8 @@
                   <b-td> {{ account.value.account_number }} </b-td>
                 </b-tr>
                 <b-tr>
-                  <b-td> Sequence </b-td
-                  ><b-td> {{ account.value.sequence }} </b-td>
+                  <b-td> Sequence </b-td>
+                  <b-td> {{ account.value.sequence }} </b-td>
                 </b-tr>
                 <b-tr>
                   <b-td> Public Key </b-td>

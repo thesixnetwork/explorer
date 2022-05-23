@@ -62,7 +62,8 @@
         <div class="d-flex justify-content-between align-items-end mb-1">
           <b-button
             v-ripple.400="'rgba(255, 255, 255, 0.15)'"
-            variant="warning"
+            variant="link"
+            class="customizer-button"
             :to="`/wallet/import?name=${item.name}`"
           >
             <feather-icon icon="EditIcon" class="mr-50" />
@@ -710,6 +711,17 @@ export default {
 
   .dark-layout & {
     color: $primary;
+  }
+}
+
+.customizer-button {
+  background-color: transparent;
+  color: $info;
+  border-radius: 12px;
+  border: 1px solid $primary;
+
+  .dark-layout & {
+    color: #fff;
   }
 }
 </style>
