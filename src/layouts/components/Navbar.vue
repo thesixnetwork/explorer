@@ -1,5 +1,27 @@
 <template>
   <div class="navbar-container d-flex content align-items-center">
+    <!-- Nav Menu Toggler -->
+    <ul class="nav navbar-nav d-lg-none">
+      <li class="nav-item">
+        <b-link class="nav-link" @click="toggleVerticalMenuActive">
+          <b-avatar
+            v-if="selected_chain && selected_chain.logo"
+            variant="transparent"
+            rounded
+            size="21"
+            :src="selected_chain.logo"
+            class="badge-minimal d-none d-xl-block"
+          />
+          <feather-icon
+            v-else
+            icon="MenuIcon"
+            size="26"
+            class="cursor-pointer customizer-icon  d-xs-block d-sm-block d-md-block d-lg-block d-xl-none"
+          />
+        </b-link>
+      </li>
+    </ul>
+
     <!-- Left Col -->
     <div class="bookmark-wrapper align-items-center flex-grow-1 d-flex">
       <b-media v-if="selected_chain" no-body class="flex align-center">
@@ -28,9 +50,9 @@
         </b-media-aside>
         <b-media-body>
           <h3 class="c-mb-0">
-            <span class="text-uppercase">
-              {{ selected_chain.chain_title || chainid }}
-            </span>
+            <span class="text-uppercase">{{
+              chainid || selected_chain.chain_title
+            }}</span>
           </h3>
           <small
             id="data-provider"
@@ -97,8 +119,8 @@
           @click="updateDefaultWallet(item.wallet)"
         >
           <div class="d-flex flex-column">
-            <span class="font-weight-bolder">
-              {{ item.wallet }}
+            <span class="font-weight-bolder"
+              >{{ item.wallet }}
               <b-avatar
                 v-if="item.wallet === walletName"
                 variant="success"
@@ -108,41 +130,35 @@
                 <feather-icon icon="CheckIcon" />
               </b-avatar>
             </span>
-            <small>
-              {{
-                item.address
-                  ? formatAddr(item.address.addr)
-                  : `Not available on ${selected_chain.chain_name}`
-              }}
-            </small>
+            <small>{{
+              item.address
+                ? formatAddr(item.address.addr)
+                : `Not available on ${selected_chain.chain_name}`
+            }}</small>
           </div>
         </b-dropdown-item>
         <b-dropdown-divider />
-
-        <b-dropdown-item to="/wallet/import" class="customizer-items">
+        <b-dropdown-item to="/wallet/import">
           <feather-icon icon="PlusIcon" size="16" />
           <span class="align-middle ml-50">Import Address</span>
         </b-dropdown-item>
         <b-dropdown-divider />
 
-        <b-dropdown-item :to="{ name: 'accounts' }" class="customizer-items">
+        <b-dropdown-item :to="{ name: 'accounts' }">
           <feather-icon icon="KeyIcon" size="16" />
           <span class="align-middle ml-50">Accounts</span>
         </b-dropdown-item>
 
-        <b-dropdown-item :to="{ name: 'delegations' }" class="customizer-items">
+        <b-dropdown-item :to="{ name: 'delegations' }">
           <feather-icon icon="BookOpenIcon" size="16" />
           <span class="align-middle ml-50">My Delegations</span>
         </b-dropdown-item>
 
-        <b-dropdown-item
-          :to="`/${selected_chain.chain_name}/uptime/my`"
-          class="customizer-items"
-        >
+        <b-dropdown-item :to="`/${selected_chain.chain_name}/uptime/my`">
           <feather-icon icon="AirplayIcon" size="16" />
           <span class="align-middle ml-50">My Validators</span>
         </b-dropdown-item>
-        <b-dropdown-item :to="`/wallet/transactions`" class="customizer-items">
+        <b-dropdown-item :to="`/wallet/transactions`">
           <feather-icon icon="LayersIcon" size="16" />
           <span class="align-middle ml-50">My Transactions</span>
         </b-dropdown-item>
@@ -162,7 +178,8 @@ import {
   VBTooltip,
   BButton,
   BDropdown,
-  BDropdownItem
+  BDropdownItem,
+  BDropdownDivider
 } from 'bootstrap-vue';
 import Ripple from 'vue-ripple-directive';
 import DarkToggler from '@core/layouts/components/app-navbar/components/DarkToggler.vue';
@@ -171,7 +188,6 @@ import SearchBar from '@core/layouts/components/app-navbar/components/SearchBar.
 // import CartDropdown from '@core/layouts/components/app-navbar/components/CartDropdown.vue'
 import { getLocalAccounts, timeIn, toDay } from '@/libs/utils';
 // import UserDropdown from '@core/layouts/components/app-navbar/components/UserDropdown.vue'
-import responsive from 'vue-responsive';
 
 export default {
   components: {
@@ -184,6 +200,7 @@ export default {
     BButton,
     BDropdown,
     BDropdownItem,
+    BDropdownDivider,
 
     // Navbar Components
     DarkToggler,
@@ -233,19 +250,35 @@ export default {
         return conf.api;
       }
       return [conf.api];
+    },
+    accounts() {
+      let accounts = getLocalAccounts() || {};
+      accounts = Object.entries(accounts).map(v => ({
+        wallet: v[0],
+        address: v[1].address.find(
+          x => x.chain === this.selected_chain.chain_name
+        )
+      }));
+
+      if (accounts.length > 0) {
+        this.updateDefaultWallet(accounts[0].wallet);
+      }
+      return accounts.filter(x => x.address);
     }
   },
-  mounted() {
-    const accounts = Object.keys(getLocalAccounts() || {});
-    if (!this.$store.state.chains.defaultWallet && accounts.length > 0) {
-      this.$store.commit('setDefaultWallet', accounts[0]);
-    }
-  },
+  mounted() {},
   methods: {
+    formatAddr(v) {
+      return v.substring(0, 10).concat('...', v.substring(v.length - 10));
+    },
+    updateDefaultWallet(v) {
+      this.$store.commit('setDefaultWallet', v);
+    },
     change(v) {
       this.index = v;
       const conf = this.$store.state.chains.selected;
       localStorage.setItem(`${conf.chain_name}-api-index`, v);
+      window.location.reload();
     },
     block() {
       const conf = this.$store.state.chains.selected;

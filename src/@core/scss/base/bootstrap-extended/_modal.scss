@@ -37,6 +37,7 @@
     // overflow: unset; updated to "visible" as close icon is not visible in IE
     overflow: visible;
     box-shadow: 0 5px 20px 0 rgba($black, 0.1);
+    height: auto;
   }
 
   .modal-footer {
@@ -101,8 +102,10 @@
     width: ($modal-slide-in-width-sm - 5);
 
     .modal-content {
-      padding-bottom: ($modal-title-line-height * $close-font-size) + $modal-header-padding-y;
-      padding-top: ($modal-title-line-height * $close-font-size) + $modal-header-padding-y;
+      padding-bottom: ($modal-title-line-height * $close-font-size) +
+        $modal-header-padding-y;
+      padding-top: ($modal-title-line-height * $close-font-size) +
+        $modal-header-padding-y;
       overflow: auto;
       border-radius: 0;
       height: 100%;

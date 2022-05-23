@@ -80,11 +80,7 @@
             </b-col>
           </b-row>
         </b-form>
-        <b-alert
-          v-model="showDismissibleAlert"
-          variant="danger"
-          dismissible
-        >
+        <b-alert v-model="showDismissibleAlert" variant="danger" dismissible>
           <div class="alert-body">
             <span>{{ error }}</span>
           </div>
@@ -109,7 +105,12 @@
             <small>Advanced</small>
           </b-form-checkbox>
         </div>
-        <b-button v-if="isOwner" variant="primary" @click="handleOk">
+        <b-button
+          v-if="isOwner"
+          variant="link"
+          @click="handleOk"
+          class="customizer-button"
+        >
           {{ actionName }}
         </b-button>
         <b-button
@@ -430,13 +431,13 @@ export default {
               });
             })
             .catch(e => {
-              this.showResult = false
+              this.showResult = false;
               this.error = e;
               this.showDismissibleAlert = true;
             });
         })
         .catch(e => {
-          this.showResult = false
+          this.showResult = false;
           this.error = e;
           this.showDismissibleAlert = true;
         });
@@ -462,6 +463,15 @@ export default {
     .close {
       margin: 0;
     }
+  }
+}
+.customizer-button {
+  background-color: $info;
+  color: #fff;
+  border-radius: 12px;
+  padding: 8px 18px;
+  .dark-layout & {
+    background-color: $primary;
   }
 }
 </style>

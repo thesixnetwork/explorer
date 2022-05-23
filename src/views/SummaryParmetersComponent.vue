@@ -40,7 +40,7 @@
               </span>
             </b-popover>
           </div>
-          <b-media v-else no-body>
+          <b-media v-else no-body class="align-center mb-1">
             <b-media-aside class="mr-2">
               <b-avatar v-if="item.icon" size="48" :variant="item.color">
                 <feather-icon size="24" :icon="item.icon" />
@@ -50,7 +50,7 @@
               <h4 class="font-weight-bolder mb-0">
                 {{ item.title || '-' }}
               </h4>
-              <b-card-text class="font-small-3 mb-1 text-capitalize">
+              <b-card-text class="font-small-3  text-capitalize">
                 {{ item.subtitle }}
               </b-card-text>
             </b-media-body>
