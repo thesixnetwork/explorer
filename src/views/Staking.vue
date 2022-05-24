@@ -1,11 +1,12 @@
 <template>
   <div>
     <b-card
-      v-if="stakeVals && stakeVals.length > 0"
-      title="❤️ Helping SIX PROTOCOL By Staking ❤️"
+      v-if="stakingVals && stakingVals.length > 0"
+      title="❤️ Helping Ping.pub By Staking ❤️"
+      class="overflow-auto"
     >
       <b-table
-        :items="stakeVals"
+        :items="stakingVals"
         :fields="validator_fields"
         :sort-desc="true"
         sort-by="tokens"
@@ -21,7 +22,7 @@
         <template #cell(description)="data">
           <b-media
             vertical-align="center"
-            class="text-truncate"
+            class="text-truncate d-flex align-items-center"
             style="max-width:320px;"
           >
             <template #aside>
@@ -29,7 +30,7 @@
                 v-if="data.item.avatar"
                 v-b-tooltip.hover.v-primary
                 v-b-tooltip.hover.right="data.item.description.details"
-                size="30"
+                size="32"
                 variant="light-primary"
                 :src="data.item.avatar"
               />
@@ -37,38 +38,35 @@
                 v-if="!data.item.avatar"
                 v-b-tooltip.hover.v-primary
                 v-b-tooltip.hover.right="data.item.description.details"
-                size="26"
               >
-                <feather-icon icon="ServerIcon" size="16" />
+                <feather-icon icon="ServerIcon" />
               </b-avatar>
             </template>
-            <span
-              class="font-weight-bolder d-block text-nowrap customizer-text"
-            >
+            <span class="font-weight-bolder d-block text-nowrap">
               <router-link :to="`./staking/${data.item.operator_address}`">
                 {{ data.item.description.moniker }}
               </router-link>
             </span>
-            <small class="text-muted">
-              {{
-                data.item.description.website || data.item.description.identity
-              }}
-            </small>
+            <small class="text-muted">{{
+              data.item.description.website || data.item.description.identity
+            }}</small>
           </b-media>
         </template>
         <!-- Token -->
         <template #cell(tokens)="data">
           <div v-if="data.item.tokens > 0" class="d-flex flex-column">
-            <span class="font-weight-bold mb-0">{{
-              tokenFormatter(data.item.tokens, stakingParameters.bond_denom)
-            }}</span>
+            <span class="font-weight-bold mb-0">
+              {{
+                tokenFormatter(data.item.tokens, stakingParameters.bond_denom)
+              }}
+            </span>
             <span class="font-small-2 text-muted text-nowrap d-none d-lg-block">
               {{ percent(data.item.tokens / stakingPool) }}%
             </span>
           </div>
           <span v-else>{{ data.item.delegator_shares }}</span>
         </template>
-        <!-- Change -->
+        <!-- Token -->
         <template #cell(changes)="data">
           <small v-if="data.item.changes > 0" class="text-success">
             +{{ data.item.changes }}
@@ -76,14 +74,13 @@
           <small v-else-if="data.item.changes === 0">-</small>
           <small v-else class="text-danger">{{ data.item.changes }}</small>
         </template>
-        <!-- Operation -->
         <template #cell(operation)="data">
           <b-button
             v-b-modal.operation-modal
             :name="data.item.operator_address"
             variant="link"
-            size="sm"
             class="customizer-button"
+            size="sm"
             @click="selectValidator(data.item.operator_address)"
           >
             Delegate
@@ -91,7 +88,7 @@
         </template>
       </b-table>
     </b-card>
-    <b-card no-body>
+    <b-card no-body class="overflow-auto">
       <b-card-header class="d-flex justify-content-between">
         <b-form-group class="mb-0">
           <b-form-radio-group
@@ -104,29 +101,16 @@
             @change="getValidatorListByStatus"
           />
         </b-form-group>
-        <!-- <b-button-group
-          v-model="selectedStatus"
-          button-variant="outline-primary"
-          :options="statusOptions"
-          buttons
-          name="radios-btn-default"
-          @change="getValidatorListByStatus"
-        >
-          <b-button variant="success" v-model="selectedStatus">Active</b-button>
-          <b-button variant="danger" v-model="selectedStatus"
-            >Inactive</b-button
-          >
-        </b-button-group> -->
         <b-card-title class="d-none d-sm-block">
           <span>
-            Validators : {{ validators.length }}/{{
-              stakingParameters.max_validators
-            }}
+            Validators {{ validators.length }}/
+            {{ stakingParameters.max_validators }}
           </span>
         </b-card-title>
       </b-card-header>
-      <b-card no-body class="text-truncate">
+      <b-card-body class="pl-0 pr-0 pb-0">
         <b-table
+          class="mb-0"
           :items="list"
           :fields="validator_fields"
           :sort-desc="true"
@@ -134,11 +118,10 @@
           striped
           hover
           responsive="sm"
-          stacked="sm"
         >
           <!-- A virtual column -->
-          <template #cell(index)="data" class="text-truncate">
-            <b-badge :variant="rankBadge(data)" class="text-truncate">
+          <template #cell(index)="data">
+            <b-badge :variant="rankBadge(data)">
               {{ data.index + 1 }}
             </b-badge>
           </template>
@@ -162,14 +145,11 @@
                   v-if="!data.item.avatar"
                   v-b-tooltip.hover.v-primary
                   v-b-tooltip.hover.right="data.item.description.details"
-                  size="26"
                 >
-                  <feather-icon icon="ServerIcon" size="14" />
+                  <feather-icon icon="ServerIcon" />
                 </b-avatar>
               </template>
-              <span
-                class="font-weight-bolder d-block text-nowrap  customizer-text"
-              >
+              <span class="font-weight-bolder d-block text-nowrap">
                 <router-link :to="`./staking/${data.item.operator_address}`">
                   {{ data.item.description.moniker }}
                 </router-link>
@@ -185,9 +165,11 @@
           <!-- Token -->
           <template #cell(tokens)="data">
             <div v-if="data.item.tokens > 0" class="d-flex flex-column">
-              <span class="font-weight-bold mb-0">{{
-                tokenFormatter(data.item.tokens, stakingParameters.bond_denom)
-              }}</span>
+              <span class="font-weight-bold mb-0">
+                {{
+                  tokenFormatter(data.item.tokens, stakingParameters.bond_denom)
+                }}
+              </span>
               <span
                 class="font-small-2 text-muted text-nowrap d-none d-lg-block"
               >
@@ -209,28 +191,26 @@
               v-b-modal.operation-modal
               :name="data.item.operator_address"
               variant="link"
-              size="sm"
               class="customizer-button"
+              size="sm"
               @click="selectValidator(data.item.operator_address)"
             >
               Delegate
             </b-button>
           </template>
         </b-table>
-      </b-card>
+      </b-card-body>
       <b-card-footer class="d-none d-md-block">
-        <!-- <template #footer> -->
-        <small class="d-none d-md-block">
+        <small>
           <b-badge variant="danger">
             &nbsp;
           </b-badge>
           Top 33%
-          <b-badge variant="warning" class="ml-1">
+          <b-badge variant="warning">
             &nbsp;
           </b-badge>
           Top 67% of Voting Power
         </small>
-        <!-- </template> -->
       </b-card-footer>
     </b-card>
     <operation-modal type="Delegate" :validator-address="validator_address" />
@@ -248,10 +228,9 @@ import {
   BCardHeader,
   BCardTitle,
   VBTooltip,
-  // BCardBody,
+  BCardBody,
   BCardFooter,
   BButton,
-  // BButtonGroup,
   BFormRadioGroup,
   BFormGroup
 } from 'bootstrap-vue';
@@ -270,11 +249,10 @@ export default {
     BBadge,
     BCardHeader,
     BCardTitle,
-    // BCardBody,
+    BCardBody,
     BCardFooter,
     BButton,
     BFormRadioGroup,
-    // BButtonGroup,
     BFormGroup,
     OperationModal
   },
@@ -336,7 +314,7 @@ export default {
     };
   },
   computed: {
-    stakingVals() {
+    sixVals() {
       return this.list.filter(
         x => x.description.identity === '6783E9F948541962'
       );
@@ -534,6 +512,12 @@ export default {
 .customizer-button {
   background-color: $info;
   color: #fff;
+
+  @include media-breakpoint-down(xs) {
+    padding: 0.4rem 1rem !important;
+    border-radius: 10px;
+    font-size: 0.9rem;
+  }
 
   .dark-layout & {
     background-color: $primary;
