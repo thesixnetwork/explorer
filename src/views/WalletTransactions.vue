@@ -12,7 +12,7 @@
       </template>
     </b-table>
     <div class="text-center">
-      <b-button @click="clear()">
+      <b-button class="customizer-button" @click="clear()">
         Clear History
       </b-button>
     </div>
@@ -54,3 +54,12 @@ export default {
   }
 };
 </script>
+
+<style lang="scss" scoped>
+@import '~@core/scss/base/bootstrap-extended/include';
+
+.customizer-button {
+  color: #fff;
+  border-radius: 12px !important;
+}
+</style>

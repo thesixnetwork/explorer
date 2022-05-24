@@ -715,13 +715,12 @@ export default {
 }
 
 .customizer-button {
-  background-color: transparent;
-  color: $info;
+  background-color: $info;
+  color: #fff;
   border-radius: 12px;
-  border: 1px solid $primary;
 
   .dark-layout & {
-    color: #fff;
+    background-color: $primary;
   }
 }
 </style>

@@ -63,10 +63,12 @@ const router = new VueRouter({
         pageTitle: 'My Delegations',
         breadcrumb: [
           {
-            text: 'Wallet'
+            text: 'Wallet',
+            active: true
           },
           {
-            text: 'My Delegations'
+            text: 'My Delegations',
+            active: true
           }
         ]
       }
@@ -79,10 +81,12 @@ const router = new VueRouter({
         pageTitle: 'Transaction History',
         breadcrumb: [
           {
-            text: 'Wallet'
+            text: 'Wallet',
+            active: true
           },
           {
-            text: 'Transaction History'
+            text: 'Transaction History',
+            active: true
           }
         ]
       }

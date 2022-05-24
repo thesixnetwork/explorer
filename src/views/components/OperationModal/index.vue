@@ -108,16 +108,17 @@
         <b-button
           v-if="isOwner"
           variant="link"
-          @click="handleOk"
           class="customizer-button"
+          @click="handleOk"
         >
           {{ actionName }}
         </b-button>
         <b-button
           v-else
           v-ripple.400="'rgba(255, 255, 255, 0.15)'"
-          variant="outline-primary"
+          variant="link"
           to="/wallet/import"
+          class="customizer-button"
         >
           Connect Wallet
         </b-button>

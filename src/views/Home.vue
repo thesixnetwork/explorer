@@ -10,10 +10,11 @@
       <b-button
         v-ripple.400="'rgba(255, 255, 255, 0.15)'"
         variant="link"
-        class="btn-icon mt-20 d-flex justify-content-center align-items-center customizer-button"
+        class="d-flex justify-content-center align-items-center customizer-button"
         :to="`/fivenet`"
+        size="sm"
       >
-        <feather-icon icon="KeyIcon" size="16" />
+        <feather-icon icon="KeyIcon" size="14" />
         <span class="align-middle ml-25">Wallet</span>
       </b-button>
     </b-nav>
@@ -206,6 +207,7 @@ export default {
   border-radius: 12px;
   background-color: $info;
   color: #fff;
+  margin: 4px 0px;
 
   .dark-layout & {
     background-color: $primary;
@@ -213,12 +215,12 @@ export default {
   }
 
   @include media-breakpoint-down(xs) {
-    padding: 6px 10px;
-    margin-top: 4px;
+    padding: 0.486rem 1rem !important;
     border-radius: 10px;
+    margin: 6px 0px;
 
     span {
-      font-size: 0.8rem;
+      font-size: 0.9rem;
     }
   }
 }

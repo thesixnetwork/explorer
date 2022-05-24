@@ -17,12 +17,12 @@ const modules = [
     title: 'staking',
     route: 'staking'
   },
-  {
-    scope: 'normal',
-    title: 'governance',
-    route: 'governance',
-    exclude: 'emoney'
-  },
+  // {
+  //   scope: 'normal',
+  //   title: 'governance',
+  //   route: 'governance',
+  //   exclude: 'emoney'
+  // },
   {
     scope: 'normal',
     title: 'uptime',

@@ -49,9 +49,11 @@
                 {{ data.item.description.moniker }}
               </router-link>
             </span>
-            <small class="text-muted">{{
-              data.item.description.website || data.item.description.identity
-            }}</small>
+            <small class="text-muted">
+              {{
+                data.item.description.website || data.item.description.identity
+              }}
+            </small>
           </b-media>
         </template>
         <!-- Token -->
@@ -102,6 +104,19 @@
             @change="getValidatorListByStatus"
           />
         </b-form-group>
+        <!-- <b-button-group
+          v-model="selectedStatus"
+          button-variant="outline-primary"
+          :options="statusOptions"
+          buttons
+          name="radios-btn-default"
+          @change="getValidatorListByStatus"
+        >
+          <b-button variant="success" v-model="selectedStatus">Active</b-button>
+          <b-button variant="danger" v-model="selectedStatus"
+            >Inactive</b-button
+          >
+        </b-button-group> -->
         <b-card-title class="d-none d-sm-block">
           <span>
             Validators : {{ validators.length }}/{{
@@ -203,7 +218,8 @@
           </template>
         </b-table>
       </b-card>
-      <template #footer>
+      <b-card-footer class="d-none d-md-block">
+        <!-- <template #footer> -->
         <small class="d-none d-md-block">
           <b-badge variant="danger">
             &nbsp;
@@ -214,7 +230,8 @@
           </b-badge>
           Top 67% of Voting Power
         </small>
-      </template>
+        <!-- </template> -->
+      </b-card-footer>
     </b-card>
     <operation-modal type="Delegate" :validator-address="validator_address" />
     <div id="txevent" />
@@ -231,7 +248,10 @@ import {
   BCardHeader,
   BCardTitle,
   VBTooltip,
+  // BCardBody,
+  BCardFooter,
   BButton,
+  // BButtonGroup,
   BFormRadioGroup,
   BFormGroup
 } from 'bootstrap-vue';
@@ -250,10 +270,12 @@ export default {
     BBadge,
     BCardHeader,
     BCardTitle,
+    // BCardBody,
+    BCardFooter,
     BButton,
     BFormRadioGroup,
+    // BButtonGroup,
     BFormGroup,
-    // eslint-disable-next-line vue/no-unused-components
     OperationModal
   },
   directives: {
@@ -261,23 +283,6 @@ export default {
   },
   data() {
     return {
-      keys: [
-        'bitsongvaloper1jxv0u20scum4trha72c7ltfgfqef6nscl86wxa',
-        'akashvaloper1vgstlgtsx4w80gphwgre0fcvc04lcnaelukvll',
-        'certikvaloper1jxv0u20scum4trha72c7ltfgfqef6nsczkvcu7',
-        'cosmosvaloper1jxv0u20scum4trha72c7ltfgfqef6nsch7q6cu',
-        'iva16plp8cmfkjssp222taq6pv6mkm8c5pa9lcktta',
-        'junovaloper1jxv0u20scum4trha72c7ltfgfqef6nscm9pmg2',
-        'kavavaloper1xftqdxvq0xkv2mu8c5y0jrsc578tak4m9u0s44',
-        'kivaloper1jxv0u20scum4trha72c7ltfgfqef6nschqtan9',
-        'osmovaloper1jxv0u20scum4trha72c7ltfgfqef6nscqx0u46',
-        'persistencevaloper1jxv0u20scum4trha72c7ltfgfqef6nsc4zjpnj',
-        'starsvaloper1jxv0u20scum4trha72c7ltfgfqef6nscdghxyx',
-        'digvaloper1jxv0u20scum4trha72c7ltfgfqef6nsc4s577p',
-        'bcnavaloper1jxv0u20scum4trha72c7ltfgfqef6nsc384wxf',
-        'pbvaloper1jxv0u20scum4trha72c7ltfgfqef6nsc5nn6cf',
-        'rizonvaloper1jxv0u20scum4trha72c7ltfgfqef6nsczn2l68'
-      ],
       islive: true,
       validator_address: null,
       mintInflation: 0,
@@ -286,6 +291,8 @@ export default {
       validators: [],
       delegations: [],
       changes: {},
+      latestPower: {},
+      previousPower: {},
       validator_fields: [
         {
           key: 'index',
@@ -298,45 +305,56 @@ export default {
           key: 'tokens',
           label: 'Voting Power',
           sortable: true,
-          sortByFormatted: true,
-          sortable: true
+          tdClass: 'text-right',
+          thClass: 'text-right',
+          sortByFormatted: true
         },
         {
           key: 'changes',
-          label: '24H Changes',
-          tdClass: 'text-truncate'
+          label: '24H Changes'
         },
         {
           key: 'commission',
-          formatter: value => `${percent(value.rate)}%`
+          formatter: value => `${percent(value.rate)}%`,
+          tdClass: 'text-right',
+          thClass: 'text-right'
         },
         {
           key: 'operation',
-          label: 'Actions'
+          label: '',
+          tdClass: 'text-right',
+          thClass: 'text-right'
         }
       ],
       statusOptions: [
-        { text: 'Active', value: ['BOND_STATUS_BONDED'] },
-        {
-          text: 'Inactive',
-          value: ['BOND_STATUS_UNBONDED', 'BOND_STATUS_UNBONDING']
-        }
+        { text: 'Active', value: 'active' },
+        { text: 'Inactive', value: 'inactive' }
       ],
-      selectedStatus: ['BOND_STATUS_BONDED']
+      selectedStatus: 'active',
+      isInactiveLoaded: false,
+      inactiveValidators: []
     };
   },
   computed: {
-    stakeVals() {
+    stakingVals() {
       return this.list.filter(
         x => x.description.identity === '6783E9F948541962'
       );
     },
     list() {
-      return this.validators.map(x => {
+      const tab =
+        this.selectedStatus === 'active'
+          ? this.validators
+          : this.inactiveValidators;
+      return tab.map(x => {
         const xh = x;
-        const change = this.changes[x.consensus_pubkey.value];
-        if (change) {
-          xh.changes = change.latest - change.previous;
+        if (
+          Object.keys(this.latestPower).length > 0 &&
+          Object.keys(this.previousPower).length > 0
+        ) {
+          const latest = this.latestPower[x.consensus_pubkey.value] || 0;
+          const previous = this.previousPower[x.consensus_pubkey.value] || 0;
+          xh.changes = latest - previous;
         }
         return xh;
       });
@@ -352,48 +370,14 @@ export default {
     });
     this.initial();
   },
-  // created() {
-  //   this.$http.getValidatorListByHeight('latest').then(data => {
-  //     let height = Number(data.block_height);
-  //     if (height > 14400) {
-  //       height -= 14400;
-  //     } else {
-  //       height = 1;
-  //     }
-  //     const changes = [];
-  //     data.validators.forEach(x => {
-  //       changes[x.pub_key.value] = {
-  //         latest: Number(x.voting_power),
-  //         previous: 0
-  //       };
-  //     });
-  //     this.$http.getValidatorListByHeight(height).then(previous => {
-  //       previous.validators.forEach(x => {
-  //         if (changes[x.pub_key.value]) {
-  //           changes[x.pub_key.value].previous = Number(x.voting_power);
-  //         } else {
-  //           changes[x.pub_key.value] = {
-  //             latest: 0,
-  //             previous: Number(x.voting_power)
-  //           };
-  //         }
-  //       });
-  //       this.$set(this, 'changes', changes);
-  //     });
-  //   });
-  //   this.$http.getStakingParameters().then(res => {
-  //     this.stakingParameters = res;
-  //   });
-  //   this.getValidatorListByStatus(this.selectedStatus);
-  // },
   beforeDestroy() {
     this.islive = false;
   },
   mounted() {
-    // const elem = document.getElementById('txevent');
-    // elem.addEventListener('txcompleted', () => {
-    //   this.initial();
-    // });
+    const elem = document.getElementById('txevent');
+    elem.addEventListener('txcompleted', () => {
+      this.initial();
+    });
   },
   methods: {
     initial() {
@@ -432,9 +416,9 @@ export default {
         } else {
           height = 1;
         }
-        // data.validators.forEach(x => {
-        //   this.$set(this.latestPower, x.pub_key.key, Number(x.voting_power));
-        // });
+        data.validators.forEach(x => {
+          this.$set(this.latestPower, x.pub_key.key, Number(x.voting_power));
+        });
         for (let offset = 100; offset < length; offset += 100) {
           this.$http.getValidatorListByHeight('latest', offset).then(latest => {
             latest.validators.forEach(x => {
@@ -448,26 +432,25 @@ export default {
         }
         for (let offset = 0; offset < length; offset += 100) {
           this.$http.getValidatorListByHeight(height, offset).then(previous => {
-            // previous.validators.forEach(x => {
-            //   this.$set(
-            //     this.previousPower,
-            //     x.pub_key.key,
-            //     Number(x.voting_power)
-            //   );
-            // });
+            previous.validators.forEach(x => {
+              this.$set(
+                this.previousPower,
+                x.pub_key.key,
+                Number(x.voting_power)
+              );
+            });
           });
         }
       });
     },
-    getValidatorListByStatus(statusList) {
-      this.validators = [];
+    getValidatorListByStatus() {
+      if (this.isInactiveLoaded) return;
+      const statusList = ['BOND_STATUS_UNBONDED', 'BOND_STATUS_UNBONDING'];
       statusList.forEach(status => {
         this.$http.getValidatorListByStatus(status).then(res => {
           const identities = [];
           const temp = res;
-          let total = 0;
           for (let i = 0; i < temp.length; i += 1) {
-            total += temp[i].tokens;
             const { identity } = temp[i].description;
             const url = this.$store.getters['chains/getAvatarById'](identity);
             if (url) {
@@ -476,8 +459,6 @@ export default {
               identities.push(identity);
             }
           }
-          this.stakingPool = total;
-          this.validators.push(...temp);
 
           // fetch avatar from keybase
           let promise = Promise.resolve();
@@ -489,8 +470,10 @@ export default {
                 })
             );
           });
+          this.inactiveValidators = this.inactiveValidators.concat(res);
         });
       });
+      this.isInactiveLoaded = true;
     },
     selectValidator(da) {
       this.validator_address = da;
@@ -500,6 +483,7 @@ export default {
       return formatToken({ amount, denom }, {}, 0);
     },
     rankBadge(data) {
+      if (this.selectedStatus === 'inactive') return 'primary';
       const { index, item } = data;
       if (index === 0) {
         window.sum = item.tokens;
@@ -522,7 +506,11 @@ export default {
           if (Array.isArray(d.them) && d.them.length > 0) {
             const pic = d.them[0].pictures;
             if (pic) {
-              const validator = this.validators.find(
+              const list =
+                this.selectedStatus === 'active'
+                  ? this.validators
+                  : this.inactiveValidators;
+              const validator = list.find(
                 u => u.description.identity === identity
               );
               this.$set(validator, 'avatar', pic.primary.url);

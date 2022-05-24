@@ -1,26 +1,26 @@
 <template>
   <div class="navbar-container d-flex content align-items-center">
     <!-- Nav Menu Toggler -->
-    <ul class="nav navbar-nav d-lg-none">
+    <!-- <ul class="nav navbar-nav d-lg-none">
       <li class="nav-item">
         <b-link class="nav-link" @click="toggleVerticalMenuActive">
           <b-avatar
             v-if="selected_chain && selected_chain.logo"
             variant="transparent"
             rounded
-            size="21"
+            size="20"
             :src="selected_chain.logo"
             class="badge-minimal d-none d-xl-block"
           />
           <feather-icon
             v-else
             icon="MenuIcon"
-            size="26"
+            size="22"
             class="cursor-pointer customizer-icon  d-xs-block d-sm-block d-md-block d-lg-block d-xl-none"
           />
         </b-link>
       </li>
-    </ul>
+    </ul> -->
 
     <!-- Left Col -->
     <div class="bookmark-wrapper align-items-center flex-grow-1 d-flex">
@@ -43,16 +43,16 @@
             />
             <feather-icon
               icon="MenuIcon"
-              size="26"
+              size="22"
               class="cursor-pointer customizer-icon  d-xs-block d-sm-block d-md-block d-lg-block d-xl-none"
             />
           </b-link>
         </b-media-aside>
         <b-media-body>
           <h3 class="c-mb-0">
-            <span class="text-uppercase">{{
-              chainid || selected_chain.chain_title
-            }}</span>
+            <span class="text-uppercase">
+              {{ chainid || selected_chain.chain_title }}
+            </span>
           </h3>
           <small
             id="data-provider"
@@ -105,7 +105,7 @@
           <b-button
             v-ripple.400="'rgba(255, 255, 255, 0.15)'"
             variant="link"
-            class="btn-icon customizer-button d-flex justify-content-center align-items-center"
+            class="customizer-button d-flex justify-content-center align-items-center"
           >
             <feather-icon icon="UserIcon" />
             <span class="align-middle ml-25">{{ walletName }}</span>
@@ -330,7 +330,7 @@ export default {
     border-radius: 10px;
 
     span {
-      font-size: 0.8rem;
+      font-size: 0.9rem;
     }
   }
 }
