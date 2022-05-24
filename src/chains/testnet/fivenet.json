@@ -4,6 +4,7 @@
     "api": [
         "https://api.fivenet.sixscan.io"
     ],
+    "rpc":"https://rpc.fivenet.sixscan.io",
     "sdk_version": "0.45.0",
     "coin_type": "118",
     "min_tx_fee": "800",

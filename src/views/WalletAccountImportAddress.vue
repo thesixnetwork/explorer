@@ -502,7 +502,6 @@ export default {
         switch (this.device) {
           case 'keplr':
             await this.cennectKeplr().then(accounts => {
-              console.log(accounts);
               if (accounts) {
                 // eslint-disable-next-line prefer-destructuring
                 this.accounts = accounts[0];

@@ -24,12 +24,24 @@
       text-transform: uppercase;
       font-size: $table-th-font-size;
       letter-spacing: 0.5px;
+      border-bottom: unset !important;
     }
   }
   th,
   td {
     padding: $table-cell-padding 2rem;
     vertical-align: middle;
+    border-top: unset !important;
+  }
+  &.table-md {
+    th,
+    td {
+      padding: $table-cell-padding-md 0.5rem;
+
+      &:first-child {
+        padding-left: 0.75rem;
+      }
+    }
   }
   &.table-sm {
     th,

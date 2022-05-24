@@ -10,7 +10,7 @@ import { isTestnet } from '@/libs/utils';
 let chains = {};
 
 let configs = require.context('../../chains/mainnet', false, /\.json$/);
-if (!isTestnet()) {
+if (isTestnet()) {
   configs = require.context('../../chains/testnet', false, /\.json$/);
 }
 

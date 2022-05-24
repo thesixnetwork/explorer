@@ -1,22 +1,22 @@
 <template>
   <div>
     <b-card
-      v-if="stakingVals && stakingVals.length > 0"
-      title="❤️ Helping Ping.pub By Staking ❤️"
+      v-if="sixVals && sixVals.length > 0"
+      title="SIX Network"
       class="overflow-auto"
     >
       <b-table
-        :items="stakingVals"
+        :items="sixVals"
         :fields="validator_fields"
         :sort-desc="true"
-        sort-by="tokens"
+        sort-by="description"
         striped
         hover
         responsive="sm"
       >
         <!-- A virtual column -->
         <template #cell(index)="data">
-          {{ data.index + 1 }}
+          <span>{{ data.index + 1 }}</span>
         </template>
         <!-- Column: Validator -->
         <template #cell(description)="data">
@@ -54,7 +54,11 @@
         </template>
         <!-- Token -->
         <template #cell(tokens)="data">
-          <div v-if="data.item.tokens > 0" class="d-flex flex-column">
+          <div
+            v-if="data.item.tokens > 0"
+            class="d-flex flex-column"
+            style="max-width:320px;"
+          >
             <span class="font-weight-bold mb-0">
               {{
                 tokenFormatter(data.item.tokens, stakingParameters.bond_denom)
@@ -123,7 +127,7 @@
           <!-- A virtual column -->
           <template #cell(index)="data">
             <b-badge :variant="rankBadge(data)">
-              {{ data.index + 1 }}
+              <span>{{ data.index + 1 }}</span>
             </b-badge>
           </template>
           <!-- Column: Validator -->
@@ -179,7 +183,7 @@
             </div>
             <span v-else>{{ data.item.delegator_shares }}</span>
           </template>
-          <!-- Token -->
+          <!-- Changes -->
           <template #cell(changes)="data">
             <small v-if="data.item.changes > 0" class="text-success">
               +{{ data.item.changes }}
@@ -279,7 +283,7 @@ export default {
           tdClass: 'd-none d-md-block',
           thClass: 'd-none d-md-block'
         },
-        { key: 'description', label: 'Validator' },
+        { key: 'description', label: 'Validator', sortByFormatted: true },
         {
           key: 'tokens',
           label: 'Voting Power',
@@ -314,12 +318,16 @@ export default {
       inactiveValidators: []
     };
   },
+
   computed: {
     sixVals() {
       return this.list.filter(
-        x => x.description.identity === '6783E9F948541962'
+        x =>
+          x.description.moniker === 'SIX Network' ||
+          x.description.moniker === 'SIX Delegator Early Bird'
       );
     },
+
     list() {
       const tab =
         this.selectedStatus === 'active'

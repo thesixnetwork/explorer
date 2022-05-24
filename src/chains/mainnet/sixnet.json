@@ -1,9 +1,10 @@
 {
-    "chain_name": "fivenet",
-    "chain_title": "SIX Testnet",
+    "chain_name": "sixnet",
+    "chain_title": "SIX Protocol",
     "api": [
-        "https://api.fivenet.sixscan.io"
+        "http://34.143.188.233:1317"
     ],
+    "rpc":"http://34.143.188.233:26657",
     "sdk_version": "0.45.0",
     "coin_type": "118",
     "min_tx_fee": "800",
