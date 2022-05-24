@@ -103,8 +103,9 @@
         </b-form-group>
         <b-card-title class="d-none d-sm-block">
           <span>
-            Validators {{ validators.length }}/
-            {{ stakingParameters.max_validators }}
+            Validators: {{ validators.length }}/{{
+              stakingParameters.max_validators
+            }}
           </span>
         </b-card-title>
       </b-card-header>

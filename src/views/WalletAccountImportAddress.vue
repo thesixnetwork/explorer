@@ -391,11 +391,11 @@ export default {
     },
     async cennectKeplr() {
       const dataChainInfo = {
-        chainId: 'fivenet',
-        chainName: 'SIX Protocol Testnet',
+        chainId: process.env.VUE_APP_CHAIN_ID,
+        chainName: process.env.VUE_APP_CHAIN_NAME,
         addressPrefix: '6x',
-        rpc: 'https://rpc.fivenet.sixscan.io',
-        rest: 'https://api.fivenet.sixscan.io',
+        rpc: process.env.VUE_APP_RPC,
+        rest: process.env.VUE_APP_REST_API,
         stakeCurrency: {
           coinDenom: 'SIX',
           coinMinimalDenom: 'usix',

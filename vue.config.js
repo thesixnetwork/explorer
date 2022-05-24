@@ -1,8 +1,9 @@
-const path = require('path')
-const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer')
-const CompressionWebpackPlugin = require('compression-webpack-plugin')
+const path = require('path');
+const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
+const CompressionWebpackPlugin = require('compression-webpack-plugin');
 
-const productionGzipExtensions = ['js', 'css']
+const productionGzipExtensions = ['js', 'css'];
+process.env.VUE_APP_VERSION = require('./package.json').version;
 
 module.exports = {
   publicPath: '/',
@@ -11,31 +12,34 @@ module.exports = {
     loaderOptions: {
       sass: {
         sassOptions: {
-          includePaths: ['./node_modules', './src/assets'],
-        },
-      },
-    },
+          includePaths: ['./node_modules', './src/assets']
+        }
+      }
+    }
   },
   configureWebpack: {
     resolve: {
       alias: {
         '@themeConfig': path.resolve(__dirname, 'themeConfig.js'),
         '@core': path.resolve(__dirname, 'src/@core'),
-        '@validations': path.resolve(__dirname, 'src/@core/utils/validations/validations.js'),
-        '@axios': path.resolve(__dirname, 'src/libs/axios'),
-      },
+        '@validations': path.resolve(
+          __dirname,
+          'src/@core/utils/validations/validations.js'
+        ),
+        '@axios': path.resolve(__dirname, 'src/libs/axios')
+      }
     },
     plugins: [
       new BundleAnalyzerPlugin({
         analyzerMode: 'static',
-        openAnalyzer: false,
+        openAnalyzer: false
       }),
       new CompressionWebpackPlugin({
         test: new RegExp(`\\.(${productionGzipExtensions.join('|')})$`),
         threshold: 8192,
-        minRatio: 0.8,
-      }),
-    ],
+        minRatio: 0.8
+      })
+    ]
   },
   chainWebpack: config => {
     config.module
@@ -54,10 +58,10 @@ module.exports = {
           'b-card-img': 'src',
           'b-card-img-lazy': ['src', 'blank-src'],
           'b-carousel-slide': 'img-src',
-          'b-embed': 'src',
-        }
-        return options
-      })
+          'b-embed': 'src'
+        };
+        return options;
+      });
   },
   transpileDependencies: ['vue-echarts', 'resize-detector'],
   devServer: {
@@ -66,9 +70,9 @@ module.exports = {
         target: 'https://cosmos.api.ping.pub/',
         changeOrigin: true,
         pathRewrite: {
-          '^/api': '',
-        },
-      },
-    },
-  },
-}
+          '^/api': ''
+        }
+      }
+    }
+  }
+};

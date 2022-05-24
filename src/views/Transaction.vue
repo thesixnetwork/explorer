@@ -5,11 +5,17 @@
       <b-table-simple v-else striped stacked="sm">
         <tbody>
           <b-tr>
-            <b-td style="width:200px"> {{ 'txhash' }} </b-td>
-            <b-td class="text-truncate">{{ tx.txhash }}</b-td>
+            <b-td style="width:200px">
+              {{ 'txhash' }}
+            </b-td>
+            <b-td class="text-truncate">
+              {{ tx.txhash }}
+            </b-td>
           </b-tr>
           <b-tr>
-            <b-td> {{ 'status' }} </b-td>
+            <b-td>
+              {{ 'status' }}
+            </b-td>
             <b-td class="text-wrap">
               <b-badge v-if="tx.code === 0" variant="light-success">
                 Success
@@ -115,7 +121,7 @@ export default {
 </script>
 
 <style>
-#message {
+/* #message {
   border-top-width: 2px;
   border-top-style: double;
 }
@@ -125,5 +131,5 @@ export default {
 
   border: double;
   border-radius: 0.5px;
-}
+} */
 </style>

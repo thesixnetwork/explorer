@@ -1,4 +1,4 @@
-echo "./deploy.sh {env}"
+echo "./gcloud_deploy.sh {env}"
 DEPLOY_ENV=$1
 
 function _exit_if_fail
@@ -8,7 +8,7 @@ function _exit_if_fail
   fi
 }
 
-. ./.env-${DEPLOY_ENV}
+. ./.env.${DEPLOY_ENV}
 
 echo "Google Cloud Bucket Name : ${GCLOUD_STORAGE_NAME}"
 echo "Google Cloud LB Name : ${GCLOUD_LB_NAME}"

@@ -6,7 +6,6 @@
       class="nav text-right text-nowrap ml-auto"
     >
       <b-nav-item><dark-toggler /></b-nav-item>
-      <!-- <b-nav-item><locale /></b-nav-item> -->
       <b-button
         v-ripple.400="'rgba(255, 255, 255, 0.15)'"
         variant="link"
@@ -19,26 +18,28 @@
       </b-button>
     </b-nav>
     <b-link>
-      <div class="d-flex justify-content-center align-items-center mt-2">
+      <div class="d-flex justify-content-center align-items-center my-2">
+        <vuexy-logo width="64" class="mr-1" />
         <h1
           :style="{
             background: '-webkit-linear-gradient(72deg, #353EED,#40D7FC)',
             '-webkit-background-clip': 'text',
             '-webkit-text-fill-color': 'transparent'
           }"
-          class="brand-text display-4 font-weight-bolder d-md-block"
+          class="brand-text display-4 font-weight-bolder d-md-block mb-0"
         >
-          SIX Scan<small class="flow-left">Beta</small>
+          SIXSCAN
+          <!-- <small class="flow-left">Beta</small> -->
         </h1>
       </div>
     </b-link>
 
     <p class="mb-1">
-      <b>SIX PROTOCOL</b> explorer is not just an explorer but also a wallet and
-      more ... 🛠
+      <b>SIXSCAN</b> explorer is not just an explorer but also a wallet and more
+      ... 🛠
     </p>
     <h2 class="mb-3">
-      SIX Protocol Ecosystem 🚀
+      SIX PROTOCOL Ecosystem Blockchains 🚀
     </h2>
 
     <div>
@@ -47,9 +48,44 @@
           <router-link :to="data.chain_name">
             <b-card v-if="data" class="earnings-card text-left">
               <div>
-                <b-card-title class="mb-1 text-uppercase">
-                  {{ data.chain_title }}
-                  <small class="font-small-2">{{ data.sdk_version }}</small>
+                <b-card-title class="mb-1 d-flex justify-content-between">
+                  <span>
+                    {{ data.chain_title }}
+                    <small class="font-small-2">{{ data.sdk_version }}</small>
+                  </span>
+                  <b-dropdown
+                    class="ml-1"
+                    variant="link"
+                    no-caret
+                    toggle-class="p-0"
+                    right
+                  >
+                    <template #button-content>
+                      <feather-icon
+                        icon="MoreVerticalIcon"
+                        size="18"
+                        class="cursor-pointer customizer-text"
+                      />
+                    </template>
+                    <b-dropdown-item
+                      :to="`/${data.chain_name}/`"
+                      class="customizer-items"
+                    >
+                      Summary
+                    </b-dropdown-item>
+                    <b-dropdown-item
+                      :to="`/${data.chain_name}/staking`"
+                      class="customizer-items"
+                    >
+                      Staking
+                    </b-dropdown-item>
+                    <b-dropdown-item
+                      :to="`/${data.chain_name}/uptime`"
+                      class="customizer-items"
+                    >
+                      Uptime
+                    </b-dropdown-item>
+                  </b-dropdown>
                 </b-card-title>
 
                 <div class="d-flex justify-content-between">
@@ -75,9 +111,9 @@
                 </div>
                 <b-card-text class="text-muted font-small-2">
                   <span> Updated on </span>
-                  <span class="font-weight-bolder">{{
-                    data.time || '...'
-                  }}</span>
+                  <span class="font-weight-bolder">
+                    {{ data.time || '...' }}
+                  </span>
                 </b-card-text>
               </div>
             </b-card>
@@ -109,7 +145,9 @@ import {
   BCardTitle,
   BNav,
   BNavItem,
-  BButton
+  BButton,
+  BDropdown,
+  BDropdownItem
 } from 'bootstrap-vue';
 import Ripple from 'vue-ripple-directive';
 import store from '@/store/index';
@@ -117,6 +155,7 @@ import { getLocalAccounts, timeIn, toDay } from '@/libs/utils';
 import DarkToggler from '@/@core/layouts/components/app-navbar/components/DarkToggler.vue';
 // import Locale from '@/@core/layouts/components/app-navbar/components/Locale.vue'
 import AppFooter from '@/@core/layouts/components/AppFooter.vue';
+import VuexyLogo from '@core/layouts/components/Logo.vue';
 
 export default {
   components: {
@@ -130,7 +169,10 @@ export default {
     BNav,
     BNavItem,
     BButton,
+    BDropdown,
+    BDropdownItem,
     DarkToggler,
+    VuexyLogo,
     // Locale,
     AppFooter
   },
@@ -230,6 +272,16 @@ export default {
 
   .dark-layout & {
     color: $primary;
+  }
+}
+
+.customizer-items :hover {
+  color: $info;
+  background-color: rbga($info, 0.12);
+
+  .dark-layout & {
+    color: #fff;
+    background-color: rbga($primary, 0.12);
   }
 }
 </style>

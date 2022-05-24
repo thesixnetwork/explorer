@@ -64,7 +64,7 @@ export default {
     doQuery() {
       const height = /^\d+$/;
       const txhash = /^[A-Z\d]{64}$/;
-      const addr = /^[a-z]{2,6}1[a-z\d]{38}$/;
+      const addr = /^[a-z\d]{2,6}1[a-z\d]{38}$/;
       const key = this.searchQuery;
 
       const c = store.state.chains.selected;

@@ -12,7 +12,7 @@
     <!-- apex chart -->
     <vue-apex-charts
       type="radialBar"
-      height="145"
+      height="160"
       class="my-2"
       :options="goalOverviewRadialBar"
       :series="[percentFormat(data.rate)]"
