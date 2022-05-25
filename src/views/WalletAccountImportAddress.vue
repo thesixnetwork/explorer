@@ -175,7 +175,7 @@
                           class="d-flex align-center"
                         >
                           <b-avatar
-                            :src="appLogoImage"
+                            :src="item.logo"
                             size="18"
                             variant="link"
                             class="customizer-avatar"

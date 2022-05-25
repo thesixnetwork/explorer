@@ -7,10 +7,12 @@
     >
       <b-nav-item><dark-toggler /></b-nav-item>
       <b-button
+        v-for="(data, index) in chains"
+        :key="index"
         v-ripple.400="'rgba(255, 255, 255, 0.15)'"
         variant="link"
         class="d-flex justify-content-center align-items-center customizer-button"
-        :to="`/fivenet`"
+        :to="data.chain_name"
         size="sm"
       >
         <feather-icon icon="KeyIcon" size="14" />
@@ -29,7 +31,6 @@
           class="brand-text display-4 font-weight-bolder d-md-block mb-0"
         >
           SIXSCAN
-          <!-- <small class="flow-left">Beta</small> -->
         </h1>
       </div>
     </b-link>
@@ -224,7 +225,6 @@ export default {
           fetch(`${host}/blocks/latest`)
             .then(res => res.json())
             .then(b => {
-              // console.log(b.block.header)
               const { header } = b.block;
               this.$set(chain, 'height', header.height);
               this.$set(chain, 'time', toDay(header.time));
@@ -283,5 +283,12 @@ export default {
     color: #fff;
     background-color: rbga($primary, 0.12);
   }
+}
+
+.customizer-badge {
+  border-radius: 8px;
+  background-color: $danger;
+  color: #fff;
+  padding: 2px 8px;
 }
 </style>

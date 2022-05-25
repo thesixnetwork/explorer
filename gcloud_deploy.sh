@@ -8,7 +8,7 @@ function _exit_if_fail
   fi
 }
 
-. ./.env.${DEPLOY_ENV}
+. ./.env-${DEPLOY_ENV}
 
 echo "Google Cloud Bucket Name : ${GCLOUD_STORAGE_NAME}"
 echo "Google Cloud LB Name : ${GCLOUD_LB_NAME}"
@@ -22,7 +22,7 @@ _exit_if_fail $?
 npm run build --fix
 _exit_if_fail $?
 
-gsutil -m  cp -r dist/* ${GCLOUD_STORAGE_NAME}
+gsutil -m cp -r dist/* ${GCLOUD_STORAGE_NAME}
 _exit_if_fail $?
 
 echo "Clear cache...."

@@ -65,7 +65,7 @@
       </div>
     </b-card-body>
     <b-card-body class="pt-0">
-      <b-button
+      <!-- <b-button
         v-b-modal.WithdrawCommission
         block
         size="sm"
@@ -73,7 +73,7 @@
         class="customizer-button"
       >
         Withdraw Commission
-      </b-button>
+      </b-button> -->
     </b-card-body>
     <operation-modal
       type="WithdrawCommission"
@@ -93,8 +93,8 @@ import {
   BMediaBody,
   BMedia,
   BMediaAside,
-  BAvatar,
-  BButton
+  BAvatar
+  // BButton
 } from 'bootstrap-vue';
 import { sha256 } from '@cosmjs/crypto';
 import { toHex } from '@cosmjs/encoding';
@@ -103,7 +103,7 @@ import OperationModal from '@/views/components/OperationModal/index.vue';
 
 export default {
   components: {
-    BButton,
+    // BButton,
     BCard,
     BCardHeader,
     BCardTitle,

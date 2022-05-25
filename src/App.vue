@@ -22,6 +22,8 @@ const LayoutHorizontal = () =>
   import('@/layouts/horizontal/LayoutHorizontal.vue');
 const LayoutFull = () => import('@/layouts/full/LayoutFull.vue');
 
+import 'bootstrap-vue/dist/bootstrap-vue.css';
+
 export default {
   components: {
     // Layouts

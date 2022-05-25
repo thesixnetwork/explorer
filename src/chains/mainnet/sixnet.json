@@ -1,10 +1,12 @@
 {
     "chain_name": "sixnet",
     "chain_title": "SIX Protocol",
-    "api": [
-        "http://34.143.188.233:1317"
+    "rpc":[
+        "https://sixnet-rpc.sixprotocol.net"
     ],
-    "rpc":"http://34.143.188.233:26657",
+    "api": [
+        "https://sixnet-api.sixprotocol.net"
+    ],
     "sdk_version": "0.45.0",
     "coin_type": "118",
     "min_tx_fee": "800",
@@ -18,5 +20,10 @@
         }
     ],
     "addr_prefix": "6x",
-    "logo": "https://i.imgur.com/W1U8f6z.png"
+    "logo": "https://i.imgur.com/W1U8f6z.png",
+    "gas_price_step": {
+        "low": 1.25,
+        "average": 1.45,
+        "high": 1.65
+    }
 }

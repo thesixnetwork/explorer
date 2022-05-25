@@ -23,7 +23,7 @@
       <b-card class="d-flex flex-row">
         <b-card-header class="pt-0 pl-0 pr-0">
           <b-card-title>Assets</b-card-title>
-          <div>
+          <!-- <div>
             <b-button
               v-b-modal.operation-modal
               variant="link"
@@ -44,7 +44,7 @@
               <feather-icon icon="SendIcon" class="d-md-none" />
               <span class="d-none d-md-block">IBC Transfer </span>
             </b-button>
-          </div>
+          </div> -->
         </b-card-header>
         <b-card-body class="pl-0 pr-0">
           <b-row>
@@ -96,7 +96,7 @@
         </b-card-body>
       </b-card>
 
-      <b-card v-if="delegations">
+      <!-- <b-card v-if="delegations">
         <b-card-header class="pt-0 pl-0 pr-0">
           <b-card-title>Delegation</b-card-title>
           <div>
@@ -126,7 +126,7 @@
         <b-card-body class="pl-0 pr-0">
           <b-table :items="deleTable" stacked="sm">
             <template #cell(action)="data">
-              <!-- size -->
+
               <b-button-group size="sm">
                 <b-button
                   v-b-modal.operation-modal
@@ -159,7 +159,7 @@
             </template>
           </b-table>
         </b-card-body>
-      </b-card>
+      </b-card> -->
 
       <b-card title="Transactions">
         <b-table :items="txs" striped hover responsive="sm" stacked="sm">
@@ -677,7 +677,7 @@ import {
   BButton,
   BCardBody,
   VBModal,
-  BButtonGroup,
+  // BButtonGroup,
   VBTooltip,
   BPagination
 } from 'bootstrap-vue';
@@ -724,7 +724,7 @@ export default {
     BCardTitle,
     BCardBody,
     BButton,
-    BButtonGroup,
+    // BButtonGroup,
     BTr,
     BTd,
     BPagination,

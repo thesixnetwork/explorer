@@ -37,6 +37,17 @@
               >
                 {{ appName }}
               </h2>
+              <b-badge
+                v-for="(data, index) in chains"
+                :key="index"
+                pill
+                variant="link"
+                class="customizer-badge"
+              >
+                <span v-if="data.chain_name == 'fivenet'">
+                  Testnet
+                </span>
+              </b-badge>
             </b-link>
           </li>
 
@@ -155,6 +166,12 @@ export default {
       appLogoImage
     };
   },
+  data() {
+    const chains = this.$store.state.chains.config;
+    return {
+      chains
+    };
+  },
   computed: {
     leftMenu() {
       const preload = [];
@@ -180,5 +197,14 @@ export default {
   .dark-layout & {
     color: $primary;
   }
+}
+
+.customizer-badge {
+  border-radius: 8px;
+  background-color: $danger;
+  color: #fff;
+  padding: 0px 6px;
+  font-size: 8px;
+  align-self: start;
 }
 </style>

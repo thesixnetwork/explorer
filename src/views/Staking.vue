@@ -78,7 +78,7 @@
           <small v-else-if="data.item.changes === 0">-</small>
           <small v-else class="text-danger">{{ data.item.changes }}</small>
         </template>
-        <template #cell(operation)="data">
+        <!-- <template #cell(operation)="data">
           <b-button
             v-b-modal.operation-modal
             :name="data.item.operator_address"
@@ -89,7 +89,7 @@
           >
             Delegate
           </b-button>
-        </template>
+        </template> -->
       </b-table>
     </b-card>
     <b-card no-body class="overflow-auto">
@@ -191,7 +191,7 @@
             <small v-else-if="data.item.changes === 0">-</small>
             <small v-else class="text-danger">{{ data.item.changes }}</small>
           </template>
-          <template #cell(operation)="data">
+          <!-- <template #cell(operation)="data">
             <b-button
               v-b-modal.operation-modal
               :name="data.item.operator_address"
@@ -202,7 +202,7 @@
             >
               Delegate
             </b-button>
-          </template>
+          </template> -->
         </b-table>
       </b-card-body>
       <b-card-footer class="d-none d-md-block">
@@ -235,7 +235,7 @@ import {
   VBTooltip,
   BCardBody,
   BCardFooter,
-  BButton,
+  // BButton,
   BFormRadioGroup,
   BFormGroup
 } from 'bootstrap-vue';
@@ -256,7 +256,7 @@ export default {
     BCardTitle,
     BCardBody,
     BCardFooter,
-    BButton,
+    // BButton,
     BFormRadioGroup,
     BFormGroup,
     OperationModal

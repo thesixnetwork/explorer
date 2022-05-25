@@ -26,7 +26,7 @@
                   validator.description.website
                 }}</span>
               </div>
-              <div class="d-flex flex-wrap">
+              <!-- <div class="d-flex flex-wrap">
                 <b-button
                   v-b-modal.operation-modal
                   variant="link"
@@ -34,7 +34,7 @@
                 >
                   Delegate
                 </b-button>
-              </div>
+              </div> -->
             </div>
           </div>
 
@@ -223,7 +223,7 @@
 <script>
 import {
   BCard,
-  BButton,
+  // BButton,
   BAvatar,
   BRow,
   BCol,
@@ -255,7 +255,7 @@ import OperationModal from '@/views/components/OperationModal/index.vue';
 export default {
   components: {
     BCard,
-    BButton,
+    // BButton,
     BRow,
     BCol,
     BAvatar,

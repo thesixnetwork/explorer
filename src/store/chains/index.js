@@ -10,6 +10,7 @@ import { isTestnet } from '@/libs/utils';
 let chains = {};
 
 let configs = require.context('../../chains/mainnet', false, /\.json$/);
+
 if (isTestnet()) {
   configs = require.context('../../chains/testnet', false, /\.json$/);
 }
@@ -19,7 +20,6 @@ configs.keys().forEach(k => {
   const c = configs(k);
   update[c.chain_name] = c;
 });
-
 chains = update;
 localStorage.setItem('chains', JSON.stringify(update));
 const selected = chains.cosmos;

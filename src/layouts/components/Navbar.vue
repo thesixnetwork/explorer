@@ -1,27 +1,5 @@
 <template>
   <div class="navbar-container d-flex content align-items-center">
-    <!-- Nav Menu Toggler -->
-    <!-- <ul class="nav navbar-nav d-lg-none">
-      <li class="nav-item">
-        <b-link class="nav-link" @click="toggleVerticalMenuActive">
-          <b-avatar
-            v-if="selected_chain && selected_chain.logo"
-            variant="transparent"
-            rounded
-            size="20"
-            :src="selected_chain.logo"
-            class="badge-minimal d-none d-xl-block"
-          />
-          <feather-icon
-            v-else
-            icon="MenuIcon"
-            size="22"
-            class="cursor-pointer customizer-icon  d-xs-block d-sm-block d-md-block d-lg-block d-xl-none"
-          />
-        </b-link>
-      </li>
-    </ul> -->
-
     <!-- Left Col -->
     <div class="bookmark-wrapper align-items-center flex-grow-1 d-flex">
       <b-media v-if="selected_chain" no-body class="flex align-center">
@@ -87,8 +65,6 @@
         </b-media-body>
       </b-media>
     </div>
-
-    <!-- <dark-Toggler class="d-none d-lg-block" /> -->
     <!-- Right Col -->
     <b-navbar-nav class="nav align-items-center ml-auto justify-content-end">
       <dark-Toggler />
@@ -168,6 +144,31 @@
         <b-dropdown-item :to="`/wallet/transactions`" class="customizer-items">
           <feather-icon icon="LayersIcon" size="16" />
           <span class="align-middle ml-50">My Transactions</span>
+        </b-dropdown-item>
+      </b-dropdown>
+      <!-- select chain -->
+      <b-dropdown
+        class="c-ml-1"
+        variant="link"
+        no-caret
+        toggle-class="p-0"
+        right
+      >
+        <template #button-content>
+          <b-button
+            v-ripple.400="'rgba(255, 255, 255, 0.15)'"
+            variant="link"
+            class="customizer-button d-flex justify-content-center align-items-center"
+          >
+            <feather-icon icon="RssIcon" />
+          </b-button>
+        </template>
+        <b-dropdown-item to="/fivenet" class="customizer-items">
+          <span class="align-middle ml-50">Testnet</span>
+        </b-dropdown-item>
+        <b-dropdown-divider />
+        <b-dropdown-item to="/sixnet" class="customizer-items">
+          <span class="align-middle ml-50">Mainnet</span>
         </b-dropdown-item>
       </b-dropdown>
     </b-navbar-nav>
