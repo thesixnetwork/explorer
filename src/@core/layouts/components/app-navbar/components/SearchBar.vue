@@ -84,7 +84,6 @@ export default {
             name: 'chain-account',
             params: { chain: c.chain_name, address: key }
           });
-          // console.log('address', key)
         }
       }
       // this.$router.push('/')

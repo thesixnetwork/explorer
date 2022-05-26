@@ -26,5 +26,5 @@
         "average": 1.45,
         "high": 1.65
     },
-    "features": ["cosmwasm", "ibc-transfer"]
+    "features": ["cosmwasm", "ibc-transfer","stargate","no-legacy-stdTx"]
 }

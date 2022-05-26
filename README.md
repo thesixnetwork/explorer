@@ -18,14 +18,14 @@ npm install && npm run serve
 
 yarn
 ```
-yarn && yarn serve
+yarn && yarn serve:{env}
 ```
 
 ## Building for web servers
 
 npm
 ```
-npm install && npm run build
+npm install && npm run build:{env}
 ```
 
 ```

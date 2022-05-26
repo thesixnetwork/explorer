@@ -345,6 +345,7 @@ export default {
   },
   mounted() {
     const { selected } = store.state.chains;
+
     if (
       selected &&
       selected.chain_name &&
@@ -451,6 +452,7 @@ export default {
       const offlineSigner = await window.getOfflineSignerAuto(
         dataChainInfo.chainId
       );
+
       return offlineSigner.getAccounts();
     },
     localAddress() {
@@ -478,6 +480,10 @@ export default {
         device: this.device,
         address: this.addresses
       };
+      console.log(
+        'localStorage',
+        localStorage.setItem('accounts', JSON.stringify(accounts))
+      );
       localStorage.setItem('accounts', JSON.stringify(accounts));
       if (!this.$store.state.chains.defaultWallet) {
         this.$store.commit('setDefaultWallet', this.name);
@@ -496,7 +502,6 @@ export default {
     },
     async validationFormDevice() {
       let ok = String(this.name).length > 0;
-
       if (!ok) {
         // new import, otherwise it's edit mode.
         switch (this.device) {
