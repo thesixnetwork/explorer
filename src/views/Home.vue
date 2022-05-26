@@ -6,18 +6,18 @@
       class="nav text-right text-nowrap ml-auto"
     >
       <b-nav-item><dark-toggler /></b-nav-item>
-      <b-button
-        v-for="(data, index) in chains"
-        :key="index"
+      <!-- <b-button
+        v-if="chains.chain_name == 'fivenet'"
         v-ripple.400="'rgba(255, 255, 255, 0.15)'"
         variant="link"
-        class="d-flex justify-content-center align-items-center customizer-button"
-        :to="data.chain_name"
+        class="d-flex
+        justify-content-center align-items-center customizer-button"
+        :to="`/fivenet`"
         size="sm"
       >
         <feather-icon icon="KeyIcon" size="14" />
         <span class="align-middle ml-25">Wallet</span>
-      </b-button>
+      </b-button> -->
     </b-nav>
     <b-link>
       <div class="d-flex justify-content-center align-items-center my-2">
@@ -146,7 +146,7 @@ import {
   BCardTitle,
   BNav,
   BNavItem,
-  BButton,
+  // BButton,
   BDropdown,
   BDropdownItem
 } from 'bootstrap-vue';
@@ -169,7 +169,7 @@ export default {
     BCardTitle,
     BNav,
     BNavItem,
-    BButton,
+    // BButton,
     BDropdown,
     BDropdownItem,
     DarkToggler,

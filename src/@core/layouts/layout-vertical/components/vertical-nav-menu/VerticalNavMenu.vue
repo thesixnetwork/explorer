@@ -37,14 +37,8 @@
               >
                 {{ appName }}
               </h2>
-              <b-badge
-                v-for="(data, index) in chains"
-                :key="index"
-                pill
-                variant="link"
-                class="customizer-badge"
-              >
-                <span v-if="data.chain_name == 'fivenet'">
+              <b-badge pill variant="link" class="customizer-badge">
+                <span v-if="selectChain == 'fivenet'">
                   Testnet
                 </span>
               </b-badge>
@@ -93,7 +87,7 @@
 <script>
 import navMenuItems from '@/navigation/vertical';
 import VuePerfectScrollbar from 'vue-perfect-scrollbar';
-import { BLink, BImg } from 'bootstrap-vue';
+import { BLink, BImg, BBadge } from 'bootstrap-vue';
 import { provide, computed, ref } from '@vue/composition-api';
 import useAppConfig from '@core/app-config/useAppConfig';
 import { $themeConfig } from '@themeConfig';
@@ -105,7 +99,8 @@ export default {
     VuePerfectScrollbar,
     VerticalNavMenuItems,
     BLink,
-    BImg
+    BImg,
+    BBadge
   },
   props: {
     isVerticalMenuActive: {
@@ -168,10 +163,13 @@ export default {
   },
   data() {
     const chains = this.$store.state.chains.config;
+    const selectChain = this.$store.state.chains.selected.chain_name;
     return {
-      chains
+      chains,
+      selectChain
     };
   },
+
   computed: {
     leftMenu() {
       const preload = [];
@@ -203,7 +201,7 @@ export default {
   border-radius: 8px;
   background-color: $danger;
   color: #fff;
-  padding: 0px 6px;
+  padding: 2px 6px;
   font-size: 8px;
   align-self: start;
 }

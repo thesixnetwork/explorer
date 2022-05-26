@@ -2,10 +2,10 @@
     "chain_name": "fivenet",
     "chain_title": "SIX Testnet",
     "rpc":[
-        "https://rpc.fivenet.sixscan.io"
+        "https://rpc.fivenet.sixprotocol.net"
     ],
     "api": [
-        "https://api.fivenet.sixscan.io"
+        "https://api.fivenet.sixprotocol.net"
     ],
     "sdk_version": "0.45.0",
     "coin_type": "118",
@@ -25,5 +25,6 @@
         "low": 1.25,
         "average": 1.45,
         "high": 1.65
-    }
+    },
+    "features": ["cosmwasm", "ibc-transfer"]
 }

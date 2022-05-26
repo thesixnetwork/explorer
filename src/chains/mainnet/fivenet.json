@@ -1,11 +1,11 @@
 {
-    "chain_name": "sixnet",
-    "chain_title": "SIX Protocol",
+    "chain_name": "fivenet",
+    "chain_title": "SIX Testnet",
     "rpc":[
-        "https://sixnet-rpc.sixprotocol.net"
+        "https://rpc.fivenet.sixprotocol.net"
     ],
     "api": [
-        "https://sixnet-api.sixprotocol.net"
+        "https://api.fivenet.sixprotocol.net"
     ],
     "sdk_version": "0.45.0",
     "coin_type": "118",
@@ -26,5 +26,5 @@
         "average": 1.45,
         "high": 1.65
     },
-    "features": ["cosmwasm", "ibc-transfer"]
+    "features": [ "cosmwasm", "ibc-transfer"]
 }

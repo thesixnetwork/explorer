@@ -344,7 +344,7 @@ export default {
     }
   },
   mounted() {
-    const { selected } = store.state.chans;
+    const { selected } = store.state.chains;
     if (
       selected &&
       selected.chain_name &&
