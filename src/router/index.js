@@ -14,9 +14,9 @@ const router = new VueRouter({
     {
       path: '/',
       name: 'home',
-      component: () => import('@/views/Home.vue'),
+      component: () => import('@/views/Summary.vue'),
       meta: {
-        layout: 'full',
+        // layout: 'full',
         pageTitle: 'Home',
         breadcrumb: [
           {

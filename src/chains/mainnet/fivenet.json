@@ -1,0 +1,30 @@
+{
+    "chain_name": "fivenet",
+    "chain_title": "SIX Testnet",
+    "rpc":[
+        "https://rpc.fivenet.sixprotocol.net"
+    ],
+    "api": [
+        "https://api.fivenet.sixprotocol.net"
+    ],
+    "sdk_version": "0.45.0",
+    "coin_type": "118",
+    "min_tx_fee": "800",
+    "assets": [
+        {
+            "base": "usix",
+            "symbol": "SIX",
+            "exponent": "6",
+            "coingecko_id": "six-network",
+            "logo": "https://i.imgur.com/W1U8f6z.png"
+        }
+    ],
+    "addr_prefix": "6x",
+    "logo": "https://i.imgur.com/W1U8f6z.png",
+    "gas_price_step": {
+        "low": 1.25,
+        "average": 1.45,
+        "high": 1.65
+    },
+    "features": ["cosmwasm", "ibc-transfer","stargate","no-legacy-stdTx"]
+}

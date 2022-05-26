@@ -38,7 +38,7 @@
                 {{ appName }}
               </h2>
               <b-badge pill variant="link" class="customizer-badge">
-                <span v-if="selectChain == 'fivenet'">
+                <span v-if="selected_chain.chain_name == 'fivenet'">
                   Testnet
                 </span>
               </b-badge>
@@ -180,6 +180,9 @@ export default {
       return preload.concat(
         navMenuItems.filter(x => x.title !== selected.chain_title)
       );
+    },
+    selected_chain() {
+      return this.$store.state.chains.selected;
     }
   }
 };
