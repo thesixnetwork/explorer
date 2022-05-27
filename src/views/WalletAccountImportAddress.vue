@@ -480,10 +480,7 @@ export default {
         device: this.device,
         address: this.addresses
       };
-      console.log(
-        'localStorage',
-        localStorage.setItem('accounts', JSON.stringify(accounts))
-      );
+
       localStorage.setItem('accounts', JSON.stringify(accounts));
       if (!this.$store.state.chains.defaultWallet) {
         this.$store.commit('setDefaultWallet', this.name);

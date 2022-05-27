@@ -38,7 +38,7 @@ export default {
           tdClass: 'text-nowrap text-truncate overflow-hidden'
         },
         {
-          key: 'abbr',
+          key: 'amount',
           label: 'Amount'
         }
       ]
