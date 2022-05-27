@@ -1,24 +1,6 @@
 <template>
   <div class="text-center container-lg my-1">
-    <b-nav
-      align="right"
-      style="width:100%;"
-      class="nav text-right text-nowrap ml-auto"
-    >
-      <b-nav-item><dark-toggler /></b-nav-item>
-      <!-- <b-button
-        v-if="chains.chain_name == 'fivenet'"
-        v-ripple.400="'rgba(255, 255, 255, 0.15)'"
-        variant="link"
-        class="d-flex
-        justify-content-center align-items-center customizer-button"
-        :to="`/fivenet`"
-        size="sm"
-      >
-        <feather-icon icon="KeyIcon" size="14" />
-        <span class="align-middle ml-25">Wallet</span>
-      </b-button> -->
-    </b-nav>
+    <full-header />
     <b-link>
       <div class="d-flex justify-content-center align-items-center my-2">
         <vuexy-logo width="64" class="mr-1" />
@@ -144,19 +126,15 @@ import {
   BCard,
   BCardText,
   BCardTitle,
-  BNav,
-  BNavItem,
-  // BButton,
   BDropdown,
   BDropdownItem
 } from 'bootstrap-vue';
 import Ripple from 'vue-ripple-directive';
 import store from '@/store/index';
 import { getLocalAccounts, timeIn, toDay } from '@/libs/utils';
-import DarkToggler from '@/@core/layouts/components/app-navbar/components/DarkToggler.vue';
-// import Locale from '@/@core/layouts/components/app-navbar/components/Locale.vue'
 import AppFooter from '@/@core/layouts/components/AppFooter.vue';
 import VuexyLogo from '@core/layouts/components/Logo.vue';
+import FullHeader from './components/FullHeader.vue';
 
 export default {
   components: {
@@ -167,13 +145,12 @@ export default {
     BCard,
     BCardText,
     BCardTitle,
-    BNav,
-    BNavItem,
+
     // BButton,
     BDropdown,
     BDropdownItem,
-    DarkToggler,
     VuexyLogo,
+    FullHeader,
     // Locale,
     AppFooter
   },
