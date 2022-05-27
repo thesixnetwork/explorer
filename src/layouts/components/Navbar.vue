@@ -163,11 +163,11 @@
             <feather-icon icon="RssIcon" />
           </b-button>
         </template>
-        <b-dropdown-item :to="'fivenet'" class="customizer-items">
+        <b-dropdown-item :to="`/fivenet/`" class="customizer-items">
           <span class="align-middle ml-50">Testnet</span>
         </b-dropdown-item>
         <b-dropdown-divider />
-        <b-dropdown-item :to="'sixnet'" class="customizer-items">
+        <b-dropdown-item :to="`/sixnet/`" class="customizer-items">
           <span class="align-middle ml-50">Mainnet</span>
         </b-dropdown-item>
       </b-dropdown>
