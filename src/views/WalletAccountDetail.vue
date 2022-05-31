@@ -1026,7 +1026,7 @@ export default {
       const qty = this.formatAmount(amount, 2, denom, false);
       const d2 = this.formatDenom(denom);
       const userCurrency = getUserCurrency();
-      const quote = this.$store.state.chains.quotes[d2];
+      const quote = this.$store.state.chains.quotes['six-network'];
       if (quote) {
         const price = quote[userCurrency];
         return parseFloat((qty * price).toFixed(2));

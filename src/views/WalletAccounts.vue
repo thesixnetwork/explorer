@@ -1,62 +1,5 @@
 <template>
   <div class="text-center">
-    <b-card v-if="calculateTotalChange !== 0" border-variant="primary">
-      <b-row class="mx-0 d-flex align-items-center">
-        <b-col md="4" class="py-0">
-          <b-dropdown
-            :text="`Currency: ${currency2.toUpperCase()}`"
-            size="sm"
-            class="text-uppercase"
-            variant="primary"
-          >
-            <b-dropdown-item @click="setCurrency('usd')">
-              USD
-            </b-dropdown-item>
-            <b-dropdown-item @click="setCurrency('cny')">
-              CNY (人民币)
-            </b-dropdown-item>
-            <b-dropdown-item @click="setCurrency('eur')">
-              EUR (Euro)
-            </b-dropdown-item>
-            <b-dropdown-item @click="setCurrency('jpy')">
-              JPY (日本円)
-            </b-dropdown-item>
-            <b-dropdown-item @click="setCurrency('hkd')">
-              HKD (港幣)
-            </b-dropdown-item>
-            <b-dropdown-item @click="setCurrency('sgd')">
-              SGD (新加坡元)
-            </b-dropdown-item>
-            <b-dropdown-item @click="setCurrency('krw')">
-              KRW (대한민국원)
-            </b-dropdown-item>
-          </b-dropdown>
-          <h2 class="mt-1 mb-0">
-            {{ currency }}
-            {{ calculateTotal }}
-          </h2>
-          <small v-if="calculateTotalChange > 0" class="my-0 text-success">
-            +{{ formatTotalChange(calculateTotalChange) }} (24h)
-          </small>
-          <small v-else class="my-0 text-danger">
-            {{ formatTotalChange(calculateTotalChange) }} (24h)
-          </small>
-          <span @click="refreshPrice()">
-            <feather-icon icon="RefreshCwIcon" size="12" />
-          </span>
-          <!-- chart -->
-          <chart-component-doughnut
-            :height="160"
-            :width="160"
-            :data="calculateChartDoughnut"
-          />
-        </b-col>
-        <b-col md="8">
-          <echart-scatter :items.sync="scatters" auto-resize />
-        </b-col>
-      </b-row>
-    </b-card>
-
     <div v-for="(item, index) in accounts" :key="index">
       <div>
         <div class="d-flex justify-content-between align-items-end mb-1">
@@ -235,8 +178,8 @@ import {
   BCol,
   BAvatar,
   BButton,
-  BDropdown,
-  BDropdownItem,
+  // BDropdown,
+  // BDropdownItem,
   VBTooltip
 } from 'bootstrap-vue';
 import Ripple from 'vue-ripple-directive';
@@ -257,8 +200,8 @@ import ToastificationContent from '@core/components/toastification/Toastificatio
 import AppCollapse from '@core/components/app-collapse/AppCollapse.vue';
 import AppCollapseItem from '@core/components/app-collapse/AppCollapseItem.vue';
 import OperationModal from '@/views/components/OperationModal/index.vue';
-import ChartComponentDoughnut from './ChartComponentDoughnut.vue';
-import EchartScatter from './components/charts/EchartScatter.vue';
+// import ChartComponentDoughnut from './ChartComponentDoughnut.vue';
+// import EchartScatter from './components/charts/EchartScatter.vue';
 
 export default {
   components: {
@@ -270,17 +213,17 @@ export default {
     BCardHeader,
     BCardBody,
     BCardTitle,
-    BDropdown,
-    BDropdownItem,
+    // BDropdown,
+    // BDropdownItem,
     // eslint-disable-next-line vue/no-unused-components
     VBTooltip,
     FeatherIcon,
     // eslint-disable-next-line vue/no-unused-components
     ToastificationContent,
-    ChartComponentDoughnut,
+    // ChartComponentDoughnut,
     AppCollapse,
     AppCollapseItem,
-    EchartScatter,
+    // EchartScatter,
     OperationModal
   },
   directives: {
@@ -543,7 +486,7 @@ export default {
     },
     priceColor(denom) {
       const d2 = this.formatDenom(denom);
-      const quote = this.$store.state.chains.quotes[d2];
+      const quote = this.$store.state.chains.quotes['six-network'];
       if (quote) {
         const price = quote[`${this.currency2}_24h_change`];
         return price > 0 ? 'text-success' : 'text-danger';
@@ -552,12 +495,12 @@ export default {
     },
     getPrice(denom) {
       const d2 = this.formatDenom(denom);
-      const quote = this.$store.state.chains.quotes[d2];
-      return quote ? quote[this.currency2] : 0;
+      const quote = this.$store.state.chains.quotes['six-network'];
+      return quote ? quote[this.currency2] || 0 : 0
     },
     getChanges(denom) {
       const d2 = this.formatDenom(denom);
-      const quote = this.$store.state.chains.quotes[d2];
+      const quote = this.$store.state.chains.quotes['six-network'];
       if (quote) {
         const price = quote[`${this.currency2}_24h_change`];
         return price;
@@ -573,7 +516,7 @@ export default {
     },
     formatPrice(denom) {
       const d2 = this.formatDenom(denom);
-      const quote = this.$store.state.chains.quotes[d2];
+      const quote = this.$store.state.chains.quotes['six-network'];
       if (quote) {
         const price = quote[this.currency2];
         return price;

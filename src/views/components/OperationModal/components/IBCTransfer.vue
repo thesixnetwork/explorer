@@ -253,7 +253,7 @@ export default {
       const { amount } = this;
       const d2 = this.printDenom();
       if (amount && d2) {
-        const quote = this.$store.state.chains.quotes[d2];
+        const quote = this.$store.state.chains.quotes['six-network'];
         const price = quote ? quote[this.currency] : 0;
         return parseFloat((amount * price).toFixed(2));
       }
