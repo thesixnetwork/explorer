@@ -83,7 +83,7 @@ function processMenu() {
   // }
   chainMenus.push({
     title: 'Discord',
-    href: 'https://discord.gg/',
+    href: 'https://discord.gg/5gJQCXzcWf',
     icon: 'EyeIcon'
   });
   chainMenus.push({
@@ -93,8 +93,13 @@ function processMenu() {
   });
   chainMenus.push({
     title: 'Github',
-    href: 'https://github.com/thesixnetwork/explorer',
+    href: 'https://github.com/thesixnetwork',
     icon: 'GithubIcon'
+  });
+  chainMenus.push({
+    title: 'Telegram',
+    href: 'https://t.me/SIXNetwork',
+    icon: 'NavigationIcon'
   });
 
   return chainMenus;
