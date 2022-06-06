@@ -42,12 +42,8 @@ export default {
           tdClass: 'text-nowrap text-truncate overflow-hidden'
         },
         {
-          key: 'amount',
+          key: 'abbr',
           label: 'amount'
-          // formatter: tokenFormatter(amount)
-          // formatter: `${formatToken(amount)}`
-          // formatter: this.formatAmount
-          // formatter: `${this.assets.amount}`
         }
       ]
     };
@@ -80,15 +76,6 @@ export default {
         return `* ${formatTokenDenom(trace.base_denom)} (${trace.path})`;
       }
       return v;
-    },
-    formatTokens(value) {
-      return tokenFormatter(value);
-    },
-    tokenFormatter(amount) {
-      return formatToken({ amount, denom }, {}, 0);
-    },
-    formatAmount(v, dec = 2, denom = 'uatom', format = true) {
-      return formatTokenAmount(v, dec, denom, format);
     }
   }
 };
