@@ -58,10 +58,12 @@ export default {
       });
     });
     this.$http.getBankTotals().then(res => {
-      const toshow = res.sort();
+      const toshow = res.filter(x => x.denom=="usix").sort();
       this.assets = toshow.reverse().map(x => {
         const xh = x;
         xh.abbr = formatTokenAmount(x.amount, 0, x.denom);
+        xh.denom = (xh.denom === "usix" ? "six":xh.denom)
+        // console.log("XH",xh)
         return xh;
       });
     });

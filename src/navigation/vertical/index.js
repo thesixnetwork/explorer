@@ -55,6 +55,7 @@ function processMenu() {
           children.push({
             // header: `item-${chain}-${m.route}`,
             title: m.title,
+            section: "chain", 
             route: { name: m.route, params: { chain } }
           });
         }
@@ -63,37 +64,43 @@ function processMenu() {
     menu.children = children;
     chainMenus.push(menu);
   });
-  chainMenus.push({ header: 'SOCIALS' });
+  chainMenus.push({ header: 'SOCIALS',section: "social" });
   chainMenus.push({
     title: 'Facebook',
     href: 'https://www.facebook.com/thesixnetwork',
-    icon: 'FacebookIcon'
+    icon: 'FacebookIcon',
+    section: "social"
   });
   chainMenus.push({
     title: 'Twitter',
     href: 'https://twitter.com/theSIXnetwork',
-    icon: 'TwitterIcon'
+    icon: 'TwitterIcon',
+    section: "social"
   });
   chainMenus.push({
     title: 'Gitbook',
     href:
       'https://sixnetwork.gitbook.io/six-protocol/six-protocol/introduction',
-    icon: 'BookIcon'
+    icon: 'BookIcon',
+    section: "social"
   });
   chainMenus.push({
     title: 'Discord',
     href: 'https://discord.gg/5gJQCXzcWf',
-    icon: 'EyeIcon'
+    icon: 'EyeIcon',
+    section: "social"
   });
   chainMenus.push({
     title: 'Github',
     href: 'https://github.com/thesixnetwork',
-    icon: 'GithubIcon'
+    icon: 'GithubIcon',
+    section: "social"
   });
   chainMenus.push({
     title: 'Telegram',
     href: 'https://t.me/SIXNetwork',
-    icon: 'NavigationIcon'
+    icon: 'NavigationIcon',
+    section: "social"
   });
 
   return chainMenus;
