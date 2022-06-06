@@ -50,8 +50,8 @@
               <h4 class="font-weight-bolder mb-0">
                 {{ item.title || '-' }}
               </h4>
-              <b-card-text class="font-small-3  text-capitalize">
-                {{ item.subtitle }}
+              <b-card-text class="font-small-3">
+                {{ item.subtitle.replaceAll('_', ' ') }}
               </b-card-text>
             </b-media-body>
           </b-media>

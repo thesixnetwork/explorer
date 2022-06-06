@@ -1,33 +1,33 @@
 <template>
-  <li class="nav-item nav-search">
+  <li class="nav-item nav-search customizer-li">
     <!-- Icon -->
-    <a
+    <!-- <a
       href="javascript:void(0)"
-      class="nav-link nav-link-search"
+      class="nav-link nav-link-search d-xs-block d-sm-block d-md-block d-lg-block d-xl-none"
       @click="showSearchBar = true"
     >
       <feather-icon icon="SearchIcon" size="21" class="customizer-icon" />
-    </a>
+    </a> -->
 
     <!-- Input -->
-    <div class="search-input" :class="{ open: showSearchBar }">
-      <div class="search-input-icon">
+    <div
+      class="search-input customizer-search my-50"
+      :class="{ open: showSearchBar }"
+    >
+      <div class="search-input-icon customizer-search-icon">
         <feather-icon icon="SearchIcon" />
       </div>
-      <!-- <input type="text" placeholder="Explore Vuexy...." class="form-control-input"> -->
-      <!-- @keyup.esc="escPressed" -->
-      <!-- @keyup.enter="suggestionSelected" -->
+
       <b-form-input
         v-if="showSearchBar"
         v-model="searchQuery"
         placeholder="Search Height/Transaction/Address"
+        class="customizer-input"
         autofocus
         autocomplete="off"
         @keyup.enter="doQuery"
+        @keyup.esc="escPressed"
       />
-      <div class="search-input-close" @click="showSearchBar = false">
-        <feather-icon icon="XIcon" />
-      </div>
     </div>
   </li>
 </template>
@@ -43,7 +43,7 @@ export default {
     BFormInput
   },
   setup() {
-    const showSearchBar = ref(false);
+    const showSearchBar = ref(true);
 
     const perfectScrollbarSettings = {
       maxScrollbarLength: 60
@@ -141,5 +141,26 @@ p {
   .dark-layout & {
     color: $primary;
   }
+}
+
+.customizer-search-icon {
+  top: 22% !important;
+}
+.customizer-li {
+  width: 50%;
+  @include media-breakpoint-only(sm) {
+    width: 65%;
+  }
+  @include media-breakpoint-down(xs) {
+    width: 100%;
+  }
+}
+
+.customizer-input {
+  padding: 1rem 3.6rem !important;
+}
+
+.customizer-search {
+  position: relative !important;
 }
 </style>

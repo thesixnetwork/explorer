@@ -41,11 +41,7 @@ const modules = [
 ];
 
 function processMenu() {
-  const chainMenus = [
-    {
-      header: 'blockchains'
-    }
-  ];
+  const chainMenus = [];
   Object.keys(store.state.chains.config).forEach(chain => {
     const menu = {
       title: store.state.chains.config[chain].chain_title,
@@ -68,28 +64,26 @@ function processMenu() {
     chainMenus.push(menu);
   });
   chainMenus.push({ header: 'SOCIALS' });
-  // if (isTestnet()) {
-  //   chainMenus.push({
-  //     title: 'Mainnet Explorer',
-  //     href: 'https://ping.pub',
-  //     icon: 'ChromeIcon'
-  //   })
-  // } else {
-  //   chainMenus.push({
-  //     title: 'Testnet Explorer',
-  //     href: 'http://testnet.ping.pub',
-  //     icon: 'LifeBuoyIcon'
-  //   })
-  // }
   chainMenus.push({
-    title: 'Discord',
-    href: 'https://discord.gg/5gJQCXzcWf',
-    icon: 'EyeIcon'
+    title: 'Facebook',
+    href: 'https://www.facebook.com/thesixnetwork',
+    icon: 'FacebookIcon'
   });
   chainMenus.push({
     title: 'Twitter',
     href: 'https://twitter.com/theSIXnetwork',
     icon: 'TwitterIcon'
+  });
+  chainMenus.push({
+    title: 'Gitbook',
+    href:
+      'https://sixnetwork.gitbook.io/six-protocol/six-protocol/introduction',
+    icon: 'BookIcon'
+  });
+  chainMenus.push({
+    title: 'Discord',
+    href: 'https://discord.gg/5gJQCXzcWf',
+    icon: 'EyeIcon'
   });
   chainMenus.push({
     title: 'Github',

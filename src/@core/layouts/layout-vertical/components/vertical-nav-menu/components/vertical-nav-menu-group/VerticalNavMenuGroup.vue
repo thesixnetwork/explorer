@@ -20,9 +20,9 @@
         class="mr-1"
       />
 
-      <span class="menu-title text-truncate text-uppercase">{{
-        item.title
-      }}</span>
+      <span class="menu-title text-truncate text-uppercase">
+        {{ item.title }}
+      </span>
       <b-badge
         v-if="item.tag"
         pill
@@ -83,10 +83,12 @@ export default {
 
     const { t } = useI18nUtils();
     const { canViewVerticalNavMenuGroup } = useAclUtils();
+    // const selectChain = window.location.pathname.split('/')[1];
+    // console.log(selectChain);
 
     return {
       resolveNavItemComponent,
-      isOpen,
+      isOpen: true,
       isActive,
       updateGroupOpen,
       updateIsActive,

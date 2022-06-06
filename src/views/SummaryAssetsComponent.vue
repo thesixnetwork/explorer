@@ -18,7 +18,11 @@
 import { sha256 } from '@cosmjs/crypto';
 import { toHex } from '@cosmjs/encoding';
 import { BTable, BCardTitle, BCard } from 'bootstrap-vue';
-import { formatTokenAmount, formatTokenDenom } from '@/libs/utils';
+import {
+  formatTokenAmount,
+  formatTokenDenom,
+  tokenFormatter
+} from '@/libs/utils';
 
 export default {
   components: {
@@ -39,7 +43,11 @@ export default {
         },
         {
           key: 'amount',
-          label: 'Amount'
+          label: 'amount'
+          // formatter: tokenFormatter(amount)
+          // formatter: `${formatToken(amount)}`
+          // formatter: this.formatAmount
+          // formatter: `${this.assets.amount}`
         }
       ]
     };
@@ -72,6 +80,15 @@ export default {
         return `* ${formatTokenDenom(trace.base_denom)} (${trace.path})`;
       }
       return v;
+    },
+    formatTokens(value) {
+      return tokenFormatter(value);
+    },
+    tokenFormatter(amount) {
+      return formatToken({ amount, denom }, {}, 0);
+    },
+    formatAmount(v, dec = 2, denom = 'uatom', format = true) {
+      return formatTokenAmount(v, dec, denom, format);
     }
   }
 };

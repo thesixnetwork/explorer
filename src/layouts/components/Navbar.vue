@@ -1,5 +1,5 @@
 <template>
-  <div class="navbar-container d-flex content align-items-center">
+  <div class="navbar-container content customizer-class">
     <!-- Left Col -->
     <div class="bookmark-wrapper align-items-center flex-grow-1 d-flex">
       <b-media v-if="selected_chain" no-body class="flex align-center">
@@ -66,10 +66,10 @@
       </b-media>
     </div>
     <!-- Right Col -->
-    <b-navbar-nav class="nav align-items-center ml-auto justify-content-end">
-      <dark-Toggler />
-      <search-bar />
+    <b-navbar-nav class="nav ml-auto customizer-class-right">
       <!-- <locale /> -->
+      <search-bar />
+      <dark-Toggler />
       <b-dropdown
         class="c-ml-1"
         variant="link"
@@ -160,14 +160,20 @@
             variant="link"
             class="customizer-button d-flex justify-content-center align-items-center"
           >
-            <feather-icon icon="RssIcon" />
+            <span
+              v-if="selected_chain.chain_name == 'sixnet'"
+              class="align-middle"
+            >
+              Mainnet
+            </span>
+            <span v-else class="align-middle">Testnet</span>
           </b-button>
         </template>
-        <b-dropdown-item :to="`/fivenet/`" class="customizer-items">
+        <b-dropdown-item :to="`/fivenet`" class="customizer-items">
           <span class="align-middle ml-50">Testnet</span>
         </b-dropdown-item>
         <b-dropdown-divider />
-        <b-dropdown-item :to="`/sixnet/`" class="customizer-items">
+        <b-dropdown-item :to="`/sixnet`" class="customizer-items">
           <span class="align-middle ml-50">Mainnet</span>
         </b-dropdown-item>
       </b-dropdown>
@@ -274,6 +280,7 @@ export default {
       return accounts.filter(x => x.address);
     }
   },
+
   mounted() {},
   methods: {
     formatAddr(v) {
@@ -339,6 +346,24 @@ export default {
 h3 {
   @include media-breakpoint-down(xs) {
     font-size: 1.2rem;
+  }
+}
+
+.customizer-class {
+  display: flex;
+  align-items: center;
+  @include media-breakpoint-down(sm) {
+    display: block;
+  }
+}
+
+.customizer-class-right {
+  display: contents;
+  align-items: center;
+  justify-content: flex-end;
+  @include media-breakpoint-down(sm) {
+    display: flex;
+    justify-content: flex-start;
   }
 }
 

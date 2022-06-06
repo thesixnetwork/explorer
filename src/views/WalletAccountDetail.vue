@@ -791,7 +791,7 @@ export default {
         return this.transactions.txs.map(x => ({
           height: Number(x.height),
           txhash: x.txhash,
-          msgs: abbrMessage(x.tx.msg ? x.tx.msg : x.tx.value.msg),
+          message: abbrMessage(x.tx.msg ? x.tx.msg : x.tx.value.msg),
           time: toDay(x.timestamp)
         }));
       }

@@ -12,7 +12,7 @@
           <div class="d-flex justify-content-start">
             <b-avatar
               :src="validator.avatar"
-              :variant="link"
+              variant="link"
               class="customizer-icon"
               size="104px"
               rounded
@@ -121,7 +121,7 @@
                 <span class="font-weight-bold">Unbond Time</span>
               </th>
               <td class="pb-50 text-capitalize">
-                {{ timeFormat(validator.unbonding_time) }}
+                {{ timeFormat(validator.unbonding_time) || '-' }}
               </td>
             </tr>
             <tr>
@@ -133,7 +133,7 @@
                 {{ parseFloat(validator.min_self_delegation) }}
               </td>
             </tr>
-            <tr>
+            <!-- <tr>
               <th class="pb-50">
                 <feather-icon icon="AlertCircleIcon" class="mr-75" />
                 <span class="font-weight-bold">Jailed</span>
@@ -141,7 +141,7 @@
               <td class="pb-50">
                 {{ validator.jailed || '-' }}
               </td>
-            </tr>
+            </tr> -->
             <tr>
               <th>
                 <feather-icon icon="PhoneIcon" class="mr-75" />
@@ -302,7 +302,7 @@ export default {
         return this.transactions.txs.map(x => ({
           height: Number(x.height),
           txhash: x.txhash,
-          msgs: abbrMessage(x.tx.value ? x.tx.value.msg : x.tx.msg),
+          message: abbrMessage(x.tx.value ? x.tx.value.msg : x.tx.msg),
           time: toDay(x.timestamp)
         }));
       }
@@ -331,6 +331,7 @@ export default {
   methods: {
     initial() {
       this.$http.getStakingValidator(this.address).then(data => {
+        console.log('data', data);
         this.validator = data;
 
         this.processAddress(data.operator_address, data.consensus_pubkey);
@@ -338,7 +339,7 @@ export default {
           this.transactions = res;
         });
 
-        const { identity } = data.description;
+        const { identity } = data.description.identity;
         keybase(identity).then(d => {
           if (Array.isArray(d.them) && d.them.length > 0) {
             this.$set(this.validator, 'avatar', d.them[0].pictures.primary.url);

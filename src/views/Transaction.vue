@@ -20,12 +20,14 @@
               <b-badge v-if="tx.code === 0" variant="light-success">
                 Success
               </b-badge>
-              <b-badge v-else variant="light-danger"> Failed </b-badge>
+              <b-badge v-else variant="light-danger">
+                Failed
+              </b-badge>
               <b v-if="tx.code > 0"> {{ tx.raw_log }}</b>
             </b-td>
           </b-tr>
           <b-tr>
-            <b-td> {{ 'height' }} </b-td>
+            <b-td> {{ 'Height' }} </b-td>
             <b-td>
               <router-link :to="`../blocks/${tx.height}`">
                 {{ tx.height }}
@@ -33,21 +35,21 @@
             </b-td>
           </b-tr>
           <b-tr>
-            <b-td> {{ 'timestamp' }} </b-td>
+            <b-td> {{ 'Timestamp' }} </b-td>
             <b-td>{{ formatTime(tx.timestamp) }}</b-td>
           </b-tr>
           <b-tr>
-            <b-td> {{ 'gas' }} </b-td>
+            <b-td> {{ 'Gas' }} </b-td>
             <b-td>{{ tx.gas_used }} / {{ tx.gas_wanted }}</b-td>
           </b-tr>
           <b-tr>
-            <b-td> {{ 'fee' }} </b-td><b-td>{{ formattoken(tx.tx.fee) }}</b-td>
+            <b-td> {{ 'Fee' }} </b-td><b-td>{{ formattoken(tx.tx.fee) }}</b-td>
           </b-tr>
           <b-tr>
-            <b-td> {{ 'memo' }} </b-td><b-td>{{ tx.tx.memo }}</b-td>
+            <b-td> {{ 'Memo' }} </b-td><b-td>{{ tx.tx.memo }}</b-td>
           </b-tr>
           <b-tr>
-            <b-td> {{ 'timeout_height' }} </b-td>
+            <b-td> {{ 'Timeout height' }} </b-td>
             <b-td>{{ tx.tx.timeout_height }}</b-td>
           </b-tr>
         </tbody>

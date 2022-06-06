@@ -251,6 +251,7 @@ export default {
 
     this.$http.getStakingParameters().then(res => {
       this.staking = this.normalize(res, 'Staking Parameters');
+
       Promise.all([
         this.$http.getStakingPool(),
         this.$http.getBankTotal(res.bond_denom)

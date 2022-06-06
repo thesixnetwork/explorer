@@ -28,12 +28,11 @@ html {
     &.dark-layout {
       background: $theme-dark-card-bg;
 
-      .navbar-container.content, .content-wrapper {
+      .navbar-container.content,
+      .content-wrapper {
         background: $theme-dark-body-bg;
       }
     }
-
-    
   }
   .content {
     padding: 0;
@@ -43,7 +42,10 @@ html {
     min-height: calc(100% - #{$footer-height});
     margin-left: $menu-expanded-width;
     &.app-content {
-      padding: calc(#{$content-padding} + #{$navbar-height} + #{$floating-nav-margin}) #{$content-padding} 0;
+      padding: calc(
+          #{$content-padding} + #{$navbar-height} + #{$floating-nav-margin}
+        )
+        #{$content-padding} 0;
 
       &.show-overlay {
         .content-overlay {
@@ -189,7 +191,11 @@ html {
       .app-content {
         .content-area-wrapper,
         .kanban-wrapper {
-          @include content-area-wrapper-height(#{$content-padding}, 0rem, #{$footer-height});
+          @include content-area-wrapper-height(
+            #{$content-padding},
+            0rem,
+            #{$footer-height}
+          );
         }
       }
     }
@@ -197,7 +203,14 @@ html {
       .app-content {
         .content-area-wrapper,
         .kanban-wrapper {
-          @include content-area-wrapper-height(#{$content-padding}, 0rem, 0rem, 0rem, 0rem, 2);
+          @include content-area-wrapper-height(
+            #{$content-padding},
+            0rem,
+            0rem,
+            0rem,
+            0rem,
+            2
+          );
         }
       }
     }
@@ -205,7 +218,14 @@ html {
       .app-content {
         .content-area-wrapper,
         .kanban-wrapper {
-          @include content-area-wrapper-height(#{$content-padding}, 0rem, #{$footer-height}, 0rem, 0rem, 2);
+          @include content-area-wrapper-height(
+            #{$content-padding},
+            0rem,
+            #{$footer-height},
+            0rem,
+            0rem,
+            2
+          );
         }
       }
     }
@@ -226,7 +246,11 @@ html {
       .app-content {
         .content-area-wrapper,
         .kanban-wrapper {
-          @include content-area-wrapper-height(#{$content-padding}, #{$navbar-height}, #{$footer-height});
+          @include content-area-wrapper-height(
+            #{$content-padding},
+            #{$navbar-height},
+            #{$footer-height}
+          );
         }
       }
     }
@@ -234,7 +258,14 @@ html {
       .app-content {
         .content-area-wrapper,
         .kanban-wrapper {
-          @include content-area-wrapper-height(#{$content-padding}, #{$navbar-height}, 0rem, 0rem, 0rem, 2);
+          @include content-area-wrapper-height(
+            #{$content-padding},
+            #{$navbar-height},
+            0rem,
+            0rem,
+            0rem,
+            2
+          );
         }
       }
     }
@@ -267,7 +298,11 @@ html {
       .app-content {
         .content-area-wrapper,
         .kanban-wrapper {
-          @include content-area-wrapper-height(#{$content-padding}, #{$navbar-height}, #{$footer-height});
+          @include content-area-wrapper-height(
+            #{$content-padding},
+            #{$navbar-height},
+            #{$footer-height}
+          );
         }
       }
     }
@@ -275,7 +310,14 @@ html {
       .app-content {
         .content-area-wrapper,
         .kanban-wrapper {
-          @include content-area-wrapper-height(#{$content-padding}, #{$navbar-height}, 0rem, 0rem, 0rem, 2);
+          @include content-area-wrapper-height(
+            #{$content-padding},
+            #{$navbar-height},
+            0rem,
+            0rem,
+            0rem,
+            2
+          );
         }
       }
     }
@@ -347,12 +389,17 @@ html {
         width: 100% !important;
       }
       .app-content {
-        padding: calc(#{$content-padding} + #{$navbar-height} + #{$floating-nav-margin}) #{$content-padding} 0 #{$content-padding} !important; // ? need to check all navbar types case
+        padding: calc(
+            #{$content-padding} + #{$navbar-height} + #{$floating-nav-margin}
+          )
+          #{$content-padding} 0 #{$content-padding} !important; // ? need to check all navbar types case
       }
       &.footer-fixed {
         .app-content {
-          padding: calc(#{$content-padding} + #{$navbar-height} + #{$floating-nav-margin}) #{$content-padding} #{$footer-height}
-            #{$content-padding} !important; // ? need to check all navbar types case
+          padding: calc(
+              #{$content-padding} + #{$navbar-height} + #{$floating-nav-margin}
+            )
+            #{$content-padding} #{$footer-height} #{$content-padding} !important; // ? need to check all navbar types case
         }
       }
     }
@@ -445,25 +492,35 @@ html {
 }
 
 @include media-breakpoint-down(xs) {
+  .content-wrapper {
+    padding: 5rem 1.5rem !important;
+  }
+}
+
+@include media-breakpoint-down(xs) {
   html body .app-content {
-    padding: calc(#{$content-padding} - 0.8rem + #{$navbar-height} + #{$floating-nav-margin})
+    padding: calc(
+        #{$content-padding} - 0.8rem + #{$navbar-height} + #{$floating-nav-margin}
+      )
       calc(#{$content-padding} - 0.8rem) 0 calc(#{$content-padding} - 0.8rem) !important; // - 0.8rem to reduce padding in small screen
   }
 
   // For static navbar
   html body.navbar-static .app-content {
-    padding: calc(#{$content-padding} - 0.8rem) calc(#{$content-padding} - 0.8rem) 0 calc(#{$content-padding} - 0.8rem) !important; // - 0.8rem to reduce padding in small screen
+    padding: calc(#{$content-padding} - 0.8rem)
+      calc(#{$content-padding} - 0.8rem) 0 calc(#{$content-padding} - 0.8rem) !important; // - 0.8rem to reduce padding in small screen
   }
 
   // For sticky navbar
   html body.navbar-sticky .app-content {
-    padding: calc(#{$content-padding} - 0.8rem + #{$navbar-height}) calc(#{$content-padding} - 0.8rem) 0
-      calc(#{$content-padding} - 0.8rem) !important; // - 0.8rem to reduce padding in small screen
+    padding: calc(#{$content-padding} - 0.8rem + #{$navbar-height})
+      calc(#{$content-padding} - 0.8rem) 0 calc(#{$content-padding} - 0.8rem) !important; // - 0.8rem to reduce padding in small screen
   }
 
   // For Hidden navbar
   html body.navbar-hidden .app-content {
-    padding: calc(#{$content-padding} - 0.8rem) calc(#{$content-padding} - 0.8rem) 0 calc(#{$content-padding} - 0.8rem) !important; // - 0.8rem to reduce padding in small screen
+    padding: calc(#{$content-padding} - 0.8rem)
+      calc(#{$content-padding} - 0.8rem) 0 calc(#{$content-padding} - 0.8rem) !important; // - 0.8rem to reduce padding in small screen
   }
 }
 

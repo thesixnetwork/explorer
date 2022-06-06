@@ -15,12 +15,13 @@ export default class Validator {
     this.bond_height = 0;
     this.bond_intra_tx_counter = 0;
     this.unbonding_height = 0;
-    this.unbonding_time = '1970-01-01T00:00:00Z';
+    this.unbonding_time = new Date();
     this.commission = new ValidatorCommission();
     this.min_self_delegation = 1;
   }
 
   init(element) {
+    console.log('element', element);
     this.operator_address = element.operator_address;
     this.consensus_pubkey = element.consensus_pubkey;
     this.jailed = element.jailed;
