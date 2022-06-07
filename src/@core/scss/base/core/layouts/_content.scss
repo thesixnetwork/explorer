@@ -491,6 +491,12 @@ html {
   }
 }
 
+@include media-breakpoint-only(sm) {
+  .content-wrapper {
+    padding: 3rem 1.5rem !important;
+  }
+}
+
 @include media-breakpoint-down(xs) {
   .content-wrapper {
     padding: 5rem 1.5rem !important;

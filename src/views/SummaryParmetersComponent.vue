@@ -1,7 +1,12 @@
 <template>
   <b-card v-if="data" no-body :class="`card-statistics ${data.class} `">
     <b-card-header>
-      <b-card-title>{{ data.title }}</b-card-title>
+      <b-card-title class="d-flex align-items-center">
+        Chain ID:
+        <h4 class="text-uppercase mb-0 ml-25">
+          {{ data.title }}
+        </h4>
+      </b-card-title>
     </b-card-header>
     <b-card-body class="statistics-body">
       <b-row>
@@ -50,7 +55,13 @@
               <h4 class="font-weight-bolder mb-0">
                 {{ item.title || '-' }}
               </h4>
-              <b-card-text class="font-small-3">
+              <b-card-text
+                v-if="item.subtitle === 'bonded_and_supply'"
+                class="font-small-3"
+              >
+                {{ 'Bonded and Supply' }}
+              </b-card-text>
+              <b-card-text v-else class="font-small-3 text-capitalize">
                 {{ item.subtitle.replaceAll('_', ' ') }}
               </b-card-text>
             </b-media-body>

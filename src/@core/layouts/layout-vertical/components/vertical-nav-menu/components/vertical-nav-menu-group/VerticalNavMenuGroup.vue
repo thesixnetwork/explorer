@@ -83,8 +83,6 @@ export default {
 
     const { t } = useI18nUtils();
     const { canViewVerticalNavMenuGroup } = useAclUtils();
-    // const selectChain = window.location.pathname.split('/')[1];
-    // console.log(selectChain);
 
     return {
       resolveNavItemComponent,

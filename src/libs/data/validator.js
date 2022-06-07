@@ -21,7 +21,6 @@ export default class Validator {
   }
 
   init(element) {
-    console.log('element', element);
     this.operator_address = element.operator_address;
     this.consensus_pubkey = element.consensus_pubkey;
     this.jailed = element.jailed;

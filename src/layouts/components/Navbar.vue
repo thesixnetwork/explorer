@@ -70,13 +70,7 @@
       <!-- <locale /> -->
       <search-bar />
       <dark-Toggler />
-      <b-dropdown
-        class="c-ml-1"
-        variant="link"
-        no-caret
-        toggle-class="p-0"
-        right
-      >
+      <b-dropdown variant="link" no-caret toggle-class="p-0" right>
         <template #button-content>
           <b-button
             v-ripple.400="'rgba(255, 255, 255, 0.15)'"

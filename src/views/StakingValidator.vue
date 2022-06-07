@@ -85,56 +85,62 @@
         <!-- Right Col: Table -->
         <b-col cols="12" xl="6">
           <table class="mt-2 mt-xl-0 w-100">
-            <tr>
-              <th class="pb-50">
+            <!-- <tr>
+             <th class="pb-50 d-flex align-items-center">
                 <feather-icon icon="UserIcon" class="mr-75" />
                 <span class="font-weight-bold">Identity</span>
               </th>
               <td class="pb-50">
                 <small>{{ validator.description.identity || '-' }}</small>
               </td>
-            </tr>
+            </tr> -->
             <tr>
-              <th class="pb-50">
-                <feather-icon icon="CheckIcon" class="mr-75" />
+              <th class="pb-50 d-flex align-items-center">
+                <feather-icon icon="ActivityIcon" class="mr-75" />
                 <span class="font-weight-bold">Status</span>
               </th>
               <td class="pb-50 text-capitalize">
-                <b-badge v-if="validator.status === 3" variant="light-success">
+                <b-badge v-if="validator.status == 3" variant="light-success">
                   Active
                 </b-badge>
                 <span v-else>{{ validator.status }}</span>
               </td>
             </tr>
-            <tr>
-              <th class="pb-50">
+            <!-- <tr>
+              <th class="pb-50 d-flex align-items-center">
                 <feather-icon icon="StarIcon" class="mr-75" />
                 <span class="font-weight-bold">Unbond Height</span>
               </th>
               <td class="pb-50 text-capitalize">
                 {{ validator.unbonding_height || '-' }}
               </td>
-            </tr>
-            <tr>
-              <th class="pb-50">
+            </tr> -->
+            <!-- <tr>
+             <th class="pb-50 d-flex align-items-center">
                 <feather-icon icon="StarIcon" class="mr-75" />
                 <span class="font-weight-bold">Unbond Time</span>
               </th>
-              <td class="pb-50 text-capitalize">
-                {{ timeFormat(validator.unbonding_time) || '-' }}
+              <td
+                v-if="validator.unbonding_time == '1970-01-01T00:00:00Z'"
+                class="pb-50 text-capitalize"
+              >
+                {{ '-' }}
               </td>
-            </tr>
+              <td v-else class="pb-50 text-capitalize">
+                {{ timeFormat(validator.unbonding_time) }}
+              </td>
+            </tr> -->
             <tr>
-              <th class="pb-50">
-                <feather-icon icon="FlagIcon" class="mr-75" />
+              <th class="pb-50 d-flex align-items-center">
+                <feather-icon icon="StarIcon" class="mr-75" />
                 <span class="font-weight-bold">Min Self Delegation</span>
               </th>
               <td class="pb-50">
-                {{ parseFloat(validator.min_self_delegation) }}
+                {{ tokenFormatter(validator.min_self_delegation) }}
               </td>
             </tr>
             <!-- <tr>
-              <th class="pb-50">
+              <th class="pb-50 d-flex align-items-center">
                 <feather-icon icon="AlertCircleIcon" class="mr-75" />
                 <span class="font-weight-bold">Jailed</span>
               </th>
@@ -142,7 +148,7 @@
                 {{ validator.jailed || '-' }}
               </td>
             </tr> -->
-            <tr>
+            <!-- <tr>
               <th>
                 <feather-icon icon="PhoneIcon" class="mr-75" />
                 <span class="font-weight-bold">Contact</span>
@@ -150,7 +156,7 @@
               <td>
                 {{ validator.security_contact || '-' }}
               </td>
-            </tr>
+            </tr> -->
           </table>
         </b-col>
       </b-row>
@@ -331,15 +337,13 @@ export default {
   methods: {
     initial() {
       this.$http.getStakingValidator(this.address).then(data => {
-        console.log('data', data);
         this.validator = data;
-
         this.processAddress(data.operator_address, data.consensus_pubkey);
         this.$http.getTxsBySender(this.accountAddress).then(res => {
           this.transactions = res;
         });
 
-        const { identity } = data.description.identity;
+        const { identity } = data.description;
         keybase(identity).then(d => {
           if (Array.isArray(d.them) && d.them.length > 0) {
             this.$set(this.validator, 'avatar', d.them[0].pictures.primary.url);

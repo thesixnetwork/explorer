@@ -21,10 +21,9 @@ export default class PingWalletClient extends SigningStargateClient {
       MsgSwapExactAmountIn
     );
 
-    // console.log('registory:', instance.registry, AminoTypes)
     const { aminoTypes = new AminoTypes({ prefix: options.prefix }) } = options;
     instance.aminoTypes = aminoTypes;
-    // console.log('aminoType:', instance.aminoTypes)
+
     return instance;
   }
 

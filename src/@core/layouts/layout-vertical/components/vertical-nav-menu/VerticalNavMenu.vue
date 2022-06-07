@@ -177,11 +177,13 @@ export default {
       const current = navMenuItems.find(x => x.title === selected.chain_title);
       preload.push({ header: 'current' });
       preload.push(current);
-        console.log(navMenuItems);
+
       return preload.concat(
-        navMenuItems.filter(x => x.title !== selected.chain_title && x.section=="social")
+        navMenuItems.filter(
+          x => x.title !== selected.chain_title && x.section == 'social'
+        )
       );
-      return preload
+      return preload;
     },
     selected_chain() {
       return this.$store.state.chains.selected;

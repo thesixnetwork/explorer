@@ -147,7 +147,7 @@ p {
   top: 22% !important;
 }
 .customizer-li {
-  width: 50%;
+  width: 40%;
   @include media-breakpoint-only(sm) {
     width: 65%;
   }

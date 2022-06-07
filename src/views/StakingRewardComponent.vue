@@ -47,7 +47,7 @@
               rounded
               size="42"
               variant="link"
-              text="S"
+              text="C"
               title="Commission"
               class="customizer-icon"
             />

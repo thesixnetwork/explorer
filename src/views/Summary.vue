@@ -235,7 +235,7 @@ export default {
 
     this.$http.getLatestBlock().then(res => {
       const height = this.chain.items.findIndex(x => x.subtitle === 'height');
-      this.$set(this.chain, 'title', `Chain ID: ${res.block.header.chain_id}`);
+      this.$set(this.chain, 'title', `${res.block.header.chain_id}`);
       this.$set(this.chain.items[height], 'title', res.block.header.height);
       if (timeIn(res.block.header.time, 3, 'm')) {
         this.syncing = true;

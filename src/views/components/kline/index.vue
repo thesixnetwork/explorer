@@ -1,52 +1,48 @@
 <template>
-  <div
-    id="chart-container-id"
-    class="kline-chart"
-  />
+  <div id="chart-container-id" class="kline-chart" />
 </template>
 
 <script>
 /* eslint-disable */
-import pako from 'pako'
-import { widget, version } from './charting_library/charting_library'
-import DataFeeds from './datafeed'
+import pako from 'pako';
+import { widget, version } from './charting_library/charting_library';
+import DataFeeds from './datafeed';
 import { TRADINGVIEW_THEME_LIGHT, TRADINGVIEW_THEME_DARK } from './KlineTheme';
 
 const toDouble = time => {
-  if (String(time).length < 2) return `0${time}`
-  return time
-}
+  if (String(time).length < 2) return `0${time}`;
+  return time;
+};
 
 export default {
   props: {
-    list: [],
+    list: []
   },
   data() {
     return {
       themeLocal: 'dark'
-    }
+    };
   },
   mounted() {
-
     const store = {
       ws: new WebSocket('wss://api.huobipro.com/ws'),
       onDataCallback: null,
       onRealTimeCallback: null,
-      to: null,
-    }
+      to: null
+    };
 
     store.ws.onmessage = e => {
-      const reader = new FileReader()
+      const reader = new FileReader();
 
       reader.onload = e => {
-        const res = JSON.parse(pako.ungzip(reader.result, { to: 'string' }))
+        const res = JSON.parse(pako.ungzip(reader.result, { to: 'string' }));
 
         if (res.ping) {
-          store.ws.send(JSON.stringify({ pong: new Date().getTime() }))
+          store.ws.send(JSON.stringify({ pong: new Date().getTime() }));
         }
 
         if (res.rep) {
-          const datas = []
+          const datas = [];
           for (const data of res.data) {
             datas.push({
               time: data.id * 1000,
@@ -54,11 +50,10 @@ export default {
               open: data.open,
               high: data.high,
               low: data.low,
-              volume: data.amount,
-            })
+              volume: data.amount
+            });
           }
-          console.log(this.list);
-          store.onDataCallback(this.list, { noData: !this.list.length })
+          store.onDataCallback(this.list, { noData: !this.list.length });
         }
 
         // if (res.tick) {
@@ -73,11 +68,14 @@ export default {
         //     low: data.low,
         //   })
         // }
-      }
+      };
 
-      reader.readAsArrayBuffer(e.data)
-    }
-    const tradingViewStyle = (this.themeLocal === 'dark' ? TRADINGVIEW_THEME_DARK : TRADINGVIEW_THEME_LIGHT);
+      reader.readAsArrayBuffer(e.data);
+    };
+    const tradingViewStyle =
+      this.themeLocal === 'dark'
+        ? TRADINGVIEW_THEME_DARK
+        : TRADINGVIEW_THEME_LIGHT;
 
     const tv = new widget({
       debug: false,
@@ -94,9 +92,10 @@ export default {
       datafeed: new DataFeeds(store),
       theme: 'Dark',
       favorites: {
-        intervals: ['30', '240', '1D'],
-      },  
-      disabled_features: [ // 禁用功能
+        intervals: ['30', '240', '1D']
+      },
+      disabled_features: [
+        // 禁用功能
         'volume_force_overlay',
         'left_toolbar',
         'timeframes_toolbar',
@@ -120,13 +119,14 @@ export default {
         // 'legend_context_menu',
         // new
         'symbol_info',
-        'pane_context_menu',
+        'pane_context_menu'
       ],
-      enabled_features: [ // 启用的功能
+      enabled_features: [
+        // 启用的功能
         'hide_left_toolbar_by_default',
         'pane_context_menu',
         'hide_last_na_study_output',
-        'dont_show_boolean_study_arguments',
+        'dont_show_boolean_study_arguments'
       ],
 
       overrides: {
@@ -137,8 +137,7 @@ export default {
 
         'paneProperties.vertGridProperties.color': tradingViewStyle.grid,
         'paneProperties.horzGridProperties.color': tradingViewStyle.grid,
-        'paneProperties.crossHairProperties.color':
-          tradingViewStyle.crosshair,
+        'paneProperties.crossHairProperties.color': tradingViewStyle.crosshair,
         'scalesProperties.lineColor': tradingViewStyle.lineColor,
         'symbolWatermarkProperties.color': 'rgba(0, 0, 0, 0)',
 
@@ -150,8 +149,7 @@ export default {
         'mainSeriesProperties.candleStyle.drawWick': true,
         'mainSeriesProperties.candleStyle.drawBorder': true,
         'mainSeriesProperties.candleStyle.borderColor': '#C400CB',
-        'mainSeriesProperties.candleStyle.borderUpColor':
-          tradingViewStyle.long,
+        'mainSeriesProperties.candleStyle.borderUpColor': tradingViewStyle.long,
         'mainSeriesProperties.candleStyle.borderDownColor':
           tradingViewStyle.short,
         'mainSeriesProperties.candleStyle.wickUpColor': tradingViewStyle.long,
@@ -165,12 +163,12 @@ export default {
 
         'study_Overlay@tv-basicstudies.areaStyle.color1': 'blue',
         'study_Overlay@tv-basicstudies.areaStyle.color2': 'blue',
-        'study_Overlay@tv-basicstudies.areaStyle.linecolor': 'blue',
-      },
-    })
+        'study_Overlay@tv-basicstudies.areaStyle.linecolor': 'blue'
+      }
+    });
 
     tv.onChartReady(() => {
-      const chart = tv.chart()
+      const chart = tv.chart();
 
       // 出现均线在0刻度，注意数据类型为number
       const colors = ['#e0d283', '#92c580', '#8dc1d9'];
@@ -179,13 +177,12 @@ export default {
         chart.createStudy('Moving Average', false, false, [time, 'close', 0], {
           'Plot.linewidth': 2,
           'plot.color.0': colors[index],
-          precision: 2,
-        })
-      })
-    })
-  },
-}
+          precision: 2
+        });
+      });
+    });
+  }
+};
 </script>
 
-<style scoped>
-</style>
+<style scoped></style>

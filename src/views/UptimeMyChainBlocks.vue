@@ -118,7 +118,6 @@ export default {
   computed: {
     uptime() {
       const vals = this.validators;
-      console.log('vals', vals);
       return vals;
     }
   },

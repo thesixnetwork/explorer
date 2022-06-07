@@ -1,5 +1,5 @@
 <script>
-import { Line, mixins } from 'vue-chartjs'
+import { Line, mixins } from 'vue-chartjs';
 
 export default {
   extends: Line,
@@ -15,44 +15,42 @@ export default {
       options: {
         maintainAspectRatio: false,
         scales: {
-          xAxes: [{
-            type: 'time',
-            time: {
-              unit: 'day',
-            },
-            ticks: {
-              autoskipping: true,
-              display: true,
-              maxTicksLimit: 15,
-            //   callback(a, b) {
-            //     console.log(a, b)
-            //   },
-            },
-          }],
-          yAxes: [{
-            ticks: {
-              autoskipping: true,
-              display: true,
-              maxTicksLimit: 8,
-            //   callback(a, b) {
-            //     console.log(a, b)
-            //   },
-            },
-          }],
+          xAxes: [
+            {
+              type: 'time',
+              time: {
+                unit: 'day'
+              },
+              ticks: {
+                autoskipping: true,
+                display: true,
+                maxTicksLimit: 15
+              }
+            }
+          ],
+          yAxes: [
+            {
+              ticks: {
+                autoskipping: true,
+                display: true,
+                maxTicksLimit: 8
+              }
+            }
+          ]
         },
         plugins: {
           legend: {
             display: false,
             labels: {
-              color: 'rgb(255, 99, 132)',
-            },
-          },
-        },
-      },
-    }
+              color: 'rgb(255, 99, 132)'
+            }
+          }
+        }
+      }
+    };
   },
   mounted() {
-    this.renderChart(this.chartData, this.options)
-  },
-}
+    this.renderChart(this.chartData, this.options);
+  }
+};
 </script>

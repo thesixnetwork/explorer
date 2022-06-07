@@ -98,9 +98,7 @@ export default {
   },
   methods: {
     formatObject(value) {
-      // console.log(value, typeof (value) === 'object', Object.keys(value))
       // if (typeof (value) === 'object' && Object.keys(value).length === 1) {
-      //   console.log(value)
       //   return value[Object.keys(value)[0]]
       // }
       return value;
