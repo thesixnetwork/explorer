@@ -42,6 +42,7 @@
     "env-cmd": "^10.1.0",
     "leaflet": "1.6.0",
     "ledger-cosmos-js": "2.1.8",
+    "lodash": "^4.17.21",
     "long": "^5.2.0",
     "node-fetch": "^2.6.5",
     "pako": "^1.0.11",

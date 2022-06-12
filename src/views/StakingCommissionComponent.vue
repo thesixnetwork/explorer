@@ -4,7 +4,7 @@
       <h4 class="mb-0">
         Commission
       </h4>
-      <b-card-text class="font-small-5 mb-0">
+      <b-card-text class="font-small-2 mb-0">
         Updated on: {{ dateFormat(data.update_time) }}
       </b-card-text>
     </b-card-header>

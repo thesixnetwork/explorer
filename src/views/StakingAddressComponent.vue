@@ -44,13 +44,13 @@
         </small>
       </b-media-body>
     </b-media>
-    <b-media class="mb-1 text-truncate" no-body>
+    <b-media class="mb-1" no-body>
       <b-media-aside class="mr-1">
         <b-avatar rounded variant="link" size="34" class="customizer-icon">
           <feather-icon icon="HashIcon" size="18" />
         </b-avatar>
       </b-media-aside>
-      <b-media-body>
+      <b-media-body class="text-truncate">
         <h6 class="mb-0">
           Hex Address
         </h6>

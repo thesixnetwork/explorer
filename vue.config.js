@@ -6,6 +6,15 @@ const productionGzipExtensions = ['js', 'css'];
 process.env.VUE_APP_VERSION = require('./package.json').version;
 
 module.exports = {
+  pwa: {
+    iconPaths: {
+      favicon32: './public/favicons/favicon-16x16.png',
+      favicon16: './public/favicons/favicon-16x16.png',
+      appleTouchIcon: './public/favicons/apple-touch-icon-152x152.png',
+      maskIcon: './public/favicon.png',
+      msTileImage: './public/favicon.png'
+    }
+  },
   publicPath: '/',
   productionSourceMap: false,
   css: {

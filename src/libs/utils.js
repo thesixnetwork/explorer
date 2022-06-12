@@ -625,9 +625,9 @@ export function formatNumber(count, withAbbr = false, decimals = 2) {
 
 export function tokenFormatter(tokens, denoms = {}) {
   if (Array.isArray(tokens)) {
-    return tokens.map(t => formatToken(t, denoms, 2)).join(', ');
+    return tokens.map(t => formatToken(t, denoms, 6)).join(', ');
   }
-  return formatToken(tokens, denoms, 2);
+  return formatToken(tokens, denoms, 6);
 }
 
 export function getCachedValidators(chainName) {

@@ -27,19 +27,21 @@
           >
             <template #aside>
               <b-avatar
-                v-if="data.item.avatar"
-                v-b-tooltip.hover.v-primary
-                v-b-tooltip.hover.right="data.item.description.details"
+                v-if="data.item.description.details"
                 size="32"
                 variant="light-primary"
-                :src="data.item.avatar"
+                :style="{ border: '.5px solid rgba(198,198,198,0.5)' }"
+                :src="
+                  `https://i.imgur.com/${
+                    fetch_details(data.item.description.details).im
+                  }.png`
+                "
               />
               <b-avatar
-                v-if="!data.item.avatar"
-                v-b-tooltip.hover.v-primary
-                v-b-tooltip.hover.right="data.item.description.details"
+                v-if="!data.item.description.details"
+                :src="require('@/assets/images/logo/six-network-logo.png')"
               >
-                <feather-icon icon="ServerIcon" />
+                <!-- <feather-icon icon="ServerIcon" /> -->
               </b-avatar>
             </template>
             <span class="font-weight-bolder d-block text-nowrap">
@@ -47,9 +49,11 @@
                 {{ data.item.description.moniker }}
               </router-link>
             </span>
-            <small class="text-muted">{{
-              data.item.description.website || data.item.description.identity
-            }}</small>
+            <small class="text-muted">
+              {{
+                data.item.description.website || data.item.description.identity
+              }}
+            </small>
           </b-media>
         </template>
         <!-- Token -->
@@ -139,18 +143,17 @@
             >
               <template #aside>
                 <b-avatar
-                  v-if="data.item.avatar"
-                  v-b-tooltip.hover.v-primary
-                  v-b-tooltip.hover.right="data.item.description.details"
+                  v-if="data.item.description.details"
                   size="32"
                   variant="light-primary"
-                  :src="data.item.avatar"
+                  :style="{ border: '.5px solid rgba(198,198,198,0.5)' }"
+                  :src="
+                    `https://i.imgur.com/${
+                      fetch_details(data.item.description.details).im
+                    }.png`
+                  "
                 />
-                <b-avatar
-                  v-if="!data.item.avatar"
-                  v-b-tooltip.hover.v-primary
-                  v-b-tooltip.hover.right="data.item.description.details"
-                >
+                <b-avatar v-if="!data.item.description.details">
                   <feather-icon icon="ServerIcon" />
                 </b-avatar>
               </template>
@@ -241,6 +244,7 @@ import {
 } from 'bootstrap-vue';
 import { percent, StakingParameters, formatToken } from '@/libs/utils';
 import { keybase } from '@/libs/fetch';
+import _ from 'lodash';
 import OperationModal from '@/views/components/OperationModal/index.vue';
 // import { toHex } from '@cosmjs/encoding'
 // import fetch from 'node-fetch'
@@ -509,6 +513,15 @@ export default {
           }
         });
       }
+    },
+    fetch_details(data) {
+      const output = {};
+      const input = data;
+      input
+        .split('|')
+        .map(x => _.set(output, x.split('=')[0], x.split('=')[1]));
+
+      return output;
     }
   }
 };

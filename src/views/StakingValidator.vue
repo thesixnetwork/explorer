@@ -11,20 +11,36 @@
           <!-- User Avatar & Action Buttons -->
           <div class="d-flex justify-content-start">
             <b-avatar
-              :src="validator.avatar"
+              v-if="validator.description.details"
+              :src="
+                `https://i.imgur.com/${
+                  fetch_details(validator.description.details).im
+                }.png`
+              "
+              alt="avatar"
               variant="link"
               class="customizer-icon"
               size="104px"
               rounded
+              :style="{ border: '1px solid rgba(198,198,198,0.5)' }"
+            />
+            <b-avatar
+              v-else
+              alt="avatar"
+              variant="link"
+              class="customizer-icon"
+              size="104px"
+              rounded
+              :style="{ border: '1px solid rgba(198,198,198,0.5)' }"
             />
             <div class="d-flex flex-column ml-1">
               <div class="mb-1">
-                <h4 class="mb-0">
+                <h4 class="mb-25">
                   {{ validator.description.moniker }}
                 </h4>
-                <span class="card-text">{{
-                  validator.description.website
-                }}</span>
+                <span v-if="validator.description.details">
+                  {{ fetch_details(validator.description.details).sd }}
+                </span>
               </div>
               <!-- <div class="d-flex flex-wrap">
                 <b-button
@@ -86,7 +102,7 @@
         <b-col cols="12" xl="6">
           <table class="mt-2 mt-xl-0 w-100">
             <!-- <tr>
-             <th class="pb-50 d-flex align-items-center">
+              <th class="pb-50 d-flex align-items-center">
                 <feather-icon icon="UserIcon" class="mr-75" />
                 <span class="font-weight-bold">Identity</span>
               </th>
@@ -148,25 +164,53 @@
                 {{ validator.jailed || '-' }}
               </td>
             </tr> -->
-            <!-- <tr>
-              <th>
-                <feather-icon icon="PhoneIcon" class="mr-75" />
-                <span class="font-weight-bold">Contact</span>
+            <tr>
+              <th class="pb-50 d-flex align-items-center">
+                <feather-icon icon="GlobeIcon" class="mr-75" />
+                <span class="font-weight-bold">Website</span>
               </th>
-              <td>
-                {{ validator.security_contact || '-' }}
+              <td v-if="validator.description.website" class="pb-50">
+                <a :href="validator.description.website" target="_blank">
+                  {{ validator.description.website }}
+                </a>
               </td>
-            </tr> -->
+              <td v-else class="pb-50">
+                <span>{{ '-' }}</span>
+              </td>
+            </tr>
+            <tr>
+              <th>
+                <feather-icon icon="FacebookIcon" class="mr-75" />
+                <span class="font-weight-bold">Facebook</span>
+              </th>
+              <td v-if="validator.description.security_contact">
+                <a
+                  :href="
+                    fetch_details(validator.description.security_contact).fb
+                  "
+                  target="_blank"
+                >
+                  {{
+                    fetch_details(validator.description.security_contact).fb ||
+                      '-'
+                  }}
+                </a>
+              </td>
+              <td v-else>
+                <span>{{ '-' }}</span>
+              </td>
+            </tr>
           </table>
         </b-col>
       </b-row>
 
-      <b-card-footer
-        v-if="validator.description.details"
-        class="mt-1 pl-0 pr-0"
-      >
-        {{ validator.description.details || '' }}
-      </b-card-footer>
+      <!-- <b-card-footer class="mt-1 pl-0 pr-0">
+        <h5>Description</h5>
+        {{
+          validator.description.long_desc ||
+            'SIX Network focuses on unleashing the true power of digital assets through the company’s flagship product, "SIX Protocol," utilizing the power of blockchain and smart contracts to create effective decentralized financial services and a blockchain infrastructure essential for businesses.'
+        }}
+      </b-card-footer> -->
     </b-card>
     <!-- First Row -->
     <template>
@@ -234,7 +278,7 @@ import {
   BRow,
   BCol,
   BTable,
-  BCardFooter,
+  // BCardFooter,
   VBTooltip,
   VBModal,
   BBadge,
@@ -252,6 +296,7 @@ import {
   abbrMessage,
   abbrAddress
 } from '@/libs/utils';
+import _ from 'lodash';
 import { keybase } from '@/libs/fetch';
 import StakingAddressComponent from './StakingAddressComponent.vue';
 import StakingCommissionComponent from './StakingCommissionComponent.vue';
@@ -265,7 +310,7 @@ export default {
     BRow,
     BCol,
     BAvatar,
-    BCardFooter,
+    // BCardFooter,
     BBadge,
     BPagination,
     BTable,
@@ -419,6 +464,15 @@ export default {
           ]);
         }
       });
+    },
+    fetch_details(data) {
+      const output = {};
+      const input = data;
+      input
+        .split('|')
+        .map(x => _.set(output, x.split('=')[0], x.split('=')[1]));
+
+      return output;
     }
   }
 };
