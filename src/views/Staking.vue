@@ -44,7 +44,7 @@
                 <!-- <feather-icon icon="ServerIcon" /> -->
               </b-avatar>
             </template>
-            <span class="font-weight-bolder d-block text-nowrap">
+            <span class="font-weight-bolder d-block text-nowrap text-uppercase">
               <router-link :to="`./staking/${data.item.operator_address}`">
                 {{ data.item.description.moniker }}
               </router-link>
@@ -157,7 +157,9 @@
                   <feather-icon icon="ServerIcon" />
                 </b-avatar>
               </template>
-              <span class="font-weight-bolder d-block text-nowrap">
+              <span
+                class="font-weight-bolder d-block text-nowrap text-uppercase"
+              >
                 <router-link :to="`./staking/${data.item.operator_address}`">
                   {{ data.item.description.moniker }}
                 </router-link>

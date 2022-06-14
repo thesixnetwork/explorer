@@ -35,7 +35,7 @@
             />
             <div class="d-flex flex-column ml-1">
               <div class="mb-1">
-                <h4 class="mb-25">
+                <h4 class="mb-25 text-uppercase">
                   {{ validator.description.moniker }}
                 </h4>
                 <span v-if="validator.description.details">
@@ -165,13 +165,15 @@
               </td>
             </tr> -->
             <tr>
-              <th class="pb-50 d-flex align-items-center">
+              <th class="d-flex align-items-center">
                 <feather-icon icon="GlobeIcon" class="mr-75" />
                 <span class="font-weight-bold">Website</span>
               </th>
-              <td v-if="validator.description.website" class="pb-50">
+              <td v-if="validator.description.website">
                 <a :href="validator.description.website" target="_blank">
-                  {{ validator.description.website }}
+                  <span class="d-inline-block text-truncate customizer-url">
+                    {{ validator.description.website }}
+                  </span>
                 </a>
               </td>
               <td v-else class="pb-50">
@@ -179,7 +181,7 @@
               </td>
             </tr>
             <tr>
-              <th>
+              <th class="d-flex align-items-center">
                 <feather-icon icon="FacebookIcon" class="mr-75" />
                 <span class="font-weight-bold">Facebook</span>
               </th>
@@ -190,10 +192,12 @@
                   "
                   target="_blank"
                 >
-                  {{
-                    fetch_details(validator.description.security_contact).fb ||
-                      '-'
-                  }}
+                  <span class="d-inline-block text-truncate customizer-url">
+                    {{
+                      fetch_details(validator.description.security_contact)
+                        .fb || '-'
+                    }}
+                  </span>
                 </a>
               </td>
               <td v-else>
@@ -507,6 +511,14 @@ export default {
 
   .dark-layout & {
     border: 1px solid $primary;
+  }
+}
+
+.customizer-url {
+  max-width: unset;
+
+  @include media-breakpoint-down(xs) {
+    max-width: 140px !important;
   }
 }
 </style>
