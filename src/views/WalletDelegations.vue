@@ -12,7 +12,7 @@
         <template #cell(validator)="data">
           <router-link
             :to="
-              `/${data.item.validator.chain}/staking/${data.item.validator.validator}`
+              `/${data.item.validator.chain}/validators/${data.item.validator.validator}`
             "
           >
             <b-avatar

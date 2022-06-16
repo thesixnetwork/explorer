@@ -45,7 +45,7 @@
               </b-avatar>
             </template>
             <span class="font-weight-bolder d-block text-nowrap text-uppercase">
-              <router-link :to="`./staking/${data.item.operator_address}`">
+              <router-link :to="`./validators/${data.item.operator_address}`">
                 {{ data.item.description.moniker }}
               </router-link>
             </span>
@@ -160,7 +160,7 @@
               <span
                 class="font-weight-bolder d-block text-nowrap text-uppercase"
               >
-                <router-link :to="`./staking/${data.item.operator_address}`">
+                <router-link :to="`./validators/${data.item.operator_address}`">
                   {{ data.item.description.moniker }}
                 </router-link>
               </span>

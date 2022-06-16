@@ -57,10 +57,10 @@
                       Summary
                     </b-dropdown-item>
                     <b-dropdown-item
-                      :to="`/${data.chain_name}/staking`"
+                      :to="`/${data.chain_name}/validators`"
                       class="customizer-items"
                     >
-                      Staking
+                      Validators
                     </b-dropdown-item>
                     <b-dropdown-item
                       :to="`/${data.chain_name}/uptime`"

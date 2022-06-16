@@ -14,7 +14,7 @@ const modules = [
   },
   {
     scope: 'normal',
-    title: 'staking',
+    title: 'Validators',
     route: 'staking'
   },
   // {
@@ -55,7 +55,7 @@ function processMenu() {
           children.push({
             // header: `item-${chain}-${m.route}`,
             title: m.title,
-            section: "chain", 
+            section: 'chain',
             route: { name: m.route, params: { chain } }
           });
         }
@@ -64,43 +64,43 @@ function processMenu() {
     menu.children = children;
     chainMenus.push(menu);
   });
-  chainMenus.push({ header: 'SOCIALS',section: "social" });
+  chainMenus.push({ header: 'SOCIALS', section: 'social' });
   chainMenus.push({
     title: 'Facebook',
     href: 'https://www.facebook.com/thesixnetwork',
     icon: 'FacebookIcon',
-    section: "social"
+    section: 'social'
   });
   chainMenus.push({
     title: 'Twitter',
     href: 'https://twitter.com/theSIXnetwork',
     icon: 'TwitterIcon',
-    section: "social"
+    section: 'social'
   });
   chainMenus.push({
     title: 'Gitbook',
     href:
       'https://sixnetwork.gitbook.io/six-protocol/six-protocol/introduction',
     icon: 'BookIcon',
-    section: "social"
+    section: 'social'
   });
   chainMenus.push({
     title: 'Discord',
     href: 'https://discord.gg/5gJQCXzcWf',
     icon: 'EyeIcon',
-    section: "social"
+    section: 'social'
   });
   chainMenus.push({
     title: 'Github',
     href: 'https://github.com/thesixnetwork',
     icon: 'GithubIcon',
-    section: "social"
+    section: 'social'
   });
   chainMenus.push({
     title: 'Telegram',
     href: 'https://t.me/SIXNetwork',
     icon: 'NavigationIcon',
-    section: "social"
+    section: 'social'
   });
 
   return chainMenus;
