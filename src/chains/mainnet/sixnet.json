@@ -7,6 +7,9 @@
     "api": [
         "https://sixnet-api.sixprotocol.net"
     ],
+    "apiTX": [
+        "https://six-protocol-get-txs-api-gateway-7kl45r91.an.gateway.dev"
+    ],
     "sdk_version": "0.45.0",
     "coin_type": "118",
     "min_tx_fee": "800",

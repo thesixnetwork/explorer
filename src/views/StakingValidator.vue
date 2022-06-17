@@ -355,12 +355,20 @@ export default {
     txs() {
       if (this.transactions.txs) {
         return this.transactions.txs.map(x => ({
-          height: Number(x.height),
+          height: Number(x.block_height),
           txhash: x.txhash,
-          message: abbrMessage(x.tx.value ? x.tx.value.msg : x.tx.msg),
-          time: toDay(x.timestamp)
+          message: x.type,
+          time: toDay(x.time_stamp)
         }));
       }
+      // if (this.transactions.txs) {
+      //   return this.transactions.txs.map(x => ({
+      //     height: Number(x.height),
+      //     txhash: x.txhash,
+      //     message: abbrMessage(x.tx.value ? x.tx.value.msg : x.tx.msg),
+      //     time: toDay(x.timestamp)
+      //   }));
+      // }
       return [];
     }
   },

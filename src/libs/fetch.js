@@ -85,7 +85,8 @@ export default class ChainFetch {
   }
 
   async getTxsBySender(sender, page = 1) {
-    return this.get(`/txs?message.sender=${sender}&page=${page}&limit=20`)
+    // return this.get(`/txs?message.sender=${sender}&page=${page}&limit=20`)
+    return this.getTx(`/api/all-txs-from-address?pageNumber=${page}&address=${sender}&limit=20`)
   }
 
   async getTxsByRecipient(recipient) {
@@ -433,6 +434,17 @@ export default class ChainFetch {
     }
     const conf = config || this.config
     const finalurl = (Array.isArray(conf.api) ? conf.api[this.getApiIndex(config)] : conf.api) + url
+    // finalurl = finalurl.replaceAll('v1beta1', this.getEndpointVersion())
+    const ret = await fetch(finalurl).then(response => response.json())
+    return ret
+  }
+
+  async getTx(url, config = null) {
+    if (!config) {
+      this.getSelectedConfig()
+    }
+    const conf = config || this.config
+    const finalurl = (Array.isArray(conf.apiTX) ? conf.apiTX[this.getApiIndex(config)] : conf.apiTX) + url
     // finalurl = finalurl.replaceAll('v1beta1', this.getEndpointVersion())
     const ret = await fetch(finalurl).then(response => response.json())
     return ret
