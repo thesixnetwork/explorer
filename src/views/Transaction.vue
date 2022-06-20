@@ -1,12 +1,12 @@
 <template>
   <div>
-    <b-card title="Basic" class="text-truncate">
+    <b-card title="Basicee" class="text-truncate">
       <object-field-component v-if="!tx.std" :tablefield="tx.raw" />
       <b-table-simple v-else striped stacked="sm">
         <tbody>
           <b-tr>
             <b-td style="width:200px">
-              {{ 'txhash' }}
+              {{ 'Tx Hash' }}
             </b-td>
             <b-td class="text-truncate">
               {{ tx.txhash }}
@@ -46,7 +46,7 @@
             <b-td> {{ 'Fee' }} </b-td><b-td>{{ formattoken(tx.tx.fee) }}</b-td>
           </b-tr>
           <b-tr>
-            <b-td> {{ 'Memo' }} </b-td><b-td>{{ tx.tx.memo }}</b-td>
+            <b-td> {{ 'Memo' }} </b-td><b-td>{{ tx.tx.memo || '-' }}</b-td>
           </b-tr>
           <b-tr>
             <b-td> {{ 'Timeout height' }} </b-td>
@@ -100,6 +100,7 @@ export default {
       tx: { tx: {} }
     };
   },
+
   beforeRouteUpdate(to, from, next) {
     const { hash } = to.params;
     if (hash !== from.params.hash) {

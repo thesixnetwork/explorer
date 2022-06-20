@@ -170,7 +170,11 @@
                 <span class="font-weight-bold">Website</span>
               </th>
               <td v-if="validator.description.website">
-                <a :href="validator.description.website" target="_blank">
+                <a
+                  :href="validator.description.website"
+                  target="_blank"
+                  rel="nofollow"
+                >
                   <span class="d-inline-block text-truncate customizer-url">
                     {{ validator.description.website }}
                   </span>
@@ -191,6 +195,7 @@
                     fetch_details(validator.description.security_contact).fb
                   "
                   target="_blank"
+                  rel="nofollow"
                 >
                   <span class="d-inline-block text-truncate customizer-url">
                     {{
@@ -357,7 +362,7 @@ export default {
         return this.transactions.txs.map(x => ({
           height: Number(x.block_height),
           txhash: x.txhash,
-          message: x.type,
+          message: x.type.split('.').slice(-1)[0],
           time: toDay(x.time_stamp)
         }));
       }

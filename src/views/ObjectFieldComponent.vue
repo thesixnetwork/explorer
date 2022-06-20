@@ -54,7 +54,7 @@
             </b-tab>
           </b-tabs>
         </b-td>
-        <b-td v-else>
+        <b-td v-else class="text-capitalize">
           {{ addNewLine(value) }}
         </b-td>
       </b-tr>
@@ -130,6 +130,7 @@ export default {
     },
     addNewLine(value) {
       const percentage = /^0\.\d+/;
+
       if (percentage.test(value)) {
         return `${percent(value)}%`;
       }
@@ -137,7 +138,7 @@ export default {
         return value.replaceAll('\\n', '\n');
       }
 
-      return value;
+      return value.replaceAll('_', ' ');
     }
   }
 };

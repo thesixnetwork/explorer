@@ -15,7 +15,7 @@
         :key="d.amount"
         class="transaction-item"
       >
-        <b-media no-body>
+        <b-media no-body class="align-items-center">
           <b-media-aside>
             <b-avatar
               rounded
@@ -29,7 +29,7 @@
             <h6 class="transaction-title">
               {{ formatDenom(d) }}
             </h6>
-            <small>{{ formatNumber(d.amount) }}</small>
+            <!-- <small>{{ formatNumber(d.amount) }}</small> -->
           </b-media-body>
         </b-media>
         <small class="text-success d-none d-xl-block ">
@@ -41,7 +41,7 @@
         :key="d.amount"
         class="transaction-item"
       >
-        <b-media no-body>
+        <b-media no-body class="align-items-center">
           <b-media-aside>
             <b-avatar
               rounded
@@ -56,7 +56,7 @@
             <h6 class="transaction-title">
               {{ formatDenom(d) }}
             </h6>
-            <small>{{ formatNumber(d.amount) }}</small>
+            <!-- <small>{{ formatNumber(d.amount) }}</small> -->
           </b-media-body>
         </b-media>
         <small class="customizer-text d-none d-xl-block">
