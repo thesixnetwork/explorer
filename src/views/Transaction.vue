@@ -1,6 +1,6 @@
 <template>
   <div>
-    <b-card title="Basicee" class="text-truncate">
+    <b-card title="Basic" class="text-truncate">
       <object-field-component v-if="!tx.std" :tablefield="tx.raw" />
       <b-table-simple v-else striped stacked="sm">
         <tbody>
