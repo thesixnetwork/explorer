@@ -29,33 +29,18 @@
           hover
           class="overflow-hidden"
         >
-          <b-tabs small>
-            <b-tab
-              v-for="key in Object.keys(value)"
-              :key="key"
-              :title="key"
-              class="pl-0 pr-0"
-              title-item-class="bg-light-primary"
-              style="padding: 0px;"
-            >
-              <array-field-component
-                v-if="Array.isArray(value[key])"
-                :tablefield="value[key]"
-              />
-              <object-field-component
-                v-else-if="typeof value[key] === 'object'"
-                :tablefield="value[key]"
-              />
-              <object-field-component
-                v-else-if="isObjectText(value[key])"
-                :tablefield="toObject(value[key])"
-              />
-              <span v-else>{{ value[key] }}</span>
-            </b-tab>
-          </b-tabs>
+          <b-td :v-if="Object.keys(value, name)" :key="name" class="p-0">
+            {{ formatTokens(value) }}
+          </b-td>
         </b-td>
         <b-td v-else class="text-capitalize">
-          {{ addNewLine(value) }}
+          {{
+            addNewLine(value) === '/cosmos.staking.v1beta1.MsgDelegate'
+              ? 'Delegate'
+              : addNewLine(value) === '/cosmos.staking.v1beta1.MsgUndelegate'
+              ? 'Undelegate'
+              : addNewLine(value)
+          }}
         </b-td>
       </b-tr>
     </b-tbody>
@@ -63,7 +48,7 @@
 </template>
 
 <script>
-import { BTableSimple, BTr, BTd, BTabs, BTab, BTbody } from 'bootstrap-vue';
+import { BTableSimple, BTr, BTd, BTbody } from 'bootstrap-vue';
 import {
   abbr,
   getStakingValidatorByHex,
@@ -81,8 +66,6 @@ export default {
     BTableSimple,
     BTr,
     BTd,
-    BTabs,
-    BTab,
     BTbody,
     ArrayFieldComponent
   },
@@ -120,7 +103,10 @@ export default {
       return isHexAddress(value);
     },
     formatHexAddress(v) {
-      return getStakingValidatorByHex(this.$http.config.chain_name, v);
+      const denom = v.denom === 'usix' ? 'six' : v.denom;
+      const amount = parseInt(v.amount) / Math.pow(10, 6);
+      return getStakingValidatorByHex(denom, amount);
+      // return getStakingValidatorByHex(this.$http.config.chain_name, v);
     },
     isArrayText(value) {
       return isStringArray(value);
