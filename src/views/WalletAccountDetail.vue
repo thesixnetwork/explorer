@@ -813,7 +813,7 @@ export default {
       if (this.transactions.txs) {
         return this.transactions.txs.map(x => ({
           txhash: x.txhash,
-          height: Number(x.block_height),
+          block: Number(x.block_height),
           type:
             x.type === '/cosmos.bank.v1beta1.MsgSend'
               ? 'Send'
@@ -831,7 +831,7 @@ export default {
           to: x.decode_tx.toAddress
             ? abbrAddress(x.decode_tx.toAddress)
             : abbrAddress(x.decode_tx.validatorAddress),
-          amount:
+          value:
             x.type === '/cosmos.staking.v1beta1.MsgDelegate' ||
             x.type === '/cosmos.staking.v1beta1.MsgUndelegate'
               ? `${formatTokenAmount(x.decode_tx.amount.amount) + ' ' + 'SIX'}`
@@ -840,7 +840,7 @@ export default {
                   ' ' +
                   'SIX'}`
               : '-',
-          value: `${formatGasAmount(x.decode_tx.gas_used) + ' ' + 'SIX'}`,
+          txnFee: `${formatGasAmount(x.decode_tx.gas_used) + ' ' + 'SIX'}`,
           time: toDay(x.time_stamp)
         }));
       }
