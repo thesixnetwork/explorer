@@ -36,9 +36,14 @@
         <b-td v-else class="text-capitalize">
           {{
             addNewLine(value) === '/cosmos.staking.v1beta1.MsgDelegate'
-              ? 'Delegate'
+              ? 'Stake'
               : addNewLine(value) === '/cosmos.staking.v1beta1.MsgUndelegate'
-              ? 'Undelegate'
+              ? 'Unstake'
+              : addNewLine(value) ===
+                '/cosmos.distribution.v1beta1.MsgWithdrawDelegatorReward'
+              ? 'Claim Reward'
+              : addNewLine(value) === '/cosmos.bank.v1beta1.MsgSend'
+              ? 'Send'
               : addNewLine(value)
           }}
         </b-td>

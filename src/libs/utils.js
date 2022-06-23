@@ -570,6 +570,36 @@ export function formatTokenAmount(
   return parseFloat(amount.toFixed(fraction));
 }
 
+export function formatGasAmount(
+  tokenAmount,
+  fraction = 6,
+  tokenDenom = 'uatom',
+  format = true
+) {
+  const denom = tokenDenom.denom_trace
+    ? tokenDenom.denom_trace.base_denom
+    : tokenDenom;
+  let amount = 0;
+
+  let exp = 6;
+  const config = Object.values(getLocalChains());
+
+  config.forEach(x => {
+    if (x.assets) {
+      const asset = x.assets.find(a => a.base === denom);
+      if (asset) exp = asset.exponent;
+    }
+  });
+  amount = Number(Number(tokenAmount)) / 10 ** exp;
+  if (amount > 10) {
+    if (format) {
+      return numberWithCommas(parseFloat(amount.toFixed(fraction)));
+    }
+    return parseFloat(amount.toFixed(fraction));
+  }
+  return parseFloat(amount.toFixed(fraction));
+}
+
 export function isTestnet() {
   return process.env.VUE_APP_CHAIN_ID === 'fivenet';
 }

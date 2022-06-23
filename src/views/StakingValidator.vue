@@ -303,7 +303,9 @@ import {
   consensusPubkeyToHexAddress,
   toDay,
   abbrMessage,
-  abbrAddress
+  abbrAddress,
+  formatTokenAmount,
+  formatGasAmount
 } from '@/libs/utils';
 import _ from 'lodash';
 import { keybase } from '@/libs/fetch';
@@ -358,22 +360,51 @@ export default {
   },
   computed: {
     txs() {
+      console.log('this.transactions.txs', this.transactions.txs);
       if (this.transactions.txs) {
         return this.transactions.txs.map(x => ({
-          height: Number(x.block_height),
           txhash: x.txhash,
-          message: x.type.split('.').slice(-1)[0],
+          height: Number(x.block_height),
+          type:
+            x.type === '/cosmos.bank.v1beta1.MsgSend'
+              ? 'Send'
+              : x.type === '/cosmos.staking.v1beta1.MsgDelegate'
+              ? 'Stake'
+              : x.type === '/cosmos.staking.v1beta1.MsgUndelegate'
+              ? 'Unstake'
+              : x.type ===
+                '/cosmos.distribution.v1beta1.MsgWithdrawDelegatorReward'
+              ? 'Claim Reward'
+              : x.type === '/cosmos.gov.v1beta1.MsgVote'
+              ? 'Vote'
+              : x.type === '/cosmos.gov.v1beta1.MsgSubmitProposal'
+              ? 'Submit Proposol'
+              : x.type === '/cosmos.gov.v1beta1.MsgDeposit'
+              ? 'Deposit'
+              : '-',
+          amount:
+            x.type === '/cosmos.staking.v1beta1.MsgDelegate' ||
+            x.type === '/cosmos.staking.v1beta1.MsgUndelegate'
+              ? `${formatTokenAmount(x.decode_tx.amount.amount) + ' ' + 'SIX'}`
+              : x.type === '/cosmos.bank.v1beta1.MsgSend'
+              ? `${formatTokenAmount(x.decode_tx.amount[0].amount) +
+                  ' ' +
+                  'SIX'}`
+              : x.type === '/cosmos.gov.v1beta1.MsgSubmitProposal' &&
+                x.decode_tx.initialDeposit.length > 0
+              ? `${formatTokenAmount(x.decode_tx.initialDeposit[0].amount) +
+                  ' ' +
+                  'SIX'}`
+              : x.type === '/cosmos.gov.v1beta1.MsgDeposit' &&
+                x.decode_tx.amount.length > 0
+              ? `${formatTokenAmount(x.decode_tx.amount[0].amount) +
+                  ' ' +
+                  'SIX'}`
+              : '-',
+          value: `${formatGasAmount(x.decode_tx.gas_used) + ' ' + 'SIX'}`,
           time: toDay(x.time_stamp)
         }));
       }
-      // if (this.transactions.txs) {
-      //   return this.transactions.txs.map(x => ({
-      //     height: Number(x.height),
-      //     txhash: x.txhash,
-      //     message: abbrMessage(x.tx.value ? x.tx.value.msg : x.tx.msg),
-      //     time: toDay(x.timestamp)
-      //   }));
-      // }
       return [];
     }
   },
