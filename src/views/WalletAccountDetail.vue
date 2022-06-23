@@ -396,7 +396,7 @@
         </b-card-body>
       </b-card> -->
       <div class="text-right mb-2">
-        <b-button @click="csvExport(dataCsv)" variant="outline-secondary">
+        <b-button variant="outline-secondary" @click="csvExport(dataCsv)">
           Export to CSV
           <feather-icon icon="FileTextIcon" size="16" />
         </b-button>
@@ -690,7 +690,6 @@ import dayjs from 'dayjs';
 import {
   BCard,
   BAvatar,
-  // BPopover,
   BTable,
   BRow,
   BCol,
@@ -703,7 +702,6 @@ import {
   BButton,
   BCardBody,
   VBModal,
-  // BButtonGroup,
   VBTooltip,
   BPagination
 } from 'bootstrap-vue';
@@ -735,8 +733,6 @@ import ObjectFieldComponent from './ObjectFieldComponent.vue';
 import OperationModal from '@/views/components/OperationModal/index.vue';
 import ChartComponentDoughnut from './ChartComponentDoughnut.vue';
 import _ from 'lodash';
-// import JsonCSV from 'vue-json-csv';
-import VueBlobJsonCsv from 'vue-blob-json-csv';
 
 export default {
   components: {
@@ -744,7 +740,6 @@ export default {
     BCol,
     BCard,
     BAvatar,
-    // BPopover,
     BTable,
     FeatherIcon,
     VueQr,
@@ -754,7 +749,6 @@ export default {
     BCardTitle,
     BCardBody,
     BButton,
-    // BButtonGroup,
     BTr,
     BTd,
     BPagination,
@@ -770,7 +764,6 @@ export default {
     Ripple
   },
   beforeRouteUpdate(to, from, next) {
-    // const { address } = this.$route.params
     const { address } = to.params;
     if (address !== from.params.hash) {
       this.address = address;
@@ -1170,7 +1163,7 @@ export default {
       const data = encodeURI(csvContent);
       const link = document.createElement('a');
       link.setAttribute('href', data);
-      link.setAttribute('download', 'export-transaction.csv');
+      link.setAttribute('download', 'export-transaction-account.csv');
       link.click();
     }
   }

@@ -243,6 +243,12 @@
           />
         </b-col>
       </b-row>
+      <div class="text-right mb-2">
+        <b-button variant="outline-secondary" @click="csvExport(dataCsv)">
+          Export to CSV
+          <feather-icon icon="FileTextIcon" size="16" />
+        </b-button>
+      </div>
       <b-row>
         <b-col>
           <b-card title="Transactions">
@@ -282,7 +288,7 @@
 <script>
 import {
   BCard,
-  // BButton,
+  BButton,
   BAvatar,
   BRow,
   BCol,
@@ -317,7 +323,7 @@ import OperationModal from '@/views/components/OperationModal/index.vue';
 export default {
   components: {
     BCard,
-    // BButton,
+    BButton,
     BRow,
     BCol,
     BAvatar,
@@ -397,6 +403,43 @@ export default {
                   'SIX'}`
               : x.type === '/cosmos.gov.v1beta1.MsgDeposit' &&
                 x.decode_tx.amount.length > 0
+              ? `${formatTokenAmount(x.decode_tx.amount[0].amount) +
+                  ' ' +
+                  'SIX'}`
+              : '-',
+          txnFee: `${formatGasAmount(x.decode_tx.gas_used) + ' ' + 'SIX'}`,
+          time: toDay(x.time_stamp)
+        }));
+      }
+      return [];
+    },
+    dataCsv() {
+      if (this.transactions.txs) {
+        return this.transactions.txs.map(x => ({
+          txhash: x.txhash,
+          type:
+            x.type === '/cosmos.bank.v1beta1.MsgSend'
+              ? 'Send'
+              : x.type === '/cosmos.staking.v1beta1.MsgDelegate'
+              ? 'Stake'
+              : x.type === '/cosmos.staking.v1beta1.MsgUndelegate'
+              ? 'Unstake'
+              : x.type ===
+                '/cosmos.distribution.v1beta1.MsgWithdrawDelegatorReward'
+              ? 'Claim Reward'
+              : '-',
+          block: Number(x.block_height),
+          from: x.decode_tx.fromAddress
+            ? x.decode_tx.fromAddress
+            : x.decode_tx.delegatorAddress,
+          to: x.decode_tx.toAddress
+            ? x.decode_tx.toAddress
+            : x.decode_tx.validatorAddress,
+          value:
+            x.type === '/cosmos.staking.v1beta1.MsgDelegate' ||
+            x.type === '/cosmos.staking.v1beta1.MsgUndelegate'
+              ? `${formatTokenAmount(x.decode_tx.amount.amount) + ' ' + 'SIX'}`
+              : x.type === '/cosmos.bank.v1beta1.MsgSend'
               ? `${formatTokenAmount(x.decode_tx.amount[0].amount) +
                   ' ' +
                   'SIX'}`
@@ -521,6 +564,20 @@ export default {
         .map(x => _.set(output, x.split('=')[0], x.split('=')[1]));
 
       return output;
+    },
+    csvExport(arrData) {
+      let csvContent = 'data:text/csv;charset=utf-8,';
+      csvContent += [
+        Object.keys(arrData[0]).join(';'),
+        ...arrData.map(item => Object.values(item).join(';'))
+      ]
+        .join('\n')
+        .replace(/(^\[)|(\]$)/gm, '');
+      const data = encodeURI(csvContent);
+      const link = document.createElement('a');
+      link.setAttribute('href', data);
+      link.setAttribute('download', 'export-transaction-node.csv');
+      link.click();
     }
   }
 };
