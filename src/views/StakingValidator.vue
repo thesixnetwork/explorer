@@ -247,9 +247,9 @@
         <b-col>
           <b-card title="Transactions">
             <b-table :items="txs" striped hover responsive stacked="sm">
-              <template #cell(height)="data">
-                <router-link :to="`../blocks/${data.item.height}`">
-                  {{ data.item.height }}
+              <template #cell(block)="data">
+                <router-link :to="`../blocks/${data.item.block}`">
+                  {{ data.item.block }}
                 </router-link>
               </template>
               <template #cell(txhash)="data">
@@ -363,7 +363,7 @@ export default {
       if (this.transactions.txs) {
         return this.transactions.txs.map(x => ({
           txhash: x.txhash,
-          block: Number(x.block_height),
+
           type:
             x.type === '/cosmos.bank.v1beta1.MsgSend'
               ? 'Send'
@@ -381,6 +381,7 @@ export default {
               : x.type === '/cosmos.gov.v1beta1.MsgDeposit'
               ? 'Deposit'
               : '-',
+          block: Number(x.block_height),
           value:
             x.type === '/cosmos.staking.v1beta1.MsgDelegate' ||
             x.type === '/cosmos.staking.v1beta1.MsgUndelegate'

@@ -407,9 +407,9 @@
           sort-by="time"
           :style="{ fontSize: 'small' }"
         >
-          <template #cell(height)="data">
-            <router-link :to="`../blocks/${data.item.height}`">
-              {{ data.item.height }}
+          <template #cell(block)="data">
+            <router-link :to="`../blocks/${data.item.block}`">
+              {{ data.item.block }}
             </router-link>
           </template>
           <template #cell(txhash)="data">
@@ -813,7 +813,6 @@ export default {
       if (this.transactions.txs) {
         return this.transactions.txs.map(x => ({
           txhash: x.txhash,
-          block: Number(x.block_height),
           type:
             x.type === '/cosmos.bank.v1beta1.MsgSend'
               ? 'Send'
@@ -824,7 +823,8 @@ export default {
               : x.type ===
                 '/cosmos.distribution.v1beta1.MsgWithdrawDelegatorReward'
               ? 'Claim Reward'
-              : 'Send',
+              : '-',
+          block: Number(x.block_height),
           from: x.decode_tx.fromAddress
             ? abbrAddress(x.decode_tx.fromAddress)
             : abbrAddress(x.decode_tx.delegatorAddress),
