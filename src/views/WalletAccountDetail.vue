@@ -395,12 +395,12 @@
           </b-table>
         </b-card-body>
       </b-card> -->
-      <div class="text-right mb-2">
+      <!-- <div class="text-right mb-2">
         <b-button variant="outline-secondary" @click="csvExport(dataCsv)">
           Export to CSV
           <feather-icon icon="FileTextIcon" size="16" />
         </b-button>
-      </div>
+      </div> -->
 
       <b-card title="Transactions" no-body class="text-truncate overflow-auto">
         <b-table
@@ -409,8 +409,6 @@
           hover
           responsive="md"
           stacked="sm"
-          :sort-desc="true"
-          sort-by="time"
           :style="{ fontSize: 'small' }"
         >
           <template #cell(block)="data">
@@ -422,6 +420,74 @@
             <router-link :to="`../tx/${data.item.txhash}`">
               {{ formatHash(data.item.txhash) }}
             </router-link>
+          </template>
+          <template #cell(type)="data">
+            <b-badge
+              v-if="data.item.type === '/cosmos.bank.v1beta1.MsgSend'"
+              variant="light-secondary"
+            >
+              Send
+            </b-badge>
+            <b-badge
+              v-else-if="
+                data.item.type === '/cosmos.staking.v1beta1.MsgDelegate'
+              "
+              variant="light-secondary"
+            >
+              Stake
+            </b-badge>
+            <b-badge
+              v-else-if="
+                data.item.type === '/cosmos.staking.v1beta1.MsgUndelegate'
+              "
+              variant="light-secondary"
+            >
+              Unstake
+            </b-badge>
+            <b-badge
+              v-else-if="
+                data.item.type ===
+                  '/cosmos.distribution.v1beta1.MsgWithdrawDelegatorReward'
+              "
+              variant="light-secondary"
+            >
+              Claim Reward
+            </b-badge>
+            <b-badge
+              v-else-if="data.item.type === '/cosmos.gov.v1beta1.MsgVote'"
+              variant="light-secondary"
+            >
+              Vote
+            </b-badge>
+            <b-badge
+              v-else-if="
+                data.item.type ===
+                  '/thesixnetwork.sixprotocol.tokenmngr.MsgBurn'
+              "
+              variant="light-secondary"
+            >
+              Burn
+            </b-badge>
+            <b-badge
+              v-else-if="
+                data.item.type ===
+                  '/thesixnetwork.sixprotocol.tokenmngr.MsgCreateToken'
+              "
+              variant="light-secondary"
+            >
+              Create Token
+            </b-badge>
+            <b-badge v-else variant="light-secondary">
+              {{ data.item.type }}
+            </b-badge>
+          </template>
+          <template #cell(status)="data">
+            <b-badge v-if="data.item.status" variant="light-danger">
+              Failed
+            </b-badge>
+            <b-badge v-else variant="light-success">
+              Success
+            </b-badge>
           </template>
         </b-table>
 
@@ -699,8 +765,9 @@ import {
   BTbody,
   BCardHeader,
   BCardTitle,
-  BButton,
+  // BButton,
   BCardBody,
+  BBadge,
   VBModal,
   VBTooltip,
   BPagination
@@ -748,7 +815,8 @@ export default {
     BCardHeader,
     BCardTitle,
     BCardBody,
-    BButton,
+    // BButton,
+    BBadge,
     BTr,
     BTd,
     BPagination,
@@ -814,29 +882,33 @@ export default {
       if (this.transactions.txs) {
         return this.transactions.txs.map(x => ({
           txhash: x.txhash,
-          type:
-            x.type === '/cosmos.bank.v1beta1.MsgSend'
-              ? 'Send'
-              : x.type === '/cosmos.staking.v1beta1.MsgDelegate'
-              ? 'Stake'
-              : x.type === '/cosmos.staking.v1beta1.MsgUndelegate'
-              ? 'Unstake'
-              : x.type ===
-                '/cosmos.distribution.v1beta1.MsgWithdrawDelegatorReward'
-              ? 'Claim Reward'
-              : '-',
+          type: x.type,
           block: Number(x.block_height),
+          status: x.decode_tx.err_msg,
           from: x.decode_tx.fromAddress
             ? abbrAddress(x.decode_tx.fromAddress)
-            : abbrAddress(x.decode_tx.delegatorAddress),
+            : x.decode_tx.creator
+            ? abbrAddress(x.decode_tx.creator)
+            : x.decode_tx.delegatorAddress
+            ? abbrAddress(x.decode_tx.delegatorAddress)
+            : '-',
           to: x.decode_tx.toAddress
             ? abbrAddress(x.decode_tx.toAddress)
-            : abbrAddress(x.decode_tx.validatorAddress),
+            : x.decode_tx.validatorAddress
+            ? abbrAddress(x.decode_tx.validatorAddress)
+            : '-',
           value:
             x.type === '/cosmos.staking.v1beta1.MsgDelegate' ||
             x.type === '/cosmos.staking.v1beta1.MsgUndelegate'
               ? `${formatTokenAmount(x.decode_tx.amount.amount) + ' ' + 'SIX'}`
-              : x.type === '/cosmos.bank.v1beta1.MsgSend'
+              : x.type === '/cosmos.bank.v1beta1.MsgSend' &&
+                x.decode_tx.amount.length > 0
+              ? `${formatTokenAmount(x.decode_tx.amount[0].amount) +
+                  ' ' +
+                  'SIX'}`
+              : x.type ===
+                  '/cosmos.distribution.v1beta1.MsgWithdrawDelegatorReward' &&
+                x.code === '0'
               ? `${formatTokenAmount(x.decode_tx.amount[0].amount) +
                   ' ' +
                   'SIX'}`
