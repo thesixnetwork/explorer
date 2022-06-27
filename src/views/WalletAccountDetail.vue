@@ -5,7 +5,7 @@
         <b-col lg="4" md="12" sm="12" xs="12">
           <b-card bg-variant="link" :style="{ height: '260px' }">
             <div class="customizer-qr-code">
-              <vue-qr :text="address" :size="174" backgroundColor="#e8ebed" />
+              <vue-qr :text="address" :size="174" />
               <div
                 class="d-flex align-items-center justify-content-center mt-1"
               >
@@ -858,6 +858,19 @@ export default {
               ? `${formatTokenAmount(x.decode_tx.amount[0].amount) +
                   ' ' +
                   'SIX'}`
+              : x.type === '/cosmos.staking.v1beta1.MsgCreateValidator'
+              ? `${formatTokenAmount(x.decode_tx.value.amount) + ' ' + 'SIX'}`
+              : x.type === '/thesixnetwork.sixprotocol.tokenmngr.MsgMint'
+              ? `${formatTokenAmount(x.decode_tx.amount) + ' ' + 'SIX'}`
+              : x.type ===
+                '/cosmos.distribution.v1beta1.MsgWithdrawDelegatorReward'
+              ? `${formatTokenAmount(x.decode_tx.amount[0].amount) +
+                  ' ' +
+                  'SIX'}`
+              : x.type === '/cosmos.gov.v1beta1.MsgDeposit'
+              ? `${formatTokenAmount(x.decode_tx.amount[0].amount) +
+                  ' ' +
+                  'SIX'}`
               : '-',
           txnFee: `${formatGasAmount(x.decode_tx.gas_used) + ' ' + 'SIX'}`,
           time: toDay(x.time_stamp)
@@ -882,17 +895,44 @@ export default {
             //   ? 'Claim Reward'
             //   : '-',
           block: Number(x.block_height),
+          status: x.decode_tx.err_msg,
           from: x.decode_tx.fromAddress
-            ? x.decode_tx.fromAddress
-            : x.decode_tx.delegatorAddress,
+            ? abbrAddress(x.decode_tx.fromAddress)
+            : x.decode_tx.creator
+            ? abbrAddress(x.decode_tx.creator)
+            : x.decode_tx.delegatorAddress
+            ? abbrAddress(x.decode_tx.delegatorAddress)
+            : '-',
           to: x.decode_tx.toAddress
-            ? x.decode_tx.toAddress
-            : x.decode_tx.validatorAddress,
+            ? abbrAddress(x.decode_tx.toAddress)
+            : x.decode_tx.validatorAddress
+            ? abbrAddress(x.decode_tx.validatorAddress)
+            : '-',
           value:
             x.type === '/cosmos.staking.v1beta1.MsgDelegate' ||
             x.type === '/cosmos.staking.v1beta1.MsgUndelegate'
               ? `${formatTokenAmount(x.decode_tx.amount.amount) + ' ' + 'SIX'}`
-              : x.type === '/cosmos.bank.v1beta1.MsgSend'
+              : x.type === '/cosmos.bank.v1beta1.MsgSend' &&
+                x.decode_tx.amount.length > 0
+              ? `${formatTokenAmount(x.decode_tx.amount[0].amount) +
+                  ' ' +
+                  'SIX'}`
+              : x.type ===
+                  '/cosmos.distribution.v1beta1.MsgWithdrawDelegatorReward' &&
+                x.code === '0'
+              ? `${formatTokenAmount(x.decode_tx.amount[0].amount) +
+                  ' ' +
+                  'SIX'}`
+              : x.type === '/cosmos.staking.v1beta1.MsgCreateValidator'
+              ? `${formatTokenAmount(x.decode_tx.value.amount) + ' ' + 'SIX'}`
+              : x.type === '/thesixnetwork.sixprotocol.tokenmngr.MsgMint'
+              ? `${formatTokenAmount(x.decode_tx.amount) + ' ' + 'SIX'}`
+              : x.type ===
+                '/cosmos.distribution.v1beta1.MsgWithdrawDelegatorReward'
+              ? `${formatTokenAmount(x.decode_tx.amount[0].amount) +
+                  ' ' +
+                  'SIX'}`
+              : x.type === '/cosmos.gov.v1beta1.MsgDeposit'
               ? `${formatTokenAmount(x.decode_tx.amount[0].amount) +
                   ' ' +
                   'SIX'}`
