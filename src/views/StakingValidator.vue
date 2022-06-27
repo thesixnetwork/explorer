@@ -264,88 +264,8 @@
                 </router-link>
               </template>
               <template #cell(type)="data">
-                <b-badge
-                  v-if="data.item.type === '/cosmos.bank.v1beta1.MsgSend'"
-                  variant="light-secondary"
-                >
-                  Send
-                </b-badge>
-                <b-badge
-                  v-else-if="
-                    data.item.type === '/cosmos.staking.v1beta1.MsgDelegate'
-                  "
-                  variant="light-secondary"
-                >
-                  Stake
-                </b-badge>
-                <b-badge
-                  v-else-if="
-                    data.item.type === '/cosmos.staking.v1beta1.MsgUndelegate'
-                  "
-                  variant="light-secondary"
-                >
-                  Unstake
-                </b-badge>
-                <b-badge
-                  v-else-if="
-                    data.item.type ===
-                      '/cosmos.distribution.v1beta1.MsgWithdrawDelegatorReward'
-                  "
-                  variant="light-secondary"
-                >
-                  Claim Reward
-                </b-badge>
-                <b-badge
-                  v-else-if="data.item.type === '/cosmos.gov.v1beta1.MsgVote'"
-                  variant="light-secondary"
-                >
-                  Vote
-                </b-badge>
-                <b-badge
-                  v-else-if="
-                    data.item.type === '/cosmos.gov.v1beta1.MsgSubmitProposal'
-                  "
-                  variant="light-secondary"
-                >
-                  Submit Proposol
-                </b-badge>
-                <b-badge
-                  v-else-if="
-                    data.item.type === '/cosmos.gov.v1beta1.MsgDeposit'
-                  "
-                  variant="light-secondary"
-                >
-                  Deposit
-                </b-badge>
-                <b-badge
-                  v-else-if="
-                    data.item.type ===
-                      '/cosmos.staking.v1beta1.MsgCreateValidator'
-                  "
-                  variant="light-secondary"
-                >
-                  Create Validator
-                </b-badge>
-                <b-badge
-                  v-else-if="
-                    data.item.type ===
-                      '/thesixnetwork.sixprotocol.tokenmngr.MsgBurn'
-                  "
-                  variant="light-secondary"
-                >
-                  Burn
-                </b-badge>
-                <b-badge
-                  v-else-if="
-                    data.item.type ===
-                      '/thesixnetwork.sixprotocol.tokenmngr.MsgCreateToken'
-                  "
-                  variant="light-secondary"
-                >
-                  Create Token
-                </b-badge>
-                <b-badge v-else variant="light-secondary">
-                  {{ data.item.type }}
+                <b-badge variant="light-secondary">
+                   {{ data.item.type }}
                 </b-badge>
               </template>
               <template #cell(status)="data">
@@ -408,6 +328,7 @@ import {
 } from '@/libs/utils';
 import _ from 'lodash';
 import { keybase } from '@/libs/fetch';
+import { codeMessage } from '@/constants/module'
 import StakingAddressComponent from './StakingAddressComponent.vue';
 import StakingCommissionComponent from './StakingCommissionComponent.vue';
 import StakingRewardComponent from './StakingRewardComponent.vue';
@@ -462,7 +383,7 @@ export default {
       if (this.transactions.txs) {
         return this.transactions.txs.map(x => ({
           txhash: x.txhash,
-          type: x.type,
+          type: typeof codeMessage[x.type.split(".").slice(-1)] !== 'undefined' ? codeMessage[x.type.split(".").slice(-1)].message: x.type,
           block: Number(x.block_height),
           value:
             x.type === '/cosmos.staking.v1beta1.MsgDelegate' ||
@@ -495,7 +416,7 @@ export default {
       if (this.transactions.txs) {
         return this.transactions.txs.map(x => ({
           txhash: x.txhash,
-          type: x.type,
+          type: typeof codeMessage[x.type.split(".").slice(-1)] !== 'undefined' ? codeMessage[x.type.split(".").slice(-1)].message: x.type,
           block: Number(x.block_height),
           from: x.decode_tx.fromAddress
             ? x.decode_tx.fromAddress

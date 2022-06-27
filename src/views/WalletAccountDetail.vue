@@ -422,62 +422,7 @@
             </router-link>
           </template>
           <template #cell(type)="data">
-            <b-badge
-              v-if="data.item.type === '/cosmos.bank.v1beta1.MsgSend'"
-              variant="light-secondary"
-            >
-              Send
-            </b-badge>
-            <b-badge
-              v-else-if="
-                data.item.type === '/cosmos.staking.v1beta1.MsgDelegate'
-              "
-              variant="light-secondary"
-            >
-              Stake
-            </b-badge>
-            <b-badge
-              v-else-if="
-                data.item.type === '/cosmos.staking.v1beta1.MsgUndelegate'
-              "
-              variant="light-secondary"
-            >
-              Unstake
-            </b-badge>
-            <b-badge
-              v-else-if="
-                data.item.type ===
-                  '/cosmos.distribution.v1beta1.MsgWithdrawDelegatorReward'
-              "
-              variant="light-secondary"
-            >
-              Claim Reward
-            </b-badge>
-            <b-badge
-              v-else-if="data.item.type === '/cosmos.gov.v1beta1.MsgVote'"
-              variant="light-secondary"
-            >
-              Vote
-            </b-badge>
-            <b-badge
-              v-else-if="
-                data.item.type ===
-                  '/thesixnetwork.sixprotocol.tokenmngr.MsgBurn'
-              "
-              variant="light-secondary"
-            >
-              Burn
-            </b-badge>
-            <b-badge
-              v-else-if="
-                data.item.type ===
-                  '/thesixnetwork.sixprotocol.tokenmngr.MsgCreateToken'
-              "
-              variant="light-secondary"
-            >
-              Create Token
-            </b-badge>
-            <b-badge v-else variant="light-secondary">
+            <b-badge variant="light-secondary">
               {{ data.item.type }}
             </b-badge>
           </template>
@@ -796,6 +741,7 @@ import {
 } from '@/libs/utils';
 import { sha256 } from '@cosmjs/crypto';
 import { toHex } from '@cosmjs/encoding';
+import { codeMessage } from '@/constants/module'
 import ObjectFieldComponent from './ObjectFieldComponent.vue';
 import OperationModal from '@/views/components/OperationModal/index.vue';
 import ChartComponentDoughnut from './ChartComponentDoughnut.vue';
@@ -882,7 +828,7 @@ export default {
       if (this.transactions.txs) {
         return this.transactions.txs.map(x => ({
           txhash: x.txhash,
-          type: x.type,
+          type: typeof codeMessage[x.type.split(".").slice(-1)] !== 'undefined' ? codeMessage[x.type.split(".").slice(-1)].message: x.type,
           block: Number(x.block_height),
           status: x.decode_tx.err_msg,
           from: x.decode_tx.fromAddress
@@ -924,17 +870,17 @@ export default {
       if (this.transactions.txs) {
         return this.transactions.txs.map(x => ({
           txhash: x.txhash,
-          type:
-            x.type === '/cosmos.bank.v1beta1.MsgSend'
-              ? 'Send'
-              : x.type === '/cosmos.staking.v1beta1.MsgDelegate'
-              ? 'Stake'
-              : x.type === '/cosmos.staking.v1beta1.MsgUndelegate'
-              ? 'Unstake'
-              : x.type ===
-                '/cosmos.distribution.v1beta1.MsgWithdrawDelegatorReward'
-              ? 'Claim Reward'
-              : '-',
+          type: typeof codeMessage[x.type.split(".").slice(-1)] !== 'undefined' ? codeMessage[x.type.split(".").slice(-1)].message: x.type,
+            // x.type === '/cosmos.bank.v1beta1.MsgSend'
+            //   ? 'Send'
+            //   : x.type === '/cosmos.staking.v1beta1.MsgDelegate'
+            //   ? 'Stake'
+            //   : x.type === '/cosmos.staking.v1beta1.MsgUndelegate'
+            //   ? 'Unstake'
+            //   : x.type ===
+            //     '/cosmos.distribution.v1beta1.MsgWithdrawDelegatorReward'
+            //   ? 'Claim Reward'
+            //   : '-',
           block: Number(x.block_height),
           from: x.decode_tx.fromAddress
             ? x.decode_tx.fromAddress
