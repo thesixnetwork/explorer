@@ -484,6 +484,11 @@ export default {
               ? `${formatTokenAmount(x.decode_tx.amount[0].amount) +
                   ' ' +
                   'SIX'}`
+              : x.type ===
+                '/cosmos.distribution.v1beta1.MsgWithdrawDelegatorReward'
+              ? `${formatTokenAmount(x.decode_tx.amount[0].amount) +
+                  ' ' +
+                  'SIX'}`
               : '-',
           txnFee: `${formatGasAmount(x.decode_tx.gas_used) + ' ' + 'SIX'}`,
           time: toDay(x.time_stamp)
@@ -497,17 +502,28 @@ export default {
           txhash: x.txhash,
           type: x.type,
           block: Number(x.block_height),
-          from: x.decode_tx.fromAddress
-            ? x.decode_tx.fromAddress
-            : x.decode_tx.delegatorAddress,
-          to: x.decode_tx.toAddress
-            ? x.decode_tx.toAddress
-            : x.decode_tx.validatorAddress,
           value:
             x.type === '/cosmos.staking.v1beta1.MsgDelegate' ||
             x.type === '/cosmos.staking.v1beta1.MsgUndelegate'
               ? `${formatTokenAmount(x.decode_tx.amount.amount) + ' ' + 'SIX'}`
               : x.type === '/cosmos.bank.v1beta1.MsgSend'
+              ? `${formatTokenAmount(x.decode_tx.amount[0].amount) +
+                  ' ' +
+                  'SIX'}`
+              : x.type === '/cosmos.gov.v1beta1.MsgSubmitProposal' &&
+                x.decode_tx.initialDeposit.length > 0
+              ? `${formatTokenAmount(x.decode_tx.initialDeposit[0].amount) +
+                  ' ' +
+                  'SIX'}`
+              : x.type === '/cosmos.staking.v1beta1.MsgCreateValidator'
+              ? `${formatTokenAmount(x.decode_tx.value.amount) + ' ' + 'SIX'}`
+              : x.type === '/cosmos.gov.v1beta1.MsgDeposit' &&
+                x.decode_tx.amount.length > 0
+              ? `${formatTokenAmount(x.decode_tx.amount[0].amount) +
+                  ' ' +
+                  'SIX'}`
+              : x.type ===
+                '/cosmos.distribution.v1beta1.MsgWithdrawDelegatorReward'
               ? `${formatTokenAmount(x.decode_tx.amount[0].amount) +
                   ' ' +
                   'SIX'}`
