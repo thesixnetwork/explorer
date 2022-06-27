@@ -127,6 +127,7 @@
           striped
           hover
           responsive="sm"
+          :style="{ fontSize: 'small' }"
         >
           <!-- A virtual column -->
           <template #cell(index)="data">

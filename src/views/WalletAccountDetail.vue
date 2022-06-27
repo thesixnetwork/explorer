@@ -36,7 +36,13 @@
             title="Profile"
             class="text-trancate customizer-card"
           >
-            <b-table-simple stacked="md">
+            <b-table-simple
+              striped
+              hover
+              responsive
+              stacked="sm"
+              :style="{ fontSize: 'smaller' }"
+            >
               <b-tbody v-if="account.type === 'cosmos-sdk/BaseAccount'">
                 <b-tr>
                   <b-td class="p-0"> Account Type </b-td>
@@ -395,12 +401,17 @@
           </b-table>
         </b-card-body>
       </b-card> -->
-      <!-- <div class="text-right mb-2">
-        <b-button variant="outline-secondary" @click="csvExport(dataCsv)">
+      <div class="text-right mb-2">
+        <b-button
+          variant="link"
+          size="sm"
+          class="customizer-button"
+          @click="csvExport(dataCsv)"
+        >
           Export to CSV
           <feather-icon icon="FileTextIcon" size="16" />
         </b-button>
-      </div> -->
+      </div>
 
       <b-card title="Transactions" no-body class="text-truncate overflow-auto">
         <b-table
@@ -409,7 +420,7 @@
           hover
           responsive="md"
           stacked="sm"
-          :style="{ fontSize: 'small' }"
+          :style="{ fontSize: 'smaller' }"
         >
           <template #cell(block)="data">
             <router-link :to="`../blocks/${data.item.block}`">
@@ -461,7 +472,7 @@
           </h2>
           <p class="mb-2">Oops! 😖 {{ error }}.</p>
           <b-card v-if="account" title="Profile" class="customizer-card">
-            <b-table-simple stacked="sm">
+            <b-table-simple striped hover responsive stacked="sm">
               <b-tbody v-if="account.type === 'cosmos-sdk/BaseAccount'">
                 <b-tr>
                   <b-td> Account Type </b-td><b-td> {{ account.type }} </b-td>
@@ -710,7 +721,7 @@ import {
   BTbody,
   BCardHeader,
   BCardTitle,
-  // BButton,
+  BButton,
   BCardBody,
   BBadge,
   VBModal,
@@ -741,7 +752,7 @@ import {
 } from '@/libs/utils';
 import { sha256 } from '@cosmjs/crypto';
 import { toHex } from '@cosmjs/encoding';
-import { codeMessage } from '@/constants/module'
+import { codeMessage } from '@/constants/module';
 import ObjectFieldComponent from './ObjectFieldComponent.vue';
 import OperationModal from '@/views/components/OperationModal/index.vue';
 import ChartComponentDoughnut from './ChartComponentDoughnut.vue';
@@ -761,7 +772,7 @@ export default {
     BCardHeader,
     BCardTitle,
     BCardBody,
-    // BButton,
+    BButton,
     BBadge,
     BTr,
     BTd,
@@ -828,7 +839,10 @@ export default {
       if (this.transactions.txs) {
         return this.transactions.txs.map(x => ({
           txhash: x.txhash,
-          type: typeof codeMessage[x.type.split(".").slice(-1)] !== 'undefined' ? codeMessage[x.type.split(".").slice(-1)].message: x.type,
+          type:
+            typeof codeMessage[x.type.split('.').slice(-1)] !== 'undefined'
+              ? codeMessage[x.type.split('.').slice(-1)].message
+              : x.type,
           block: Number(x.block_height),
           status: x.decode_tx.err_msg,
           from: x.decode_tx.fromAddress
@@ -837,6 +851,12 @@ export default {
             ? abbrAddress(x.decode_tx.creator)
             : x.decode_tx.delegatorAddress
             ? abbrAddress(x.decode_tx.delegatorAddress)
+            : x.decode_tx.depositor
+            ? abbrAddress(x.decode_tx.depositor)
+            : x.decode_tx.voter
+            ? abbrAddress(x.decode_tx.voter)
+            : x.decode_tx.relate_addr.length > 0
+            ? abbrAddress(x.decode_tx.relate_addr[0])
             : '-',
           to: x.decode_tx.toAddress
             ? abbrAddress(x.decode_tx.toAddress)
@@ -883,30 +903,28 @@ export default {
       if (this.transactions.txs) {
         return this.transactions.txs.map(x => ({
           txhash: x.txhash,
-          type: typeof codeMessage[x.type.split(".").slice(-1)] !== 'undefined' ? codeMessage[x.type.split(".").slice(-1)].message: x.type,
-            // x.type === '/cosmos.bank.v1beta1.MsgSend'
-            //   ? 'Send'
-            //   : x.type === '/cosmos.staking.v1beta1.MsgDelegate'
-            //   ? 'Stake'
-            //   : x.type === '/cosmos.staking.v1beta1.MsgUndelegate'
-            //   ? 'Unstake'
-            //   : x.type ===
-            //     '/cosmos.distribution.v1beta1.MsgWithdrawDelegatorReward'
-            //   ? 'Claim Reward'
-            //   : '-',
+          type:
+            typeof codeMessage[x.type.split('.').slice(-1)] !== 'undefined'
+              ? codeMessage[x.type.split('.').slice(-1)].message
+              : x.type,
           block: Number(x.block_height),
-          status: x.decode_tx.err_msg,
           from: x.decode_tx.fromAddress
             ? abbrAddress(x.decode_tx.fromAddress)
             : x.decode_tx.creator
             ? abbrAddress(x.decode_tx.creator)
             : x.decode_tx.delegatorAddress
             ? abbrAddress(x.decode_tx.delegatorAddress)
+            : x.decode_tx.depositor
+            ? abbrAddress(x.decode_tx.depositor)
+            : x.decode_tx.voter
+            ? abbrAddress(x.decode_tx.voter)
+            : x.decode_tx.relate_addr.length > 0
+            ? abbrAddress(x.decode_tx.relate_addr[0])
             : '-',
           to: x.decode_tx.toAddress
-            ? abbrAddress(x.decode_tx.toAddress)
+            ? x.decode_tx.toAddress
             : x.decode_tx.validatorAddress
-            ? abbrAddress(x.decode_tx.validatorAddress)
+            ? x.decode_tx.validatorAddress
             : '-',
           value:
             x.type === '/cosmos.staking.v1beta1.MsgDelegate' ||
@@ -1236,6 +1254,7 @@ export default {
   background-color: $info;
   color: #fff;
   border-radius: 12px;
+  font-size: 0.9rem;
 
   .dark-layout & {
     background-color: $primary;
@@ -1257,11 +1276,9 @@ export default {
   overflow: hidden;
   text-overflow: ellipsis;
   word-break: break-all;
+  font-size: 0.9rem;
 }
 .customizer-card {
   height: 260px !important;
-  // @include media-breakpoint-down(sm) {
-  //   height: 320px !important;
-  // }
 }
 </style>

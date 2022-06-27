@@ -243,16 +243,32 @@
           />
         </b-col>
       </b-row>
-      <!-- <div class="text-right mb-2">
-        <b-button variant="outline-secondary" @click="csvExport(dataCsv)">
+      <div class="text-right mb-2">
+        <b-button
+          variant="link"
+          size="sm"
+          class="customizer-button"
+          @click="csvExport(dataCsv)"
+        >
           Export to CSV
           <feather-icon icon="FileTextIcon" size="16" />
         </b-button>
-      </div> -->
+      </div>
       <b-row>
         <b-col>
-          <b-card title="Transactions">
-            <b-table :items="txs" striped hover responsive stacked="sm">
+          <b-card
+            title="Transactions"
+            no-body
+            class="text-truncate overflow-auto"
+          >
+            <b-table
+              :items="txs"
+              striped
+              hover
+              responsive
+              stacked="sm"
+              :style="{ fontSize: 'smaller' }"
+            >
               <template #cell(block)="data">
                 <router-link :to="`../blocks/${data.item.block}`">
                   {{ data.item.block }}
@@ -265,9 +281,10 @@
               </template>
               <template #cell(type)="data">
                 <b-badge variant="light-secondary">
-                   {{ data.item.type }}
+                  {{ data.item.type }}
                 </b-badge>
               </template>
+
               <template #cell(status)="data">
                 <b-badge v-if="data.item.status" variant="light-danger">
                   Failed
@@ -301,7 +318,7 @@
 <script>
 import {
   BCard,
-  // BButton,
+  BButton,
   BAvatar,
   BRow,
   BCol,
@@ -328,7 +345,7 @@ import {
 } from '@/libs/utils';
 import _ from 'lodash';
 import { keybase } from '@/libs/fetch';
-import { codeMessage } from '@/constants/module'
+import { codeMessage } from '@/constants/module';
 import StakingAddressComponent from './StakingAddressComponent.vue';
 import StakingCommissionComponent from './StakingCommissionComponent.vue';
 import StakingRewardComponent from './StakingRewardComponent.vue';
@@ -337,7 +354,7 @@ import OperationModal from '@/views/components/OperationModal/index.vue';
 export default {
   components: {
     BCard,
-    // BButton,
+    BButton,
     BRow,
     BCol,
     BAvatar,
@@ -383,7 +400,10 @@ export default {
       if (this.transactions.txs) {
         return this.transactions.txs.map(x => ({
           txhash: x.txhash,
-          type: typeof codeMessage[x.type.split(".").slice(-1)] !== 'undefined' ? codeMessage[x.type.split(".").slice(-1)].message: x.type,
+          type:
+            typeof codeMessage[x.type.split('.').slice(-1)] !== 'undefined'
+              ? codeMessage[x.type.split('.').slice(-1)].message
+              : x.type,
           block: Number(x.block_height),
           value:
             x.type === '/cosmos.staking.v1beta1.MsgDelegate' ||
@@ -421,7 +441,10 @@ export default {
       if (this.transactions.txs) {
         return this.transactions.txs.map(x => ({
           txhash: x.txhash,
-          type: typeof codeMessage[x.type.split(".").slice(-1)] !== 'undefined' ? codeMessage[x.type.split(".").slice(-1)].message: x.type,
+          type:
+            typeof codeMessage[x.type.split('.').slice(-1)] !== 'undefined'
+              ? codeMessage[x.type.split('.').slice(-1)].message
+              : x.type,
           block: Number(x.block_height),
           value:
             x.type === '/cosmos.staking.v1beta1.MsgDelegate' ||
@@ -595,6 +618,8 @@ export default {
 .customizer-button {
   background-color: $info;
   color: #fff;
+  font-size: 0.9rem;
+  border-radius: 12px;
 
   .dark-layout & {
     background-color: $primary;
