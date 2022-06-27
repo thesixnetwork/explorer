@@ -326,8 +326,26 @@
                 >
                   Create Validator
                 </b-badge>
+                <b-badge
+                  v-else-if="
+                    data.item.type ===
+                      '/thesixnetwork.sixprotocol.tokenmngr.MsgBurn'
+                  "
+                  variant="light-secondary"
+                >
+                  Burn
+                </b-badge>
+                <b-badge
+                  v-else-if="
+                    data.item.type ===
+                      '/thesixnetwork.sixprotocol.tokenmngr.MsgCreateToken'
+                  "
+                  variant="light-secondary"
+                >
+                  Create Token
+                </b-badge>
                 <b-badge v-else variant="light-secondary">
-                  {{ '-' }}
+                  {{ data.item.type }}
                 </b-badge>
               </template>
               <template #cell(status)="data">
