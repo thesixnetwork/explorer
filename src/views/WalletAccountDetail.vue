@@ -906,10 +906,6 @@ export default {
       if (this.transactions.txs) {
         return this.transactions.txs.map(x => ({
           txhash: x.txhash,
-          // type:
-          //   typeof codeMessage[x.type.split('.').slice(-1)] !== 'undefined'
-          //     ? codeMessage[x.type.split('.').slice(-1)].message
-          //     : x.type,
           type:
             typeof codeMessage[x.type.split('.').slice(-1)] !== 'undefined'
               ? x.type.split('.').slice(-1)[0] === 'MsgSend' &&
@@ -1241,8 +1237,8 @@ export default {
     csvExport(arrData) {
       let csvContent = 'data:text/csv;charset=utf-8,';
       csvContent += [
-        Object.keys(arrData[0]).join(';'),
-        ...arrData.map(item => Object.values(item).join(';'))
+        Object.keys(arrData[0]).join(','),
+        ...arrData.map(item => Object.values(item).join(','))
       ]
         .join('\n')
         .replace(/(^\[)|(\]$)/gm, '');

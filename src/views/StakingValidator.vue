@@ -602,8 +602,8 @@ export default {
     csvExport(arrData) {
       let csvContent = 'data:text/csv;charset=utf-8,';
       csvContent += [
-        Object.keys(arrData[0]).join(';'),
-        ...arrData.map(item => Object.values(item).join(';'))
+        Object.keys(arrData[0]).join(','),
+        ...arrData.map(item => Object.values(item).join(','))
       ]
         .join('\n')
         .replace(/(^\[)|(\]$)/gm, '');
