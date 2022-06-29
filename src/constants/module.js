@@ -1,6 +1,6 @@
 export const codeMessage = {
   MsgSend: {
-    message: 'Send'
+    message: 'Receive'
   },
   MsgVote: {
     message: 'Vote'

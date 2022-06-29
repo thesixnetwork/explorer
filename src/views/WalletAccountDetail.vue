@@ -892,7 +892,7 @@ export default {
                   ' ' +
                   'SIX'}`
               : '-',
-          txnFee: `${formatGasAmount(x.decode_tx.gas_used) + ' ' + 'SIX'}`,
+          txnFee: `${formatGasAmount(x.decode_tx.fee_amount) + ' ' + 'SIX'}`,
           time: toDay(x.time_stamp)
         }));
       }
@@ -955,7 +955,7 @@ export default {
                   ' ' +
                   'SIX'}`
               : '-',
-          txnFee: `${formatGasAmount(x.decode_tx.gas_used) + ' ' + 'SIX'}`,
+          txnFee: `${formatGasAmount(x.decode_tx.fee_amount) + ' ' + 'SIX'}`,
           time: toDay(x.time_stamp)
         }));
       }
