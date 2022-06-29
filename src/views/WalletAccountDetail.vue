@@ -878,35 +878,6 @@ export default {
                     'SIX'}`) ||
                 '-'
               : '-',
-          // value:
-          //   x.type === '/cosmos.staking.v1beta1.MsgDelegate' ||
-          //   x.type === '/cosmos.staking.v1beta1.MsgUndelegate'
-          //     ? `${formatTokenAmount(x.decode_tx.amount.amount) + ' ' + 'SIX'}`
-          //     : x.type === '/cosmos.bank.v1beta1.MsgSend' &&
-          //       x.decode_tx.amount.length > 0
-          //     ? `${formatTokenAmount(x.decode_tx.amount[0].amount) +
-          //         ' ' +
-          //         'SIX'}`
-          //     : x.type ===
-          //         '/cosmos.distribution.v1beta1.MsgWithdrawDelegatorReward' &&
-          //       x.code === '0'
-          //     ? `${formatTokenAmount(x.decode_tx.amount[0].amount) +
-          //         ' ' +
-          //         'SIX'}`
-          //     : x.type === '/cosmos.staking.v1beta1.MsgCreateValidator'
-          //     ? `${formatTokenAmount(x.decode_tx.value.amount) + ' ' + 'SIX'}`
-          //     : x.type === '/thesixnetwork.sixprotocol.tokenmngr.MsgMint'
-          //     ? `${formatTokenAmount(x.decode_tx.amount) + ' ' + 'SIX'}`
-          //     : x.type ===
-          //       '/cosmos.distribution.v1beta1.MsgWithdrawDelegatorReward'
-          //     ? `${formatTokenAmount(x.decode_tx.amount[0].amount) +
-          //         ' ' +
-          //         'SIX'}`
-          //     : x.type === '/cosmos.gov.v1beta1.MsgDeposit'
-          //     ? `${formatTokenAmount(x.decode_tx.amount[0].amount) +
-          //         ' ' +
-          //         'SIX'}`
-          //     : '-',
           txnFee: `${formatGasAmount(x.decode_tx.fee_amount) + ' ' + 'SIX'}`,
           time: toDay(x.time_stamp)
         }));
@@ -947,44 +918,15 @@ export default {
           value:
             typeof x.decode_tx.amount !== 'undefined'
               ? (typeof x.decode_tx.amount.amount !== 'undefined' &&
-                  `${formatTokenAmount(x.decode_tx.amount.amount) +
+                  `${x.decode_tx.amount.amount / Math.pow(10, 6) +
                     ' ' +
                     'SIX'}`) ||
                 (typeof x.decode_tx.amount[0] !== 'undefined' &&
-                  `${formatTokenAmount(x.decode_tx.amount[0].amount) +
+                  `${x.decode_tx.amount[0].amount / Math.pow(10, 6) +
                     ' ' +
                     'SIX'}`) ||
                 '-'
               : '-',
-          // value:
-          //   x.type === '/cosmos.staking.v1beta1.MsgDelegate' ||
-          //   x.type === '/cosmos.staking.v1beta1.MsgUndelegate'
-          //     ? `${formatTokenAmount(x.decode_tx.amount.amount) + ' ' + 'SIX'}`
-          //     : x.type === '/cosmos.bank.v1beta1.MsgSend' &&
-          //       x.decode_tx.amount.length > 0
-          //     ? `${formatTokenAmount(x.decode_tx.amount[0].amount) +
-          //         ' ' +
-          //         'SIX'}`
-          //     : x.type ===
-          //         '/cosmos.distribution.v1beta1.MsgWithdrawDelegatorReward' &&
-          //       x.code === '0'
-          //     ? `${formatTokenAmount(x.decode_tx.amount[0].amount) +
-          //         ' ' +
-          //         'SIX'}`
-          //     : x.type === '/cosmos.staking.v1beta1.MsgCreateValidator'
-          //     ? `${formatTokenAmount(x.decode_tx.value.amount) + ' ' + 'SIX'}`
-          //     : x.type === '/thesixnetwork.sixprotocol.tokenmngr.MsgMint'
-          //     ? `${formatTokenAmount(x.decode_tx.amount) + ' ' + 'SIX'}`
-          //     : x.type ===
-          //       '/cosmos.distribution.v1beta1.MsgWithdrawDelegatorReward'
-          //     ? `${formatTokenAmount(x.decode_tx.amount[0].amount) +
-          //         ' ' +
-          //         'SIX'}`
-          //     : x.type === '/cosmos.gov.v1beta1.MsgDeposit'
-          //     ? `${formatTokenAmount(x.decode_tx.amount[0].amount) +
-          //         ' ' +
-          //         'SIX'}`
-          //     : '-',
           txnFee: `${formatGasAmount(x.decode_tx.fee_amount) + ' ' + 'SIX'}`,
           time: toDay(x.time_stamp)
         }));
@@ -1259,7 +1201,7 @@ export default {
       return toETHAddress(this.address);
     },
     csvExport(arrData) {
-      let csvContent = 'data:text/csv;charset=utf-8,';
+      let csvContent = 'data:text/csv;charset=utf-8';
       csvContent += [
         Object.keys(arrData[0]).join(','),
         ...arrData.map(item => Object.values(item).join(','))
