@@ -18,7 +18,7 @@
         responsive="sm"
       >
         <template #cell(hash)="data">
-          <router-link :to="`../tx/${data.value}`">
+          <router-link :to="`../tx/${data.value}/account/`">
             {{ data.value }}
           </router-link>
         </template>
