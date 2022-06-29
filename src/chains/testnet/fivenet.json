@@ -2,10 +2,10 @@
     "chain_name": "fivenet",
     "chain_title": "SIX Testnet",
     "rpc":[
-        "https://rpc.fivenet.sixprotocol.net"
+        "https://rpc1.fivenet.sixprotocol.net"
     ],
     "api": [
-        "https://api.fivenet.sixprotocol.net"
+        "https://api1.fivenet.sixprotocol.net"
     ],
     "apiTX": [
         "https://six-protocol-get-txs-api-gateway-7kl45r91.an.gateway.dev"
