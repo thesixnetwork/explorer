@@ -1,182 +1,182 @@
 export const codeMessage = {
-  MsgSend: {
-    message: 'Receive'
+  "MsgSend": {
+    message: 'Send'
   },
-  MsgVote: {
+  "MsgVote": {
     message: 'Vote'
   },
-  MsgSubmitProposal: {
+  "MsgSubmitProposal": {
     message: 'SubmitProposol'
   },
-  MsgDeposit: {
+  "MsgDeposit": {
     message: 'Deposit'
   },
-  MsgDelegate: {
+  "MsgDelegate": {
     message: 'Stake'
   },
-  MsgUndelegate: {
+  "MsgUndelegate": {
     message: 'Unstake'
   },
-  MsgWithdrawDelegatorReward: {
+  "MsgWithdrawDelegatorReward": {
     message: 'ClaimReward'
   },
-  MsgCreateValidator: {
+  "MsgCreateValidator": {
     message: 'CreateValidator'
   },
-  MsgBurn: {
+  "MsgBurn": {
     message: 'Burn'
   },
-  MsgCreateToken: {
+  "MsgCreateToken": {
     message: 'CreateToken'
   },
-  MsgCreateGroup: {
+  "MsgCreateGroup": {
     message: 'CreateGroup'
   },
-  MsgMint: {
+  "MsgMint": {
     message: 'Mint'
   },
-  MsgDeleteToken: {
+  "MsgDeleteToken": {
     message: 'DeleteToken'
   },
-  MsgCreateMintperm: {
+  "MsgCreateMintperm": {
     message: 'CreateMintperm'
   },
-  MsgSetWithdrawAddress: {
+  "MsgSetWithdrawAddress": {
     message: 'SetWithdrawAddress'
   },
-  MsgWithdrawValidatorCommission: {
+  "MsgWithdrawValidatorCommission": {
     message: 'WithdrawValidatorCommission'
   },
-  MsgSubmitEvidence: {
+  "MsgSubmitEvidence": {
     message: 'SubmitEvidence'
   },
-  MsgGrantAllowance: {
+  "MsgGrantAllowance": {
     message: 'GrantAllowance'
   },
-  MsgRevokeAllowance: {
+  "MsgRevokeAllowance": {
     message: 'RevokeAllowance'
   },
-  MsgVoteWeighted: {
+  "MsgVoteWeighted": {
     message: 'VoteWeighted'
   },
-  MsgBeginRedelegate: {
+  "MsgBeginRedelegate": {
     message: 'BeginRedelegate'
   },
-  MsgCreateValidator: {
+  "MsgCreateValidator": {
     message: 'CreateValidator'
   },
-  MsgEditValidator: {
+  "MsgEditValidator": {
     message: 'EditValidator'
   },
-  MsgSetValidatorApproval: {
+  "MsgSetValidatorApproval": {
     message: 'SetValidatorApproval'
   },
-  MsgCreateVestingAccount: {
+  "MsgCreateVestingAccount": {
     message: 'CreateVestingAccount'
   },
-  MsgMigrateContract: {
+  "MsgMigrateContract": {
     message: 'MigrateContract'
   },
-  MsgStoreCode: {
+  "MsgStoreCode": {
     message: 'StoreCode'
   },
-  MsgTransfer: {
+  "MsgTransfer": {
     message: 'Transfer'
   },
-  MsgAcknowledgement: {
+  "MsgAcknowledgement": {
     message: 'Acknowledgement'
   },
-  MsgChannelCloseConfirm: {
+  "MsgChannelCloseConfirm": {
     message: 'ChannelCloseConfirm'
   },
-  MsgChannelCloseInit: {
+  "MsgChannelCloseInit": {
     message: 'ChannelCloseInit'
   },
-  MsgChannelOpenAck: {
+  "MsgChannelOpenAck": {
     message: 'ChannelOpenAck'
   },
-  MsgChannelOpenConfirm: {
+  "MsgChannelOpenConfirm": {
     message: 'ChannelOpenConfirm'
   },
-  MsgChannelOpenInit: {
+  "MsgChannelOpenInit": {
     message: 'ChannelOpenInit'
   },
-  MsgChannelOpen: {
+  "MsgChannelOpen": {
     message: 'ChannelOpen'
   },
-  MsgRecvPacket: {
+  "MsgRecvPacket": {
     message: 'RecvPacket'
   },
-  MsgTimeoutOnClose: {
+  "MsgTimeoutOnClose": {
     message: 'TimeoutOnClose'
   },
-  MsgTimeout: {
+  "MsgTimeout": {
     message: 'Timeout'
   },
-  MsgCreateClient: {
+  'MsgCreateClient': {
     message: 'CreateClient'
   },
-  MsgSubmitMisbehaviour: {
+  'MsgSubmitMisbehaviour': {
     message: 'SubmitMisbehaviour'
   },
-  MsgUpgradeClient: {
+  'MsgUpgradeClient': {
     message: 'UpgradeClient'
   },
-  MsgConnectionOpenAck: {
+  "MsgConnectionOpenAck": {
     message: 'ConnectionOpenAck'
   },
-  MsgConnectionOpenConfirm: {
+  "MsgConnectionOpenConfirm": {
     message: 'ConnectionOpenConfirm'
   },
-  MsgConnectionOpenInit: {
+  'MsgConnectionOpenInit': {
     message: 'ConnectionOpenInit'
   },
-  MsgConnectionOpenTry: {
+  "MsgConnectionOpenTry": {
     message: 'ConnectionOpenTry'
   },
-  MsgAddAdminToGroup: {
+  "MsgAddAdminToGroup": {
     message: 'AddAdminToGroup'
   },
-  MsgCreateGroupAck: {
+  "MsgCreateGroupAck": {
     message: 'CreateGroup'
   },
-  MsgDeleteGroupConfirm: {
+  "MsgDeleteGroupConfirm": {
     message: 'DeleteGroup'
   },
-  MsgRemoveAdminFromGroupInit: {
+  "MsgRemoveAdminFromGroupInit": {
     message: 'RemoveAdminFromGroup'
   },
-  MsgUpdateGroupTry: {
+  'MsgUpdateGroupTry': {
     message: 'UpdateGroup'
   },
-  MsgCreateOptions: {
+  "MsgCreateOptions": {
     message: 'CreateOptions'
   },
-  MsgDeleteMintperm: {
+  "MsgDeleteMintperm": {
     message: 'DeleteMintperm'
   },
-  MsgDeleteOptions: {
+  "MsgDeleteOptions": {
     message: 'DeleteOptions'
   },
-  MsgDeleteToken: {
+  "MsgDeleteToken": {
     message: 'DeleteToken'
   },
-  MsgUpdateMintperm: {
+  "MsgUpdateMintperm": {
     message: 'UpdateMintperm'
   },
-  MsgUpdateOptions: {
+  "MsgUpdateOptions": {
     message: 'UpdateOptions'
   },
-  MsgUpdateToken: {
+  "MsgUpdateToken": {
     message: 'UpdateToken'
   },
-  MsgMultiSend: {
+  "MsgMultiSend": {
     message: 'MultiSend'
   },
-  MsgVerifyInvariant: {
+  "MsgVerifyInvariant": {
     message: 'VerifyInvariant'
   },
-  MsgFundCommunityPool: {
+  "MsgFundCommunityPool": {
     message: 'FundCommunityPool'
   }
 };

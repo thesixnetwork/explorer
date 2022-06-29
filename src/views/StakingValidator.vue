@@ -402,7 +402,10 @@ export default {
           txhash: x.txhash,
           type:
             typeof codeMessage[x.type.split('.').slice(-1)] !== 'undefined'
-              ? codeMessage[x.type.split('.').slice(-1)].message
+              ? x.type.split('.').slice(-1)[0] === 'MsgSend' &&
+                x.decode_tx.fromAddress !== this.address
+                ? 'Receive'
+                : codeMessage[x.type.split('.').slice(-1)].message
               : x.type,
           block: Number(x.block_height),
           value:
@@ -443,7 +446,10 @@ export default {
           txhash: x.txhash,
           type:
             typeof codeMessage[x.type.split('.').slice(-1)] !== 'undefined'
-              ? codeMessage[x.type.split('.').slice(-1)].message
+              ? x.type.split('.').slice(-1)[0] === 'MsgSend' &&
+                x.decode_tx.fromAddress !== this.address
+                ? 'Receive'
+                : codeMessage[x.type.split('.').slice(-1)].message
               : x.type,
           block: Number(x.block_height),
           value:

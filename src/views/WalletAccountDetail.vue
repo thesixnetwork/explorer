@@ -841,7 +841,10 @@ export default {
           txhash: x.txhash,
           type:
             typeof codeMessage[x.type.split('.').slice(-1)] !== 'undefined'
-              ? codeMessage[x.type.split('.').slice(-1)].message
+              ? x.type.split('.').slice(-1)[0] === 'MsgSend' &&
+                x.decode_tx.fromAddress !== this.address
+                ? 'Receive'
+                : codeMessage[x.type.split('.').slice(-1)].message
               : x.type,
           block: Number(x.block_height),
           status: x.decode_tx.err_msg,
@@ -903,9 +906,16 @@ export default {
       if (this.transactions.txs) {
         return this.transactions.txs.map(x => ({
           txhash: x.txhash,
+          // type:
+          //   typeof codeMessage[x.type.split('.').slice(-1)] !== 'undefined'
+          //     ? codeMessage[x.type.split('.').slice(-1)].message
+          //     : x.type,
           type:
             typeof codeMessage[x.type.split('.').slice(-1)] !== 'undefined'
-              ? codeMessage[x.type.split('.').slice(-1)].message
+              ? x.type.split('.').slice(-1)[0] === 'MsgSend' &&
+                x.decode_tx.fromAddress !== this.address
+                ? 'Receive'
+                : codeMessage[x.type.split('.').slice(-1)].message
               : x.type,
           block: Number(x.block_height),
           from: x.decode_tx.fromAddress
