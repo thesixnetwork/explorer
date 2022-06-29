@@ -275,7 +275,9 @@
                 </router-link>
               </template>
               <template #cell(txhash)="data">
-                <router-link :to="`../tx/${data.item.txhash}`">
+                <router-link
+                  :to="`../tx/${data.item.txhash}/account/${accountAddress}`"
+                >
                   {{ formatHash(data.item.txhash) }}
                 </router-link>
               </template>
@@ -409,31 +411,43 @@ export default {
               : x.type,
           block: Number(x.block_height),
           value:
-            x.type === '/cosmos.staking.v1beta1.MsgDelegate' ||
-            x.type === '/cosmos.staking.v1beta1.MsgUndelegate'
-              ? `${formatTokenAmount(x.decode_tx.amount.amount) + ' ' + 'SIX'}`
-              : x.type === '/cosmos.bank.v1beta1.MsgSend'
-              ? `${formatTokenAmount(x.decode_tx.amount[0].amount) +
-                  ' ' +
-                  'SIX'}`
-              : x.type === '/cosmos.gov.v1beta1.MsgSubmitProposal' &&
-                x.decode_tx.initialDeposit.length > 0
-              ? `${formatTokenAmount(x.decode_tx.initialDeposit[0].amount) +
-                  ' ' +
-                  'SIX'}`
-              : x.type === '/cosmos.staking.v1beta1.MsgCreateValidator'
-              ? `${formatTokenAmount(x.decode_tx.value.amount) + ' ' + 'SIX'}`
-              : x.type === '/cosmos.gov.v1beta1.MsgDeposit' &&
-                x.decode_tx.amount.length > 0
-              ? `${formatTokenAmount(x.decode_tx.amount[0].amount) +
-                  ' ' +
-                  'SIX'}`
-              : x.type ===
-                '/cosmos.distribution.v1beta1.MsgWithdrawDelegatorReward'
-              ? `${formatTokenAmount(x.decode_tx.amount[0].amount) +
-                  ' ' +
-                  'SIX'}`
+            typeof x.decode_tx.amount !== 'undefined'
+              ? (typeof x.decode_tx.amount.amount !== 'undefined' &&
+                  `${formatTokenAmount(x.decode_tx.amount.amount) +
+                    ' ' +
+                    'SIX'}`) ||
+                (typeof x.decode_tx.amount[0] !== 'undefined' &&
+                  `${formatTokenAmount(x.decode_tx.amount[0].amount) +
+                    ' ' +
+                    'SIX'}`) ||
+                '-'
               : '-',
+          // value:
+          //   x.type === '/cosmos.staking.v1beta1.MsgDelegate' ||
+          //   x.type === '/cosmos.staking.v1beta1.MsgUndelegate'
+          //     ? `${formatTokenAmount(x.decode_tx.amount.amount) + ' ' + 'SIX'}`
+          //     : x.type === '/cosmos.bank.v1beta1.MsgSend'
+          //     ? `${formatTokenAmount(x.decode_tx.amount[0].amount) +
+          //         ' ' +
+          //         'SIX'}`
+          //     : x.type === '/cosmos.gov.v1beta1.MsgSubmitProposal' &&
+          //       x.decode_tx.initialDeposit.length > 0
+          //     ? `${formatTokenAmount(x.decode_tx.initialDeposit[0].amount) +
+          //         ' ' +
+          //         'SIX'}`
+          //     : x.type === '/cosmos.staking.v1beta1.MsgCreateValidator'
+          //     ? `${formatTokenAmount(x.decode_tx.value.amount) + ' ' + 'SIX'}`
+          //     : x.type === '/cosmos.gov.v1beta1.MsgDeposit' &&
+          //       x.decode_tx.amount.length > 0
+          //     ? `${formatTokenAmount(x.decode_tx.amount[0].amount) +
+          //         ' ' +
+          //         'SIX'}`
+          //     : x.type ===
+          //       '/cosmos.distribution.v1beta1.MsgWithdrawDelegatorReward'
+          //     ? `${formatTokenAmount(x.decode_tx.amount[0].amount) +
+          //         ' ' +
+          //         'SIX'}`
+          //     : '-',
           txnFee: `${formatGasAmount(x.decode_tx.fee_amount) + ' ' + 'SIX'}`,
           time: toDay(x.time_stamp)
         }));
@@ -453,31 +467,43 @@ export default {
               : x.type,
           block: Number(x.block_height),
           value:
-            x.type === '/cosmos.staking.v1beta1.MsgDelegate' ||
-            x.type === '/cosmos.staking.v1beta1.MsgUndelegate'
-              ? `${formatTokenAmount(x.decode_tx.amount.amount) + ' ' + 'SIX'}`
-              : x.type === '/cosmos.bank.v1beta1.MsgSend'
-              ? `${formatTokenAmount(x.decode_tx.amount[0].amount) +
-                  ' ' +
-                  'SIX'}`
-              : x.type === '/cosmos.gov.v1beta1.MsgSubmitProposal' &&
-                x.decode_tx.initialDeposit.length > 0
-              ? `${formatTokenAmount(x.decode_tx.initialDeposit[0].amount) +
-                  ' ' +
-                  'SIX'}`
-              : x.type === '/cosmos.staking.v1beta1.MsgCreateValidator'
-              ? `${formatTokenAmount(x.decode_tx.value.amount) + ' ' + 'SIX'}`
-              : x.type === '/cosmos.gov.v1beta1.MsgDeposit' &&
-                x.decode_tx.amount.length > 0
-              ? `${formatTokenAmount(x.decode_tx.amount[0].amount) +
-                  ' ' +
-                  'SIX'}`
-              : x.type ===
-                '/cosmos.distribution.v1beta1.MsgWithdrawDelegatorReward'
-              ? `${formatTokenAmount(x.decode_tx.amount[0].amount) +
-                  ' ' +
-                  'SIX'}`
+            typeof x.decode_tx.amount !== 'undefined'
+              ? (typeof x.decode_tx.amount.amount !== 'undefined' &&
+                  `${formatTokenAmount(x.decode_tx.amount.amount) +
+                    ' ' +
+                    'SIX'}`) ||
+                (typeof x.decode_tx.amount[0] !== 'undefined' &&
+                  `${formatTokenAmount(x.decode_tx.amount[0].amount) +
+                    ' ' +
+                    'SIX'}`) ||
+                '-'
               : '-',
+          // value:
+          //   x.type === '/cosmos.staking.v1beta1.MsgDelegate' ||
+          //   x.type === '/cosmos.staking.v1beta1.MsgUndelegate'
+          //     ? `${formatTokenAmount(x.decode_tx.amount.amount) + ' ' + 'SIX'}`
+          //     : x.type === '/cosmos.bank.v1beta1.MsgSend'
+          //     ? `${formatTokenAmount(x.decode_tx.amount[0].amount) +
+          //         ' ' +
+          //         'SIX'}`
+          //     : x.type === '/cosmos.gov.v1beta1.MsgSubmitProposal' &&
+          //       x.decode_tx.initialDeposit.length > 0
+          //     ? `${formatTokenAmount(x.decode_tx.initialDeposit[0].amount) +
+          //         ' ' +
+          //         'SIX'}`
+          //     : x.type === '/cosmos.staking.v1beta1.MsgCreateValidator'
+          //     ? `${formatTokenAmount(x.decode_tx.value.amount) + ' ' + 'SIX'}`
+          //     : x.type === '/cosmos.gov.v1beta1.MsgDeposit' &&
+          //       x.decode_tx.amount.length > 0
+          //     ? `${formatTokenAmount(x.decode_tx.amount[0].amount) +
+          //         ' ' +
+          //         'SIX'}`
+          //     : x.type ===
+          //       '/cosmos.distribution.v1beta1.MsgWithdrawDelegatorReward'
+          //     ? `${formatTokenAmount(x.decode_tx.amount[0].amount) +
+          //         ' ' +
+          //         'SIX'}`
+          //     : '-',
           txnFee: `${formatGasAmount(x.decode_tx.fee_amount) + ' ' + 'SIX'}`,
           time: toDay(x.time_stamp)
         }));

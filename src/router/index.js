@@ -258,7 +258,7 @@ const router = new VueRouter({
       }
     },
     {
-      path: '/:chain/tx/:hash',
+      path: '/:chain/tx/:hash/account/:address',
       name: 'transaction',
       component: () => import('@/views/Transaction.vue'),
       meta: {

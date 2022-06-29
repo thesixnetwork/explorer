@@ -43,7 +43,9 @@
                 '/cosmos.distribution.v1beta1.MsgWithdrawDelegatorReward'
               ? 'Claim Reward'
               : addNewLine(value) === '/cosmos.bank.v1beta1.MsgSend'
-              ? 'Send'
+              ? tablefield['to_address'] === address
+                ? 'Receive'
+                : 'Send'
               : addNewLine(value)
           }}
         </b-td>
@@ -74,6 +76,11 @@ export default {
     BTbody,
     ArrayFieldComponent
   },
+  data() {
+    return {
+      address: ''
+    };
+  },
   props: {
     tablefield: {
       type: [Array, Object],
@@ -83,6 +90,10 @@ export default {
       type: Boolean,
       default: true
     }
+  },
+  created() {
+    const { address } = this.$route.params;
+    this.address = address;
   },
   methods: {
     formatObject(value) {
@@ -129,7 +140,7 @@ export default {
         return value.replaceAll('\\n', '\n');
       }
 
-      return value.replaceAll('_', ' ');
+      return value;
     }
   }
 };
