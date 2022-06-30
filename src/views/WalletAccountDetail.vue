@@ -45,11 +45,11 @@
             >
               <b-tbody v-if="account.type === 'cosmos-sdk/BaseAccount'">
                 <b-tr>
-                  <b-td class="p-0"> 
-                    Account Type 
+                  <b-td class="p-0">
+                    Account Type
                   </b-td>
-                  <b-td class="px-0 py-20"> 
-                    {{ account.type }} 
+                  <b-td class="px-0 py-20">
+                    {{ account.type }}
                   </b-td>
                 </b-tr>
                 <b-tr>
@@ -61,11 +61,11 @@
                   </b-td>
                 </b-tr>
                 <b-tr>
-                  <b-td class="p-0"> 
-                    Sequence 
+                  <b-td class="p-0">
+                    Sequence
                   </b-td>
-                  <b-td class="px-0 py-20"> 
-                    {{ account.value.sequence }} 
+                  <b-td class="px-0 py-20">
+                    {{ account.value.sequence }}
                   </b-td>
                 </b-tr>
                 <!-- <b-tr>
@@ -92,8 +92,8 @@
                   </b-td>
                 </b-tr>
                 <b-tr>
-                  <b-td> 
-                    Account Number 
+                  <b-td>
+                    Account Number
                   </b-td>
                   <b-td>
                     {{
@@ -103,8 +103,8 @@
                   </b-td>
                 </b-tr>
                 <b-tr>
-                  <b-td> 
-                    Sequence 
+                  <b-td>
+                    Sequence
                   </b-td>
                   <b-td>
                     {{
@@ -124,8 +124,8 @@
                   </b-td>
                 </b-tr> -->
                 <b-tr>
-                  <b-td> 
-                    Original Vesting 
+                  <b-td>
+                    Original Vesting
                   </b-td>
                   <b-td>
                     {{
@@ -136,8 +136,8 @@
                   </b-td>
                 </b-tr>
                 <b-tr>
-                  <b-td> 
-                    Delegated Free 
+                  <b-td>
+                    Delegated Free
                   </b-td>
                   <b-td>
                     {{
@@ -862,7 +862,7 @@ export default {
     },
     txs() {
       if (this.transactions.txs) {
-        this.isBusy = false
+        this.isBusy = false;
         return this.transactions.txs.map(x => ({
           txhash: x.txhash,
           type:
@@ -937,17 +937,17 @@ export default {
               : x.type,
           block: Number(x.block_height),
           from: x.decode_tx.fromAddress
-            ? abbrAddress(x.decode_tx.fromAddress)
+            ? x.decode_tx.fromAddress
             : x.decode_tx.creator
-            ? abbrAddress(x.decode_tx.creator)
+            ? x.decode_tx.creator
             : x.decode_tx.delegatorAddress
-            ? abbrAddress(x.decode_tx.delegatorAddress)
+            ? x.decode_tx.delegatorAddress
             : x.decode_tx.depositor
-            ? abbrAddress(x.decode_tx.depositor)
+            ? x.decode_tx.depositor
             : x.decode_tx.voter
-            ? abbrAddress(x.decode_tx.voter)
+            ? x.decode_tx.voter
             : x.decode_tx.relate_addr.length > 0
-            ? abbrAddress(x.decode_tx.relate_addr[0])
+            ? x.decode_tx.relate_addr[0]
             : '-',
           to: x.decode_tx.toAddress
             ? x.decode_tx.toAddress
@@ -970,7 +970,6 @@ export default {
           time: toDay(x.time_stamp)
         }));
       }
-
       return [];
     },
     assetTable() {
@@ -1240,7 +1239,7 @@ export default {
       return toETHAddress(this.address);
     },
     csvExport(arrData) {
-      let csvContent = 'data:text/csv;charset=utf-8';
+      let csvContent = 'data:text/csv;charset=utf-8,';
       csvContent += [
         Object.keys(arrData[0]).join(','),
         ...arrData.map(item => Object.values(item).join(','))
