@@ -263,12 +263,19 @@
           >
             <b-table
               :items="txs"
+              :busy="isBusy"
               striped
               hover
               responsive
               stacked="sm"
               :style="{ fontSize: 'smaller' }"
             >
+              <template #table-busy>
+                <div class="text-center text-secondary my-2">
+                  <b-spinner class="align-middle mr-25"></b-spinner>
+                  <strong>Loading...</strong>
+                </div>
+              </template>
               <template #cell(block)="data">
                 <router-link :to="`../blocks/${data.item.block}`">
                   {{ data.item.block }}
@@ -329,7 +336,8 @@ import {
   VBTooltip,
   VBModal,
   BBadge,
-  BPagination
+  BPagination,
+  BSpinner
 } from 'bootstrap-vue';
 
 import {
@@ -364,6 +372,7 @@ export default {
     BBadge,
     BPagination,
     BTable,
+    BSpinner,
     StakingAddressComponent,
     StakingCommissionComponent,
     StakingRewardComponent,
@@ -394,12 +403,14 @@ export default {
       userData: {},
       blocks: Array.from('0'.repeat(100)).map(x => [Boolean(x), Number(x)]),
       distribution: {},
-      transactions: {}
+      transactions: {},
+      isBusy: false
     };
   },
   computed: {
     txs() {
       if (this.transactions.txs) {
+        this.isBusy = false;
         return this.transactions.txs.map(x => ({
           txhash: x.txhash,
           type:
@@ -425,8 +436,19 @@ export default {
           txnFee: `${formatGasAmount(x.decode_tx.fee_amount) + ' ' + 'SIX'}`,
           time: toDay(x.time_stamp)
         }));
+      } else {
+        this.isBusy = true;
+        return [
+          {
+            txhash: '',
+            type: '',
+            block: '',
+            value: '',
+            txnFee: '',
+            time: ''
+          }
+        ];
       }
-      return [];
     },
     dataCsv() {
       if (this.transactions.txs) {

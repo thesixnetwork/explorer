@@ -45,8 +45,12 @@
             >
               <b-tbody v-if="account.type === 'cosmos-sdk/BaseAccount'">
                 <b-tr>
-                  <b-td class="p-0"> Account Type </b-td>
-                  <b-td class="px-0 py-20"> {{ account.type }} </b-td>
+                  <b-td class="p-0"> 
+                    Account Type 
+                  </b-td>
+                  <b-td class="px-0 py-20"> 
+                    {{ account.type }} 
+                  </b-td>
                 </b-tr>
                 <b-tr>
                   <b-td class="p-0 max-width:100px;">
@@ -57,8 +61,12 @@
                   </b-td>
                 </b-tr>
                 <b-tr>
-                  <b-td class="p-0"> Sequence </b-td>
-                  <b-td class="px-0 py-20"> {{ account.value.sequence }} </b-td>
+                  <b-td class="p-0"> 
+                    Sequence 
+                  </b-td>
+                  <b-td class="px-0 py-20"> 
+                    {{ account.value.sequence }} 
+                  </b-td>
                 </b-tr>
                 <!-- <b-tr>
                   <b-td class="p-0"> Public Key </b-td>
@@ -84,7 +92,9 @@
                   </b-td>
                 </b-tr>
                 <b-tr>
-                  <b-td> Account Number </b-td>
+                  <b-td> 
+                    Account Number 
+                  </b-td>
                   <b-td>
                     {{
                       account.value.base_vesting_account.base_account
@@ -93,7 +103,9 @@
                   </b-td>
                 </b-tr>
                 <b-tr>
-                  <b-td> Sequence </b-td>
+                  <b-td> 
+                    Sequence 
+                  </b-td>
                   <b-td>
                     {{
                       account.value.base_vesting_account.base_account.sequence
@@ -112,7 +124,9 @@
                   </b-td>
                 </b-tr> -->
                 <b-tr>
-                  <b-td> Original Vesting </b-td>
+                  <b-td> 
+                    Original Vesting 
+                  </b-td>
                   <b-td>
                     {{
                       formatToken(
@@ -122,7 +136,9 @@
                   </b-td>
                 </b-tr>
                 <b-tr>
-                  <b-td> Delegated Free </b-td>
+                  <b-td> 
+                    Delegated Free 
+                  </b-td>
                   <b-td>
                     {{
                       formatToken(
@@ -416,12 +432,19 @@
       <b-card title="Transactions" no-body class="text-truncate overflow-auto">
         <b-table
           :items="txs"
+          :busy="isBusy"
           striped
           hover
           responsive="md"
           stacked="sm"
           :style="{ fontSize: 'smaller' }"
         >
+          <template #table-busy>
+            <div class="text-center text-secondary my-2">
+              <b-spinner class="align-middle mr-25"></b-spinner>
+              <strong>Loading...</strong>
+            </div>
+          </template>
           <template #cell(block)="data">
             <router-link :to="`../blocks/${data.item.block}`">
               {{ data.item.block }}
@@ -726,7 +749,8 @@ import {
   BBadge,
   VBModal,
   VBTooltip,
-  BPagination
+  BPagination,
+  BSpinner
 } from 'bootstrap-vue';
 import FeatherIcon from '@/@core/components/feather-icon/FeatherIcon.vue';
 import ToastificationContent from '@core/components/toastification/ToastificationContent.vue';
@@ -765,6 +789,7 @@ export default {
     BCard,
     BAvatar,
     BTable,
+    BSpinner,
     FeatherIcon,
     VueQr,
     BTableSimple,
@@ -809,7 +834,6 @@ export default {
   },
   data() {
     const { address } = this.$route.params;
-
     return {
       currency: getUserCurrencySign(),
       selectedValidator: '',
@@ -825,7 +849,8 @@ export default {
       transactions: [],
       stakingParameters: {},
       operationModalType: '',
-      error: null
+      error: null,
+      isBusy: false
     };
   },
   computed: {
@@ -837,6 +862,7 @@ export default {
     },
     txs() {
       if (this.transactions.txs) {
+        this.isBusy = false
         return this.transactions.txs.map(x => ({
           txhash: x.txhash,
           type:
@@ -881,9 +907,22 @@ export default {
           txnFee: `${formatGasAmount(x.decode_tx.fee_amount) + ' ' + 'SIX'}`,
           time: toDay(x.time_stamp)
         }));
+      } else {
+        this.isBusy = true;
+        return [
+          {
+            txhash: '',
+            type: '',
+            block: '',
+            status: '',
+            from: '',
+            to: '',
+            value: '',
+            txnFee: '',
+            time: ''
+          }
+        ];
       }
-
-      return [];
     },
     dataCsv() {
       if (this.transactions.txs) {

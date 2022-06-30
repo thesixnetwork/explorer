@@ -20,7 +20,8 @@ module.exports = {
     'vue/multiline-html-element-content-newline': 'off',
     'comma-dangle': ['error', 'never'],
     'comma-dangle': 'off',
-    'vue/max-attributes-per-line': 'off'
+    'vue/max-attributes-per-line': 'off',
+    'vue/no-side-effects-in-computed-properties': 'off'
     // "@typescript-eslint/comma-dangle": ["error", "only-multiline"]
   }
 };
