@@ -49,7 +49,7 @@
             <!-- Column: Height -->
             <template #cell(height)="data">
               <router-link
-                :to="`/fivenet/blocks/${data.item.block.header.height}`"
+                :to="`/${chain.title}/blocks/${data.item.block.header.height}`"
               >
                 {{ data.item.block.header.height }}
               </router-link>

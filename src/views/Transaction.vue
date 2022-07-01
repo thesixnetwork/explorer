@@ -29,7 +29,7 @@
           <b-tr>
             <b-td> {{ 'Height' }} </b-td>
             <b-td>
-              <router-link :to="`../blocks/${tx.height}`">
+              <router-link :to="`/${chain}/blocks/${tx.height}`">
                 {{ tx.height }}
               </router-link>
             </b-td>
@@ -84,6 +84,7 @@ import {
 } from 'bootstrap-vue';
 import { toDay, tokenFormatter } from '@/libs/utils';
 import ObjectFieldComponent from './ObjectFieldComponent.vue';
+import store from '@/store';
 
 export default {
   components: {
@@ -97,7 +98,8 @@ export default {
   },
   data() {
     return {
-      tx: { tx: {} }
+      tx: { tx: {} },
+      chain: store.state.chains.selected.chain_name
     };
   },
 
