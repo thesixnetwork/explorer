@@ -863,6 +863,7 @@ export default {
     txs() {
       if (this.transactions.txs) {
         this.isBusy = false;
+        console.log('account detial', this.transactions.txs);
         return this.transactions.txs.map(x => ({
           txhash: x.txhash,
           type:
@@ -904,6 +905,7 @@ export default {
                     'SIX'}`) ||
                 '-'
               : '-',
+
           txnFee: `${formatGasAmount(x.decode_tx.fee_amount) + ' ' + 'SIX'}`,
           time: toDay(x.time_stamp)
         }));
@@ -918,6 +920,7 @@ export default {
             from: '',
             to: '',
             value: '',
+            commission: '',
             txnFee: '',
             time: ''
           }
@@ -962,6 +965,14 @@ export default {
                     'SIX'}`) ||
                 (typeof x.decode_tx.amount[0] !== 'undefined' &&
                   `${x.decode_tx.amount[0].amount / Math.pow(10, 6) +
+                    ' ' +
+                    'SIX'}`) ||
+                '-'
+              : '-',
+          commission:
+            typeof x.decode_tx.commission !== 'undefined'
+              ? (typeof x.decode_tx.commission.amount !== 'undefined' &&
+                  `${formatTokenAmount(x.decode_tx.commission.amount) +
                     ' ' +
                     'SIX'}`) ||
                 '-'

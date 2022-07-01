@@ -411,6 +411,7 @@ export default {
     txs() {
       if (this.transactions.txs) {
         this.isBusy = false;
+        console.log('staking', this.transactions.txs);
         return this.transactions.txs.map(x => ({
           txhash: x.txhash,
           type:
@@ -433,6 +434,14 @@ export default {
                     'SIX'}`) ||
                 '-'
               : '-',
+          commission:
+            typeof x.decode_tx.commission !== 'undefined'
+              ? (typeof x.decode_tx.commission.amount !== 'undefined' &&
+                  `${formatTokenAmount(x.decode_tx.commission.amount) +
+                    ' ' +
+                    'SIX'}`) ||
+                '-'
+              : '-',
           txnFee: `${formatGasAmount(x.decode_tx.fee_amount) + ' ' + 'SIX'}`,
           time: toDay(x.time_stamp)
         }));
@@ -444,6 +453,7 @@ export default {
             type: '',
             block: '',
             value: '',
+            commission: '',
             txnFee: '',
             time: ''
           }
@@ -474,7 +484,14 @@ export default {
                     'SIX'}`) ||
                 '-'
               : '-',
-
+          commission:
+            typeof x.decode_tx.commission !== 'undefined'
+              ? (typeof x.decode_tx.commission.amount !== 'undefined' &&
+                  `${formatTokenAmount(x.decode_tx.commission.amount) +
+                    ' ' +
+                    'SIX'}`) ||
+                '-'
+              : '-',
           txnFee: `${formatGasAmount(x.decode_tx.fee_amount) + ' ' + 'SIX'}`,
           time: toDay(x.time_stamp)
         }));
