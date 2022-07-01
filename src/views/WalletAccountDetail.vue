@@ -863,7 +863,6 @@ export default {
     txs() {
       if (this.transactions.txs) {
         this.isBusy = false;
-        console.log('account detial', this.transactions.txs);
         return this.transactions.txs.map(x => ({
           txhash: x.txhash,
           type:

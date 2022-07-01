@@ -29,23 +29,34 @@
           hover
           class="overflow-hidden"
         >
-          <b-td :v-if="Object.keys(value, name)" :key="name" class="p-0">
-            {{
-              (typeof value['block'] !== 'undefined' && value['block']) ||
-                formatTokens(value)
-            }}
-          </b-td>
+          <b-tabs v-if="value" small>
+            <b-tab
+              v-for="key in Object.keys(value)"
+              :key="key"
+              :title="key"
+              class="pl-0 pr-0"
+              title-item-class="bg-light-primary"
+              style="padding: 0px;"
+            >
+              <array-field-component
+                v-if="Array.isArray(value[key])"
+                :tablefield="value[key]"
+              />
+              <object-field-component
+                v-else-if="typeof value[key] === 'object'"
+                :tablefield="value[key]"
+              />
+              <object-field-component
+                v-else-if="isObjectText(value[key])"
+                :tablefield="toObject(value[key])"
+              />
+              <span v-else>{{ value[key] }}</span>
+            </b-tab>
+          </b-tabs>
         </b-td>
         <b-td v-else class="text-capitalize">
           {{
-            addNewLine(value) === '/cosmos.staking.v1beta1.MsgDelegate'
-              ? 'Stake'
-              : addNewLine(value) === '/cosmos.staking.v1beta1.MsgUndelegate'
-              ? 'Unstake'
-              : addNewLine(value) ===
-                '/cosmos.distribution.v1beta1.MsgWithdrawDelegatorReward'
-              ? 'Claim Reward'
-              : addNewLine(value) === '/cosmos.bank.v1beta1.MsgSend'
+            addNewLine(value) === '/cosmos.bank.v1beta1.MsgSend'
               ? tablefield['to_address'] === address
                 ? 'Receive'
                 : 'Send'
@@ -58,7 +69,7 @@
 </template>
 
 <script>
-import { BTableSimple, BTr, BTd, BTbody } from 'bootstrap-vue';
+import { BTableSimple, BTr, BTd, BTabs, BTab, BTbody } from 'bootstrap-vue';
 import {
   abbr,
   getStakingValidatorByHex,
@@ -69,6 +80,7 @@ import {
   tokenFormatter
 } from '@/libs/utils';
 import ArrayFieldComponent from './ArrayFieldComponent.vue';
+import { codeMessage } from '@/constants/module';
 
 export default {
   name: 'ObjectFieldComponent',
@@ -76,6 +88,8 @@ export default {
     BTableSimple,
     BTr,
     BTd,
+    BTabs,
+    BTab,
     BTbody,
     ArrayFieldComponent
   },
@@ -141,6 +155,28 @@ export default {
       }
       if (typeof value === 'string' && value.indexOf('\\n') > -1) {
         return value.replaceAll('\\n', '\n');
+      }
+
+      if (value.toString().split('.').length > 1) {
+        if (
+          value
+            .toString()
+            .split('.')
+            .slice(-1)[0] === 'MsgSend'
+        ) {
+          return value.replaceAll('\\n', '\n');
+        } else {
+          if (typeof codeMessage[value.split('.').slice(-1)] !== 'undefined') {
+            return codeMessage[
+              value
+                .toString()
+                .split('.')
+                .slice(-1)[0]
+            ].message;
+          } else {
+            return value.replaceAll('\\n', '\n');
+          }
+        }
       }
 
       return value;
