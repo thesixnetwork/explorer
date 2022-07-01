@@ -30,7 +30,10 @@
           class="overflow-hidden"
         >
           <b-td :v-if="Object.keys(value, name)" :key="name" class="p-0">
-            {{ formatTokens(value) }}
+            {{
+              (typeof value['block'] !== 'undefined' && value['block']) ||
+                formatTokens(value)
+            }}
           </b-td>
         </b-td>
         <b-td v-else class="text-capitalize">
