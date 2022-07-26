@@ -23,25 +23,33 @@
         <ul class="nav navbar-nav flex-row">
           <!-- Logo & Text -->
           <li class="nav-item mr-auto">
-            <b-link class="navbar-brand" to="/">
+            <b-link class="navbar-brand position-relative" to="/">
               <span class="brand-logo">
-                <b-img :src="appLogoImage" alt="logo" />
+                <b-img :src="appLogoImage" alt="logo" fluid />
               </span>
-              <h2
-                :style="{
-                  background: '-webkit-linear-gradient(72deg, #353EED,#40D7FC)',
-                  '-webkit-background-clip': 'text',
-                  '-webkit-text-fill-color': 'transparent'
-                }"
-                class="brand-text"
-              >
+
+              <h2 class="brand-text customizer-text">
                 {{ appName }}
+                <div class="customizer-div">
+                  <span class="customizer-text-desc">
+                    SIX Protocol block explorer
+                  </span>
+                </div>
               </h2>
-              <b-badge pill variant="link" class="customizer-badge">
+              <b-badge
+                v-if="selected_chain.chain_name == 'fivenet'"
+                variant="danger"
+                text-indicator
+                class="customizer-badge"
+              >
+                Testnet
+              </b-badge>
+
+              <!-- <b-badge pill variant="link" class="customizer-badge">
                 <span v-if="selected_chain.chain_name == 'fivenet'">
                   Testnet
                 </span>
-              </b-badge>
+              </b-badge> -->
             </b-link>
           </li>
 
@@ -206,10 +214,31 @@ export default {
 
 .customizer-badge {
   border-radius: 8px;
-  background-color: $danger;
   color: #fff;
   padding: 2px 6px;
   font-size: 8px;
   align-self: start;
+  position: absolute;
+  margin-left: 150px;
+}
+
+.customizer-div {
+  line-height: 0.6rem;
+}
+
+.customizer-text-desc {
+  font-size: 10px;
+  color: #40404180 !important;
+  .dark-layout & {
+    color: #ffffff80 !important;
+  }
+}
+
+.customizer-text {
+  color: $info !important;
+
+  .dark-layout & {
+    color: $primary !important;
+  }
 }
 </style>
