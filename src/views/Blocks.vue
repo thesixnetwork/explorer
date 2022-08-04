@@ -51,7 +51,6 @@ import {
   getStakingValidatorByHex,
   toDay
 } from '@/libs/utils';
-import fetch from 'node-fetch';
 
 export default {
   components: {

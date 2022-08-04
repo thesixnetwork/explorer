@@ -1,422 +1,103 @@
 <template>
   <div>
     <div v-if="!error">
-      <b-row>
-        <b-col lg="4" md="12" sm="12" xs="12">
-          <b-card bg-variant="link" :style="{ height: '260px' }">
-            <div class="customizer-qr-code">
-              <vue-qr :text="address" :size="174" />
-              <div
-                class="d-flex align-items-center justify-content-center mt-1"
-              >
-                <h5 class="my-50">
-                  Address:
-                </h5>
-                <span
-                  v-b-tooltip.hover.bottom="{ variant: 'secondary' }"
-                  :title="address"
-                  class="customizer-addr mx-25"
-                >
-                  {{ formatAddress(address) }}
-                </span>
-
-                <feather-icon
-                  icon="CopyIcon"
-                  size="16"
-                  class="cursor-pointer"
-                  @click="copy()"
-                />
-              </div>
-            </div>
-          </b-card>
-        </b-col>
-        <b-col lg="8" md="12" sm="12" xs="12">
-          <b-card
-            v-if="account"
-            title="Profile"
-            class="text-trancate customizer-card"
-          >
-            <b-table-simple
-              striped
-              hover
-              responsive
-              stacked="sm"
-              :style="{ fontSize: 'smaller' }"
-            >
-              <b-tbody v-if="account.type === 'cosmos-sdk/BaseAccount'">
-                <b-tr>
-                  <b-td class="p-0">
-                    Account Type
-                  </b-td>
-                  <b-td class="px-0 py-20">
-                    {{ account.type }}
-                  </b-td>
-                </b-tr>
-                <b-tr>
-                  <b-td class="p-0 max-width:100px;">
-                    Account Number
-                  </b-td>
-                  <b-td class="px-0 py-20">
-                    {{ account.value.account_number }}
-                  </b-td>
-                </b-tr>
-                <b-tr>
-                  <b-td class="p-0">
-                    Sequence
-                  </b-td>
-                  <b-td class="px-0 py-20">
-                    {{ account.value.sequence }}
-                  </b-td>
-                </b-tr>
-                <!-- <b-tr>
-                  <b-td class="p-0"> Public Key </b-td>
-                  <b-td class="px-0">
-                    <object-field-component
-                      :tablefield="account.value.public_key"
-                    />
-                  </b-td>
-                </b-tr> -->
-              </b-tbody>
-              <b-tbody
-                v-else-if="
-                  account.type === 'cosmos-sdk/PeriodicVestingAccount' &&
-                    account.value.base_vesting_account
-                "
-              >
-                <b-tr>
-                  <b-td>
-                    Account Type
-                  </b-td>
-                  <b-td>
-                    {{ account.type }}
-                  </b-td>
-                </b-tr>
-                <b-tr>
-                  <b-td>
-                    Account Number
-                  </b-td>
-                  <b-td>
-                    {{
-                      account.value.base_vesting_account.base_account
-                        .account_number
-                    }}
-                  </b-td>
-                </b-tr>
-                <b-tr>
-                  <b-td>
-                    Sequence
-                  </b-td>
-                  <b-td>
-                    {{
-                      account.value.base_vesting_account.base_account.sequence
-                    }}
-                  </b-td>
-                </b-tr>
-                <!-- <b-tr>
-                  <b-td> Public Key </b-td>
-                  <b-td>
-                    <object-field-component
-                      :tablefield="
-                        account.value.base_vesting_account.base_account
-                          .public_key
-                      "
-                    />
-                  </b-td>
-                </b-tr> -->
-                <b-tr>
-                  <b-td>
-                    Original Vesting
-                  </b-td>
-                  <b-td>
-                    {{
-                      formatToken(
-                        account.value.base_vesting_account.original_vesting
-                      )
-                    }}
-                  </b-td>
-                </b-tr>
-                <b-tr>
-                  <b-td>
-                    Delegated Free
-                  </b-td>
-                  <b-td>
-                    {{
-                      formatToken(
-                        account.value.base_vesting_account.delegated_free
-                      )
-                    }}
-                  </b-td>
-                </b-tr>
-                <b-tr>
-                  <b-td> Delegated Vesting </b-td>
-                  <b-td>
-                    {{
-                      formatToken(
-                        account.value.base_vesting_account.delegated_vesting
-                      )
-                    }}
-                  </b-td>
-                </b-tr>
-                <b-tr>
-                  <b-td> Vesting Time </b-td>
-                  <b-td>
-                    {{ formatTime(account.value.start_time) }} -
-                    {{
-                      formatTime(account.value.base_vesting_account.end_time)
-                    }}
-                  </b-td>
-                </b-tr>
-                <b-tr>
-                  <b-td> Vesting Periods </b-td>
-                  <b-td>
-                    <b-table-simple>
-                      <th>Length</th>
-                      <th>Amount</th>
-                      <b-tr
-                        v-for="(p, index) in account.value.vesting_periods"
-                        :key="index"
-                      >
-                        <td>
-                          <small>
-                            {{ p.length }}
-                            <br />
-                            {{ formatLength(p.length) }}
-                          </small>
-                        </td>
-                        <td>{{ formatToken(p.amount) }}</td>
-                      </b-tr>
-                    </b-table-simple>
-                  </b-td>
-                </b-tr>
-              </b-tbody>
-              <b-tbody
-                v-else-if="
-                  account.type === 'cosmos-sdk/DelayedVestingAccount' &&
-                    account.value.base_vesting_account
-                "
-              >
-                <b-tr>
-                  <b-td> Account Type </b-td>
-                  <b-td> {{ account.type }} </b-td>
-                </b-tr>
-                <b-tr>
-                  <b-td style="max-width:100px;">
-                    Account Number
-                  </b-td>
-                  <b-td>
-                    {{
-                      account.value.base_vesting_account.base_account
-                        .account_number
-                    }}
-                  </b-td>
-                </b-tr>
-                <b-tr>
-                  <b-td> Sequence </b-td>
-                  <b-td>
-                    {{
-                      account.value.base_vesting_account.base_account.sequence
-                    }}
-                  </b-td>
-                </b-tr>
-                <!-- <b-tr>
-                  <b-td> Public Key </b-td>
-                  <b-td>
-                    <object-field-component
-                      :tablefield="
-                        account.value.base_vesting_account.base_account
-                          .public_key
-                      "
-                    />
-                  </b-td>
-                </b-tr> -->
-                <b-tr>
-                  <b-td> Original Vesting </b-td>
-                  <b-td>
-                    {{
-                      formatToken(
-                        account.value.base_vesting_account.original_vesting
-                      )
-                    }}
-                  </b-td>
-                </b-tr>
-                <b-tr>
-                  <b-td> Delegated Free </b-td>
-                  <b-td>
-                    {{
-                      formatToken(
-                        account.value.base_vesting_account.delegated_free
-                      )
-                    }}
-                  </b-td>
-                </b-tr>
-                <b-tr>
-                  <b-td> Delegated Vesting </b-td>
-                  <b-td>
-                    {{
-                      formatToken(
-                        account.value.base_vesting_account.delegated_vesting
-                      )
-                    }}
-                  </b-td>
-                </b-tr>
-                <b-tr>
-                  <b-td> End Time </b-td>
-                  <b-td>
-                    {{
-                      formatTime(account.value.base_vesting_account.end_time)
-                    }}
-                  </b-td>
-                </b-tr>
-              </b-tbody>
-              <object-field-component
-                v-else
-                :tablefield="account.value || account"
-              />
-            </b-table-simple>
-          </b-card>
-        </b-col>
-      </b-row>
-
       <b-card class="d-flex flex-row">
-        <b-card-header class="pt-0 pl-0 pr-0">
-          <b-card-title>Assets</b-card-title>
-          <!-- <div>
-            <b-button
-              v-b-modal.operation-modal
-              variant="link"
-              size="sm"
-              class="mr-25 customizer-button"
-              @click="setOperationModalType('Transfer')"
-            >
-              <feather-icon icon="SendIcon" class="d-md-none" />
-              <span class="d-none d-md-block">Transfer</span>
-            </b-button>
-            <b-button
-              v-b-modal.operation-modal
-              variant="link"
-              class="customizer-button-danger"
-              size="sm"
-              @click="setOperationModalType('IBCTransfer')"
-            >
-              <feather-icon icon="SendIcon" class="d-md-none" />
-              <span class="d-none d-md-block">IBC Transfer </span>
-            </b-button>
-          </div> -->
-        </b-card-header>
         <b-card-body class="pl-0 pr-0">
           <b-row>
-            <b-col xm="12" md="4">
-              <chart-component-doughnut
-                v-if="chartData"
-                :height="235"
-                :width="235"
-                :data="chartData"
-                class="mb-3"
-              />
-            </b-col>
-            <b-col class="border-left d-none d-md-block" md="1" />
-            <b-col xm="12" md="7">
-              <!-- tokens -->
-              <div
-                v-for="(token, index) in assetTable.items"
-                :key="`asset-${index}`"
-                class="d-flex justify-content-between mb-1"
-              >
-                <div class="d-flex align-items-center">
-                  <b-avatar :variant="`light-${token.color}`" rounded>
-                    <feather-icon
-                      :icon="token.icon"
-                      size="16"
-                      :class="`text-${token.color}`"
-                    />
-                  </b-avatar>
-                  <span class="font-weight-bold ml-75 d-none d-md-block">
-                    {{ token.type }}
-                  </span>
-                  <span class="ml-25">{{ token.percent }}%</span>
-                </div>
-                <div class="d-flex flex-column">
-                  <span class="text-right">{{ formatToken(token) }}</span>
-                  <small class="text-right">
-                    {{ currency }}{{ formatNumber(token.currency) }}
-                  </small>
-                </div>
+            <b-col lg="3" md="12" sm="12" xs="12" align-self="center">
+              <div class="text-center">
+                <vue-qr
+                  :text="address"
+                  :logoSrc="iconUrl"
+                  :logoScale="0.2"
+                  :logoMargin="0.5"
+                  :dotScale="0.6"
+                  :margin="4"
+                  :size="200"
+                  colorDark="#343a40"
+                  backgroundColor="#FFFFFF00"
+                  :style="{ boxShadow: '0px 6px 10px #00000040' }"
+                />
               </div>
-              <!--/ tokens -->
-              <div class="text-right border-top pt-1">
-                <h2>
-                  Total: {{ currency }}{{ formatNumber(assetTable.currency) }}
-                </h2>
+            </b-col>
+            <b-col lg="9" md="12" sm="12" xs="12">
+              <div v-if="account" class="text-trancate mb-0 mt-1">
+                <div
+                  class="d-flex align-items-center justify-content-between mb-1"
+                >
+                  <h5 class="mb-25">
+                    Overview
+                  </h5>
+                  <div class="d-flex align-items-center">
+                    <span
+                      v-b-tooltip.hover.bottom="{ variant: 'secondary' }"
+                      :title="address"
+                      class="customizer-addr mx-25 d-none d-sm-block"
+                    >
+                      {{ address }}
+                    </span>
+                    <span
+                      v-b-tooltip.hover.bottom="{ variant: 'secondary' }"
+                      :title="address"
+                      class="customizer-addr mx-25 d-sm-block d-md-none d-lg-none"
+                    >
+                      {{ formatAddress(address) }}
+                    </span>
+                    <feather-icon
+                      icon="CopyIcon"
+                      size="16"
+                      class="cursor-pointer"
+                      @click="copy()"
+                    />
+                  </div>
+                </div>
+                <div
+                  v-for="(token, index) in assetTable.items"
+                  :key="`asset-${index}`"
+                  class="d-flex justify-content-between mb-25"
+                >
+                  <div class="d-flex align-items-center">
+                    <b-avatar :variant="`light-${token.color}`" rounded>
+                      <feather-icon
+                        :icon="token.icon"
+                        size="16"
+                        :class="`text-${token.color}`"
+                      />
+                    </b-avatar>
+                    <span class="font-weight-bold ml-75 d-none d-md-block">
+                      {{ token.type }}
+                    </span>
+                    <span class="ml-25">{{ token.percent }}%</span>
+                  </div>
+                  <div class="d-flex flex-column">
+                    <span class="text-right">{{ formatToken(token) }}</span>
+                    <small class="text-right">
+                      {{ currency }}{{ formatNumber(token.currency) }}
+                    </small>
+                  </div>
+                </div>
+                <!--/ tokens -->
+                <!-- Token other -->
+                <div class="flex align-items-center">
+                  <p class="mb-0 mt-50 mr-1">Token:</p>
+                  <b-form-select
+                    v-model="selected"
+                    size="sm"
+                    class="mt-50"
+                    :options="options"
+                  >
+                  </b-form-select>
+                </div>
+                <div class="text-right border-top mt-1">
+                  <h5 class="mt-1 mb-0">
+                    Total: {{ currency }}{{ formatNumber(assetTable.currency) }}
+                  </h5>
+                </div>
               </div>
             </b-col>
           </b-row>
         </b-card-body>
       </b-card>
-
-      <!-- <b-card v-if="delegations">
-        <b-card-header class="pt-0 pl-0 pr-0">
-          <b-card-title>Delegation</b-card-title>
-          <div>
-            <b-button
-              v-b-modal.operation-modal
-              variant="link"
-              size="sm"
-              class="mr-25 customizer-button"
-              @click="setOperationModalType('Delegate')"
-            >
-              <feather-icon icon="LogInIcon" class="d-md-none" />
-              <small class="d-none d-md-block"> Delegate </small>
-            </b-button>
-            <b-button
-              v-if="delegations"
-              v-b-modal.operation-modal
-              variant="link"
-              size="sm"
-              class="customizer-button"
-              @click="setOperationModalType('Withdraw')"
-            >
-              <feather-icon icon="ShareIcon" class="d-md-none" />
-              <small class="d-none d-md-block"> Withdraw Rewards </small>
-            </b-button>
-          </div>
-        </b-card-header>
-        <b-card-body class="pl-0 pr-0">
-          <b-table :items="deleTable" stacked="sm">
-            <template #cell(action)="data">
-
-              <b-button-group size="sm">
-                <b-button
-                  v-b-modal.operation-modal
-                  v-ripple.400="'rgba(113, 102, 240, 0.15)'"
-                  v-b-tooltip.hover.top="'Delegate'"
-                  variant="outline-primary"
-                  @click="selectValue(data.value, 'Delegate')"
-                >
-                  <feather-icon icon="LogInIcon" />
-                </b-button>
-                <b-button
-                  v-b-modal.operation-modal
-                  v-ripple.400="'rgba(113, 102, 240, 0.15)'"
-                  v-b-tooltip.hover.top="'Redelegate'"
-                  variant="outline-primary"
-                  @click="selectValue(data.value, 'Redelegate')"
-                >
-                  <feather-icon icon="ShuffleIcon" />
-                </b-button>
-                <b-button
-                  v-b-modal.operation-modal
-                  v-ripple.400="'rgba(113, 102, 240, 0.15)'"
-                  v-b-tooltip.hover.top="'Unbond'"
-                  variant="outline-primary"
-                  @click="selectValue(data.value, 'Unbond')"
-                >
-                  <feather-icon icon="LogOutIcon" />
-                </b-button>
-              </b-button-group>
-            </template>
-          </b-table>
-        </b-card-body>
-      </b-card> -->
       <div class="text-right mb-2">
         <b-button
           variant="link"
@@ -428,11 +109,11 @@
           <feather-icon icon="FileTextIcon" size="16" />
         </b-button>
       </div>
-
       <b-card title="Transactions" no-body class="text-truncate overflow-auto">
         <b-table
           :items="txs"
           :busy="isBusy"
+          :fields="list_fields"
           striped
           hover
           responsive="md"
@@ -494,223 +175,6 @@
             Account not found 🕵🏻‍♀️
           </h2>
           <p class="mb-2">Oops! 😖 {{ error }}.</p>
-          <b-card v-if="account" title="Profile" class="customizer-card">
-            <b-table-simple striped hover responsive stacked="sm">
-              <b-tbody v-if="account.type === 'cosmos-sdk/BaseAccount'">
-                <b-tr>
-                  <b-td> Account Type </b-td><b-td> {{ account.type }} </b-td>
-                </b-tr>
-                <b-tr>
-                  <b-td class="max-width:100px;">
-                    Account Number
-                  </b-td>
-                  <b-td> {{ account.value.account_number }} </b-td>
-                </b-tr>
-                <b-tr>
-                  <b-td> Sequence </b-td>
-                  <b-td> {{ account.value.sequence }} </b-td>
-                </b-tr>
-                <!-- <b-tr>
-                  <b-td> Public Key </b-td>
-                  <b-td>
-                    <object-field-component
-                      :tablefield="account.value.public_key"
-                    />
-                  </b-td>
-                </b-tr> -->
-              </b-tbody>
-              <b-tbody
-                v-else-if="
-                  account.type === 'cosmos-sdk/PeriodicVestingAccount' &&
-                    account.value.base_vesting_account
-                "
-              >
-                <b-tr>
-                  <b-td>
-                    Account Type
-                  </b-td>
-                  <b-td>
-                    {{ account.type }}
-                  </b-td>
-                </b-tr>
-                <b-tr>
-                  <b-td> Account Number </b-td>
-                  <b-td>
-                    {{
-                      account.value.base_vesting_account.base_account
-                        .account_number
-                    }}
-                  </b-td>
-                </b-tr>
-                <b-tr>
-                  <b-td> Sequence </b-td>
-                  <b-td>
-                    {{
-                      account.value.base_vesting_account.base_account.sequence
-                    }}
-                  </b-td>
-                </b-tr>
-                <!-- <b-tr>
-                  <b-td> Public Key </b-td>
-                  <b-td>
-                    <object-field-component
-                      :tablefield="
-                        account.value.base_vesting_account.base_account
-                          .public_key
-                      "
-                    />
-                  </b-td>
-                </b-tr> -->
-                <b-tr>
-                  <b-td> Original Vesting </b-td>
-                  <b-td>
-                    {{
-                      formatToken(
-                        account.value.base_vesting_account.original_vesting
-                      )
-                    }}
-                  </b-td>
-                </b-tr>
-                <b-tr>
-                  <b-td> Delegated Free </b-td>
-                  <b-td>
-                    {{
-                      formatToken(
-                        account.value.base_vesting_account.delegated_free
-                      )
-                    }}
-                  </b-td>
-                </b-tr>
-                <b-tr>
-                  <b-td> Delegated Vesting </b-td>
-                  <b-td>
-                    {{
-                      formatToken(
-                        account.value.base_vesting_account.delegated_vesting
-                      )
-                    }}
-                  </b-td>
-                </b-tr>
-                <b-tr>
-                  <b-td> Vesting Time </b-td>
-                  <b-td>
-                    {{ formatTime(account.value.start_time) }} -
-                    {{
-                      formatTime(account.value.base_vesting_account.end_time)
-                    }}
-                  </b-td>
-                </b-tr>
-                <b-tr>
-                  <b-td> Vesting Periods </b-td>
-                  <b-td>
-                    <b-table-simple>
-                      <th>Length</th>
-                      <th>Amount</th>
-                      <b-tr
-                        v-for="(p, index) in account.value.vesting_periods"
-                        :key="index"
-                      >
-                        <td>
-                          <small>
-                            {{ p.length }}
-                          </small>
-                          <br />
-                          <small>
-                            {{ formatLength(p.length) }}
-                          </small>
-                        </td>
-                        <td>{{ formatToken(p.amount) }}</td>
-                      </b-tr>
-                    </b-table-simple>
-                  </b-td>
-                </b-tr>
-              </b-tbody>
-              <b-tbody
-                v-else-if="
-                  account.type === 'cosmos-sdk/DelayedVestingAccount' &&
-                    account.value.base_vesting_account
-                "
-              >
-                <b-tr>
-                  <b-td> Account Type </b-td>
-                  <b-td> {{ account.type }} </b-td>
-                </b-tr>
-                <b-tr>
-                  <b-td style="max-width:100px;">
-                    Account Number
-                  </b-td>
-                  <b-td>
-                    {{
-                      account.value.base_vesting_account.base_account
-                        .account_number
-                    }}
-                  </b-td>
-                </b-tr>
-                <b-tr>
-                  <b-td> Sequence </b-td>
-                  <b-td>
-                    {{
-                      account.value.base_vesting_account.base_account.sequence
-                    }}
-                  </b-td>
-                </b-tr>
-                <!-- <b-tr>
-                  <b-td> Public Key </b-td>
-                  <b-td>
-                    <object-field-component
-                      :tablefield="
-                        account.value.base_vesting_account.base_account
-                          .public_key
-                      "
-                    />
-                  </b-td>
-                </b-tr> -->
-                <b-tr>
-                  <b-td> Original Vesting </b-td>
-                  <b-td>
-                    {{
-                      formatToken(
-                        account.value.base_vesting_account.original_vesting
-                      )
-                    }}
-                  </b-td>
-                </b-tr>
-                <b-tr>
-                  <b-td> Delegated Free </b-td>
-                  <b-td>
-                    {{
-                      formatToken(
-                        account.value.base_vesting_account.delegated_free
-                      )
-                    }}
-                  </b-td>
-                </b-tr>
-                <b-tr>
-                  <b-td> Delegated Vesting </b-td>
-                  <b-td>
-                    {{
-                      formatToken(
-                        account.value.base_vesting_account.delegated_vesting
-                      )
-                    }}
-                  </b-td>
-                </b-tr>
-                <b-tr>
-                  <b-td> End Time </b-td>
-                  <b-td>
-                    {{
-                      formatTime(account.value.base_vesting_account.end_time)
-                    }}
-                  </b-td>
-                </b-tr>
-              </b-tbody>
-              <object-field-component
-                v-else
-                :tablefield="account.value || account"
-              />
-            </b-table-simple>
-          </b-card>
-
           <operation-modal
             :type="operationModalType"
             :address="address"
@@ -732,26 +196,26 @@
 <script>
 import { $themeColors } from '@themeConfig';
 import dayjs from 'dayjs';
+import { defineAsyncComponent } from 'vue';
 import {
   BCard,
   BAvatar,
   BTable,
   BRow,
   BCol,
-  BTableSimple,
-  BTr,
-  BTd,
-  BTbody,
-  BCardHeader,
-  BCardTitle,
+  // BTableSimple,
+  // BTr,
+  // BTd,
+  // BTbody,
   BButton,
-  BCardBody,
   BBadge,
   VBModal,
   VBTooltip,
   BPagination,
-  BSpinner
+  BSpinner,
+  BFormSelect
 } from 'bootstrap-vue';
+// import QRCodeVue3 from 'qrcode-vue3';
 import FeatherIcon from '@/@core/components/feather-icon/FeatherIcon.vue';
 import ToastificationContent from '@core/components/toastification/ToastificationContent.vue';
 import Ripple from 'vue-ripple-directive';
@@ -774,12 +238,10 @@ import {
   numberWithCommas,
   toETHAddress
 } from '@/libs/utils';
-import { sha256 } from '@cosmjs/crypto';
-import { toHex } from '@cosmjs/encoding';
 import { codeMessage } from '@/constants/module';
-import ObjectFieldComponent from './ObjectFieldComponent.vue';
+// import ObjectFieldComponent from './ObjectFieldComponent.vue';
 import OperationModal from '@/views/components/OperationModal/index.vue';
-import ChartComponentDoughnut from './ChartComponentDoughnut.vue';
+// import ChartComponentDoughnut from './ChartComponentDoughnut.vue';
 import _ from 'lodash';
 
 export default {
@@ -792,21 +254,20 @@ export default {
     BSpinner,
     FeatherIcon,
     VueQr,
-    BTableSimple,
-    BTbody,
-    BCardHeader,
-    BCardTitle,
-    BCardBody,
+    // BTableSimple,
+    // BTbody,
     BButton,
     BBadge,
-    BTr,
-    BTd,
+    // BTr,
+    // BTd,
     BPagination,
+    BFormSelect,
     // eslint-disable-next-line vue/no-unused-components
     ToastificationContent,
-    ObjectFieldComponent,
-    ChartComponentDoughnut,
+    // ObjectFieldComponent,
+    // ChartComponentDoughnut,
     OperationModal
+    // QRCodeVue3
   },
   directives: {
     'b-modal': VBModal,
@@ -850,7 +311,63 @@ export default {
       stakingParameters: {},
       operationModalType: '',
       error: null,
-      isBusy: false
+      isBusy: false,
+      selected: null,
+      iconUrl: require('../assets/images/logo/six-protocol.png'),
+      options: [
+        { value: null, text: 'Please select an option' },
+        { value: 'a', text: 'This is First option' },
+        { value: 'b', text: 'Selected Option' },
+        { value: { C: '3PO' }, text: 'This is an option with object value' },
+        { value: 'd', text: 'This one is disabled', disabled: true }
+      ],
+      list_fields: [
+        {
+          key: 'txhash',
+          thClass: 'px-50 py-50',
+          tdClass: 'px-50 py-50'
+        },
+        {
+          key: 'type',
+          thClass: 'px-50 py-50',
+          tdClass: 'px-50 py-50'
+        },
+        {
+          key: 'block',
+          thClass: 'px-50 py-50',
+          tdClass: 'px-50 py-50'
+        },
+        {
+          key: 'status',
+          thClass: 'px-50 py-50',
+          tdClass: 'px-50 py-50'
+        },
+        {
+          key: 'from',
+          thClass: 'px-50 py-50',
+          tdClass: 'px-50 py-50'
+        },
+        {
+          key: 'to',
+          thClass: 'px-50 py-50',
+          tdClass: 'px-50 py-50'
+        },
+        {
+          key: 'value',
+          thClass: 'px-50 py-50',
+          tdClass: 'px-50 py-50'
+        },
+        {
+          key: 'txnFee',
+          thClass: 'px-50 py-50',
+          tdClass: 'px-50 py-50'
+        },
+        {
+          key: 'time',
+          thClass: 'px-50 py-50',
+          tdClass: 'px-50 py-50'
+        }
+      ]
     };
   },
   computed: {
@@ -1000,7 +517,6 @@ export default {
       );
 
       let stakingDenom = '';
-
       if (this.delegations && this.delegations.length > 0) {
         let temp = 0;
         this.delegations.forEach(x => {
@@ -1056,44 +572,47 @@ export default {
           currency: unbonding
         });
       }
+
       total = total.map(x => {
         const xh = x;
         xh.percent = percent(Number(x.amount) / sum);
+        console.log('xh', xh);
         return xh;
       });
+      console.log('total', total);
       return {
         items: total,
         currency: parseFloat(sumCurrency.toFixed(2))
       };
     },
-    chartData() {
-      const data = this.assetTable.items.reduce((t, c) => {
-        const th = t;
-        if (t[c.type]) {
-          th[c.type] += Number(c.amount);
-        } else {
-          th[c.type] = Number(c.amount);
-        }
-        return th;
-      }, []);
-      return {
-        datasets: [
-          {
-            labels: Object.keys(data),
-            data: Object.values(data),
-            backgroundColor: [
-              $themeColors.success,
-              $themeColors.primary,
-              $themeColors.warning,
-              $themeColors.danger,
-              $themeColors.info
-            ],
-            borderWidth: 0,
-            pointStyle: 'rectRounded'
-          }
-        ]
-      };
-    },
+    // chartData() {
+    //   const data = this.assetTable.items.reduce((t, c) => {
+    //     const th = t;
+    //     if (t[c.type]) {
+    //       th[c.type] += Number(c.amount);
+    //     } else {
+    //       th[c.type] = Number(c.amount);
+    //     }
+    //     return th;
+    //   }, []);
+    //   return {
+    //     datasets: [
+    //       {
+    //         labels: Object.keys(data),
+    //         data: Object.values(data),
+    //         backgroundColor: [
+    //           $themeColors.success,
+    //           $themeColors.primary,
+    //           $themeColors.warning,
+    //           $themeColors.danger,
+    //           $themeColors.info
+    //         ],
+    //         borderWidth: 0,
+    //         pointStyle: 'rectRounded'
+    //       }
+    //     ]
+    //   };
+    // },
     deleTable() {
       const re = [];
       if (
@@ -1287,18 +806,15 @@ export default {
   border-radius: 12px;
 }
 
-.customizer-qr-code {
-  display: block;
-  text-align: center;
-}
-
 .customizer-addr {
   overflow: hidden;
   text-overflow: ellipsis;
   word-break: break-all;
   font-size: 0.9rem;
+  font-weight: 600;
 }
+
 .customizer-card {
-  height: 260px !important;
+  height: 100% !important;
 }
 </style>

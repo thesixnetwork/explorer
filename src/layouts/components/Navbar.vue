@@ -22,7 +22,7 @@
             <feather-icon
               icon="MenuIcon"
               size="22"
-              class="cursor-pointer customizer-icon  d-xs-block d-sm-block d-md-block d-lg-block d-xl-none"
+              class="cursor-pointer customizer-icon d-xs-block d-sm-block d-md-block d-lg-block d-xl-none"
             />
           </b-link>
         </b-media-aside>

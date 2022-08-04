@@ -21,7 +21,8 @@ module.exports = {
     'comma-dangle': ['error', 'never'],
     'comma-dangle': 'off',
     'vue/max-attributes-per-line': 'off',
-    'vue/no-side-effects-in-computed-properties': 'off'
+    'vue/no-side-effects-in-computed-properties': 'off',
+    'vue/attribute-hyphenation': ['error', 'never']
     // "@typescript-eslint/comma-dangle": ["error", "only-multiline"]
   }
 };
