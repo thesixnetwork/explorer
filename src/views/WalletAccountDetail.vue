@@ -78,10 +78,10 @@
                 </div>
                 <!--/ tokens -->
                 <!-- Token other -->
-                <div class="flex align-items-center">
-                  <p class="mb-0 mt-50 mr-1">
+                <div v-if="options.length > 0" class="d-flex align-items-center mt-1">
+                  <span class="font-weight-bold mr-1">
                     Token:
-                  </p>
+                  </span>
                   <v-select
                     class="style-chooser w-100 p-0"
                     :options="options"
@@ -178,9 +178,7 @@
           <h2 class="mb-1">
             Account not found 🕵🏻‍♀️
           </h2>
-          <p class="mb-2">
-            Oops! 😖 {{ error }}.
-          </p>
+          <span class="mb-2"> Oops! 😖 {{ error }}. </span>
           <operation-modal
             :type="operationModalType"
             :address="address"
@@ -297,7 +295,7 @@ export default {
   data() {
     const { address } = this.$route.params;
     return {
-      placement:'down',
+      placement: 'down',
       currency: getUserCurrencySign(),
       selectedValidator: '',
       totalCurrency: 0,
@@ -319,15 +317,7 @@ export default {
       selectedIndex: 0, // the index of the selected tab,
       tabs: [],
       iconUrl: require('../assets/images/logo/six-protocol.png'),
-      options: [
-        { name: 'Cat', id: 'cat' },
-        { name: 'Dog', id: 'dog' },
-        { name: 'Elephant', id: 'elephant' },
-        { name: 'Girafe', id: 'girafe' },
-        { name: 'Snake', id: 'snake' },
-        { name: 'Spider', id: 'spider' },
-        { name: 'Unicorn', id: 'unicorn' }
-      ],
+      options: [{}],
       list_fields: [
         {
           key: 'txhash',
@@ -671,12 +661,14 @@ export default {
       });
       this.$http.getBankAccountBalanceToken(this.address).then(bal => {
         let array = [];
-        const filterData = bal.result.filter(x=> { return x.denom !== "usix"})
-        if  (filterData.length > 0) {
-           bal.result.map((x, i) => {
+        const filterData = bal.result.filter(x => {
+          return x.denom !== 'usix';
+        });
+        if (filterData.length > 0) {
+          bal.result.map((x, i) => {
             array.push({
               name: formatTokenDenom(x.denom),
-              id: this.formatAmount(x.amount) + " " + formatTokenDenom(x.denom)
+              id: this.formatAmount(x.amount) + ' ' + formatTokenDenom(x.denom)
             });
           });
         }

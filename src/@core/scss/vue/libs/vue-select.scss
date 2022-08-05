@@ -40,14 +40,17 @@ $vs-dropdown-box-shadow: 0px 4px 25px 0px rgba(0, 0, 0, 0.1);
   transition: all 0.25s ease-in-out;
 
   .vs--single & {
-    padding-left: 6px;
+    padding: unset;
+  }
+
+  .vs__actions {
+    padding: 0px 6px;
   }
 }
 
 .vs__dropdown-option--disabled {
   &.vs__dropdown-option--selected {
     background: $white !important;
-   
   }
   opacity: 0.5;
 }
@@ -79,7 +82,7 @@ $vs-dropdown-box-shadow: 0px 4px 25px 0px rgba(0, 0, 0, 0.1);
 /* rtl:begin:ignore */
 .vs__dropdown-option--selected {
   background-color: $white;
-  color:$black;
+  color: $black;
   position: relative;
 
   &::after {
@@ -100,7 +103,11 @@ $vs-dropdown-box-shadow: 0px 4px 25px 0px rgba(0, 0, 0, 0.1);
     }
 
     // Icon
-    background-image: url(str-replace(str-replace($check, 'currentColor', $white), '#', '%23'));
+    background-image: url(str-replace(
+      str-replace($check, 'currentColor', $white),
+      '#',
+      '%23'
+    ));
     background-repeat: no-repeat;
     background-position: center;
     background-size: 1.1rem;
@@ -318,9 +325,7 @@ $vs-dropdown-box-shadow: 0px 4px 25px 0px rgba(0, 0, 0, 0.1);
   .vs__actions {
     svg {
       fill: $theme-dark-input-border-color;
-      cursor: pointer !important;
     }
-   
   }
   .vs__dropdown-menu {
     background: $theme-dark-input-bg;
