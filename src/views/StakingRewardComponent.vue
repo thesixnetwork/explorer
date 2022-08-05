@@ -9,126 +9,123 @@
       /> -->
     </b-card-header>
 
-    <b-card-body class="overflow-auto" style="max-height:250px;">
+    <b-card-body class="overflow-auto" style="max-height:260px;">
       <!-- Rewards -->
-      <div
-        v-for="d in data.self_bond_rewards"
-        :key="d.amount"
-        class="transaction-item mb-1"
-      >
-        <b-media no-body class="align-items-center">
-          <b-media-aside>
-            <b-avatar
-              rounded
-              size="42"
-              variant="light-success"
-              text="R"
-              title="Rewards"
-            />
-          </b-media-aside>
-          <b-media-body>
-            <h6 class="transaction-title">
-              {{ formatDenom(d) }}
-            </h6>
-          </b-media-body>
-        </b-media>
-        <small class="text-success d-none d-xl-block ">
-          Reward
-        </small>
+      <div v-for="d in data.self_bond_rewards" :key="d.amount">
+        <div class="mb-50">
+          <span class="font-weight-bold">
+            Rewards
+          </span>
+        </div>
+        <div class="transaction-item mb-1">
+          <b-media no-body class="align-items-center">
+            <b-media-aside>
+              <b-avatar
+                rounded
+                size="42"
+                variant="light-success"
+                text="R"
+                title="Rewards"
+              />
+            </b-media-aside>
+            <b-media-body>
+              <h6 class="transaction-title">
+                {{ formatDenom(d) }}
+              </h6>
+            </b-media-body>
+          </b-media>
+        </div>
       </div>
 
       <!-- Commission -->
-      <div
-        v-for="d in data.val_commission"
-        :key="d.amount"
-        class="transaction-item mb-1"
-      >
-        <b-media no-body class="align-items-center">
-          <b-media-aside>
-            <b-avatar
-              rounded
-              size="42"
-              variant="link"
-              text="C"
-              title="Commission"
-              class="customizer-icon"
-            />
-          </b-media-aside>
-          <b-media-body>
-            <h6 class="transaction-title">
-              {{ formatDenom(d) }}
-            </h6>
-          </b-media-body>
-        </b-media>
-        <!-- <small class="customizer-text d-none d-xl-block">
-          Commission
-        </small> -->
+      <div v-for="d in data.val_commission" :key="d.amount">
+        <div class="mb-50">
+          <span class="font-weight-bold">
+            Commission
+          </span>
+        </div>
+        <div class="transaction-item mb-1">
+          <b-media no-body class="align-items-center">
+            <b-media-aside>
+              <b-avatar
+                rounded
+                size="42"
+                variant="link"
+                text="C"
+                title="Commission"
+                class="customizer-icon"
+              />
+            </b-media-aside>
+            <b-media-body>
+              <h6 class="transaction-title">
+                {{ formatDenom(d) }}
+              </h6>
+            </b-media-body>
+          </b-media>
+        </div>
       </div>
+
       <!-- Estimated Reward -->
-      <div class="mb-50">
-        <b>
-          Estimated Reward
-        </b>
-      </div>
-      <div
-        v-for="d in data.val_commission"
-        :key="d.amount"
-        class="transaction-item mb-1"
-      >
-        <b-media no-body class="align-items-center">
-          <b-media-aside>
-            <b-avatar
-              rounded
-              size="42"
-              variant="link"
-              text="E"
-              title="per block"
-              class="customizer-icon"
-            />
-          </b-media-aside>
-          <b-media-body>
-            <h6 class="transaction-title">
-              {{ formatDenom(d) }}
-            </h6>
-          </b-media-body>
-        </b-media>
-        <!-- <small class="customizer-text d-none d-xl-block">
+      <div v-for="d in data.val_commission" :key="d.amount">
+        <div class="mb-50">
+          <span class="font-weight-bold">
+            Estimated Reward
+          </span>
+        </div>
+        <div class="transaction-item mb-1">
+          <b-media no-body class="align-items-center">
+            <b-media-aside>
+              <b-avatar
+                rounded
+                size="42"
+                variant="link"
+                text="E"
+                title="per block"
+                class="customizer-icon"
+              />
+            </b-media-aside>
+            <b-media-body>
+              <h6 class="transaction-title">
+                {{ formatDenom(d) }}
+              </h6>
+            </b-media-body>
+          </b-media>
+          <!-- <small class="customizer-text d-none d-xl-block">
           per block
         </small> -->
+        </div>
       </div>
 
       <!-- Block Validated -->
-      <div class="mb-50">
-        <b>
-          Block Validated
-        </b>
-      </div>
-      <div
-        v-for="d in data.val_commission"
-        :key="d.amount"
-        class="transaction-item"
-      >
-        <b-media no-body class="align-items-center">
-          <b-media-aside>
-            <b-avatar
-              rounded
-              size="42"
-              variant="link"
-              text="B"
-              title="Block"
-              class="customizer-icon"
-            />
-          </b-media-aside>
-          <b-media-body>
-            <h6 class="transaction-title">
-              {{ formatDenom(d) }}
-            </h6>
-            <!-- <small>{{ formatNumber(d.amount) }}</small> -->
-          </b-media-body>
-        </b-media>
-        <!-- <small class="customizer-text d-none d-xl-block">
+      <div v-for="d in data.val_commission" :key="d.amount">
+        <div class="mb-50">
+          <span class="font-weight-bold">
+            Block Validated
+          </span>
+        </div>
+        <div class="transaction-item">
+          <b-media no-body class="align-items-center">
+            <b-media-aside>
+              <b-avatar
+                rounded
+                size="42"
+                variant="link"
+                text="B"
+                title="Block"
+                class="customizer-icon"
+              />
+            </b-media-aside>
+            <b-media-body>
+              <h6 class="transaction-title">
+                {{ formatDenom(d) }}
+              </h6>
+              <!-- <small>{{ formatNumber(d.amount) }}</small> -->
+            </b-media-body>
+          </b-media>
+          <!-- <small class="customizer-text d-none d-xl-block">
           Block
         </small> -->
+        </div>
       </div>
     </b-card-body>
     <!-- <b-card-body class="pt-0">

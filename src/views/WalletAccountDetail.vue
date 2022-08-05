@@ -8,14 +8,14 @@
               <div class="text-center">
                 <vue-qr
                   :text="address"
-                  :logoSrc="iconUrl"
-                  :logoScale="0.2"
-                  :logoMargin="0.5"
-                  :dotScale="0.6"
+                  :logo-src="iconUrl"
+                  :logo-scale="0.2"
+                  :logo-margin="0.5"
+                  :dot-scale="0.6"
                   :margin="4"
                   :size="200"
-                  colorDark="#343a40"
-                  backgroundColor="#FFFFFF00"
+                  color-dark="#343a40"
+                  background-color="#FFFFFF00"
                   :style="{ boxShadow: '0px 6px 10px #00000040' }"
                 />
               </div>
@@ -78,15 +78,16 @@
                 </div>
                 <!--/ tokens -->
                 <!-- Token other -->
-                <div class="flex align-items-center">
-                  <p class="mb-0 mt-50 mr-1">
+                <div class="d-flex align-items-center mt-1">
+                  <span class="font-weight-bold mr-1">
                     Token:
-                  </p>
-                  <b-form-select
-                    v-model="selected"
-                    size="sm"
-                    class="mt-50"
+                  </span>
+                  <v-select
+                    class="style-chooser w-100 p-0"
                     :options="options"
+                    label="id"
+                    :placement="placement"
+                    select
                   />
                 </div>
                 <div class="text-right border-top mt-1">
@@ -177,7 +178,7 @@
           <h2 class="mb-1">
             Account not found 🕵🏻‍♀️
           </h2>
-          <p class="mb-2">Oops! 😖 {{ error }}.</p>
+          <span class="mb-2"> Oops! 😖 {{ error }}. </span>
           <operation-modal
             :type="operationModalType"
             :address="address"
@@ -210,7 +211,8 @@ import {
   VBTooltip,
   BPagination,
   BSpinner,
-  BFormSelect
+  BCardBody
+  // BFormSelect
 } from 'bootstrap-vue';
 import FeatherIcon from '@/@core/components/feather-icon/FeatherIcon.vue';
 import ToastificationContent from '@core/components/toastification/ToastificationContent.vue';
@@ -239,6 +241,8 @@ import { codeMessage } from '@/constants/module';
 import OperationModal from '@/views/components/OperationModal/index.vue';
 // import ChartComponentDoughnut from './ChartComponentDoughnut.vue';
 import _ from 'lodash';
+// import Dropdown from 'vue-simple-search-dropdown';
+import vSelect from 'vue-select';
 
 export default {
   components: {
@@ -253,10 +257,16 @@ export default {
     BButton,
     BBadge,
     BPagination,
-    BFormSelect,
+    // BFormSelect,
     // eslint-disable-next-line vue/no-unused-components
     ToastificationContent,
-    OperationModal
+    // ObjectFieldComponent,
+    // ChartComponentDoughnut,
+    OperationModal,
+    // Dropdown,
+    BCardBody,
+    vSelect
+    // QRCodeVue3
   },
   directives: {
     'b-modal': VBModal,
@@ -285,6 +295,7 @@ export default {
   data() {
     const { address } = this.$route.params;
     return {
+      placement: 'down',
       currency: getUserCurrencySign(),
       selectedValidator: '',
       totalCurrency: 0,
@@ -301,17 +312,19 @@ export default {
       operationModalType: '',
       error: null,
       isBusy: false,
-      selected: null,
+      selected: { name: null, id: null },
       isActive: true,
       selectedIndex: 0, // the index of the selected tab,
       tabs: [],
       iconUrl: require('../assets/images/logo/six-protocol.png'),
       options: [
-        { value: null, text: 'Please select an option' },
-        { value: 'a', text: 'This is First option' },
-        { value: 'b', text: 'Selected Option' },
-        { value: { C: '3PO' }, text: 'This is an option with object value' },
-        { value: 'd', text: 'This one is disabled', disabled: true }
+        { name: 'Cat', id: 'cat' },
+        { name: 'Dog', id: 'dog' },
+        { name: 'Elephant', id: 'elephant' },
+        { name: 'Girafe', id: 'girafe' },
+        { name: 'Snake', id: 'snake' },
+        { name: 'Spider', id: 'spider' },
+        { name: 'Unicorn', id: 'unicorn' }
       ],
       list_fields: [
         {
@@ -568,10 +581,8 @@ export default {
       total = total.map(x => {
         const xh = x;
         xh.percent = percent(Number(x.amount) / sum);
-        console.log('xh', xh);
         return xh;
       });
-      console.log('total', total);
       return {
         items: total,
         currency: parseFloat(sumCurrency.toFixed(2))
@@ -656,6 +667,21 @@ export default {
           }
         });
       });
+      this.$http.getBankAccountBalanceToken(this.address).then(bal => {
+        let array = [];
+        const filterData = bal.result.filter(x => {
+          return x.denom !== 'usix';
+        });
+        if (filterData.length > 0) {
+          bal.result.map((x, i) => {
+            array.push({
+              name: formatTokenDenom(x.denom),
+              id: this.formatAmount(x.amount) + ' ' + formatTokenDenom(x.denom)
+            });
+          });
+        }
+        this.options = array;
+      });
       this.$http.getStakingReward(this.address).then(res => {
         this.reward = res;
       });
@@ -665,6 +691,9 @@ export default {
       this.$http.getStakingUnbonding(this.address).then(res => {
         this.unbonding = res.unbonding_responses || res;
       });
+    },
+    validateSelection(selection) {
+      this.selected = selection;
     },
     formatNumber(v) {
       return numberWithCommas(v);
@@ -753,7 +782,6 @@ export default {
 <style lang="scss" scoped>
 @import '~@core/scss/base/bootstrap-extended/include';
 @import '~@core/scss/base/components/variables-dark';
-
 .customizer-button {
   background-color: $info;
   color: #fff;

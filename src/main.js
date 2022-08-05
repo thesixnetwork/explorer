@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import { ToastPlugin, ModalPlugin } from 'bootstrap-vue'
 import VueCompositionAPI from '@vue/composition-api'
+import Dropdown from 'vue-simple-search-dropdown';
 import messages from '@/lang'
 
 import VueI18n from 'vue-i18n'
@@ -35,6 +36,7 @@ Vue.use(ModalPlugin)
 
 // Composition API
 Vue.use(VueCompositionAPI)
+Vue.use(Dropdown);
 
 // import core styles
 require('@core/scss/core.scss')
