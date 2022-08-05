@@ -79,14 +79,15 @@
                 <!--/ tokens -->
                 <!-- Token other -->
                 <div class="flex align-items-center">
-                  <p class="mb-0 mt-50 mr-1">Token:</p>
+                  <p class="mb-0 mt-50 mr-1">
+                    Token:
+                  </p>
                   <b-form-select
                     v-model="selected"
                     size="sm"
                     class="mt-50"
                     :options="options"
-                  >
-                  </b-form-select>
+                  />
                 </div>
                 <div class="text-right border-top mt-1">
                   <h5 class="mt-1 mb-0">
@@ -98,6 +99,7 @@
           </b-row>
         </b-card-body>
       </b-card>
+
       <div class="text-right mb-2">
         <b-button
           variant="link"
@@ -109,6 +111,7 @@
           <feather-icon icon="FileTextIcon" size="16" />
         </b-button>
       </div>
+
       <b-card title="Transactions" no-body class="text-truncate overflow-auto">
         <b-table
           :items="txs"
@@ -122,7 +125,7 @@
         >
           <template #table-busy>
             <div class="text-center text-secondary my-2">
-              <b-spinner class="align-middle mr-25"></b-spinner>
+              <b-spinner class="align-middle mr-25" />
               <strong>Loading...</strong>
             </div>
           </template>
@@ -194,19 +197,13 @@
 </template>
 
 <script>
-import { $themeColors } from '@themeConfig';
 import dayjs from 'dayjs';
-import { defineAsyncComponent } from 'vue';
 import {
   BCard,
   BAvatar,
   BTable,
   BRow,
   BCol,
-  // BTableSimple,
-  // BTr,
-  // BTd,
-  // BTbody,
   BButton,
   BBadge,
   VBModal,
@@ -215,7 +212,6 @@ import {
   BSpinner,
   BFormSelect
 } from 'bootstrap-vue';
-// import QRCodeVue3 from 'qrcode-vue3';
 import FeatherIcon from '@/@core/components/feather-icon/FeatherIcon.vue';
 import ToastificationContent from '@core/components/toastification/ToastificationContent.vue';
 import Ripple from 'vue-ripple-directive';
@@ -254,20 +250,13 @@ export default {
     BSpinner,
     FeatherIcon,
     VueQr,
-    // BTableSimple,
-    // BTbody,
     BButton,
     BBadge,
-    // BTr,
-    // BTd,
     BPagination,
     BFormSelect,
     // eslint-disable-next-line vue/no-unused-components
     ToastificationContent,
-    // ObjectFieldComponent,
-    // ChartComponentDoughnut,
     OperationModal
-    // QRCodeVue3
   },
   directives: {
     'b-modal': VBModal,
@@ -313,6 +302,9 @@ export default {
       error: null,
       isBusy: false,
       selected: null,
+      isActive: true,
+      selectedIndex: 0, // the index of the selected tab,
+      tabs: [],
       iconUrl: require('../assets/images/logo/six-protocol.png'),
       options: [
         { value: null, text: 'Please select an option' },
@@ -585,34 +577,6 @@ export default {
         currency: parseFloat(sumCurrency.toFixed(2))
       };
     },
-    // chartData() {
-    //   const data = this.assetTable.items.reduce((t, c) => {
-    //     const th = t;
-    //     if (t[c.type]) {
-    //       th[c.type] += Number(c.amount);
-    //     } else {
-    //       th[c.type] = Number(c.amount);
-    //     }
-    //     return th;
-    //   }, []);
-    //   return {
-    //     datasets: [
-    //       {
-    //         labels: Object.keys(data),
-    //         data: Object.values(data),
-    //         backgroundColor: [
-    //           $themeColors.success,
-    //           $themeColors.primary,
-    //           $themeColors.warning,
-    //           $themeColors.danger,
-    //           $themeColors.info
-    //         ],
-    //         borderWidth: 0,
-    //         pointStyle: 'rectRounded'
-    //       }
-    //     ]
-    //   };
-    // },
     deleTable() {
       const re = [];
       if (
@@ -656,6 +620,7 @@ export default {
     }
   },
   created() {
+    this.tabs = this.$children;
     this.$http
       .getAuthAccount(this.address)
       .then(acc => {
@@ -794,6 +759,7 @@ export default {
   color: #fff;
   border-radius: 12px;
   font-size: 0.9rem;
+  padding: 6px 14px;
 
   .dark-layout & {
     background-color: $primary;
@@ -812,9 +778,5 @@ export default {
   word-break: break-all;
   font-size: 0.9rem;
   font-weight: 600;
-}
-
-.customizer-card {
-  height: 100% !important;
 }
 </style>

@@ -1,6 +1,6 @@
 <template>
   <div
-    class="main-menu menu-fixed menu-accordion"
+    class="main-menu menu-fixed menu-accordion menu-shadow"
     :class="[
       {
         expanded:
@@ -44,17 +44,27 @@
               >
                 Testnet
               </b-badge>
-
-              <!-- <b-badge pill variant="link" class="customizer-badge">
-                <span v-if="selected_chain.chain_name == 'fivenet'">
-                  Testnet
-                </span>
-              </b-badge> -->
             </b-link>
           </li>
 
           <!-- Toggler Button -->
           <li class="nav-item nav-toggle">
+            <b-link class="nav-link modern-nav-toggle">
+              <!-- <feather-icon
+                icon="XIcon"
+                size="20"
+                class="d-block d-xl-none"
+                @click="toggleVerticalMenuActive"
+              /> -->
+              <feather-icon
+                :icon="collapseTogglerIconFeather"
+                size="20"
+                class="d-none d-xl-block collapse-toggle-icon"
+                @click="toggleCollapsed"
+              />
+            </b-link>
+          </li>
+          <!-- <li class="nav-item nav-toggle">
             <b-link class="nav-link modern-nav-toggle">
               <feather-icon
                 icon="XIcon"
@@ -63,7 +73,7 @@
                 @click="toggleVerticalMenuActive"
               />
             </b-link>
-          </li>
+          </li> -->
         </ul>
       </slot>
     </div>
@@ -85,7 +95,7 @@
     >
       <vertical-nav-menu-items
         :items.sync="leftMenu"
-        class="navigation navigation-main pl-2 pr-1"
+        class="navigation navigation-main pl-1 pr-1"
       />
     </vue-perfect-scrollbar>
     <!-- /main menu content-->
