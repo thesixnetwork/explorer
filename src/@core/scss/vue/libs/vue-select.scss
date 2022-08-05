@@ -31,6 +31,7 @@ $vs-dropdown-box-shadow: 0px 4px 25px 0px rgba(0, 0, 0, 0.1);
 .vs__open-indicator {
   fill: none;
   margin-top: 0.15rem;
+  cursor: pointer;
 }
 
 // Matches height of input element for consistency
@@ -45,9 +46,24 @@ $vs-dropdown-box-shadow: 0px 4px 25px 0px rgba(0, 0, 0, 0.1);
 
 .vs__dropdown-option--disabled {
   &.vs__dropdown-option--selected {
-    background: $primary !important;
+    background: $white !important;
+   
   }
   opacity: 0.5;
+}
+
+.style-chooser .vs__search::placeholder,
+.style-chooser .vs__dropdown-toggle,
+.style-chooser .vs__dropdown-menu {
+  // background: #dfe5fb;
+  // border: none;
+  // color: #394066;
+  text-transform: lowercase;
+}
+
+.style-chooser .vs__clear,
+.style-chooser .vs__open-indicator {
+  fill: #394066;
 }
 
 // Options list color
@@ -62,8 +78,8 @@ $vs-dropdown-box-shadow: 0px 4px 25px 0px rgba(0, 0, 0, 0.1);
 
 /* rtl:begin:ignore */
 .vs__dropdown-option--selected {
-  background-color: $primary;
-  color: $white;
+  background-color: $white;
+  color:$black;
   position: relative;
 
   &::after {
@@ -92,8 +108,8 @@ $vs-dropdown-box-shadow: 0px 4px 25px 0px rgba(0, 0, 0, 0.1);
 
   // Because, highlight get primary color and if item is selected we want to keep white color even if it's hovered/highlighted
   &.vs__dropdown-option--highlight {
-    color: $white !important;
-    background-color: $primary !important;
+    color: $black !important;
+    background-color: $white !important;
   }
 }
 /* rtl:end:ignore */
@@ -177,7 +193,7 @@ $vs-dropdown-box-shadow: 0px 4px 25px 0px rgba(0, 0, 0, 0.1);
 //     .vs__selected {
 //       background-color: $primary;
 //       border: none;
-//       color: #fff;
+//       color: $white;
 //       button {
 //         svg {
 //           fill: white;
@@ -302,7 +318,9 @@ $vs-dropdown-box-shadow: 0px 4px 25px 0px rgba(0, 0, 0, 0.1);
   .vs__actions {
     svg {
       fill: $theme-dark-input-border-color;
+      cursor: pointer !important;
     }
+   
   }
   .vs__dropdown-menu {
     background: $theme-dark-input-bg;
@@ -322,6 +340,7 @@ $vs-dropdown-box-shadow: 0px 4px 25px 0px rgba(0, 0, 0, 0.1);
     // For single select
     &.vs--single {
       .vs__selected {
+        background-color: rgba($primary, 0.12);
         color: $theme-dark-body-color !important;
       }
     }

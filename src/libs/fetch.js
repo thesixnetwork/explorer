@@ -359,6 +359,13 @@ export default class ChainFetch {
     );
   }
 
+  async getBankAccountBalanceToken(address) {
+    return this.get('/bank/balances/'.concat(address)).then(data => {
+      return data;
+      }
+    );
+  }
+
   async getStakingReward(address, config = null) {
     if (
       compareVersions(
@@ -497,19 +504,19 @@ export default class ChainFetch {
   }
 
   // eslint-disable-next-line camelcase
-  async getIBCChannelClientState(channel_id, port_id, config = null) {
+  async getIBCChannelClientState(channelId, portId, config = null) {
     // eslint-disable-next-line camelcase
     return this.get(
-      `/ibc/core/channel/v1/channels/${channel_id}/ports/${port_id}/client_state`,
+      `/ibc/core/channel/v1/channels/${channelId}/ports/${portId}/client_state`,
       config
     ).then(data => commonProcess(data));
   }
 
   // eslint-disable-next-line camelcase
-  async getIBCChannel(channel_id, port_id, config = null) {
+  async getIBCChannel(channelId, portId, config = null) {
     // eslint-disable-next-line camelcase
     return this.get(
-      `/ibc/core/channel/v1/channels/${channel_id}/ports/${port_id}`,
+      `/ibc/core/channel/v1/channels/${channelId}/ports/${portId}`,
       config
     ).then(data => commonProcess(data));
   }
