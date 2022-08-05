@@ -100,6 +100,7 @@
           </b-row>
         </b-card-body>
       </b-card>
+
       <div class="text-right mb-2">
         <b-button
           variant="link"
@@ -111,6 +112,7 @@
           <feather-icon icon="FileTextIcon" size="16" />
         </b-button>
       </div>
+
       <b-card title="Transactions" no-body class="text-truncate overflow-auto">
         <b-table
           :items="txs"
@@ -198,19 +200,13 @@
 </template>
 
 <script>
-import { $themeColors } from '@themeConfig';
 import dayjs from 'dayjs';
-import { defineAsyncComponent } from 'vue';
 import {
   BCard,
   BAvatar,
   BTable,
   BRow,
   BCol,
-  // BTableSimple,
-  // BTr,
-  // BTd,
-  // BTbody,
   BButton,
   BBadge,
   VBModal,
@@ -220,7 +216,6 @@ import {
   BCardBody
   // BFormSelect
 } from 'bootstrap-vue';
-// import QRCodeVue3 from 'qrcode-vue3';
 import FeatherIcon from '@/@core/components/feather-icon/FeatherIcon.vue';
 import ToastificationContent from '@core/components/toastification/ToastificationContent.vue';
 import Ripple from 'vue-ripple-directive';
@@ -261,12 +256,8 @@ export default {
     BSpinner,
     FeatherIcon,
     VueQr,
-    // BTableSimple,
-    // BTbody,
     BButton,
     BBadge,
-    // BTr,
-    // BTd,
     BPagination,
     // BFormSelect,
     // eslint-disable-next-line vue/no-unused-components
@@ -324,6 +315,9 @@ export default {
       error: null,
       isBusy: false,
       selected: { name: null, id: null },
+      isActive: true,
+      selectedIndex: 0, // the index of the selected tab,
+      tabs: [],
       iconUrl: require('../assets/images/logo/six-protocol.png'),
       options: [
         { name: 'Cat', id: 'cat' },
@@ -596,34 +590,6 @@ export default {
         currency: parseFloat(sumCurrency.toFixed(2))
       };
     },
-    // chartData() {
-    //   const data = this.assetTable.items.reduce((t, c) => {
-    //     const th = t;
-    //     if (t[c.type]) {
-    //       th[c.type] += Number(c.amount);
-    //     } else {
-    //       th[c.type] = Number(c.amount);
-    //     }
-    //     return th;
-    //   }, []);
-    //   return {
-    //     datasets: [
-    //       {
-    //         labels: Object.keys(data),
-    //         data: Object.values(data),
-    //         backgroundColor: [
-    //           $themeColors.success,
-    //           $themeColors.primary,
-    //           $themeColors.warning,
-    //           $themeColors.danger,
-    //           $themeColors.info
-    //         ],
-    //         borderWidth: 0,
-    //         pointStyle: 'rectRounded'
-    //       }
-    //     ]
-    //   };
-    // },
     deleTable() {
       const re = [];
       if (
@@ -667,6 +633,7 @@ export default {
     }
   },
   created() {
+    this.tabs = this.$children;
     this.$http
       .getAuthAccount(this.address)
       .then(acc => {
@@ -820,6 +787,7 @@ export default {
   color: #fff;
   border-radius: 12px;
   font-size: 0.9rem;
+  padding: 6px 14px;
 
   .dark-layout & {
     background-color: $primary;
@@ -838,9 +806,5 @@ export default {
   word-break: break-all;
   font-size: 0.9rem;
   font-weight: 600;
-}
-
-.customizer-card {
-  height: 100% !important;
 }
 </style>

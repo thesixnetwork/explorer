@@ -101,15 +101,6 @@
         <!-- Right Col: Table -->
         <b-col cols="12" xl="6">
           <table class="mt-2 mt-xl-0 w-100">
-            <!-- <tr>
-              <th class="pb-50 d-flex align-items-center">
-                <feather-icon icon="UserIcon" class="mr-75" />
-                <span class="font-weight-bold">Identity</span>
-              </th>
-              <td class="pb-50">
-                <small>{{ validator.description.identity || '-' }}</small>
-              </td>
-            </tr> -->
             <tr>
               <th class="pb-50 d-flex align-items-center">
                 <feather-icon icon="ActivityIcon" class="mr-75" />
@@ -122,30 +113,6 @@
                 <span v-else>{{ validator.status }}</span>
               </td>
             </tr>
-            <!-- <tr>
-              <th class="pb-50 d-flex align-items-center">
-                <feather-icon icon="StarIcon" class="mr-75" />
-                <span class="font-weight-bold">Unbond Height</span>
-              </th>
-              <td class="pb-50 text-capitalize">
-                {{ validator.unbonding_height || '-' }}
-              </td>
-            </tr> -->
-            <!-- <tr>
-             <th class="pb-50 d-flex align-items-center">
-                <feather-icon icon="StarIcon" class="mr-75" />
-                <span class="font-weight-bold">Unbond Time</span>
-              </th>
-              <td
-                v-if="validator.unbonding_time == '1970-01-01T00:00:00Z'"
-                class="pb-50 text-capitalize"
-              >
-                {{ '-' }}
-              </td>
-              <td v-else class="pb-50 text-capitalize">
-                {{ timeFormat(validator.unbonding_time) }}
-              </td>
-            </tr> -->
             <tr>
               <th class="pb-50 d-flex align-items-center">
                 <feather-icon icon="StarIcon" class="mr-75" />
@@ -155,15 +122,6 @@
                 {{ tokenFormatter(validator.min_self_delegation) }}
               </td>
             </tr>
-            <!-- <tr>
-              <th class="pb-50 d-flex align-items-center">
-                <feather-icon icon="AlertCircleIcon" class="mr-75" />
-                <span class="font-weight-bold">Jailed</span>
-              </th>
-              <td class="pb-50">
-                {{ validator.jailed || '-' }}
-              </td>
-            </tr> -->
             <tr>
               <th class="d-flex align-items-center">
                 <feather-icon icon="GlobeIcon" class="mr-75" />
@@ -212,15 +170,8 @@
           </table>
         </b-col>
       </b-row>
-
-      <!-- <b-card-footer class="mt-1 pl-0 pr-0">
-        <h5>Description</h5>
-        {{
-          validator.description.long_desc ||
-            'SIX Network focuses on unleashing the true power of digital assets through the company’s flagship product, "SIX Protocol," utilizing the power of blockchain and smart contracts to create effective decentralized financial services and a blockchain infrastructure essential for businesses.'
-        }}
-      </b-card-footer> -->
     </b-card>
+
     <!-- First Row -->
     <template>
       <b-row class="match-height">
@@ -243,78 +194,84 @@
           />
         </b-col>
       </b-row>
-      <div class="text-right mb-2">
-        <b-button
-          variant="link"
-          size="sm"
-          class="customizer-button"
-          @click="csvExport(dataCsv)"
-        >
-          Export to CSV
-          <feather-icon icon="FileTextIcon" size="16" />
-        </b-button>
-      </div>
-      <b-row>
-        <b-col>
-          <b-card
-            title="Transactions"
-            no-body
-            class="text-truncate overflow-auto"
+      <div class="divGroup mb-2">
+        <b-form-group class="mb-0">
+          <b-form-radio-group
+            id="tab-table"
+            v-model="selectedStatus"
+            button-variant="outline-primary"
+            :options="statusOptions"
+            buttons
+            name="btn-default"
+            @change="getValidatorListByStatus"
+          />
+        </b-form-group>
+        <div class="text-right">
+          <b-button
+            variant="link"
+            size="sm"
+            class="customizer-button"
+            @click="csvExport(dataCsv)"
           >
-            <b-table
-              :items="txs"
-              :busy="isBusy"
-              striped
-              hover
-              responsive
-              stacked="sm"
-              :style="{ fontSize: 'smaller' }"
-            >
-              <template #table-busy>
-                <div class="text-center text-secondary my-2">
-                  <b-spinner class="align-middle mr-25"></b-spinner>
-                  <strong>Loading...</strong>
-                </div>
-              </template>
-              <template #cell(block)="data">
-                <router-link :to="`../blocks/${data.item.block}`">
-                  {{ data.item.block }}
-                </router-link>
-              </template>
-              <template #cell(txhash)="data">
-                <router-link
-                  :to="`../tx/${data.item.txhash}/account/${accountAddress}`"
-                >
-                  {{ formatHash(data.item.txhash) }}
-                </router-link>
-              </template>
-              <template #cell(type)="data">
-                <b-badge variant="light-secondary">
-                  {{ data.item.type }}
-                </b-badge>
-              </template>
-
-              <template #cell(status)="data">
-                <b-badge v-if="data.item.status" variant="light-danger">
-                  Failed
-                </b-badge>
-                <b-badge v-else variant="light-success">
-                  Success
-                </b-badge>
-              </template>
-            </b-table>
-            <b-pagination
-              v-if="Number(transactions.page_total) > 1"
-              :total-rows="transactions.total_count"
-              :per-page="transactions.limit"
-              :value="transactions.page_number"
-              align="center"
-              class="mt-1"
-              @change="pageload"
-            />
-          </b-card>
-        </b-col>
-      </b-row>
+            Export to CSV
+            <feather-icon icon="FileTextIcon" size="16" />
+          </b-button>
+        </div>
+      </div>
+      <b-card no-body class="overflow-auto">
+        <b-card-body class="pl-0 pr-0 pb-0">
+          <b-table
+            :items="txs"
+            :busy="isBusy"
+            striped
+            hover
+            responsive
+            stacked="sm"
+            :style="{ fontSize: 'smaller' }"
+          >
+            <template #table-busy>
+              <div class="text-center text-secondary my-2">
+                <b-spinner class="align-middle mr-25"></b-spinner>
+                <strong>Loading...</strong>
+              </div>
+            </template>
+            <template #cell(block)="data">
+              <router-link :to="`../blocks/${data.item.block}`">
+                {{ data.item.block }}
+              </router-link>
+            </template>
+            <template #cell(txhash)="data">
+              <router-link
+                :to="`../tx/${data.item.txhash}/account/${accountAddress}`"
+              >
+                {{ formatHash(data.item.txhash) }}
+              </router-link>
+            </template>
+            <template #cell(type)="data">
+              <b-badge variant="light-secondary">
+                {{ data.item.type }}
+              </b-badge>
+            </template>
+            <template #cell(status)="data">
+              <b-badge v-if="data.item.status" variant="light-danger">
+                Failed
+              </b-badge>
+              <b-badge v-else variant="light-success">
+                Success
+              </b-badge>
+            </template>
+          </b-table>
+          <b-pagination
+            v-if="Number(transactions.page_total) > 1"
+            :total-rows="transactions.total_count"
+            :per-page="transactions.limit"
+            :value="transactions.page_number"
+            align="center"
+            class="mt-1"
+            @change="pageload"
+          />
+        </b-card-body>
+      </b-card>
     </template>
     <operation-modal
       type="Delegate"
@@ -332,14 +289,14 @@ import {
   BRow,
   BCol,
   BTable,
-  // BCardFooter,
   VBTooltip,
   VBModal,
   BBadge,
   BPagination,
+  BFormRadioGroup,
+  BFormGroup,
   BSpinner
 } from 'bootstrap-vue';
-
 import {
   percent,
   formatToken,
@@ -348,7 +305,6 @@ import {
   operatorAddressToAccount,
   consensusPubkeyToHexAddress,
   toDay,
-  abbrMessage,
   abbrAddress,
   formatTokenAmount,
   formatGasAmount
@@ -368,11 +324,12 @@ export default {
     BRow,
     BCol,
     BAvatar,
-    // BCardFooter,
     BBadge,
     BPagination,
     BTable,
     BSpinner,
+    BFormRadioGroup,
+    BFormGroup,
     StakingAddressComponent,
     StakingCommissionComponent,
     StakingRewardComponent,
@@ -404,11 +361,21 @@ export default {
       blocks: Array.from('0'.repeat(100)).map(x => [Boolean(x), Number(x)]),
       distribution: {},
       transactions: {},
-      isBusy: false
+      isBusy: false,
+      statusOptions: [
+        { text: 'Transaction', value: 'transaction' },
+        { text: 'Proposal Block', value: 'proposal-block' }
+      ],
+      selectedStatus: 'transaction'
     };
   },
   computed: {
     txs() {
+      const tab =
+        this.selectedStatus === 'transaction'
+          ? this.transactions.txs
+          : 'this.transactions';
+
       if (this.transactions.txs) {
         this.isBusy = false;
         return this.transactions.txs.map(x => ({
@@ -625,6 +592,11 @@ export default {
       link.setAttribute('href', data);
       link.setAttribute('download', 'export-transaction-node.csv');
       link.click();
+    },
+    getValidatorListByStatus() {
+      if (this.isInactiveLoaded) return;
+
+      this.isInactiveLoaded = true;
     }
   }
 };
@@ -639,6 +611,7 @@ export default {
   color: #fff;
   font-size: 0.9rem;
   border-radius: 12px;
+  padding: 6px 14px;
 
   .dark-layout & {
     background-color: $primary;
@@ -670,5 +643,11 @@ export default {
   @include media-breakpoint-down(xs) {
     max-width: 140px !important;
   }
+}
+
+.divGroup {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 </style>
