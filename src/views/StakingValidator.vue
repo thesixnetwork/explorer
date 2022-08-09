@@ -58,7 +58,7 @@
           <div class="d-flex flex-wrap align-items-center mt-2">
             <div class="d-flex align-items-center mr-2">
               <b-avatar variant="light-primary" rounded>
-                <feather-icon icon="DiscIcon" size="18" />
+                <feather-icon icon="DollarSignIcon" size="18" />
               </b-avatar>
               <div class="ml-1">
                 <h5 class="mb-0">
@@ -194,20 +194,21 @@
           />
         </b-col>
       </b-row>
-      <div class="divGroup mb-2">
+      <div class="groupContainer">
         <b-form-group class="mb-0">
           <b-form-radio-group
             id="tab-table"
-            v-model="selectedStatus"
+            v-model="selectedOption"
             button-variant="outline-primary"
-            :options="statusOptions"
+            :options="optionBlock"
             buttons
             name="btn-default"
-            @change="getValidatorListByStatus"
+            @change="validatorBlocks"
           />
         </b-form-group>
-        <div class="text-right">
+        <div class="csvStyle">
           <b-button
+            v-if="selectedOption === 'transaction'"
             variant="link"
             size="sm"
             class="customizer-button"
@@ -216,9 +217,23 @@
             Export to CSV
             <feather-icon icon="FileTextIcon" size="16" />
           </b-button>
+          <b-button
+            v-else
+            variant="link"
+            size="sm"
+            class="customizer-button"
+            @click="csvExportPropose(blockCsv)"
+          >
+            Export Propose to CSV
+            <feather-icon icon="FileTextIcon" size="16" />
+          </b-button>
         </div>
       </div>
-      <b-card no-body class="overflow-auto">
+      <b-card
+        v-if="selectedOption === 'transaction'"
+        no-body
+        class="overflow-auto"
+      >
         <b-card-body class="pl-0 pr-0 pb-0">
           <b-table
             :items="txs"
@@ -231,7 +246,62 @@
           >
             <template #table-busy>
               <div class="text-center text-secondary my-2">
-                <b-spinner class="align-middle mr-25"></b-spinner>
+                <b-spinner class="align-middle mr-25" />
+                <strong>Loading...</strong>
+              </div>
+            </template>
+            <template #cell(block)="data">
+              <router-link :to="`../blocks/${data.item.block}`">
+                {{ data.item.block }}
+              </router-link>
+            </template>
+            <template #cell(txhash)="data">
+              <router-link
+                :to="`../tx/${data.item.txhash}/account/${accountAddress}`"
+              >
+                {{ formatHash(data.item.txhash) }}
+              </router-link>
+            </template>
+            <template #cell(type)="data">
+              <b-badge variant="light-secondary">
+                {{ data.item.type }}
+              </b-badge>
+            </template>
+            <template #cell(status)="data">
+              <b-badge v-if="data.item.status" variant="light-danger">
+                Failed
+              </b-badge>
+              <b-badge v-else variant="light-success">
+                Success
+              </b-badge>
+            </template>
+          </b-table>
+          <b-pagination
+            v-if="Number(transactions.page_total) > 1"
+            :total-rows="transactions.total_count"
+            :per-page="transactions.limit"
+            :value="transactions.page_number"
+            align="center"
+            class="mt-1"
+            @change="pageload"
+          />
+        </b-card-body>
+      </b-card>
+      <b-card v-else no-body class="overflow-auto">
+        <b-card-body class="pl-0 pr-0 pb-0">
+          <b-table
+            :items="proposeTxs"
+            :busy="isBusy"
+            :fields="list_blocks"
+            striped
+            hover
+            responsive
+            stacked="sm"
+            :style="{ fontSize: 'smaller' }"
+          >
+            <template #table-busy>
+              <div class="text-center text-secondary my-2">
+                <b-spinner class="align-middle mr-25" />
                 <strong>Loading...</strong>
               </div>
             </template>
@@ -362,20 +432,34 @@ export default {
       distribution: {},
       transactions: {},
       isBusy: false,
-      statusOptions: [
+      proposeTransactions: {},
+      optionBlock: [
         { text: 'Transaction', value: 'transaction' },
         { text: 'Proposal Block', value: 'proposal-block' }
       ],
-      selectedStatus: 'transaction'
+      selectedOption: 'transaction',
+      list_blocks: [
+        {
+          key: 'month',
+          label: 'Month',
+          sortable: true
+        },
+        {
+          key: 'year',
+          label: 'Year'
+        },
+        { key: 'totalTxs', label: 'Total Txs', sortable: true },
+        {
+          key: 'totalProposed',
+          label: 'Total Block Proposed',
+          sortable: true
+        }
+      ]
     };
   },
+
   computed: {
     txs() {
-      const tab =
-        this.selectedStatus === 'transaction'
-          ? this.transactions.txs
-          : 'this.transactions';
-
       if (this.transactions.txs) {
         this.isBusy = false;
         return this.transactions.txs.map(x => ({
@@ -426,6 +510,27 @@ export default {
         ];
       }
     },
+    proposeTxs() {
+      if (this.proposeTransactions.length > 0) {
+        this.isBusy = false;
+        return this.proposeTransactions.map(x => ({
+          month: x._id.month,
+          year: x._id.year,
+          totalTxs: x.txsSize,
+          totalProposed: x.proposeCount
+        }));
+      } else {
+        this.isBusy = true;
+        return [
+          {
+            month: '',
+            year: '',
+            totalTxs: '',
+            totalProposed: ''
+          }
+        ];
+      }
+    },
     dataCsv() {
       if (this.transactions.txs) {
         return this.transactions.txs.map(x => ({
@@ -460,6 +565,17 @@ export default {
               : '-',
           txnFee: `${formatGasAmount(x.decode_tx.fee_amount) + ' ' + 'SIX'}`,
           time: toDay(x.time_stamp)
+        }));
+      }
+      return [];
+    },
+    blockCsv() {
+      if (this.proposeTransactions.length) {
+        return this.proposeTransactions.map(x => ({
+          month: x._id.month,
+          year: x._id.year,
+          totalTxs: x.txsSize,
+          totalProposed: x.proposeCount
         }));
       }
       return [];
@@ -503,6 +619,14 @@ export default {
             });
           }
         });
+        this.hexAddress = consensusPubkeyToHexAddress(data.consensus_pubkey);
+        fetch(
+          `${process.env.VUE_APP_API_VALIDATOR}/api/validator/propose-count?proposerAddr=${this.hexAddress}`
+        )
+          .then(data => data.json())
+          .then(resp => {
+            this.proposeTransactions = resp.data;
+          });
       });
       this.$http.getValidatorDistribution(this.address).then(res => {
         this.distribution = res;
@@ -593,9 +717,22 @@ export default {
       link.setAttribute('download', 'export-transaction-node.csv');
       link.click();
     },
-    getValidatorListByStatus() {
+    csvExportPropose(arrData) {
+      let csvContent = 'data:text/csv;charset=utf-8,';
+      csvContent += [
+        Object.keys(arrData[0]).join(','),
+        ...arrData.map(item => Object.values(item).join(','))
+      ]
+        .join('\n')
+        .replace(/(^\[)|(\]$)/gm, '');
+      const data = encodeURI(csvContent);
+      const link = document.createElement('a');
+      link.setAttribute('href', data);
+      link.setAttribute('download', 'export-validate-propose.csv');
+      link.click();
+    },
+    validatorBlocks() {
       if (this.isInactiveLoaded) return;
-
       this.isInactiveLoaded = true;
     }
   }
@@ -645,9 +782,21 @@ export default {
   }
 }
 
-.divGroup {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+.groupContainer {
+  margin-bottom: 14px;
+  @include media-breakpoint-up(sm) {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+}
+
+.csvStyle {
+  @include media-breakpoint-up(md) {
+    text-align: right;
+  }
+  @include media-breakpoint-down(sm) {
+    margin-top: 14px;
+  }
 }
 </style>

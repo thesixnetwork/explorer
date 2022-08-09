@@ -69,10 +69,6 @@ export default {
     consensusPubkey: {
       type: [Object, String],
       required: true
-    },
-    hexAddress: {
-      type: String,
-      default: '-'
     }
   },
   methods: {

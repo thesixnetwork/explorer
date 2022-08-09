@@ -66,7 +66,7 @@
       </div>
 
       <!-- Estimated Reward -->
-      <div v-for="d in data.val_commission" :key="d.amount">
+      <!-- <div v-for="d in data.val_commission" :key="d.amount">
         <div class="mb-50">
           <span class="font-weight-bold">
             Estimated Reward
@@ -90,14 +90,11 @@
               </h6>
             </b-media-body>
           </b-media>
-          <!-- <small class="customizer-text d-none d-xl-block">
-          per block
-        </small> -->
         </div>
-      </div>
+      </div> -->
 
       <!-- Block Validated -->
-      <div v-for="d in data.val_commission" :key="d.amount">
+      <!-- <div v-for="d in data.val_commission" :key="d.amount">
         <div class="mb-50">
           <span class="font-weight-bold">
             Block Validated
@@ -119,14 +116,10 @@
               <h6 class="transaction-title">
                 {{ formatDenom(d) }}
               </h6>
-              <!-- <small>{{ formatNumber(d.amount) }}</small> -->
             </b-media-body>
           </b-media>
-          <!-- <small class="customizer-text d-none d-xl-block">
-          Block
-        </small> -->
         </div>
-      </div>
+      </div> -->
     </b-card-body>
     <!-- <b-card-body class="pt-0">
       <b-button
@@ -198,7 +191,6 @@ export default {
   },
   computed: {
     denoms() {
-      console.log('this.$store.state.chains.denoms', this.$store.state);
       return this.$store.state.chains.denoms;
     }
   },
