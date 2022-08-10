@@ -380,6 +380,7 @@ import {
   formatGasAmount
 } from '@/libs/utils';
 import _ from 'lodash';
+import moment from 'moment';
 import { keybase } from '@/libs/fetch';
 import { codeMessage } from '@/constants/module';
 import StakingAddressComponent from './StakingAddressComponent.vue';
@@ -440,13 +441,9 @@ export default {
       selectedOption: 'transaction',
       list_blocks: [
         {
-          key: 'month',
-          label: 'Month',
+          key: 'date',
+          label: 'Date',
           sortable: true
-        },
-        {
-          key: 'year',
-          label: 'Year'
         },
         { key: 'totalTxs', label: 'Total Txs', sortable: true },
         {
@@ -514,8 +511,10 @@ export default {
       if (this.proposeTransactions.length > 0) {
         this.isBusy = false;
         return this.proposeTransactions.map(x => ({
-          month: x._id.month,
-          year: x._id.year,
+          date:
+            moment(String(x._id.month)).format('MMMM') +
+            ' ' +
+            moment(String(x._id.year)).format('YYYY'),
           totalTxs: x.txsSize,
           totalProposed: x.proposeCount
         }));
@@ -523,8 +522,7 @@ export default {
         this.isBusy = true;
         return [
           {
-            month: '',
-            year: '',
+            date: '',
             totalTxs: '',
             totalProposed: ''
           }
@@ -572,8 +570,10 @@ export default {
     blockCsv() {
       if (this.proposeTransactions.length) {
         return this.proposeTransactions.map(x => ({
-          month: x._id.month,
-          year: x._id.year,
+          date:
+            moment(String(x._id.month)).format('MMMM') +
+            ' ' +
+            moment(String(x._id.year)).format('YYYY'),
           totalTxs: x.txsSize,
           totalProposed: x.proposeCount
         }));
