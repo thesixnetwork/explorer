@@ -487,6 +487,10 @@ export default {
                   `${formatTokenAmount(x.decode_tx.commission.amount) +
                     ' ' +
                     'SIX'}`) ||
+                (typeof x.decode_tx.commission[0] !== 'undefined' &&
+                  `${formatTokenAmount(x.decode_tx.commission[0].amount) +
+                    ' ' +
+                    'SIX'}`) ||
                 '-'
               : '-',
           txnFee: `${formatGasAmount(x.decode_tx.fee_amount) + ' ' + 'SIX'}`,
@@ -556,7 +560,11 @@ export default {
           commission:
             typeof x.decode_tx.commission !== 'undefined'
               ? (typeof x.decode_tx.commission.amount !== 'undefined' &&
-                  `${formatTokenAmount(x.decode_tx.commission.amount) +
+                  `${x.decode_tx.commission.amount / Math.pow(10, 6) +
+                    ' ' +
+                    'SIX'}`) ||
+                (typeof x.decode_tx.commission[0] !== 'undefined' &&
+                  `${x.decode_tx.commission[0].amount / Math.pow(10, 6) +
                     ' ' +
                     'SIX'}`) ||
                 '-'

@@ -78,7 +78,10 @@
                 </div>
                 <!--/ tokens -->
                 <!-- Token other -->
-                <div v-if="options.length > 0" class="d-flex align-items-center mt-1">
+                <div
+                  v-if="options.length > 0"
+                  class="d-flex align-items-center mt-1"
+                >
                   <span class="font-weight-bold mr-1">
                     Token:
                   </span>
@@ -355,6 +358,11 @@ export default {
           tdClass: 'px-50 py-50'
         },
         {
+          key: 'commission',
+          thClass: 'px-50 py-50',
+          tdClass: 'px-50 py-50'
+        },
+        {
           key: 'txnFee',
           thClass: 'px-50 py-50',
           tdClass: 'px-50 py-50'
@@ -418,7 +426,18 @@ export default {
                     'SIX'}`) ||
                 '-'
               : '-',
-
+          commission:
+            typeof x.decode_tx.commission !== 'undefined'
+              ? (typeof x.decode_tx.commission.amount !== 'undefined' &&
+                  `${formatTokenAmount(x.decode_tx.commission.amount) +
+                    ' ' +
+                    'SIX'}`) ||
+                (typeof x.decode_tx.commission[0] !== 'undefined' &&
+                  `${formatTokenAmount(x.decode_tx.commission[0].amount) +
+                    ' ' +
+                    'SIX'}`) ||
+                '-'
+              : '-',
           txnFee: `${formatGasAmount(x.decode_tx.fee_amount) + ' ' + 'SIX'}`,
           time: toDay(x.time_stamp)
         }));
@@ -485,7 +504,11 @@ export default {
           commission:
             typeof x.decode_tx.commission !== 'undefined'
               ? (typeof x.decode_tx.commission.amount !== 'undefined' &&
-                  `${formatTokenAmount(x.decode_tx.commission.amount) +
+                  `${x.decode_tx.commission.amount / Math.pow(10, 6) +
+                    ' ' +
+                    'SIX'}`) ||
+                (typeof x.decode_tx.commission[0] !== 'undefined' &&
+                  `${x.decode_tx.commission[0].amount / Math.pow(10, 6) +
                     ' ' +
                     'SIX'}`) ||
                 '-'
