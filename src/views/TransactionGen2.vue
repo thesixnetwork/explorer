@@ -16,6 +16,13 @@
         </b-card>
       </b-col>
     </b-row>
+    <b-card>
+      <b-tabs content-class="mt-3">
+        <b-tab title="Gen2 Txn" active><b-table></b-table></b-tab>
+        <b-tab title="Collection"><p>I'm the second tab</p></b-tab>
+        <b-tab title="Info" disabled><p>I'm a disabled tab!</p></b-tab>
+      </b-tabs>
+    </b-card>
   </div>
 </template>
 
@@ -24,7 +31,10 @@ import {
   BCard,
   BCardBody,
   BRow,
-  BCol
+  BCol,
+  BTab,
+  BTabs,
+  BTable
   // BTableSimple,
   // BTr,
   // BTd,
@@ -39,7 +49,10 @@ export default {
     BCard,
     BCardBody,
     BRow,
-    BCol
+    BCol,
+    BTab,
+    BTabs,
+    BTable
     // BTableSimple,
     // BTr,
     // BTd,
