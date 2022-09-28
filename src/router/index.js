@@ -140,6 +140,20 @@ const router = new VueRouter({
       }
     },
     {
+      path: '/:chain/txn-gen2',
+      name: 'gen2Txn',
+      component: () => import('@/views/TransactionGen2.vue'),
+      meta: {
+        pageTitle: 'Transaction Gen2',
+        breadcrumb: [
+          {
+            text: 'Transaction Gen2',
+            active: true
+          }
+        ]
+      }
+    },
+    {
       path: '/:chain/account/:address',
       name: 'chain-account',
       component: () => import('@/views/WalletAccountDetail.vue'),

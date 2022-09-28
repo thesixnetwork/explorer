@@ -29,6 +29,11 @@ const modules = [
     route: 'uptime'
   },
   {
+    scope: 'normal',
+    title: 'Transactions Gen2',
+    route: 'gen2Txn'
+  },
+  {
     scope: 'cos-mos',
     title: 'gravity',
     route: 'gravity'
