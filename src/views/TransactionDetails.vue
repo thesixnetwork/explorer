@@ -1,169 +1,140 @@
 <template>
   <div>
-    <b-row>
-      <b-col lg="6" md="12" sm="12" xs="12">
-        <b-card>
-          <b-card-body class="p-0">
-            <b-row
-              class="customizer-overviews divider-bottom px-1 pt-0 text-bold"
-            >
-              <h5 class="customizer-text">
-                Overview
-              </h5>
-            </b-row>
-            <b-row>
-              <span class="text-secondary text-small px-1 pt-25 pb-25">
-                Min price
-              </span>
-            </b-row>
-            <b-row class="pt-0 pb-25 customizer-overviews divider-bottom">
-              <span class="text-small px-1">$0.00</span>
-              <span class="text-secondary text-small px-1">0.0000 SIX</span>
-            </b-row>
-            <b-row class="customizer-overviews divider-bottom">
-              <b-col>
-                <span>Max Total Supply:</span>
-              </b-col>
-              <b-col>
-                <span>1,000,000</span>
-              </b-col>
-            </b-row>
-            <b-row class="customizer-overviews divider-bottom">
-              <b-col>
-                <span>Holders:</span>
-              </b-col>
-              <b-col>
-                <span>6,666</span>
-              </b-col>
-            </b-row>
-            <b-row class="pt-1">
-              <b-col>
-                <span>Transfers:</span>
-              </b-col>
-              <b-col>
-                <span>66,666</span>
-              </b-col>
-            </b-row>
-          </b-card-body>
-        </b-card>
-      </b-col>
-      <b-col lg="6" md="12" sm="12" xs="12">
-        <b-card>
-          <b-card-body class="p-0">
-            <b-row
-              class="customizer-overviews divider-bottom px-1 pt-0 text-bold"
-            >
-              <h5 class="customizer-text">
-                Profile Summary
-              </h5>
-            </b-row>
-            <b-row class="customizer-overviews divider-bottom">
-              <b-col>
-                <span>Collection:</span>
-              </b-col>
-              <b-col>
-                <span>SIX PROTOCOL</span>
-              </b-col>
-            </b-row>
-            <b-row class="customizer-overviews divider-bottom">
-              <b-col>
-                <span>Contract:</span>
-              </b-col>
-              <b-col>
-                <span>6x12345</span>
-              </b-col>
-            </b-row>
-            <b-row class="customizer-overviews divider-bottom">
-              <b-col>
-                <span>Official Site:</span>
-              </b-col>
-              <b-col>
-                <span>https://xxx.xxx</span>
-              </b-col>
-            </b-row>
-            <b-row class="pt-1">
-              <b-col>
-                <span>Social Profiles:</span>
-              </b-col>
-              <b-col>
-                <span>https://xxx.xxx</span>
-              </b-col>
-            </b-row>
-          </b-card-body>
-        </b-card>
-      </b-col>
-    </b-row>
     <b-card>
+      <h4 class="divider-bottom pb-1 style-text">
+        Transaction Details
+      </h4>
       <b-tabs content-class="mt-1">
-        <b-tab title="Gen2 Txn" active class="pa-0">
-          <p class="text-secondary">
-            A total of 0 transactions found
-          </p>
-          <b-table
-            :items="txs"
-            :busy="isBusy"
-            :fields="fields"
-            striped
-            hover
-            responsive="md"
-            stacked="sm"
-            :style="{ fontSize: 'smaller' }"
-          >
-            <template #table-busy>
-              <div class="text-center text-secondary my-2">
-                <b-spinner small class="align-middle mr-50" />
-                <strong>Loading...</strong>
+        <b-tab title="Overview" active class="pa-0">
+          <b-row class="customizer-overviews">
+            <b-col>
+              <div class="d-flex align-items-center">
+                <feather-icon
+                  :icon="'InfoIcon'"
+                  size="16"
+                  class="text-secondary mr-50"
+                />
+                <span class="text-secondary">Transaction Hash:</span>
               </div>
-            </template>
-            <template #cell(block)="data">
-              <router-link :to="`../blocks/${data.item.block}`">
-                {{ data.item.block }}
-              </router-link>
-            </template>
-          </b-table>
-          <b-pagination
-            v-if="Number(transactions.page_total) > 1"
-            :total-rows="transactions.total_count"
-            :per-page="transactions.limit"
-            :value="transactions.page_number"
-            align="center"
-            class="mt-1"
-            @change="pageload"
-          />
-        </b-tab>
-        <b-tab title="Collection">
-          <p>Latest 0 active tokens (From a total of 0 tokens)</p>
-          <b-row>
-            <b-col lg="3" md="12" sm="12" xs="12">
-              <router-link to="/txn-gen2/nft-txs">
-                <b-card class="customizer-card">
-                  <div class="d-flex justify-content-center mb-2">
-                    <b-avatar
-                      :size="140"
-                      :src="
-                        require('@/assets/images/logo/six-network-logo.png')
-                      "
-                    />
-                  </div>
-                  <div class="d-flex">
-                    <span class="mr-50">Token ID:</span>
-                    <span class="customizer-text text-truncate d-inline-block">
-                      12341234123412341234123412341234
-                    </span>
-                  </div>
-                  <div class="d-flex">
-                    <span class="mr-50">Owner:</span>
-                    <span class="customizer-text text-truncate d-inline-block">
-                      6x12341234123412341234123412341234
-                    </span>
-                  </div>
-                </b-card>
-              </router-link>
+            </b-col>
+            <b-col>
+              <div class="d-flex align-items-center">
+                <span>0x22</span>
+                <feather-icon
+                  :icon="'CopyIcon'"
+                  size="16"
+                  class="customizer-collapse ml-50"
+                />
+              </div>
+            </b-col>
+          </b-row>
+          <b-row class="customizer-overviews">
+            <b-col>
+              <div class="d-flex align-items-center">
+                <feather-icon
+                  :icon="'InfoIcon'"
+                  size="16"
+                  class="text-secondary mr-50"
+                />
+                <span class="text-secondary">Status:</span>
+              </div>
+            </b-col>
+            <b-col>
+              <div class="d-flex align-items-center">
+                <b-badge variant="light-success">
+                  <feather-icon
+                    :icon="'CheckCircleIcon'"
+                    size="16"
+                    class="text-success mr-50"
+                  />
+                  <span class="text-success">Success</span>
+                </b-badge>
+              </div>
+            </b-col>
+          </b-row>
+          <b-row class="customizer-overviews">
+            <b-col>
+              <div class="d-flex align-items-center">
+                <feather-icon
+                  :icon="'InfoIcon'"
+                  size="16"
+                  class="text-secondary mr-50"
+                />
+                <span class="text-secondary">Block:</span>
+              </div>
+            </b-col>
+            <b-col>
+              <div class="d-flex align-items-center">
+                <feather-icon
+                  :icon="'CheckCircleIcon'"
+                  size="16"
+                  class="text-success mr-50"
+                />
+                <span class="style-text">123456789</span>
+              </div>
+            </b-col>
+          </b-row>
+          <b-row class="customizer-overviews">
+            <b-col>
+              <div class="d-flex align-items-center">
+                <feather-icon
+                  :icon="'InfoIcon'"
+                  size="16"
+                  class="text-secondary mr-50"
+                />
+                <span class="text-secondary">Timestamp:</span>
+              </div>
+            </b-col>
+            <b-col>
+              <div class="d-flex align-items-center">
+                <feather-icon :icon="'ClockIcon'" size="16" class="mr-50" />
+                <span>6 hrs 36 mins ago ()</span>
+              </div>
+            </b-col>
+          </b-row>
+          <b-row class="customizer-overviews">
+            <b-col>
+              <div class="d-flex align-items-center">
+                <feather-icon
+                  :icon="'InfoIcon'"
+                  size="16"
+                  class="text-secondary mr-50"
+                />
+                <span class="text-secondary">Transaction Fee:</span>
+              </div>
+            </b-col>
+            <b-col>
+              <div class="d-flex align-items-center">
+                <span>0.00025 SIX</span>
+              </div>
+            </b-col>
+          </b-row>
+          <b-row class="customizer-overviews">
+            <b-col>
+              <div class="d-flex align-items-center">
+                <feather-icon
+                  :icon="'InfoIcon'"
+                  size="16"
+                  class="text-secondary mr-50"
+                />
+                <span class="text-secondary">Gas Price:</span>
+              </div>
+            </b-col>
+            <b-col>
+              <div class="d-flex align-items-center">
+                <span>0.000000001</span>
+              </div>
             </b-col>
           </b-row>
         </b-tab>
-        <b-tab title="Info">
-          <p>I'm a Info tab!</p>
+        <b-tab title="Logs (x)" disabled>
+          <p>I'm a Logs tab!</p>
+        </b-tab>
+        <b-tab title="State" disabled>
+          <p>I'm a State tab!</p>
+        </b-tab>
+        <b-tab title="Comments" disabled>
+          <p>I'm a Comments tab!</p>
         </b-tab>
       </b-tabs>
     </b-card>
@@ -171,18 +142,7 @@
 </template>
 
 <script>
-import {
-  BCard,
-  BCardBody,
-  BRow,
-  BCol,
-  BTab,
-  BTabs,
-  BTable,
-  BSpinner,
-  BPagination,
-  BAvatar
-} from 'bootstrap-vue';
+import { BCard, BRow, BCol, BTab, BTabs, BBadge } from 'bootstrap-vue';
 
 import {
   percent,
@@ -199,15 +159,11 @@ import {
 export default {
   components: {
     BCard,
-    BCardBody,
     BRow,
     BCol,
     BTab,
     BTabs,
-    BTable,
-    BSpinner,
-    BPagination,
-    BAvatar
+    BBadge
   },
   beforeRouteUpdate(to, from, next) {
     const { address } = to.params;
@@ -418,5 +374,13 @@ export default {
 
 .text-small {
   font-size: 10px;
+}
+
+.style-text {
+  color: $info;
+
+  .dark-layout & {
+    color: $primary;
+  }
 }
 </style>

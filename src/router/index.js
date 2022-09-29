@@ -154,6 +154,34 @@ const router = new VueRouter({
       }
     },
     {
+      path: '/txn-gen2/nft-txs',
+      name: 'nftTxs',
+      component: () => import('@/views/TransactionNFT.vue'),
+      meta: {
+        pageTitle: 'NFT Transaction',
+        breadcrumb: [
+          {
+            text: 'NFT Transaction',
+            active: true
+          }
+        ]
+      }
+    },
+    {
+      path: '/txn-gen2/txs-details',
+      name: 'txsDetails',
+      component: () => import('@/views/TransactionDetails.vue'),
+      meta: {
+        pageTitle: 'Transaction Details',
+        breadcrumb: [
+          {
+            text: 'Transaction Details',
+            active: true
+          }
+        ]
+      }
+    },
+    {
       path: '/:chain/account/:address',
       name: 'chain-account',
       component: () => import('@/views/WalletAccountDetail.vue'),

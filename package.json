@@ -28,11 +28,13 @@
     "@ledgerhq/hw-transport-webusb": "^6.3.0",
     "@vue/composition-api": "^1.4.9",
     "@vueuse/core": "4.0.0",
+    "add": "^2.0.6",
     "animate.css": "4.1.1",
     "apexcharts": "3.24.0",
     "axios": "0.21.2",
     "axios-mock-adapter": "1.19.0",
     "bootstrap": "4.6.0",
+    "bootstrap-icons": "^1.9.1",
     "bootstrap-vue": "2.21.1",
     "chart.js": "2.9.4",
     "compare-versions": "^3.6.0",
@@ -45,6 +47,7 @@
     "ledger-cosmos-js": "2.1.8",
     "lodash": "^4.17.21",
     "long": "^5.2.0",
+    "material-icons": "^1.11.11",
     "moment": "^2.29.4",
     "node-fetch": "^2.6.5",
     "pako": "^1.0.11",
@@ -60,7 +63,6 @@
     "trading-vue-js": "^1.0.2",
     "uuid": "8.3.2",
     "vee-validate": "3.4.5",
-    "vue": "2.x",
     "vue-apexcharts": "1.6.0",
     "vue-autosuggest": "2.2.0",
     "vue-awesome-swiper": "4.1.1",
@@ -94,7 +96,9 @@
     "vue2-leaflet": "2.5.2",
     "vue3-qr-code-styling": "^1.4.6",
     "vuedraggable": "2.24.3",
-    "vuex": "3.6.0"
+    "vuesax": "^3.12.2",
+    "vuex": "3.6.0",
+    "yarn": "^1.22.19"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "~4.5.9",
@@ -111,7 +115,7 @@
     "eslint-plugin-vue": "6.2.2",
     "sass": "1.32.*",
     "sass-loader": "^10.1.0",
-    "vue-template-compiler": "2.x",
+    "vue-template-compiler": "2.6.14",
     "webpack-bundle-analyzer": "^4.5.0"
   },
   "prettier": {
