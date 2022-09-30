@@ -49,7 +49,7 @@
       </b-col>
       <b-col lg="6" md="12" sm="12" xs="12">
         <b-card>
-          <b-card-body class="p-0">
+          <b-card-body v-if="nFTSchema['code']" class="p-0">
             <b-row
               class="customizer-overviews divider-bottom px-1 pt-0 text-bold"
             >
@@ -62,7 +62,7 @@
                 <span>Collection:</span>
               </b-col>
               <b-col>
-                <span>SIX PROTOCOL</span>
+                <span>{{ nFTSchema['code'] }}</span>
               </b-col>
             </b-row>
             <b-row class="customizer-overviews divider-bottom">
@@ -70,23 +70,9 @@
                 <span>Contract:</span>
               </b-col>
               <b-col>
-                <span>6x12345</span>
-              </b-col>
-            </b-row>
-            <b-row class="customizer-overviews divider-bottom">
-              <b-col>
-                <span>Official Site:</span>
-              </b-col>
-              <b-col>
-                <span>https://xxx.xxx</span>
-              </b-col>
-            </b-row>
-            <b-row class="pt-1">
-              <b-col>
-                <span>Social Profiles:</span>
-              </b-col>
-              <b-col>
-                <span>https://xxx.xxx</span>
+                <span>{{
+                  nFTSchema['origin_data']['origin_contract_address']
+                }}</span>
               </b-col>
             </b-row>
           </b-card-body>
@@ -128,7 +114,6 @@
             :value="transactions.page_number"
             align="center"
             class="mt-1"
-            @change="pageload"
           />
         </b-tab>
         <b-tab title="Collection">
@@ -242,7 +227,8 @@ export default {
         { key: 'to', label: 'To' },
         { key: 'tokenId', label: 'Token ID' },
         { key: 'details', label: 'Details' }
-      ]
+      ],
+      nFTSchema: {}
     };
   },
   computed: {
@@ -304,78 +290,14 @@ export default {
   },
   created() {
     this.tabs = this.$children;
-    this.$http
-      .getAuthAccount(this.address)
-      .then(acc => {
-        this.account = acc;
-        this.initial();
-        this.$http.getTxsBySender(this.address).then(res => {
-          this.transactions = res;
-        });
-        this.$http.getStakingParameters().then(res => {
-          this.stakingParameters = res;
-        });
-      })
-      .catch(err => {
-        this.error = err;
-      });
   },
   mounted() {
-    const elem = document.getElementById('txevent');
-    elem.addEventListener('txcompleted', () => {
-      this.initial();
-    });
+    this.initial();
   },
   methods: {
     initial() {
-      this.$http.getStakingValidator(this.address).then(data => {
-        this.validator = data;
-        this.processAddress(data.operator_address, data.consensus_pubkey);
-        this.$http.getTxsBySender(this.accountAddress).then(res => {
-          this.transactions = res;
-        });
-
-        const { identity } = data.description;
-        keybase(identity).then(d => {
-          if (Array.isArray(d.them) && d.them.length > 0) {
-            this.$set(this.validator, 'avatar', d.them[0].pictures.primary.url);
-            this.$store.commit('cacheAvatar', {
-              identity,
-              url: d.them[0].pictures.primary.url
-            });
-          }
-        });
-        this.hexAddress = consensusPubkeyToHexAddress(data.consensus_pubkey);
-        fetch(
-          `${process.env.VUE_APP_API_VALIDATOR}/api/validator/propose-count?proposerAddr=${this.hexAddress}`
-        )
-          .then(data => data.json())
-          .then(resp => {
-            this.proposeTransactions = resp.data;
-          });
-      });
-      this.$http.getValidatorDistribution(this.address).then(res => {
-        this.distribution = res;
-      });
-    },
-    pageload(v) {
-      this.$http.getTxsBySender(this.accountAddress, v).then(res => {
-        this.transactions = res;
-      });
-    },
-    processAddress(operAddress, consensusPubkey) {
-      this.accountAddress = operatorAddressToAccount(operAddress);
-      this.hexAddress = consensusPubkeyToHexAddress(consensusPubkey);
-      this.$http
-        .getStakingDelegatorDelegation(this.accountAddress, operAddress)
-        .then(d => {
-          this.selfDelegation = d;
-        });
-    },
-    tokenFormatter(token) {
-      return formatToken({
-        amount: token,
-        denom: this.stakingParameter.bond_denom
+      this.$http.getMetaData().then(res => {
+        this.nFTSchema = res.nFTSchema;
       });
     }
   }

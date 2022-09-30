@@ -10,6 +10,7 @@
     "apiTX": [
         "https://six-protocol-sixnet-get-txs-api-gateway-3hi29er0.an.gateway.dev"
     ],
+    "schema" : ["https://sixnft-api.sixprotocol.net/sixnft/nftmngr/nft_schema/sixnetwork-uat.nftexpo"],
     "sdk_version": "0.45.0",
     "coin_type": "118",
     "min_tx_fee": "800",

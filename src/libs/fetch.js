@@ -362,8 +362,13 @@ export default class ChainFetch {
   async getBankAccountBalanceToken(address) {
     return this.get('/bank/balances/'.concat(address)).then(data => {
       return data;
-      }
-    );
+    });
+  }
+
+  async getMetaData() {
+    return this.getSchema('/').then(data => {
+      return data;
+    });
   }
 
   async getStakingReward(address, config = null) {
@@ -611,6 +616,19 @@ export default class ChainFetch {
       (Array.isArray(conf.api)
         ? conf.api[this.getApiIndex(config)]
         : conf.api) + url;
+    // finalurl = finalurl.replaceAll('v1beta1', this.getEndpointVersion())
+    const ret = await fetch(finalurl).then(response => response.json());
+    return ret;
+  }
+
+  async getSchema(url, config = null) {
+    if (!config) {
+      this.getSelectedConfig();
+    }
+    const conf = config || this.config;
+    const finalurl = Array.isArray(conf.schema)
+      ? conf.schema[this.getApiIndex(config)]
+      : conf.schema;
     // finalurl = finalurl.replaceAll('v1beta1', this.getEndpointVersion())
     const ret = await fetch(finalurl).then(response => response.json());
     return ret;
