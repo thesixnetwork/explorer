@@ -20,6 +20,7 @@ import {
   getUserCurrency
 } from './utils';
 import OsmosAPI from './osmos';
+import { SixDataChainConnector } from '@sixnetwork/six-data-chain-sdk';
 
 function commonProcess(res) {
   if (res && Object.keys(res).includes('result')) {
@@ -371,6 +372,32 @@ export default class ChainFetch {
     });
   }
 
+  async getMetaData1(tokenCode) {
+    const sixConnector = new SixDataChainConnector('', 443, 443);
+    sixConnector.apiUrl = 'https://sixnft-api.sixprotocol.net';
+    const apiClient = await sixConnector.connectAPIClient();
+    try {
+      const res = await apiClient.nftmngrModule.queryNftSchema(tokenCode);
+      return res.data;
+    } catch (error) {
+      return res.error;
+    }
+  }
+
+  // async getTxsBySender(sender, page = 1) {
+  //   // return this.get(`/txs?message.sender=${sender}&page=${page}&limit=20`)
+  //   return this.getTx(
+  //     `/api/all-txs-from-address?pageNumber=${page}&address=${sender}&limit=20`
+  //   );
+  // }
+
+  async getAllTransactions(schemaCode, page = 1) {
+    console.log("^^^^^^^^schemaCode^^^^^^^^", schemaCode)
+    return this.getSchemaTransaction(
+      `/api/nft/getAllTransaction?schemaCode=${schemaCode}&page=${page}&limit=20`
+    );
+  }
+
   async getStakingReward(address, config = null) {
     if (
       compareVersions(
@@ -629,6 +656,21 @@ export default class ChainFetch {
     const finalurl = Array.isArray(conf.schema)
       ? conf.schema[this.getApiIndex(config)]
       : conf.schema;
+    // finalurl = finalurl.replaceAll('v1beta1', this.getEndpointVersion())
+    const ret = await fetch(finalurl).then(response => response.json());
+    return ret;
+  }
+
+  async getSchemaTransaction(url, config = null) {
+    if (!config) {
+      this.getSelectedConfig();
+    }
+
+    console.log("))))))))))))))))))))))))", url)
+    const conf = config || this.config;
+    const finalurl = (Array.isArray(conf.datachain)
+      ? conf.datachain[this.getApiIndex(config)]
+      : conf.datachain) + url;
     // finalurl = finalurl.replaceAll('v1beta1', this.getEndpointVersion())
     const ret = await fetch(finalurl).then(response => response.json());
     return ret;

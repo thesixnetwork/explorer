@@ -10,7 +10,55 @@
     </a> -->
 
     <!-- Input -->
-    <div
+    <div>
+      <b-input-group>
+        <template #prepend>
+          <b-input-group-text>
+            <div class="search-input-icon customizer-search-icon">
+              <feather-icon icon="SearchIcon" />
+            </div>
+          </b-input-group-text>
+        </template>
+        <b-form-input
+          v-if="showSearchBar"
+          v-model="searchQuery"
+          placeholder="Search Height/Transaction/Address/Schema code"
+          autofocus
+          autocomplete="off"
+          @keyup.enter="doQuery"
+          @keyup.esc="escPressed"
+        />
+
+        <template #append>
+          <b-dropdown
+            :text="selectedItem"
+            variant="primary"
+            v-model="selectedItem"
+          >
+            <b-dropdown-item
+              id="Height"
+              @click="selectedItem = 'Height'"
+              class="text-dropdown"
+              >Height</b-dropdown-item
+            >
+            <b-dropdown-item
+              id="Transaction"
+              @click="selectedItem = 'Transaction'"
+              >Transaction</b-dropdown-item
+            >
+            <b-dropdown-item id="Address" @click="selectedItem = 'Address'"
+              >Address</b-dropdown-item
+            >
+            <b-dropdown-item
+              id="Schema code"
+              @click="selectedItem = 'Schema code'"
+              >Schema code</b-dropdown-item
+            >
+          </b-dropdown>
+        </template>
+      </b-input-group>
+    </div>
+    <!-- <div
       class="search-input customizer-search my-50"
       :class="{ open: showSearchBar }"
     >
@@ -28,19 +76,29 @@
         @keyup.enter="doQuery"
         @keyup.esc="escPressed"
       />
-    </div>
+    </div>-->
   </li>
 </template>
 
 <script>
-import { BFormInput } from 'bootstrap-vue';
+import {
+  BFormInput,
+  BInputGroup,
+  BInputGroupText,
+  BDropdown,
+  BDropdownItem
+} from 'bootstrap-vue';
 import { ref } from '@vue/composition-api';
 import { title } from '@core/utils/filter';
 import store from '@/store';
 
 export default {
   components: {
-    BFormInput
+    BFormInput,
+    BInputGroup,
+    BInputGroupText,
+    BDropdown,
+    BDropdownItem
   },
   setup() {
     const showSearchBar = ref(true);
@@ -57,32 +115,48 @@ export default {
   },
   data() {
     return {
-      searchQuery: null
+      searchQuery: null,
+      options: [
+        { text: 'Option1', value: 1 },
+        { text: 'Option2', value: 2 },
+        { text: 'Option3', value: 3 },
+        { text: 'Option4', value: 4 }
+      ],
+      selectedItem: 'Filter'
     };
   },
   methods: {
+    doSomething(v) {
+      console.log('------------------', v);
+    },
     doQuery() {
       const height = /^\d+$/;
       const txhash = /^[A-Z\d]{64}$/;
       const addr = /^[a-z\d]{2,6}1[a-z\d]{38}$/;
       const key = this.searchQuery;
+      const item = this.selectedItem;
 
       const c = store.state.chains.selected;
       if (!Object.values(this.$route.params).includes(key)) {
-        if (height.test(key)) {
+        if (item === 'Height' && height.test(key)) {
           this.$router.push({
             name: 'block',
             params: { chain: c.chain_name, height: key }
           });
-        } else if (txhash.test(key)) {
+        } else if (item === 'Transaction' && txhash.test(key)) {
           this.$router.push({
             name: 'transaction',
             params: { chain: c.chain_name, hash: key }
           });
-        } else if (addr.test(key)) {
+        } else if (item === 'Address' && addr.test(key)) {
           this.$router.push({
             name: 'chain-account',
             params: { chain: c.chain_name, address: key }
+          });
+        } else if (item === 'Schema code') {
+          this.$router.push({
+            name: 'gen2TxnSeach',
+            params: { chain: c.chain_name, address: key, tokenCode: key }
           });
         }
       }
@@ -162,5 +236,18 @@ p {
 
 .customizer-search {
   position: relative !important;
+}
+
+.bg-dropdown {
+  background: $info;
+  color: #fff;
+}
+
+.text-dropdown {
+  color: #fff;
+
+  .dark-layout & {
+    color: $primary;
+  }
 }
 </style>

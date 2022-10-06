@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div v-if="nFTSchema['code']">
     <b-row>
       <b-col lg="6" md="12" sm="12" xs="12">
         <b-card>
@@ -11,7 +11,7 @@
                 Overview
               </h5>
             </b-row>
-            <b-row>
+            <!-- <b-row>
               <span class="text-secondary text-small px-1 pt-25 pb-25">
                 Min price
               </span>
@@ -27,7 +27,7 @@
               <b-col>
                 <span>1,000,000</span>
               </b-col>
-            </b-row>
+            </b-row> -->
             <b-row class="customizer-overviews divider-bottom">
               <b-col>
                 <span>Holders:</span>
@@ -49,7 +49,7 @@
       </b-col>
       <b-col lg="6" md="12" sm="12" xs="12">
         <b-card>
-          <b-card-body v-if="nFTSchema['code']" class="p-0">
+          <b-card-body class="p-0">
             <b-row
               class="customizer-overviews divider-bottom px-1 pt-0 text-bold"
             >
@@ -153,6 +153,9 @@
       </b-tabs>
     </b-card>
   </div>
+  <div v-else>
+    Data not found 🕵🏻‍♀️
+  </div>
 </template>
 
 <script>
@@ -214,6 +217,7 @@ export default {
     }
   },
   data() {
+    const { tokenCode } = this.$route.params;
     return {
       isBusy: false,
       txnGen2: [],
@@ -228,7 +232,8 @@ export default {
         { key: 'tokenId', label: 'Token ID' },
         { key: 'details', label: 'Details' }
       ],
-      nFTSchema: {}
+      nFTSchema: {},
+      tokenCode
     };
   },
   computed: {
@@ -290,14 +295,43 @@ export default {
   },
   created() {
     this.tabs = this.$children;
+    if (this.tokenCode !== undefined) {
+      this.$http.getAllTransactions(this.tokenCode).then(res => {
+        console.log("&&&&&&&&&&&&&&&&&&&&&&&&&&&",res)
+        this.transactions = res;
+      });
+      this.$http
+        .getMetaData1(this.tokenCode)
+        .then(acc => {
+          consoel.log('===============', acc);
+        })
+        .catch(err => {
+          this.error = err;
+        });
+    }
   },
   mounted() {
     this.initial();
   },
+  beforeRouteUpdate(to, from, next) {
+    const { address } = to.params;
+    if (this.tokenCode !== undefined) {
+      this.$http.getAllTransactions(this.tokenCode).then(res => {
+        this.transactions = res;
+      });
+      next();
+    }
+  },
   methods: {
     initial() {
-      this.$http.getMetaData().then(res => {
+      this.$http.getMetaData1(this.tokenCode).then(res => {
         this.nFTSchema = res.nFTSchema;
+      });
+    },
+    pageload(v) {
+      console.log('***************page');
+      this.$http.getAllTransactions(this.tokenCode, v).then(res => {
+        this.transactions = res;
       });
     }
   }

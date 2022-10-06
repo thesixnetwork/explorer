@@ -286,6 +286,7 @@ export default {
           this.account = acc;
           this.initial();
           this.$http.getTxsBySender(this.address).then(res => {
+            console.log("beforeRouteUpdate")
             this.transactions = res;
           });
         })
@@ -653,6 +654,7 @@ export default {
         this.account = acc;
         this.initial();
         this.$http.getTxsBySender(this.address).then(res => {
+          console.log("created",res)
           this.transactions = res;
         });
         this.$http.getStakingParameters().then(res => {
@@ -715,6 +717,7 @@ export default {
     },
     pageload(v) {
       this.$http.getTxsBySender(this.address, v).then(res => {
+        console.log("pageload")
         this.transactions = res;
       });
     },

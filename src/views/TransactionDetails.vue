@@ -175,6 +175,7 @@ export default {
           this.account = acc;
           this.initial();
           this.$http.getTxsBySender(this.address).then(res => {
+            console.log("______________________3")
             this.transactions = res;
           });
         })
@@ -266,6 +267,7 @@ export default {
         this.account = acc;
         this.initial();
         this.$http.getTxsBySender(this.address).then(res => {
+          console.log("______________________4")
           this.transactions = res;
         });
         this.$http.getStakingParameters().then(res => {
@@ -288,6 +290,7 @@ export default {
         this.validator = data;
         this.processAddress(data.operator_address, data.consensus_pubkey);
         this.$http.getTxsBySender(this.accountAddress).then(res => {
+          console.log("______________________1")
           this.transactions = res;
         });
 
@@ -316,6 +319,7 @@ export default {
     },
     pageload(v) {
       this.$http.getTxsBySender(this.accountAddress, v).then(res => {
+        console.log("______________________2")
         this.transactions = res;
       });
     },
