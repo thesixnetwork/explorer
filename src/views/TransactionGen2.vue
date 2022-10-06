@@ -2,12 +2,12 @@
   <div v-if="nFTSchema['code']">
     <b-row>
       <b-col lg="6" md="12" sm="12" xs="12">
-        <b-card>
+        <b-card class="style-card">
           <b-card-body class="p-0">
             <b-row
               class="customizer-overviews divider-bottom px-1 pt-0 text-bold"
             >
-              <h5 class="customizer-text">
+              <h5 class="font-weight-bolder customizer-text">
                 Overview
               </h5>
             </b-row>
@@ -19,60 +19,75 @@
             <b-row class="pt-0 pb-25 customizer-overviews divider-bottom">
               <span class="text-small px-1">$0.00</span>
               <span class="text-secondary text-small px-1">0.0000 SIX</span>
-            </b-row>
-            <b-row class="customizer-overviews divider-bottom">
-              <b-col>
-                <span>Max Total Supply:</span>
-              </b-col>
-              <b-col>
-                <span>1,000,000</span>
-              </b-col>
             </b-row> -->
-            <b-row class="customizer-overviews divider-bottom">
-              <b-col>
+            <b-row class="customizer-overviews">
+              <b-col lg="4">
+                <span class="text-small">Max Total Supply:</span>
+              </b-col>
+              <b-col lg="8">
+                <span class="text-sm-detail">1,000,000</span>
+              </b-col>
+            </b-row>
+            <!-- <b-row class="customizer-overviews">
+              <b-col lg="4">
                 <span>Holders:</span>
               </b-col>
-              <b-col>
+              <b-col lg="8">
                 <span>6,666</span>
               </b-col>
-            </b-row>
-            <b-row class="pt-1">
-              <b-col>
+            </b-row> -->
+            <!-- <b-row class="pt-1">
+              <b-col lg="4">
                 <span>Transfers:</span>
               </b-col>
-              <b-col>
+              <b-col lg="8">
                 <span>66,666</span>
               </b-col>
-            </b-row>
+            </b-row> -->
           </b-card-body>
         </b-card>
       </b-col>
       <b-col lg="6" md="12" sm="12" xs="12">
+<<<<<<< HEAD
         <b-card>
           <b-card-body class="p-0">
+=======
+        <b-card class="style-card">
+          <b-card-body v-if="nFTSchema['code']" class="p-0">
+>>>>>>> 7db1713a51b6506a62f4b03fdc86e48a391a32a7
             <b-row
               class="customizer-overviews divider-bottom px-1 pt-0 text-bold"
             >
-              <h5 class="customizer-text">
+              <h5 class="font-weight-bolder customizer-text">
                 Profile Summary
               </h5>
             </b-row>
             <b-row class="customizer-overviews divider-bottom">
-              <b-col>
-                <span>Collection:</span>
+              <b-col lg="3">
+                <span class="text-small">Collection:</span>
               </b-col>
-              <b-col>
-                <span>{{ nFTSchema['code'] }}</span>
+              <b-col lg="9">
+                <span class="text-sm-detail style-text">
+                  {{ nFTSchema['name'] }}
+                </span>
               </b-col>
             </b-row>
             <b-row class="customizer-overviews divider-bottom">
-              <b-col>
-                <span>Contract:</span>
+              <b-col lg="3">
+                <span class="text-small">Contract:</span>
               </b-col>
-              <b-col>
-                <span>{{
-                  nFTSchema['origin_data']['origin_contract_address']
-                }}</span>
+              <b-col lg="9" class="text-truncate">
+                <span class="customizer-text text-truncate text-sm-detail">
+                  {{ nFTSchema['origin_data']['origin_contract_address'] }}
+                </span>
+              </b-col>
+            </b-row>
+            <b-row class="customizer-overviews">
+              <b-col lg="3">
+                <span class="text-small">Schema code:</span>
+              </b-col>
+              <b-col lg="9" class="style-text text-sm-detail">
+                <span> {{ nFTSchema['code'] }} </span>
               </b-col>
             </b-row>
           </b-card-body>
@@ -147,9 +162,10 @@
             </b-col>
           </b-row>
         </b-tab>
-        <b-tab title="Info">
-          <p>I'm a Info tab!</p>
-        </b-tab>
+        <!-- <b-tab title="Info">
+          <p class="font-weight-bold">OVERVIEW</p>
+          <p>The sixnetwork-uat.nftexpo is made up of 10k Club xxx NFTs.</p>
+        </b-tab> -->
       </b-tabs>
     </b-card>
   </div>
@@ -227,8 +243,7 @@ export default {
         { key: 'txnHash', label: 'Txn Hash' },
         { key: 'method', label: 'Method' },
         { key: 'age', label: 'Age' },
-        { key: 'from', label: 'From' },
-        { key: 'to', label: 'To' },
+        { key: 'by', label: 'By' },
         { key: 'tokenId', label: 'Token ID' },
         { key: 'details', label: 'Details' }
       ],
@@ -350,6 +365,13 @@ export default {
   cursor: pointer;
 }
 
+.style-card {
+  height: 200px;
+  @include media-breakpoint-down(md) {
+    height: auto;
+  }
+}
+
 .customizer-text {
   color: $info;
   max-width: 150px;
@@ -359,9 +381,17 @@ export default {
   }
 }
 
+.style-text {
+  color: $info;
+
+  .dark-layout & {
+    color: $primary;
+  }
+}
 .customizer-overviews {
   padding-bottom: 10px;
   padding-top: 10px;
+  align-items: center;
 }
 
 .divider-bottom {
@@ -373,6 +403,16 @@ export default {
 }
 
 .text-small {
-  font-size: 10px;
+  font-size: 14px;
+  @include media-breakpoint-down(lg) {
+    font-size: 10px;
+  }
+}
+
+.text-sm-detail {
+  font-size: 13px;
+  @include media-breakpoint-down(lg) {
+    font-size: 12px;
+  }
 }
 </style>

@@ -19,7 +19,9 @@
             SIX PROTOCOL #6666
           </span>
           <router-link to="/txn-gen2/txs-details">
-            <p class="customizer-text">SIX Protocol</p>
+            <p class="customizer-text">
+              SIX Protocol
+            </p>
           </router-link>
         </div>
         <b-card class="mb-1">
@@ -566,8 +568,7 @@ export default {
         { key: 'txnHash', label: 'Txn Hash' },
         { key: 'method', label: 'Method' },
         { key: 'age', label: 'Age' },
-        { key: 'from', label: 'From' },
-        { key: 'to', label: 'To' },
+        { key: 'by', label: 'By' },
         { key: 'tokenId', label: 'Token ID' },
         { key: 'details', label: 'Details' }
       ]

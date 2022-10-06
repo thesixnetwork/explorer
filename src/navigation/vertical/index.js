@@ -28,11 +28,11 @@ const modules = [
     title: 'uptime',
     route: 'uptime'
   },
-  {
-    scope: 'normal',
-    title: 'Transactions Gen2',
-    route: 'gen2Txn'
-  },
+  // {
+  //   scope: 'normal',
+  //   title: 'Transactions Gen2',
+  //   route: 'gen2Txn'
+  // },
   {
     scope: 'cos-mos',
     title: 'gravity',
