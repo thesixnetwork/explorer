@@ -127,7 +127,7 @@
             </b-col>
           </b-row>
         </b-tab>
-        <b-tab title="Logs (x)" disabled>
+        <!-- <b-tab title="Logs (x)" disabled>
           <p>I'm a Logs tab!</p>
         </b-tab>
         <b-tab title="State" disabled>
@@ -135,7 +135,7 @@
         </b-tab>
         <b-tab title="Comments" disabled>
           <p>I'm a Comments tab!</p>
-        </b-tab>
+        </b-tab> -->
       </b-tabs>
     </b-card>
   </div>
@@ -194,8 +194,7 @@ export default {
         { key: 'txnHash', label: 'Txn Hash' },
         { key: 'method', label: 'Method' },
         { key: 'age', label: 'Age' },
-        { key: 'from', label: 'From' },
-        { key: 'to', label: 'To' },
+        { key: 'by', label: 'By' },
         { key: 'tokenId', label: 'Token ID' },
         { key: 'details', label: 'Details' }
       ]
@@ -374,6 +373,10 @@ export default {
 
 .text-small {
   font-size: 10px;
+}
+
+.text-sm {
+  font-size: 14px;
 }
 
 .style-text {
