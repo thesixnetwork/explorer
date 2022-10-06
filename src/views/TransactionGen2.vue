@@ -48,13 +48,8 @@
         </b-card>
       </b-col>
       <b-col lg="6" md="12" sm="12" xs="12">
-<<<<<<< HEAD
-        <b-card>
-          <b-card-body class="p-0">
-=======
         <b-card class="style-card">
           <b-card-body v-if="nFTSchema['code']" class="p-0">
->>>>>>> 7db1713a51b6506a62f4b03fdc86e48a391a32a7
             <b-row
               class="customizer-overviews divider-bottom px-1 pt-0 text-bold"
             >
