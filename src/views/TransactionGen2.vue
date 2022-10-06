@@ -25,7 +25,7 @@
                 <span class="text-small">Max Total Supply:</span>
               </b-col>
               <b-col lg="8">
-                <span class="text-sm-detail">1,000,000</span>
+                <span class="text-sm-detail">x,xxx,xxx</span>
               </b-col>
             </b-row>
             <!-- <b-row class="customizer-overviews">
@@ -74,6 +74,14 @@
               <b-col lg="9" class="text-truncate">
                 <span class="customizer-text text-truncate text-sm-detail">
                   {{ nFTSchema['origin_data']['origin_contract_address'] }}
+                  <feather-icon
+                    :icon="'CopyIcon'"
+                    size="16"
+                    class="ml-25 customizer-copy"
+                    @click="
+                      copy(nFTSchema['origin_data']['origin_contract_address'])
+                    "
+                  />
                 </span>
               </b-col>
             </b-row>
@@ -92,9 +100,16 @@
     <b-card>
       <b-tabs content-class="mt-1">
         <b-tab title="Gen2 Txn" active class="pa-0">
-          <p class="text-secondary">
-            A total of 0 transactions found
-          </p>
+          <div class="mb-1">
+            <span class="text-secondary">
+              A total of
+              <span class="font-weight-bold text-primary px-50">
+                {{ txs.length }}
+              </span>
+              transactions found
+            </span>
+          </div>
+
           <b-table
             :items="txs"
             :busy="isBusy"
@@ -111,14 +126,14 @@
                 <strong>Loading...</strong>
               </div>
             </template>
-            <template #cell(block)="data">
-              <router-link :to="`../blocks/${data.item.block}`">
-                {{ data.item.block }}
+            <template #cell(txhash)="data">
+              <router-link :to="`/txn-gen2/txs-details/${data.item.txhash}`">
+                {{ formatHash(data.item.txhash) }}
               </router-link>
             </template>
           </b-table>
           <b-pagination
-            v-if="Number(transactions.page_total) > 1"
+            v-if="Number(transactions.totalPage) > 1"
             :total-rows="transactions.total_count"
             :per-page="transactions.limit"
             :value="transactions.page_number"
@@ -165,7 +180,9 @@
     </b-card>
   </div>
   <div v-else>
-    Data not found 🕵🏻‍♀️
+    <h3 class="text-center">
+      Data not found 🕵🏻‍♀️
+    </h3>
   </div>
 </template>
 
@@ -182,18 +199,8 @@ import {
   BPagination,
   BAvatar
 } from 'bootstrap-vue';
-
-import {
-  percent,
-  formatToken,
-  operatorAddressToAccount,
-  consensusPubkeyToHexAddress,
-  toDay,
-  abbrAddress,
-  formatTokenAmount,
-  formatGasAmount,
-  tokenFormatter
-} from '@/libs/utils';
+import { toDay, abbrAddress } from '@/libs/utils';
+import ToastificationContent from '@core/components/toastification/ToastificationContent.vue';
 
 export default {
   components: {
@@ -235,12 +242,10 @@ export default {
       transactions: [],
       tabs: [],
       fields: [
-        { key: 'txnHash', label: 'Txn Hash' },
+        { key: 'txhash', label: 'Txn Hash' },
         { key: 'method', label: 'Method' },
         { key: 'age', label: 'Age' },
-        { key: 'by', label: 'By' },
-        { key: 'tokenId', label: 'Token ID' },
-        { key: 'details', label: 'Details' }
+        { key: 'by', label: 'By' }
       ],
       nFTSchema: {},
       tokenCode
@@ -248,56 +253,25 @@ export default {
   },
   computed: {
     txs() {
-      if (this.transactions.txs) {
+      if (this.transactions.data) {
         this.isBusy = false;
-        return this.transactions.txs.map(x => ({
+        return this.transactions.data.txs.map(x => ({
           txhash: x.txhash,
-          type:
-            typeof codeMessage[x.type.split('.').slice(-1)] !== 'undefined'
-              ? x.type.split('.').slice(-1)[0] === 'MsgSend' &&
-                x.decode_tx.fromAddress !== this.address
-                ? 'Receive'
-                : codeMessage[x.type.split('.').slice(-1)].message
+          method:
+            x.type === '/sixnft.nftmngr.MsgCreateNFTSchema'
+              ? 'Create NFT Schema'
               : x.type,
-          block: Number(x.block_height),
-          value:
-            typeof x.decode_tx.amount !== 'undefined'
-              ? (typeof x.decode_tx.amount.amount !== 'undefined' &&
-                  `${formatTokenAmount(x.decode_tx.amount.amount) +
-                    ' ' +
-                    'SIX'}`) ||
-                (typeof x.decode_tx.amount[0] !== 'undefined' &&
-                  `${formatTokenAmount(x.decode_tx.amount[0].amount) +
-                    ' ' +
-                    'SIX'}`) ||
-                '-'
-              : '-',
-          commission:
-            typeof x.decode_tx.commission !== 'undefined'
-              ? (typeof x.decode_tx.commission.amount !== 'undefined' &&
-                  `${formatTokenAmount(x.decode_tx.commission.amount) +
-                    ' ' +
-                    'SIX'}`) ||
-                (typeof x.decode_tx.commission[0] !== 'undefined' &&
-                  `${formatTokenAmount(x.decode_tx.commission[0].amount) +
-                    ' ' +
-                    'SIX'}`) ||
-                '-'
-              : '-',
-          txnFee: `${formatGasAmount(x.decode_tx.fee_amount) + ' ' + 'SIX'}`,
-          time: toDay(x.time_stamp)
+          age: toDay(x.time_stamp),
+          by: abbrAddress(x.decode_tx.creator)
         }));
       } else {
         this.isBusy = true;
         return [
           {
             txhash: '',
-            type: '',
-            block: '',
-            value: '',
-            commission: '',
-            txnFee: '',
-            time: ''
+            method: '',
+            age: '',
+            by: ''
           }
         ];
       }
@@ -307,7 +281,6 @@ export default {
     this.tabs = this.$children;
     if (this.tokenCode !== undefined) {
       this.$http.getAllTransactions(this.tokenCode).then(res => {
-        console.log("&&&&&&&&&&&&&&&&&&&&&&&&&&&",res)
         this.transactions = res;
       });
       this.$http
@@ -343,6 +316,30 @@ export default {
       this.$http.getAllTransactions(this.tokenCode, v).then(res => {
         this.transactions = res;
       });
+    },
+    formatHash: abbrAddress,
+    copy(v) {
+      this.$copyText(v).then(
+        () => {
+          this.$toast({
+            component: ToastificationContent,
+            props: {
+              title: 'Address copied',
+              icon: 'BellIcon'
+            }
+          });
+        },
+        e => {
+          this.$toast({
+            component: ToastificationContent,
+            props: {
+              title: `Failed to copy address! ${e}`,
+              icon: 'BellIcon',
+              variant: 'danger'
+            }
+          });
+        }
+      );
     }
   }
 };
@@ -351,6 +348,28 @@ export default {
 <style lang="scss" scoped>
 @import '~@core/scss/base/bootstrap-extended/include';
 @import '~@core/scss/base/components/variables-dark';
+
+.customizer-copy {
+  cursor: pointer;
+  color: $info;
+
+  .dark-layout & {
+    color: $primary;
+  }
+}
+
+.customizer-button {
+  background-color: $info;
+  color: #fff;
+  font-size: 0.8rem;
+  border-radius: 12px;
+  padding: 8px 14px;
+
+  .dark-layout & {
+    background-color: $primary;
+    color: #fff;
+  }
+}
 
 .customizer-card {
   color: $secondary;

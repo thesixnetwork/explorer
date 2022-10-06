@@ -18,7 +18,7 @@
           <span class="customizer-title">
             SIX PROTOCOL #6666
           </span>
-          <router-link to="/txn-gen2/txs-details">
+          <router-link>
             <p class="customizer-text">
               SIX Protocol
             </p>
