@@ -2,7 +2,6 @@
   <div v-if="attributes.schema_code">
     <b-row>
       <b-col lg="4" md="12" sm="12" xs="12">
-        <!-- <b-img :src="attributes.image" :alt="attributes.image" thumbnail /> -->
         <b-card>
           <div class="d-flex justify-content-center">
             <b-img :src="attributes.image" :alt="attributes.image" thumbnail />
