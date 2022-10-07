@@ -61,4 +61,19 @@ const getContract = (abi, address, contractOptions) => {
   return new web3.eth.Contract(abi, address, contractOptions);
 };
 
-export { getWeb3, getContract, decryptRequest };
+const STATUS_CODE = {
+  GORLI: {
+    PROVIDER: 'https://ethereum-goerli-rpc.allthatnode.com/'
+  },
+  KLAYTN: {
+    PROVIDER: 'https://klaytn-api.fingerlabs.io/'
+  },
+  BAOBAB: {
+    PROVIDER: 'https://public-en.kaikas.io/v1/baobab/'
+  },
+  ETHEREUM: {
+    PROVIDER: 'https://mainnet.infura.io/v3/'
+  }
+};
+
+export { getWeb3, getContract, decryptRequest, STATUS_CODE };

@@ -380,7 +380,7 @@ export default class ChainFetch {
       const res = await apiClient.nftmngrModule.queryNftSchema(tokenCode);
       return res.data;
     } catch (error) {
-      return res.error;
+      return {};
     }
   }
 
@@ -670,7 +670,7 @@ export default class ChainFetch {
     if (!config) {
       this.getSelectedConfig();
     }
-    
+
     const conf = config || this.config;
     const finalurl =
       (Array.isArray(conf.datachain)
