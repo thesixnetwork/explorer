@@ -175,6 +175,10 @@ const router = new VueRouter({
         pageTitle: 'NFT Transaction',
         breadcrumb: [
           {
+            text: 'Transaction Gen2',
+            active: true
+          },
+          {
             text: 'NFT Transaction',
             active: true
           }
