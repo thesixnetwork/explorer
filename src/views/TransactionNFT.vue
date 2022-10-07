@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div v-if="attributes.schema_code">
     <b-row>
       <b-col lg="4" md="12" sm="12" xs="12">
         <!-- <b-img :src="attributes.image" :alt="attributes.image" thumbnail /> -->
@@ -107,15 +107,13 @@
                         class="text-success mr-50"
                       />
                       <span class="text-truncate customizer-text">
-                        0x898bb3b662419e79366046C625A213B83fB4809B
+                        {{ contract_address }}
                       </span>
                       <feather-icon
                         :icon="'CopyIcon'"
                         size="16"
                         class="ml-25 customizer-copy"
-                        @click="
-                          copy('0x898bb3b662419e79366046c625a213b83fb4809b')
-                        "
+                        @click="copy(contract_address)"
                       />
                     </div>
                   </b-col>
@@ -310,7 +308,7 @@
         </b-card>
       </b-col>
     </b-row>
-    <!-- <b-card>
+    <!--<b-card>
       <p class="font-weight-bold divider-bottom pb-1 style-text">
         Item Activity
       </p>
@@ -343,7 +341,7 @@
         class="mt-1"
         @change="pageload"
       />
-    </b-card> -->
+    </b-card>-->
   </div>
 </template>
 
@@ -359,6 +357,7 @@ import {
   // BTable,
   // BSpinner,
   // BPagination,
+  // BAvatar,
   BImg,
   BCollapse,
   VBToggle
@@ -385,6 +384,7 @@ export default {
     // BTable,
     // BSpinner,
     // BPagination,
+    // BAvatar,
     BImg,
     BCollapse
   },
@@ -393,14 +393,16 @@ export default {
   },
   beforeRouteUpdate(to, from, next) {
     const { address } = to.params;
+    this.initial();
     if (address !== from.params.hash) {
       this.address = address;
     }
   },
   data() {
-    const { id } = this.$route.params;
+    const { id, schema } = this.$route.params;
     return {
       id,
+      schema,
       isBusy: false,
       transactions: [],
       typeExpand: 'shadow',
@@ -414,39 +416,33 @@ export default {
     this.tabs = this.$children;
   },
   mounted() {
-    this.fetchMetaData();
+    this.initial();
   },
   methods: {
-    initial() {
-      this.$http.getStakingValidator(this.address).then(data => {
-        this.validator = data;
-        this.processAddress(data.operator_address, data.consensus_pubkey);
-        this.$http.getTxsBySender(this.accountAddress).then(res => {
-          this.transactions = res;
-        });
+    async initial() {
+      if (this.schema !== undefined) {
+        const staticType = ['Background', 'Moon', 'Plate', 'Tail', 'Whale'];
+        this.$http.getNftSchema(this.schema).then(async res => {
+          this.contract_address =
+            res.nFTSchema.origin_data.origin_contract_address;
+          const nftContract = getContract(
+            TestNfts,
+            res.nFTSchema.origin_data.origin_contract_address || ''
+          );
 
-        const { identity } = data.description;
-        keybase(identity).then(d => {
-          if (Array.isArray(d.them) && d.them.length > 0) {
-            this.$set(this.validator, 'avatar', d.them[0].pictures.primary.url);
-            this.$store.commit('cacheAvatar', {
-              identity,
-              url: d.them[0].pictures.primary.url
-            });
-          }
+          const uri = await nftContract.methods.tokenURI(this.id).call();
+          const ownerOf = await nftContract.methods.ownerOf(this.id).call();
+          const built = axios.get(uri);
+          const [allNfts, owner] = await Promise.all([built, ownerOf]);
+          this.attributes = { ...allNfts.data, owner: owner };
+          this.staticAttributes = allNfts.data.attributes.filter(at =>
+            staticType.includes(at.trait_type)
+          );
+          this.dynamicAttributes = allNfts.data.attributes.filter(
+            at => !staticType.includes(at.trait_type)
+          );
         });
-        this.hexAddress = consensusPubkeyToHexAddress(data.consensus_pubkey);
-        fetch(
-          `${process.env.VUE_APP_API_VALIDATOR}/api/validator/propose-count?proposerAddr=${this.hexAddress}`
-        )
-          .then(data => data.json())
-          .then(resp => {
-            this.proposeTransactions = resp.data;
-          });
-      });
-      this.$http.getValidatorDistribution(this.address).then(res => {
-        this.distribution = res;
-      });
+      }
     },
     pageload(v) {
       this.$http.getTxsBySender(this.accountAddress, v).then(res => {
@@ -467,25 +463,6 @@ export default {
         amount: token,
         denom: this.stakingParameter.bond_denom
       });
-    },
-    async fetchMetaData() {
-      const staticType = ['Background', 'Moon', 'Plate', 'Tail', 'Whale'];
-      const nftContract = getContract(
-        TestNfts,
-        '0x898bb3b662419e79366046C625A213B83fB4809B' || ''
-      );
-
-      const uri = await nftContract.methods.tokenURI(this.id).call();
-      const ownerOf = await nftContract.methods.ownerOf(this.id).call();
-      const built = axios.get(uri);
-      const [allNfts, owner] = await Promise.all([built, ownerOf]);
-      this.attributes = { ...allNfts.data, owner: owner };
-      this.staticAttributes = allNfts.data.attributes.filter(at =>
-        staticType.includes(at.trait_type)
-      );
-      this.dynamicAttributes = allNfts.data.attributes.filter(
-        at => !staticType.includes(at.trait_type)
-      );
     },
     copy(v) {
       this.$copyText(v).then(
