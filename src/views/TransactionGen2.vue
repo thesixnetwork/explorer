@@ -133,12 +133,13 @@
             </template>
           </b-table>
           <b-pagination
-            v-if="Number(transactions.totalPage) > 1"
-            :total-rows="transactions.total_count"
-            :per-page="transactions.limit"
-            :value="transactions.page_number"
+            v-if="Number(transactions.data.totalPage) > 1"
+            :total-rows="Number(transactions.data.totalCount)"
+            :per-page="20"
+            :value="page_number"
             align="center"
             class="mt-1"
+            @change="pageload"
           />
         </b-tab>
         <b-tab title="Collection">
@@ -267,7 +268,8 @@ export default {
         { key: 'by', label: 'By' }
       ],
       nFTSchema: {},
-      tokenCode
+      tokenCode,
+      page_number: 1,
     };
   },
   computed: {
@@ -331,6 +333,7 @@ export default {
       });
     },
     pageload(v) {
+      this.page_number = v;
       this.$http.getAllTransactions(this.tokenCode, v).then(res => {
         this.transactions = res;
       });
