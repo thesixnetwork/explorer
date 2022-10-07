@@ -109,9 +109,14 @@
         </b-tabs>
       </div>
       <div v-else>
-        <h5 class="text-center mb-0">
-          Loading Data 🕵🏻‍♀️
-        </h5>
+        <b-card>
+          <div class="flex align-items-center justify-content-center">
+            <b-spinner class="mr-50" />
+            <span class="text-center mb-0">
+              Loading Data 🕵🏻‍♀️
+            </span>
+          </div>
+        </b-card>
       </div>
     </b-card>
   </div>
@@ -125,7 +130,8 @@ import {
   BTd,
   BTab,
   BTabs,
-  BBadge
+  BBadge,
+  BSpinner
 } from 'bootstrap-vue';
 
 import { tokenFormatter, toDay } from '@/libs/utils';
@@ -138,7 +144,8 @@ export default {
     BTd,
     BTab,
     BTabs,
-    BBadge
+    BBadge,
+    BSpinner
   },
   beforeRouteUpdate(to, from, next) {
     const { address } = to.params;

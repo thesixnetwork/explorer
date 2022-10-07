@@ -10,7 +10,7 @@
     </a> -->
 
     <!-- Input -->
-    <div>
+    <!-- <div>
       <b-input-group>
         <template #prepend>
           <b-input-group-text>
@@ -60,8 +60,8 @@
           </b-dropdown>
         </template>
       </b-input-group>
-    </div>
-    <!-- <div
+    </div> -->
+    <div
       class="search-input customizer-search my-50"
       :class="{ open: showSearchBar }"
     >
@@ -72,36 +72,35 @@
       <b-form-input
         v-if="showSearchBar"
         v-model="searchQuery"
-        placeholder="Search Height/Transaction/Address"
+        placeholder="Search Height/Transaction/Address/SchemaCode"
         class="customizer-input"
         autofocus
         autocomplete="off"
         @keyup.enter="doQuery"
         @keyup.esc="escPressed"
       />
-    </div>-->
+    </div>
+
+    <!-- <div class="mt-2 style-search">
+      <div v-for="search in filteredSearch" :key="search" class="p-50">
+        <div class="col-4 text-dark">
+          <h6>{{ search.title }}</h6>
+        </div>
+        <div class="col text-secondary">{{ search.text }}</div>
+      </div>
+    </div> -->
   </li>
 </template>
 
 <script>
-import {
-  BFormInput,
-  BInputGroup,
-  BInputGroupText,
-  BDropdown,
-  BDropdownItem
-} from 'bootstrap-vue';
+import { BFormInput } from 'bootstrap-vue';
 import { ref } from '@vue/composition-api';
 import { title } from '@core/utils/filter';
 import store from '@/store';
 
 export default {
   components: {
-    BFormInput,
-    BInputGroup,
-    BInputGroupText,
-    BDropdown,
-    BDropdownItem
+    BFormInput
   },
   setup() {
     const showSearchBar = ref(true);
@@ -118,14 +117,17 @@ export default {
   },
   data() {
     return {
-      searchQuery: null,
-      options: [
-        { text: 'Option1', value: 1 },
-        { text: 'Option2', value: 2 },
-        { text: 'Option3', value: 3 },
-        { text: 'Option4', value: 4 }
-      ],
-      selectedItem: 'Filter'
+      searchQuery: '',
+      searchValue: '',
+      searchList: [
+        { title: 'Hight', text: 'Whatever it takes' },
+        { title: 'Transaction', text: 'I am still worthy' },
+        {
+          title: 'Address',
+          text: 'I dont judge people by their worst mistakes'
+        },
+        { title: 'Schema code', text: 'I am… inevitable' }
+      ]
     };
   },
   methods: {
@@ -136,34 +138,44 @@ export default {
       const height = /^\d+$/;
       const txhash = /^[A-Z\d]{64}$/;
       const addr = /^[a-z\d]{2,6}1[a-z\d]{38}$/;
+      const schema = /\W/;
       const key = this.searchQuery;
-      const item = this.selectedItem;
 
       const c = store.state.chains.selected;
       if (!Object.values(this.$route.params).includes(key)) {
-        if (item === 'Height' && height.test(key)) {
+        if (height.test(key)) {
           this.$router.push({
             name: 'block',
             params: { chain: c.chain_name, height: key }
           });
-        } else if (item === 'Transaction' && txhash.test(key)) {
+        } else if (txhash.test(key)) {
           this.$router.push({
             name: 'transaction',
             params: { chain: c.chain_name, hash: key }
           });
-        } else if (item === 'Address' && addr.test(key)) {
+        } else if (addr.test(key)) {
           this.$router.push({
             name: 'chain-account',
             params: { chain: c.chain_name, address: key }
           });
-        } else if (item === 'Schema code') {
+        } else if (schema.test(key)) {
           this.$router.push({
             name: 'gen2TxnSeach',
-            params: { chain: c.chain_name, address: key, tokenCode: key }
+            params: { chain: c.chain_name, tokenCode: key }
           });
         }
       }
       // this.$router.push('/')
+    }
+  },
+  computed: {
+    filteredSearch() {
+      return this.searchList.filter(search => {
+        return (
+          search.title.toLowerCase().includes(this.searchValue.toLowerCase()) ||
+          search.text.toLowerCase().includes(this.searchValue.toLowerCase())
+        );
+      });
     }
   }
 };
@@ -252,5 +264,11 @@ p {
   .dark-layout & {
     color: $primary;
   }
+}
+
+.style-search {
+  border: 1px solid $white;
+  border-radius: 12px;
+  cursor: pointer;
 }
 </style>
