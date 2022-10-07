@@ -21,6 +21,7 @@
     "@cosmjs/math": "^0.26.5",
     "@cosmjs/proto-signing": "^0.26.5",
     "@cosmjs/stargate": "0.26.5",
+    "crypto": "^1.0.1",
     "@diadal/vue3-qr-code-styling": "^1.4.6",
     "@intlify/vue-i18n-loader": "^2.1.2",
     "@ledgerhq/hw-app-cosmos": "^6.3.0",
@@ -99,7 +100,9 @@
     "vuedraggable": "2.24.3",
     "vuesax": "^3.12.2",
     "vuex": "3.6.0",
-    "yarn": "^1.22.19"
+    "yarn": "^1.22.19",
+    "web3": "^1.8.0",
+    "@dopex-io/web3-multicall": "^0.1.9"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "~4.5.9",

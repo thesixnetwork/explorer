@@ -372,7 +372,7 @@ export default class ChainFetch {
     });
   }
 
-  async getMetaData1(tokenCode) {
+  async getNftSchema(tokenCode) {
     const sixConnector = new SixDataChainConnector('', 443, 443);
     sixConnector.apiUrl = 'https://sixnft-api.sixprotocol.net';
     const apiClient = await sixConnector.connectAPIClient();
@@ -392,7 +392,6 @@ export default class ChainFetch {
   // }
 
   async getAllTransactions(schemaCode, page = 1) {
-    console.log("^^^^^^^^schemaCode^^^^^^^^", schemaCode)
     return this.getSchemaTransaction(
       `/api/nft/getAllTransaction?schemaCode=${schemaCode}&page=${page}&limit=20`
     );
@@ -666,7 +665,6 @@ export default class ChainFetch {
       this.getSelectedConfig();
     }
 
-    console.log("))))))))))))))))))))))))", url)
     const conf = config || this.config;
     const finalurl = (Array.isArray(conf.datachain)
       ? conf.datachain[this.getApiIndex(config)]

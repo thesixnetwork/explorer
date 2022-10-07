@@ -168,7 +168,7 @@ const router = new VueRouter({
       }
     },
     {
-      path: '/txn-gen2/nft-txs',
+      path: '/txn-gen2/nft-txs/:id',
       name: 'nftTxs',
       component: () => import('@/views/TransactionNFT.vue'),
       meta: {

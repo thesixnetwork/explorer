@@ -129,27 +129,29 @@
         <b-tab title="Collection">
           <p>Latest 0 active tokens (From a total of 0 tokens)</p>
           <b-row>
-            <b-col lg="3" md="12" sm="12" xs="12">
-              <router-link to="/txn-gen2/nft-txs">
+            <b-col
+              v-for="(item, index) in nfts"
+              :key="index"
+              lg="3"
+              md="4"
+              sm="6"
+              xs="6"
+            >
+              <router-link :to="`/txn-gen2/nft-txs/${index+1}`">
                 <b-card class="customizer-card">
                   <div class="d-flex justify-content-center mb-2">
-                    <b-avatar
-                      :size="140"
-                      :src="
-                        require('@/assets/images/logo/six-network-logo.png')
-                      "
-                    />
+                    <b-avatar :size="140" :src="item.image" />
                   </div>
                   <div class="d-flex">
                     <span class="mr-50">Token ID:</span>
                     <span class="customizer-text text-truncate d-inline-block">
-                      12341234123412341234123412341234
+                      {{ item.name }}
                     </span>
                   </div>
                   <div class="d-flex">
                     <span class="mr-50">Owner:</span>
                     <span class="customizer-text text-truncate d-inline-block">
-                      6x12341234123412341234123412341234
+                      {{ item.owner }}
                     </span>
                   </div>
                 </b-card>
@@ -194,6 +196,11 @@ import {
   formatGasAmount,
   tokenFormatter
 } from '@/libs/utils';
+import TestNfts from '@/abi/TestNfts.json';
+import { getContract } from '@/libs/web3';
+import axios from 'axios';
+import Multicall from '@dopex-io/web3-multicall';
+import Web3 from 'web3';
 
 export default {
   components: {
@@ -234,6 +241,7 @@ export default {
       txnGen2: [],
       transactions: [],
       tabs: [],
+      nfts: [],
       fields: [
         { key: 'txnHash', label: 'Txn Hash' },
         { key: 'method', label: 'Method' },
@@ -248,80 +256,26 @@ export default {
   },
   computed: {
     txs() {
-      if (this.transactions.txs) {
-        this.isBusy = false;
-        return this.transactions.txs.map(x => ({
-          txhash: x.txhash,
-          type:
-            typeof codeMessage[x.type.split('.').slice(-1)] !== 'undefined'
-              ? x.type.split('.').slice(-1)[0] === 'MsgSend' &&
-                x.decode_tx.fromAddress !== this.address
-                ? 'Receive'
-                : codeMessage[x.type.split('.').slice(-1)].message
-              : x.type,
-          block: Number(x.block_height),
-          value:
-            typeof x.decode_tx.amount !== 'undefined'
-              ? (typeof x.decode_tx.amount.amount !== 'undefined' &&
-                  `${formatTokenAmount(x.decode_tx.amount.amount) +
-                    ' ' +
-                    'SIX'}`) ||
-                (typeof x.decode_tx.amount[0] !== 'undefined' &&
-                  `${formatTokenAmount(x.decode_tx.amount[0].amount) +
-                    ' ' +
-                    'SIX'}`) ||
-                '-'
-              : '-',
-          commission:
-            typeof x.decode_tx.commission !== 'undefined'
-              ? (typeof x.decode_tx.commission.amount !== 'undefined' &&
-                  `${formatTokenAmount(x.decode_tx.commission.amount) +
-                    ' ' +
-                    'SIX'}`) ||
-                (typeof x.decode_tx.commission[0] !== 'undefined' &&
-                  `${formatTokenAmount(x.decode_tx.commission[0].amount) +
-                    ' ' +
-                    'SIX'}`) ||
-                '-'
-              : '-',
-          txnFee: `${formatGasAmount(x.decode_tx.fee_amount) + ' ' + 'SIX'}`,
-          time: toDay(x.time_stamp)
-        }));
-      } else {
-        this.isBusy = true;
-        return [
-          {
-            txhash: '',
-            type: '',
-            block: '',
-            value: '',
-            commission: '',
-            txnFee: '',
-            time: ''
-          }
-        ];
-      }
     }
   },
   created() {
     this.tabs = this.$children;
     if (this.tokenCode !== undefined) {
       this.$http.getAllTransactions(this.tokenCode).then(res => {
-        console.log("&&&&&&&&&&&&&&&&&&&&&&&&&&&",res)
         this.transactions = res;
       });
-      this.$http
-        .getMetaData1(this.tokenCode)
-        .then(acc => {
-          consoel.log('===============', acc);
-        })
-        .catch(err => {
-          this.error = err;
-        });
+      // this.$http
+      //   .getNftSchema(this.tokenCode)
+      //   .then(acc => {
+      //   })
+      //   .catch(err => {
+      //     this.error = err;
+      //   });
     }
   },
   mounted() {
     this.initial();
+    this.fetchMetaData();
   },
   beforeRouteUpdate(to, from, next) {
     const { address } = to.params;
@@ -334,15 +288,39 @@ export default {
   },
   methods: {
     initial() {
-      this.$http.getMetaData1(this.tokenCode).then(res => {
+      this.$http.getNftSchema(this.tokenCode).then(res => {
         this.nFTSchema = res.nFTSchema;
       });
     },
     pageload(v) {
-      console.log('***************page');
       this.$http.getAllTransactions(this.tokenCode, v).then(res => {
         this.transactions = res;
       });
+    },
+    async fetchMetaData() {
+      const nftContract = getContract(
+        TestNfts,
+        '0x898bb3b662419e79366046C625A213B83fB4809B' || ''
+      );
+
+      const totalSupply = await nftContract.methods.totalSupply().call();
+      const web3 = new Web3('https://klaytn-api.fingerlabs.io/' || '');
+      const aggregate = [...Array(parseInt(totalSupply))].map((x, index) =>
+        nftContract.methods.tokenURI(parseInt(index + 1)).call()
+      );
+
+      const ownerOf = [...Array(parseInt(totalSupply))].map((x, index) =>
+        nftContract.methods.ownerOf(parseInt(index + 1)).call()
+      );
+      const alloOwnerOf = await Promise.all(ownerOf);
+      const all = await Promise.all(aggregate);
+      const built = all.map(uri => axios.get(uri));
+      const allNfts = await Promise.all(built);
+      const allData = allNfts.map((x, i) => {
+        return { ...x.data, owner: alloOwnerOf[i] };
+      });
+
+      this.nfts = allData;
     }
   }
 };

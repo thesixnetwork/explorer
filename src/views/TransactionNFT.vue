@@ -5,26 +5,21 @@
         <b-card>
           <b-card-body class="p-0">
             <div class="d-flex justify-content-center mb-2">
-              <b-avatar
-                :size="140"
-                :src="require('@/assets/images/logo/six-network-logo.png')"
-              />
+              <b-avatar :size="140" :src="attributes.image" />
             </div>
           </b-card-body>
         </b-card>
       </b-col>
       <b-col lg="8" md="12" sm="12" xs="12">
         <div>
-          <span class="customizer-title">
-            SIX PROTOCOL #6666
-          </span>
+          <span class="customizer-title"> {{ attributes.name }} </span>
           <router-link to="/txn-gen2/txs-details">
             <p class="customizer-text">
-              SIX Protocol
+              {{ attributes.schema_code }}
             </p>
           </router-link>
         </div>
-        <b-card class="mb-1">
+        <!--<b-card class="mb-1">
           <b-card-body class="p-0">
             <b-row>
               <b-col class="divider-right">
@@ -53,7 +48,7 @@
               </b-col>
             </b-row>
           </b-card-body>
-        </b-card>
+        </b-card>-->
         <div class="accordion mb-2" role="tablist">
           <b-card no-body class="mb-0">
             <b-card-header header-tag="header" class="p-1" role="tab">
@@ -94,7 +89,7 @@
                   </b-col>
                   <b-col>
                     <div class="d-flex align-items-center">
-                      <span>0x22</span>
+                      <span>{{ attributes.owner }}</span>
                       <feather-icon
                         :icon="'CopyIcon'"
                         size="16"
@@ -130,7 +125,7 @@
                     </div>
                   </b-col>
                 </b-row>
-                <b-row class="customizer-overviews divider-bottom">
+                <!--<b-row class="customizer-overviews divider-bottom">
                   <b-col>
                     <div class="d-flex align-items-center">
                       <feather-icon
@@ -151,8 +146,8 @@
                       />
                     </div>
                   </b-col>
-                </b-row>
-                <b-row class="customizer-overviews divider-bottom">
+                </b-row>-->
+                <!--<b-row class="customizer-overviews divider-bottom">
                   <b-col>
                     <div class="d-flex align-items-center">
                       <feather-icon
@@ -166,7 +161,7 @@
                   <b-col>
                     <span>66,666</span>
                   </b-col>
-                </b-row>
+                </b-row>-->
                 <b-row class="customizer-overviews divider-bottom">
                   <b-col>
                     <div class="d-flex align-items-center">
@@ -180,7 +175,7 @@
                   </b-col>
                   <b-col>
                     <div class="d-flex align-items-center">
-                      <span>0x22</span>
+                      <span>{{ id }}</span>
                       <feather-icon
                         :icon="'CopyIcon'"
                         size="16"
@@ -189,7 +184,7 @@
                     </div>
                   </b-col>
                 </b-row>
-                <b-row class="customizer-overviews divider-bottom">
+                <!--<b-row class="customizer-overviews divider-bottom">
                   <b-col>
                     <div class="d-flex align-items-center">
                       <feather-icon
@@ -203,8 +198,8 @@
                   <b-col>
                     <span>66,666</span>
                   </b-col>
-                </b-row>
-                <b-row class="customizer-overviews">
+                </b-row>-->
+                <!--<b-row class="customizer-overviews">
                   <b-col>
                     <div class="d-flex align-items-center">
                       <feather-icon
@@ -218,7 +213,7 @@
                   <b-col>
                     <span>66,666</span>
                   </b-col>
-                </b-row>
+                </b-row>-->
               </b-card-body>
             </b-collapse>
           </b-card>
@@ -254,68 +249,16 @@
             >
               <b-card-body>
                 <b-row>
-                  <b-col>
+                  <b-col v-for="item in staticAttributes" :key="item.owner">
                     <div class="text-center card-proper">
                       <p class="mb-0 font-weight-bold style-text">
-                        Hat
+                        {{ item.trait_type }}
                       </p>
-                      <p class="mb-0">
+                      <!--<p class="mb-0">
                         Spinner Hat
-                      </p>
+                      </p>-->
                       <p class="text-secondary mb-0 text-small">
-                        Rarity: 0.8%
-                      </p>
-                    </div>
-                  </b-col>
-                  <b-col>
-                    <div class="text-center card-proper">
-                      <p class="mb-0 font-weight-bold style-text">
-                        Hat
-                      </p>
-                      <p class="mb-0">
-                        Spinner Hat
-                      </p>
-                      <p class="text-secondary mb-0 text-small">
-                        Rarity: 0.8%
-                      </p>
-                    </div>
-                  </b-col>
-                  <b-col>
-                    <div class="text-center card-proper">
-                      <p class="mb-0 font-weight-bold style-text">
-                        Hat
-                      </p>
-                      <p class="mb-0">
-                        Spinner Hat
-                      </p>
-                      <p class="text-secondary mb-0 text-small">
-                        Rarity: 0.8%
-                      </p>
-                    </div>
-                  </b-col>
-                  <b-col>
-                    <div class="text-center card-proper">
-                      <p class="mb-0 font-weight-bold style-text">
-                        Hat
-                      </p>
-                      <p class="mb-0">
-                        Spinner Hat
-                      </p>
-                      <p class="text-secondary mb-0 text-small">
-                        Rarity: 0.8%
-                      </p>
-                    </div>
-                  </b-col>
-                  <b-col>
-                    <div class="text-center card-proper">
-                      <p class="mb-0 font-weight-bold style-text">
-                        Hat
-                      </p>
-                      <p class="mb-0">
-                        Spinner Hat
-                      </p>
-                      <p class="text-secondary mb-0 text-small">
-                        Rarity: 0.8%
+                        Value: {{ item.value }}
                       </p>
                     </div>
                   </b-col>
@@ -338,7 +281,9 @@
                   size="16"
                   class="mr-50 customizer-collapse"
                 />
-                <span class="customizer-collapse">Dynamic Attributes (10)</span>
+                <span class="customizer-collapse"
+                  >Dynamic Attributes ({{ dynamicAttributes.length }})</span
+                >
               </div>
               <feather-icon
                 :icon="'ChevronDownIcon'"
@@ -351,108 +296,21 @@
           <b-collapse id="dynamic" visible accordion="dynamic" role="tabpanel">
             <b-card-body>
               <b-row>
-                <b-col class="pr-0 pt-1">
+                <b-col
+                  v-for="item in dynamicAttributes"
+                  :key="item.owner"
+                  class="pr-0 pt-1"
+                >
                   <div class="text-center card-proper">
                     <p class="mb-0 font-weight-bold style-text">
-                      Checked in
+                      {{ item.trait_type }}
                     </p>
                     <p class="mb-0">
-                      No
+                      {{ item.value }}
                     </p>
-                    <p class="text-secondary mb-0 text-small">
+                    <!--<p class="text-secondary mb-0 text-small">
                       100% have this trait
-                    </p>
-                  </div>
-                </b-col>
-                <b-col class="pr-0 pt-1">
-                  <div class="text-center card-proper">
-                    <p class="mb-0 font-weight-bold style-text">
-                      Checked in
-                    </p>
-                    <p class="mb-0">
-                      No
-                    </p>
-                    <p class="text-secondary mb-0 text-small">
-                      100% have this trait
-                    </p>
-                  </div>
-                </b-col>
-                <b-col class="pr-0 pt-1">
-                  <div class="text-center card-proper">
-                    <p class="mb-0 font-weight-bold style-text">
-                      Checked in
-                    </p>
-                    <p class="mb-0">
-                      No
-                    </p>
-                    <p class="text-secondary mb-0 text-small">
-                      100% have this trait
-                    </p>
-                  </div>
-                </b-col>
-                <b-col class="pr-0 pt-1">
-                  <div class="text-center card-proper">
-                    <p class="mb-0 font-weight-bold style-text">
-                      Checked in
-                    </p>
-                    <p class="mb-0">
-                      No
-                    </p>
-                    <p class="text-secondary mb-0 text-small">
-                      100% have this trait
-                    </p>
-                  </div>
-                </b-col>
-                <b-col class="pr-0 pt-1">
-                  <div class="text-center card-proper">
-                    <p class="mb-0 font-weight-bold style-text">
-                      Checked in
-                    </p>
-                    <p class="mb-0">
-                      No
-                    </p>
-                    <p class="text-secondary mb-0 text-small">
-                      100% have this trait
-                    </p>
-                  </div>
-                </b-col>
-                <b-col class="pr-0 pt-1">
-                  <div class="text-center card-proper">
-                    <p class="mb-0 font-weight-bold style-text">
-                      Checked in
-                    </p>
-                    <p class="mb-0">
-                      No
-                    </p>
-                    <p class="text-secondary mb-0 text-small">
-                      100% have this trait
-                    </p>
-                  </div>
-                </b-col>
-                <b-col class="pr-0 pt-1">
-                  <div class="text-center card-proper">
-                    <p class="mb-0 font-weight-bold style-text">
-                      Checked in
-                    </p>
-                    <p class="mb-0">
-                      No
-                    </p>
-                    <p class="text-secondary mb-0 text-small">
-                      100% have this trait
-                    </p>
-                  </div>
-                </b-col>
-                <b-col class="pt-1">
-                  <div class="text-center card-proper">
-                    <p class="mb-0 font-weight-bold style-text">
-                      Checked in
-                    </p>
-                    <p class="mb-0">
-                      No
-                    </p>
-                    <p class="text-secondary mb-0 text-small">
-                      100% have this trait
-                    </p>
+                    </p>-->
                   </div>
                 </b-col>
               </b-row>
@@ -522,6 +380,9 @@ import {
   formatTokenAmount,
   formatGasAmount
 } from '@/libs/utils';
+import { getContract } from '@/libs/web3';
+import TestNfts from '@/abi/TestNfts.json';
+import axios from 'axios';
 
 export default {
   components: {
@@ -560,10 +421,15 @@ export default {
     }
   },
   data() {
+    const { id } = this.$route.params;
     return {
+      id,
       isBusy: false,
       transactions: [],
       typeExpand: 'shadow',
+      attributes: {},
+      staticAttributes: {},
+      dynamicAttributes: {},
       fields: [
         { key: 'txnHash', label: 'Txn Hash' },
         { key: 'method', label: 'Method' },
@@ -650,10 +516,7 @@ export default {
       });
   },
   mounted() {
-    const elem = document.getElementById('txevent');
-    elem.addEventListener('txcompleted', () => {
-      this.initial();
-    });
+    this.fetchMetaData();
   },
   methods: {
     initial() {
@@ -706,6 +569,25 @@ export default {
         amount: token,
         denom: this.stakingParameter.bond_denom
       });
+    },
+    async fetchMetaData() {
+      const staticType = ['Background', 'Moon', 'Plate', 'Tail', 'Whale'];
+      const nftContract = getContract(
+        TestNfts,
+        '0x898bb3b662419e79366046C625A213B83fB4809B' || ''
+      );
+
+      const uri = await nftContract.methods.tokenURI(this.id).call();
+      const ownerOf = await nftContract.methods.ownerOf(this.id).call();
+      const built = axios.get(uri);
+      const [allNfts, owner] = await Promise.all([built, ownerOf]);
+      this.attributes = { ...allNfts.data, owner: owner };
+      this.staticAttributes = allNfts.data.attributes.filter(at =>
+        staticType.includes(at.trait_type)
+      );
+      this.dynamicAttributes = allNfts.data.attributes.filter(
+        at => !staticType.includes(at.trait_type)
+      );
     }
   }
 };
