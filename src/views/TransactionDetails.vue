@@ -4,338 +4,183 @@
       <h4 class="divider-bottom pb-1 style-text">
         Transaction Details
       </h4>
-      <b-tabs content-class="mt-1">
-        <b-tab title="Overview" active class="pa-0">
-          <b-row class="customizer-overviews">
-            <b-col>
-              <div class="d-flex align-items-center">
-                <feather-icon
-                  :icon="'InfoIcon'"
-                  size="16"
-                  class="text-secondary mr-50"
-                />
-                <span class="text-secondary">Transaction Hash:</span>
-              </div>
-            </b-col>
-            <b-col>
-              <div class="d-flex align-items-center">
-                <span>0x22</span>
-                <feather-icon
-                  :icon="'CopyIcon'"
-                  size="16"
-                  class="customizer-collapse ml-50"
-                />
-              </div>
-            </b-col>
-          </b-row>
-          <b-row class="customizer-overviews">
-            <b-col>
-              <div class="d-flex align-items-center">
-                <feather-icon
-                  :icon="'InfoIcon'"
-                  size="16"
-                  class="text-secondary mr-50"
-                />
-                <span class="text-secondary">Status:</span>
-              </div>
-            </b-col>
-            <b-col>
-              <div class="d-flex align-items-center">
-                <b-badge variant="light-success">
-                  <feather-icon
-                    :icon="'CheckCircleIcon'"
-                    size="16"
-                    class="text-success mr-50"
-                  />
-                  <span class="text-success">Success</span>
-                </b-badge>
-              </div>
-            </b-col>
-          </b-row>
-          <b-row class="customizer-overviews">
-            <b-col>
-              <div class="d-flex align-items-center">
-                <feather-icon
-                  :icon="'InfoIcon'"
-                  size="16"
-                  class="text-secondary mr-50"
-                />
-                <span class="text-secondary">Block:</span>
-              </div>
-            </b-col>
-            <b-col>
-              <div class="d-flex align-items-center">
-                <feather-icon
-                  :icon="'CheckCircleIcon'"
-                  size="16"
-                  class="text-success mr-50"
-                />
-                <span class="style-text">123456789</span>
-              </div>
-            </b-col>
-          </b-row>
-          <b-row class="customizer-overviews">
-            <b-col>
-              <div class="d-flex align-items-center">
-                <feather-icon
-                  :icon="'InfoIcon'"
-                  size="16"
-                  class="text-secondary mr-50"
-                />
-                <span class="text-secondary">Timestamp:</span>
-              </div>
-            </b-col>
-            <b-col>
-              <div class="d-flex align-items-center">
-                <feather-icon :icon="'ClockIcon'" size="16" class="mr-50" />
-                <span>6 hrs 36 mins ago ()</span>
-              </div>
-            </b-col>
-          </b-row>
-          <b-row class="customizer-overviews">
-            <b-col>
-              <div class="d-flex align-items-center">
-                <feather-icon
-                  :icon="'InfoIcon'"
-                  size="16"
-                  class="text-secondary mr-50"
-                />
-                <span class="text-secondary">Transaction Fee:</span>
-              </div>
-            </b-col>
-            <b-col>
-              <div class="d-flex align-items-center">
-                <span>0.00025 SIX</span>
-              </div>
-            </b-col>
-          </b-row>
-          <b-row class="customizer-overviews">
-            <b-col>
-              <div class="d-flex align-items-center">
-                <feather-icon
-                  :icon="'InfoIcon'"
-                  size="16"
-                  class="text-secondary mr-50"
-                />
-                <span class="text-secondary">Gas Price:</span>
-              </div>
-            </b-col>
-            <b-col>
-              <div class="d-flex align-items-center">
-                <span>0.000000001</span>
-              </div>
-            </b-col>
-          </b-row>
-        </b-tab>
-        <!-- <b-tab title="Logs (x)" disabled>
-          <p>I'm a Logs tab!</p>
-        </b-tab>
-        <b-tab title="State" disabled>
-          <p>I'm a State tab!</p>
-        </b-tab>
-        <b-tab title="Comments" disabled>
-          <p>I'm a Comments tab!</p>
-        </b-tab> -->
-      </b-tabs>
+      <div v-if="tx">
+        <b-tabs content-class="mt-1">
+          <b-tab title="Overview" active class="pa-0">
+            <b-table-simple striped stacked="sm">
+              <tbody>
+                <b-tr>
+                  <b-td style="width:200px">
+                    {{ 'Transaction Hash' }}
+                  </b-td>
+                  <b-td class="text-truncate customizer-text">
+                    {{ tx.data.txhash }}
+                    <feather-icon
+                      :icon="'CopyIcon'"
+                      size="16"
+                      class="ml-25 customizer-copy"
+                      @click="copy(tx.data.txhash)"
+                    />
+                  </b-td>
+                </b-tr>
+                <b-tr>
+                  <b-td>
+                    {{ 'Status' }}
+                  </b-td>
+                  <b-td class="text-wrap">
+                    <b-badge v-if="tx.data.code === 0" variant="light-success">
+                      <feather-icon
+                        :icon="'CheckCircleIcon'"
+                        size="16"
+                        class="text-success mr-50"
+                      />
+                      Success
+                    </b-badge>
+                    <b-badge v-else variant="light-danger">
+                      Failed
+                    </b-badge>
+                    <b v-if="tx.data.code > 0"> {{ tx.data.raw_log }}</b>
+                  </b-td>
+                </b-tr>
+                <b-tr>
+                  <b-td>
+                    {{ 'Block' }}
+                  </b-td>
+                  <b-td class="text-truncate">
+                    <feather-icon
+                      :icon="'CheckCircleIcon'"
+                      size="16"
+                      class="text-success mr-25"
+                    />
+                    {{ tx.data.block_height }}
+                  </b-td>
+                </b-tr>
+                <b-tr>
+                  <b-td> {{ 'Timestamp' }} </b-td>
+                  <b-td>
+                    <feather-icon :icon="'ClockIcon'" size="16" class="mr-25" />
+                    {{ formatTime(tx.data.time_stamp) }}
+                  </b-td>
+                </b-tr>
+                <b-tr>
+                  <b-td>
+                    {{ 'Action' }}
+                  </b-td>
+                  <b-td class="text-truncate">
+                    {{ tx.data.events[0].value.replaceAll('_', ' ') }}
+                  </b-td>
+                </b-tr>
+                <b-tr>
+                  <b-td>
+                    {{ 'By' }}
+                  </b-td>
+                  <b-td class="text-truncate customizer-text">
+                    {{ tx.data.decode_tx.creator }}
+                    <feather-icon
+                      :icon="'CopyIcon'"
+                      size="16"
+                      class="ml-25 customizer-copy"
+                      @click="copy(tx.data.decode_tx.creator)"
+                    />
+                  </b-td>
+                </b-tr>
+                <b-tr>
+                  <b-td> {{ 'Gas Price' }} </b-td>
+                  <b-td>{{ tx.data.gas_used }} / {{ tx.data.gas_wanted }}</b-td>
+                </b-tr>
+                <b-tr>
+                  <b-td> {{ 'Fee' }} </b-td>
+                  <b-td>{{ tx.data.fee_amount.amount / Math.pow(10, 8) }}</b-td>
+                </b-tr>
+              </tbody>
+            </b-table-simple>
+          </b-tab>
+        </b-tabs>
+      </div>
+      <div v-else>
+        <h3 class="text-center">
+          Data not found 🕵🏻‍♀️
+        </h3>
+      </div>
     </b-card>
   </div>
 </template>
 
 <script>
-import { BCard, BRow, BCol, BTab, BTabs, BBadge } from 'bootstrap-vue';
-
 import {
-  percent,
-  formatToken,
-  operatorAddressToAccount,
-  consensusPubkeyToHexAddress,
-  toDay,
-  abbrAddress,
-  formatTokenAmount,
-  formatGasAmount,
-  tokenFormatter
-} from '@/libs/utils';
+  BCard,
+  BTableSimple,
+  BTr,
+  BTd,
+  BTab,
+  BTabs,
+  BBadge
+} from 'bootstrap-vue';
 
+import { tokenFormatter, toDay } from '@/libs/utils';
+import ToastificationContent from '@core/components/toastification/ToastificationContent.vue';
 export default {
   components: {
     BCard,
-    BRow,
-    BCol,
+    BTableSimple,
+    BTr,
+    BTd,
     BTab,
     BTabs,
     BBadge
   },
   beforeRouteUpdate(to, from, next) {
     const { address } = to.params;
-    if (address !== from.params.hash) {
-      this.address = address;
-      this.$http
-        .getAuthAccount(this.address)
-        .then(acc => {
-          this.account = acc;
-          this.initial();
-          this.$http.getTxsBySender(this.address).then(res => {
-            console.log("______________________3")
-            this.transactions = res;
-          });
-        })
-        .catch(err => {
-          this.error = err;
-        });
+    const { hash } = this.$route.params.hash;
+    if (address !== from.params.txHash) {
+      this.$http.getTransactionByHash(hash).then(res => {
+        console.log('2 before', res);
+        this.tx = res;
+      });
       next();
     }
   },
   data() {
     return {
       isBusy: false,
-      txnGen2: [],
-      transactions: [],
       tabs: [],
-      fields: [
-        { key: 'txnHash', label: 'Txn Hash' },
-        { key: 'method', label: 'Method' },
-        { key: 'age', label: 'Age' },
-        { key: 'by', label: 'By' },
-        { key: 'tokenId', label: 'Token ID' },
-        { key: 'details', label: 'Details' }
-      ]
+      tx: { tx: {} }
     };
   },
-  computed: {
-    txs() {
-      if (this.transactions.txs) {
-        this.isBusy = false;
-        return this.transactions.txs.map(x => ({
-          txhash: x.txhash,
-          type:
-            typeof codeMessage[x.type.split('.').slice(-1)] !== 'undefined'
-              ? x.type.split('.').slice(-1)[0] === 'MsgSend' &&
-                x.decode_tx.fromAddress !== this.address
-                ? 'Receive'
-                : codeMessage[x.type.split('.').slice(-1)].message
-              : x.type,
-          block: Number(x.block_height),
-          value:
-            typeof x.decode_tx.amount !== 'undefined'
-              ? (typeof x.decode_tx.amount.amount !== 'undefined' &&
-                  `${formatTokenAmount(x.decode_tx.amount.amount) +
-                    ' ' +
-                    'SIX'}`) ||
-                (typeof x.decode_tx.amount[0] !== 'undefined' &&
-                  `${formatTokenAmount(x.decode_tx.amount[0].amount) +
-                    ' ' +
-                    'SIX'}`) ||
-                '-'
-              : '-',
-          commission:
-            typeof x.decode_tx.commission !== 'undefined'
-              ? (typeof x.decode_tx.commission.amount !== 'undefined' &&
-                  `${formatTokenAmount(x.decode_tx.commission.amount) +
-                    ' ' +
-                    'SIX'}`) ||
-                (typeof x.decode_tx.commission[0] !== 'undefined' &&
-                  `${formatTokenAmount(x.decode_tx.commission[0].amount) +
-                    ' ' +
-                    'SIX'}`) ||
-                '-'
-              : '-',
-          txnFee: `${formatGasAmount(x.decode_tx.fee_amount) + ' ' + 'SIX'}`,
-          time: toDay(x.time_stamp)
-        }));
-      } else {
-        this.isBusy = true;
-        return [
-          {
-            txhash: '',
-            type: '',
-            block: '',
-            value: '',
-            commission: '',
-            txnFee: '',
-            time: ''
-          }
-        ];
-      }
-    }
-  },
+
   created() {
     this.tabs = this.$children;
-    this.$http
-      .getAuthAccount(this.address)
-      .then(acc => {
-        this.account = acc;
-        this.initial();
-        this.$http.getTxsBySender(this.address).then(res => {
-          console.log("______________________4")
-          this.transactions = res;
-        });
-        this.$http.getStakingParameters().then(res => {
-          this.stakingParameters = res;
-        });
-      })
-      .catch(err => {
-        this.error = err;
-      });
-  },
-  mounted() {
-    const elem = document.getElementById('txevent');
-    elem.addEventListener('txcompleted', () => {
-      this.initial();
+    this.$http.getTransactionByHash(this.$route.params.hash).then(res => {
+      console.log('1 create', res);
+      this.tx = res;
     });
   },
+  mounted() {},
   methods: {
-    initial() {
-      this.$http.getStakingValidator(this.address).then(data => {
-        this.validator = data;
-        this.processAddress(data.operator_address, data.consensus_pubkey);
-        this.$http.getTxsBySender(this.accountAddress).then(res => {
-          console.log("______________________1")
-          this.transactions = res;
-        });
-
-        const { identity } = data.description;
-        keybase(identity).then(d => {
-          if (Array.isArray(d.them) && d.them.length > 0) {
-            this.$set(this.validator, 'avatar', d.them[0].pictures.primary.url);
-            this.$store.commit('cacheAvatar', {
-              identity,
-              url: d.them[0].pictures.primary.url
-            });
-          }
-        });
-        this.hexAddress = consensusPubkeyToHexAddress(data.consensus_pubkey);
-        fetch(
-          `${process.env.VUE_APP_API_VALIDATOR}/api/validator/propose-count?proposerAddr=${this.hexAddress}`
-        )
-          .then(data => data.json())
-          .then(resp => {
-            this.proposeTransactions = resp.data;
+    formattoken: v => tokenFormatter(v),
+    formatTime: v => toDay(v),
+    copy(v) {
+      this.$copyText(v).then(
+        () => {
+          this.$toast({
+            component: ToastificationContent,
+            props: {
+              title: 'Address copied',
+              icon: 'BellIcon'
+            }
           });
-      });
-      this.$http.getValidatorDistribution(this.address).then(res => {
-        this.distribution = res;
-      });
-    },
-    pageload(v) {
-      this.$http.getTxsBySender(this.accountAddress, v).then(res => {
-        console.log("______________________2")
-        this.transactions = res;
-      });
-    },
-    processAddress(operAddress, consensusPubkey) {
-      this.accountAddress = operatorAddressToAccount(operAddress);
-      this.hexAddress = consensusPubkeyToHexAddress(consensusPubkey);
-      this.$http
-        .getStakingDelegatorDelegation(this.accountAddress, operAddress)
-        .then(d => {
-          this.selfDelegation = d;
-        });
-    },
-    tokenFormatter(token) {
-      return formatToken({
-        amount: token,
-        denom: this.stakingParameter.bond_denom
-      });
+        },
+        e => {
+          this.$toast({
+            component: ToastificationContent,
+            props: {
+              title: `Failed to copy address! ${e}`,
+              icon: 'BellIcon',
+              variant: 'danger'
+            }
+          });
+        }
+      );
     }
   }
 };
@@ -353,10 +198,18 @@ export default {
   cursor: pointer;
 }
 
+.customizer-copy {
+  cursor: pointer;
+  color: $info;
+
+  .dark-layout & {
+    color: $primary;
+  }
+}
+
 .customizer-text {
   color: $info;
-  max-width: 150px;
-  align-items: center;
+
   .dark-layout & {
     color: $primary;
   }

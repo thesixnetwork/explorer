@@ -182,7 +182,7 @@ const router = new VueRouter({
       }
     },
     {
-      path: '/txn-gen2/txs-details',
+      path: '/txn-gen2/txs-details/:hash',
       name: 'txsDetails',
       component: () => import('@/views/TransactionDetails.vue'),
       meta: {

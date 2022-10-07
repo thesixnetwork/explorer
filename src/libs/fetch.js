@@ -397,6 +397,12 @@ export default class ChainFetch {
     );
   }
 
+  async getTransactionByHash(txHash) {
+    return this.getSchemaTransaction(
+      `/api/nft/getTransactionByHash?txhash=${txHash}`
+    );
+  }
+
   async getStakingReward(address, config = null) {
     if (
       compareVersions(
@@ -664,11 +670,12 @@ export default class ChainFetch {
     if (!config) {
       this.getSelectedConfig();
     }
-
+    
     const conf = config || this.config;
-    const finalurl = (Array.isArray(conf.datachain)
-      ? conf.datachain[this.getApiIndex(config)]
-      : conf.datachain) + url;
+    const finalurl =
+      (Array.isArray(conf.datachain)
+        ? conf.datachain[this.getApiIndex(config)]
+        : conf.datachain) + url;
     // finalurl = finalurl.replaceAll('v1beta1', this.getEndpointVersion())
     const ret = await fetch(finalurl).then(response => response.json());
     return ret;
