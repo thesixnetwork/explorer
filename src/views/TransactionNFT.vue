@@ -344,9 +344,12 @@
   </div>
   <div v-else>
     <b-card>
-      <h4 class="text-center mb-0">
-        Loading Data 🕵🏻‍♀️
-      </h4>
+      <div class="flex align-items-center justify-content-center">
+        <b-spinner small class="mr-50" />
+        <span class="text-center mb-0">
+          Loading Data 🕵🏻‍♀️
+        </span>
+      </div>
     </b-card>
   </div>
 </template>
@@ -358,10 +361,10 @@ import {
   BCardBody,
   BRow,
   BCol,
+  BSpinner,
   // BTab,
   // BTabs,
   // BTable,
-  // BSpinner,
   // BPagination,
   // BAvatar,
   BImg,
@@ -387,10 +390,10 @@ export default {
     BCardBody,
     BRow,
     BCol,
+    BSpinner,
     // BTab,
     // BTabs,
     // BTable,
-    // BSpinner,
     // BPagination,
     // BAvatar,
     BImg,

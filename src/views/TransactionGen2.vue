@@ -204,10 +204,14 @@
                 </router-link>
               </b-col>
             </b-row>
-            <b-row v-else>
-              <b-card-body class="text-center">
-                <strong>Loading...</strong>
-              </b-card-body>
+            <b-row
+              v-else
+              class="flex align-items-center justify-content-center"
+            >
+              <b-spinner small class="align-middle mr-50" />
+              <span class="text-center mb-0">
+                Loading ...
+              </span>
             </b-row>
           </b-tab>
         </b-tabs>
@@ -224,7 +228,7 @@
   <div v-else>
     <b-card>
       <div class="flex align-items-center justify-content-center">
-        <b-spinner class="mr-50" />
+        <b-spinner small class="mr-50" />
         <span class="text-center mb-0">
           Loading Data 🕵🏻‍♀️
         </span>
@@ -388,7 +392,6 @@ export default {
             const allData = allNfts.map((x, i) => {
               return { ...x.data, owner: alloOwnerOf[i] };
             });
-
 
             this.nfts = allData;
           } else {

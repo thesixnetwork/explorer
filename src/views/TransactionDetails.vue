@@ -111,7 +111,7 @@
       <div v-else>
         <b-card>
           <div class="flex align-items-center justify-content-center">
-            <b-spinner class="mr-50" />
+            <b-spinner small class="mr-50" />
             <span class="text-center mb-0">
               Loading Data 🕵🏻‍♀️
             </span>
