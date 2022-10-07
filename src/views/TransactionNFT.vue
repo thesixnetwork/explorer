@@ -371,9 +371,10 @@ import {
   formatTokenAmount,
   formatGasAmount
 } from '@/libs/utils';
-import { getContract } from '@/libs/web3';
+import { getContract, STATUS_CODE } from '@/libs/web3';
 import TestNfts from '@/abi/TestNfts.json';
 import axios from 'axios';
+import Web3 from 'web3';
 
 export default {
   components: {
@@ -465,10 +466,19 @@ export default {
         this.$http.getNftSchema(this.schema).then(async res => {
           this.contract_address =
             res.nFTSchema.origin_data.origin_contract_address;
-          const nftContract = getContract(
+
+          const webs = new Web3(
+            STATUS_CODE[res.nFTSchema.origin_data.origin_chain].PROVIDER || ''
+          );
+          const nftContract = new webs.eth.Contract(
             TestNfts,
             res.nFTSchema.origin_data.origin_contract_address || ''
           );
+
+          // const nftContract = getContract(
+          //   TestNfts,
+          //   res.nFTSchema.origin_data.origin_contract_address || ''
+          // );
 
           const uri = await nftContract.methods.tokenURI(this.id).call();
           const ownerOf = await nftContract.methods.ownerOf(this.id).call();

@@ -220,7 +220,7 @@ import {
 
 import { toDay, abbrAddress } from '@/libs/utils';
 import TestNfts from '@/abi/TestNfts.json';
-import { getContract } from '@/libs/web3';
+import { getContract, STATUS_CODE } from '@/libs/web3';
 import axios from 'axios';
 import Multicall from '@dopex-io/web3-multicall';
 import Web3 from 'web3';
@@ -321,14 +321,22 @@ export default {
     async initial() {
       if (this.tokenCode !== undefined) {
         this.$http.getNftSchema(this.tokenCode).then(async res => {
-          const nftContract = getContract(
+          const webs = new Web3(
+            STATUS_CODE[res.nFTSchema.origin_data.origin_chain].PROVIDER || ''
+          );
+          const nftContract = new webs.eth.Contract(
             TestNfts,
             res.nFTSchema.origin_data.origin_contract_address || ''
           );
+          // const nftContract = getContract(
+          //   TestNfts,
+          //   res.nFTSchema.origin_data.origin_contract_address || ''.
+          //   STATUS_CODE[res.nFTSchema.origin_data.origin_chain].PROVIDER
+          // );
 
           const totalSupply = await nftContract.methods.totalSupply().call();
           this.totalSupply = totalSupply;
-          const web3 = new Web3(this.$http.getSelectedConfig().provider || '');
+          // const web3 = new Web3(this.$http.getSelectedConfig().provider || '');
           const aggregate = [...Array(parseInt(totalSupply))].map((x, index) =>
             nftContract.methods.tokenURI(parseInt(index + 1)).call()
           );
@@ -343,7 +351,7 @@ export default {
           const allData = allNfts.map((x, i) => {
             return { ...x.data, owner: alloOwnerOf[i] };
           });
-          
+
           this.nfts = allData;
 
           this.nFTSchema = res.nFTSchema;
