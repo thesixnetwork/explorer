@@ -32,7 +32,7 @@
                       <feather-icon
                         :icon="'CheckCircleIcon'"
                         size="16"
-                        class="text-success mr-50"
+                        class="text-success mr-25"
                       />
                       Success
                     </b-badge>
@@ -134,7 +134,6 @@ export default {
     const { hash } = this.$route.params.hash;
     if (address !== from.params.txHash) {
       this.$http.getTransactionByHash(hash).then(res => {
-        console.log('2 before', res);
         this.tx = res;
       });
       next();
@@ -151,7 +150,6 @@ export default {
   created() {
     this.tabs = this.$children;
     this.$http.getTransactionByHash(this.$route.params.hash).then(res => {
-      console.log('1 create', res);
       this.tx = res;
     });
   },
@@ -230,10 +228,6 @@ export default {
 
 .text-small {
   font-size: 10px;
-}
-
-.text-sm {
-  font-size: 14px;
 }
 
 .style-text {

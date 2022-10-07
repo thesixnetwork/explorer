@@ -25,7 +25,7 @@
                 <span class="text-small">Max Total Supply:</span>
               </b-col>
               <b-col lg="8">
-                <span class="text-sm-detail">x,xxx,xxx</span>
+                <span class="text-sm-detail style-text">{{ totalSupply }}</span>
               </b-col>
             </b-row>
             <!-- <b-row class="customizer-overviews">
@@ -143,42 +143,57 @@
           />
         </b-tab>
         <b-tab title="Collection">
-          <p>Latest 0 active tokens (From a total of 0 tokens)</p>
+          <div class="flex justify-content-end mb-1">
+            <b-pagination
+              v-if="Number(totalSupply / limit) > 1"
+              :total-rows="totalSupply"
+              :per-page="limit"
+              :value="currentPage"
+              v-model="currentPage"
+              size="sm"
+            />
+          </div>
           <b-row>
             <b-col
-              v-for="(item, index) in nfts"
+              v-for="(item, index) in totalPages"
               :key="index"
-              lg="3"
+              lg="2"
               md="4"
               sm="6"
               xs="6"
+              class="pl-20"
             >
-              <router-link :to="`/txn-gen2/nft-txs/${index + 1}`">
-                <b-card class="customizer-card">
-                  <div class="d-flex justify-content-center mb-2">
-                    <b-avatar :size="140" :src="item.image" />
+              <router-link :to="`/txn-gen2/nft-txs/${index + 1}/${tokenCode}`">
+                <b-card-body class="customizer-card">
+                  <div class="d-flex justify-content-center mb-1">
+                    <b-img
+                      :src="item.image"
+                      :alt="item.image"
+                      height="120px"
+                      width="120px"
+                    />
                   </div>
                   <div class="d-flex">
-                    <span class="mr-50">Token ID:</span>
-                    <span class="customizer-text text-truncate d-inline-block">
+                    <span class="mr-25 text-xs">Token ID:</span>
+                    <span
+                      class="customizer-text text-truncate d-inline-block text-xs"
+                    >
                       {{ item.name }}
                     </span>
                   </div>
                   <div class="d-flex">
-                    <span class="mr-50">Owner:</span>
-                    <span class="customizer-text text-truncate d-inline-block">
+                    <span class="mr-25 text-xs">Owner:</span>
+                    <span
+                      class="customizer-text text-truncate d-inline-block text-xs"
+                    >
                       {{ item.owner }}
                     </span>
                   </div>
-                </b-card>
+                </b-card-body>
               </router-link>
             </b-col>
           </b-row>
         </b-tab>
-        <!-- <b-tab title="Info">
-          <p class="font-weight-bold">OVERVIEW</p>
-          <p>The sixnetwork-uat.nftexpo is made up of 10k Club xxx NFTs.</p>
-        </b-tab> -->
       </b-tabs>
     </b-card>
   </div>
@@ -200,26 +215,17 @@ import {
   BTable,
   BSpinner,
   BPagination,
-  BAvatar
+  BImg
 } from 'bootstrap-vue';
 
-import {
-  percent,
-  formatToken,
-  operatorAddressToAccount,
-  consensusPubkeyToHexAddress,
-  toDay,
-  abbrAddress,
-  formatTokenAmount,
-  formatGasAmount,
-  tokenFormatter
-} from '@/libs/utils';
+import { toDay, abbrAddress } from '@/libs/utils';
 import TestNfts from '@/abi/TestNfts.json';
 import { getContract } from '@/libs/web3';
 import axios from 'axios';
 import Multicall from '@dopex-io/web3-multicall';
 import Web3 from 'web3';
 import ToastificationContent from '@core/components/toastification/ToastificationContent.vue';
+import _ from 'lodash';
 
 export default {
   components: {
@@ -232,26 +238,11 @@ export default {
     BTable,
     BSpinner,
     BPagination,
-    BAvatar
+    BImg
+    // BAvatar
   },
   beforeRouteUpdate(to, from, next) {
     const { address } = to.params;
-    if (address !== from.params.hash) {
-      this.address = address;
-      this.$http
-        .getAuthAccount(this.address)
-        .then(acc => {
-          this.account = acc;
-          this.initial();
-          this.$http.getTxsBySender(this.address).then(res => {
-            this.transactions = res;
-          });
-        })
-        .catch(err => {
-          this.error = err;
-        });
-      next();
-    }
     if (this.tokenCode !== undefined) {
       this.$http.getAllTransactions(this.tokenCode).then(res => {
         this.transactions = res;
@@ -276,7 +267,11 @@ export default {
       ],
       nFTSchema: {},
       tokenCode,
-      page_number: 1
+      page_number: 1,
+      totalSupply: 0,
+      limit: 30,
+      currentPage: 0,
+      contractAddress: ''
     };
   },
   computed: {
@@ -303,6 +298,12 @@ export default {
           }
         ];
       }
+    },
+    totalPages: function() {
+      return this.nfts.slice(
+        Number(this.currentPage - 1) * Number(this.limit),
+        Number(this.currentPage) * Number(this.limit)
+      );
     }
   },
   created() {
@@ -311,13 +312,6 @@ export default {
       this.$http.getAllTransactions(this.tokenCode).then(res => {
         this.transactions = res;
       });
-      // this.$http
-      //   .getNftSchema(this.tokenCode)
-      //   .then(acc => {
-      //   })
-      //   .catch(err => {
-      //     this.error = err;
-      //   });
     }
   },
   mounted() {
@@ -325,32 +319,36 @@ export default {
   },
   methods: {
     async initial() {
-      this.$http.getNftSchema(this.tokenCode).then(async res => {
-        const nftContract = getContract(
-          TestNfts,
-          res.nFTSchema.origin_data.origin_contract_address || ''
-        );
+      if (this.tokenCode !== undefined) {
+        this.$http.getNftSchema(this.tokenCode).then(async res => {
+          const nftContract = getContract(
+            TestNfts,
+            res.nFTSchema.origin_data.origin_contract_address || ''
+          );
 
-        const totalSupply = await nftContract.methods.totalSupply().call();
-        const web3 = new Web3(this.$http.getSelectedConfig().provider || '');
-        const aggregate = [...Array(parseInt(totalSupply))].map((x, index) =>
-          nftContract.methods.tokenURI(parseInt(index + 1)).call()
-        );
+          const totalSupply = await nftContract.methods.totalSupply().call();
+          this.totalSupply = totalSupply;
+          const web3 = new Web3(this.$http.getSelectedConfig().provider || '');
+          const aggregate = [...Array(parseInt(totalSupply))].map((x, index) =>
+            nftContract.methods.tokenURI(parseInt(index + 1)).call()
+          );
 
-        const ownerOf = [...Array(parseInt(totalSupply))].map((x, index) =>
-          nftContract.methods.ownerOf(parseInt(index + 1)).call()
-        );
-        const alloOwnerOf = await Promise.all(ownerOf);
-        const all = await Promise.all(aggregate);
-        const built = all.map(uri => axios.get(uri));
-        const allNfts = await Promise.all(built);
-        const allData = allNfts.map((x, i) => {
-          return { ...x.data, owner: alloOwnerOf[i] };
+          const ownerOf = [...Array(parseInt(totalSupply))].map((x, index) =>
+            nftContract.methods.ownerOf(parseInt(index + 1)).call()
+          );
+          const alloOwnerOf = await Promise.all(ownerOf);
+          const all = await Promise.all(aggregate);
+          const built = all.map(uri => axios.get(uri));
+          const allNfts = await Promise.all(built);
+          const allData = allNfts.map((x, i) => {
+            return { ...x.data, owner: alloOwnerOf[i] };
+          });
+          
+          this.nfts = allData;
+
+          this.nFTSchema = res.nFTSchema;
         });
-        this.nfts = allData;
-
-        this.nFTSchema = res.nFTSchema;
-      });
+      }
     },
     pageload(v) {
       this.page_number = v;
@@ -415,9 +413,10 @@ export default {
 .customizer-card {
   color: $secondary;
   border-radius: 12px;
-  font-size: 0.9rem;
   border: 1px solid $light;
   cursor: pointer;
+  margin-bottom: 20px;
+  padding: 10px 12px;
 }
 
 .style-card {
@@ -462,6 +461,10 @@ export default {
   @include media-breakpoint-down(lg) {
     font-size: 10px;
   }
+}
+
+.text-xs {
+  font-size: 9px;
 }
 
 .text-sm-detail {

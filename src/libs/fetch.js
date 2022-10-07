@@ -366,15 +366,15 @@ export default class ChainFetch {
     });
   }
 
-  async getMetaData() {
-    return this.getSchema('/').then(data => {
-      return data;
-    });
-  }
+  // async getMetaData() {
+  //   return this.getSchema('/').then(data => {
+  //     return data;
+  //   });
+  // }
 
   async getNftSchema(tokenCode) {
-    const sixConnector = new SixDataChainConnector('', 443, 443);
-    sixConnector.apiUrl = 'https://sixnft-api.sixprotocol.net';
+    const sixConnector = new SixDataChainConnector();
+    sixConnector.apiUrl = this.getSelectedConfig().apiUrl;
     const apiClient = await sixConnector.connectAPIClient();
     try {
       const res = await apiClient.nftmngrModule.queryNftSchema(tokenCode);

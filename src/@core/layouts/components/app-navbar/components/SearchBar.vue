@@ -39,21 +39,24 @@
               id="Height"
               @click="selectedItem = 'Height'"
               class="text-dropdown"
-              >Height</b-dropdown-item
             >
+              Height
+            </b-dropdown-item>
             <b-dropdown-item
               id="Transaction"
               @click="selectedItem = 'Transaction'"
-              >Transaction</b-dropdown-item
             >
-            <b-dropdown-item id="Address" @click="selectedItem = 'Address'"
-              >Address</b-dropdown-item
-            >
+              Transaction
+            </b-dropdown-item>
+            <b-dropdown-item id="Address" @click="selectedItem = 'Address'">
+              Address
+            </b-dropdown-item>
             <b-dropdown-item
               id="Schema code"
               @click="selectedItem = 'Schema code'"
-              >Schema code</b-dropdown-item
             >
+              Schema code
+            </b-dropdown-item>
           </b-dropdown>
         </template>
       </b-input-group>
@@ -127,7 +130,7 @@ export default {
   },
   methods: {
     doSomething(v) {
-      console.log('------------------', v);
+      console.log('log v', v);
     },
     doQuery() {
       const height = /^\d+$/;

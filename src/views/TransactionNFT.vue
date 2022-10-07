@@ -2,22 +2,19 @@
   <div v-if="attributes.schema_code">
     <b-row>
       <b-col lg="4" md="12" sm="12" xs="12">
+        <!-- <b-img :src="attributes.image" :alt="attributes.image" thumbnail /> -->
         <b-card>
-          <b-card-body class="p-0">
-            <div class="d-flex justify-content-center mb-2">
-              <b-avatar :size="140" :src="attributes.image" />
-            </div>
-          </b-card-body>
+          <div class="d-flex justify-content-center">
+            <b-img :src="attributes.image" :alt="attributes.image" thumbnail />
+          </div>
         </b-card>
       </b-col>
       <b-col lg="8" md="12" sm="12" xs="12">
         <div>
           <span class="customizer-title"> {{ attributes.name }} </span>
-          <router-link to="/txn-gen2/txs-details">
-            <p class="customizer-text">
-              {{ attributes.schema_code }}
-            </p>
-          </router-link>
+          <p class="customizer-text text-style">
+            {{ attributes.schema_code }}
+          </p>
         </div>
         <!--<b-card class="mb-1">
           <b-card-body class="p-0">
@@ -51,7 +48,7 @@
         </b-card>-->
         <div class="accordion mb-2" role="tablist">
           <b-card no-body class="mb-0">
-            <b-card-header header-tag="header" class="p-1" role="tab">
+            <b-card-header class="p-1 d-block" role="tab">
               <div v-b-toggle="'details'" variant="info" class="style-toggle">
                 <div class="d-flex align-items-center">
                   <feather-icon
@@ -75,52 +72,48 @@
               accordion="details"
               role="tabpanel"
             >
-              <b-card-body class="pt-0">
+              <b-card-body class="py-0">
                 <b-row class="customizer-overviews divider-bottom">
-                  <b-col>
+                  <b-col lg="3">
                     <div class="d-flex align-items-center">
-                      <feather-icon
-                        :icon="'InfoIcon'"
-                        size="16"
-                        class="text-secondary mr-50"
-                      />
                       <span class="text-secondary">Owner:</span>
                     </div>
                   </b-col>
-                  <b-col>
+                  <b-col lg="9">
                     <div class="d-flex align-items-center">
-                      <span>{{ attributes.owner }}</span>
+                      <span class="text-truncate customizer-text">
+                        {{ attributes.owner }}
+                      </span>
                       <feather-icon
                         :icon="'CopyIcon'"
                         size="16"
-                        class="customizer-collapse ml-50"
+                        class="ml-25 customizer-copy"
+                        @click="copy(attributes.owner)"
                       />
                     </div>
                   </b-col>
                 </b-row>
                 <b-row class="customizer-overviews divider-bottom">
-                  <b-col>
+                  <b-col lg="3">
                     <div class="d-flex align-items-center">
-                      <feather-icon
-                        :icon="'InfoIcon'"
-                        size="16"
-                        class="text-secondary mr-50"
-                      />
                       <span class="text-secondary">Contract Address:</span>
                     </div>
                   </b-col>
-                  <b-col>
+                  <b-col lg="9">
                     <div class="d-flex align-items-center">
                       <feather-icon
                         :icon="'CheckCircleIcon'"
                         size="16"
                         class="text-success mr-50"
                       />
-                      <span>0x2sss2</span>
+                      <span class="text-truncate customizer-text">
+                        {{ contract_address }}
+                      </span>
                       <feather-icon
                         :icon="'CopyIcon'"
                         size="16"
-                        class="customizer-collapse ml-50"
+                        class="ml-25 customizer-copy"
+                        @click="copy(contract_address)"
                       />
                     </div>
                   </b-col>
@@ -162,25 +155,15 @@
                     <span>66,666</span>
                   </b-col>
                 </b-row>-->
-                <b-row class="customizer-overviews divider-bottom">
-                  <b-col>
+                <b-row class="customizer-overviews">
+                  <b-col lg="3">
                     <div class="d-flex align-items-center">
-                      <feather-icon
-                        :icon="'InfoIcon'"
-                        size="16"
-                        class="text-secondary mr-50"
-                      />
                       <span class="text-secondary">Token ID:</span>
                     </div>
                   </b-col>
-                  <b-col>
+                  <b-col lg="9">
                     <div class="d-flex align-items-center">
-                      <span>{{ id }}</span>
-                      <feather-icon
-                        :icon="'CopyIcon'"
-                        size="16"
-                        class="customizer-collapse ml-50"
-                      />
+                      <span class="customizer-text">#{{ id }}</span>
                     </div>
                   </b-col>
                 </b-row>
@@ -219,7 +202,7 @@
           </b-card>
 
           <b-card no-body class="mb-0">
-            <b-card-header header-tag="header" class="p-1" role="tab">
+            <b-card-header class="p-1 d-block" role="tab">
               <div
                 v-b-toggle="'properties'"
                 variant="info"
@@ -247,16 +230,21 @@
               accordion="properties"
               role="tabpanel"
             >
-              <b-card-body>
+              <b-card-body class="pt-0">
                 <b-row>
-                  <b-col v-for="item in staticAttributes" :key="item.owner">
+                  <b-col
+                    v-for="item in staticAttributes"
+                    :key="item.owner"
+                    class="pr-0 pt-1"
+                    lg="2"
+                    md="4"
+                    sm="6"
+                    xs="6"
+                  >
                     <div class="text-center card-proper">
                       <p class="mb-0 font-weight-bold style-text">
                         {{ item.trait_type }}
                       </p>
-                      <!--<p class="mb-0">
-                        Spinner Hat
-                      </p>-->
                       <p class="text-secondary mb-0 text-small">
                         Value: {{ item.value }}
                       </p>
@@ -273,7 +261,7 @@
     <b-row class="mb-1">
       <b-col lg="12" md="12" sm="12" xs="12">
         <b-card no-body class="mb-0">
-          <b-card-header header-tag="header" class="p-1" role="tab">
+          <b-card-header class="p-1 d-block" role="tab">
             <div v-b-toggle="'dynamic'" variant="info" class="style-toggle">
               <div class="d-flex align-items-center">
                 <feather-icon
@@ -281,9 +269,9 @@
                   size="16"
                   class="mr-50 customizer-collapse"
                 />
-                <span class="customizer-collapse"
-                  >Dynamic Attributes ({{ dynamicAttributes.length }})</span
-                >
+                <span class="customizer-collapse">
+                  Dynamic Attributes ({{ dynamicAttributes.length }})
+                </span>
               </div>
               <feather-icon
                 :icon="'ChevronDownIcon'"
@@ -294,23 +282,24 @@
           </b-card-header>
           <hr class="m-0" />
           <b-collapse id="dynamic" visible accordion="dynamic" role="tabpanel">
-            <b-card-body>
+            <b-card-body class="pt-0">
               <b-row>
                 <b-col
                   v-for="item in dynamicAttributes"
                   :key="item.owner"
                   class="pr-0 pt-1"
+                  lg="2"
+                  md="4"
+                  sm="6"
+                  xs="6"
                 >
                   <div class="text-center card-proper">
-                    <p class="mb-0 font-weight-bold style-text">
+                    <p class="mb-0 font-weight-bold style-text text-sm">
                       {{ item.trait_type }}
                     </p>
                     <p class="mb-0">
                       {{ item.value }}
                     </p>
-                    <!--<p class="text-secondary mb-0 text-small">
-                      100% have this trait
-                    </p>-->
                   </div>
                 </b-col>
               </b-row>
@@ -359,6 +348,7 @@
 <script>
 import {
   BCard,
+  BCardHeader,
   BCardBody,
   BRow,
   BCol,
@@ -367,7 +357,8 @@ import {
   // BTable,
   // BSpinner,
   // BPagination,
-  BAvatar,
+  // BAvatar,
+  BImg,
   BCollapse,
   VBToggle
 } from 'bootstrap-vue';
@@ -387,6 +378,7 @@ import axios from 'axios';
 export default {
   components: {
     BCard,
+    BCardHeader,
     BCardBody,
     BRow,
     BCol,
@@ -395,7 +387,8 @@ export default {
     // BTable,
     // BSpinner,
     // BPagination,
-    BAvatar,
+    // BAvatar,
+    BImg,
     BCollapse
   },
   directives: {
@@ -403,27 +396,29 @@ export default {
   },
   beforeRouteUpdate(to, from, next) {
     const { address } = to.params;
+    this.initial();
     if (address !== from.params.hash) {
       this.address = address;
-      this.$http
-        .getAuthAccount(this.address)
-        .then(acc => {
-          this.account = acc;
-          this.initial();
-          this.$http.getTxsBySender(this.address).then(res => {
-            this.transactions = res;
-          });
-        })
-        .catch(err => {
-          this.error = err;
-        });
+      // this.$http
+      //   .getAuthAccount(this.address)
+      //   .then(acc => {
+      //     this.account = acc;
+      //     this.initial();
+      //     this.$http.getTxsBySender(this.address).then(res => {
+      //       this.transactions = res;
+      //     });
+      //   })
+      //   .catch(err => {
+      //     this.error = err;
+      //   });
       next();
     }
   },
   data() {
-    const { id } = this.$route.params;
+    const { id,schema } = this.$route.params;
     return {
       id,
+      schema,
       isBusy: false,
       transactions: [],
       typeExpand: 'shadow',
@@ -437,118 +432,57 @@ export default {
         { key: 'by', label: 'By' },
         { key: 'tokenId', label: 'Token ID' },
         { key: 'details', label: 'Details' }
-      ]
+      ],
+      contract_address: ''
     };
   },
-  computed: {
-    txs() {
-      if (this.transactions.txs) {
-        this.isBusy = false;
-        return this.transactions.txs.map(x => ({
-          txhash: x.txhash,
-          type:
-            typeof codeMessage[x.type.split('.').slice(-1)] !== 'undefined'
-              ? x.type.split('.').slice(-1)[0] === 'MsgSend' &&
-                x.decode_tx.fromAddress !== this.address
-                ? 'Receive'
-                : codeMessage[x.type.split('.').slice(-1)].message
-              : x.type,
-          block: Number(x.block_height),
-          value:
-            typeof x.decode_tx.amount !== 'undefined'
-              ? (typeof x.decode_tx.amount.amount !== 'undefined' &&
-                  `${formatTokenAmount(x.decode_tx.amount.amount) +
-                    ' ' +
-                    'SIX'}`) ||
-                (typeof x.decode_tx.amount[0] !== 'undefined' &&
-                  `${formatTokenAmount(x.decode_tx.amount[0].amount) +
-                    ' ' +
-                    'SIX'}`) ||
-                '-'
-              : '-',
-          commission:
-            typeof x.decode_tx.commission !== 'undefined'
-              ? (typeof x.decode_tx.commission.amount !== 'undefined' &&
-                  `${formatTokenAmount(x.decode_tx.commission.amount) +
-                    ' ' +
-                    'SIX'}`) ||
-                (typeof x.decode_tx.commission[0] !== 'undefined' &&
-                  `${formatTokenAmount(x.decode_tx.commission[0].amount) +
-                    ' ' +
-                    'SIX'}`) ||
-                '-'
-              : '-',
-          txnFee: `${formatGasAmount(x.decode_tx.fee_amount) + ' ' + 'SIX'}`,
-          time: toDay(x.time_stamp)
-        }));
-      } else {
-        this.isBusy = true;
-        return [
-          {
-            txhash: '',
-            type: '',
-            block: '',
-            value: '',
-            commission: '',
-            txnFee: '',
-            time: ''
-          }
-        ];
-      }
-    }
-  },
+  computed: {},
   created() {
     this.tabs = this.$children;
-    this.$http
-      .getAuthAccount(this.address)
-      .then(acc => {
-        this.account = acc;
-        this.initial();
-        this.$http.getTxsBySender(this.address).then(res => {
-          this.transactions = res;
-        });
-        this.$http.getStakingParameters().then(res => {
-          this.stakingParameters = res;
-        });
-      })
-      .catch(err => {
-        this.error = err;
-      });
+    // this.$http
+    //   .getAuthAccount(this.address)
+    //   .then(acc => {
+    //     this.account = acc;
+    //     this.initial();
+    //     this.$http.getTxsBySender(this.address).then(res => {
+    //       this.transactions = res;
+    //     });
+    //     this.$http.getStakingParameters().then(res => {
+    //       this.stakingParameters = res;
+    //     });
+    //   })
+    //   .catch(err => {
+    //     this.error = err;
+    //   });
   },
   mounted() {
-    this.fetchMetaData();
+    this.initial();
   },
   methods: {
-    initial() {
-      this.$http.getStakingValidator(this.address).then(data => {
-        this.validator = data;
-        this.processAddress(data.operator_address, data.consensus_pubkey);
-        this.$http.getTxsBySender(this.accountAddress).then(res => {
-          this.transactions = res;
-        });
+    async initial() {
+      if (this.schema !== undefined) {
+        const staticType = ['Background', 'Moon', 'Plate', 'Tail', 'Whale'];
+        this.$http.getNftSchema(this.schema).then(async res => {
+          this.contract_address =
+            res.nFTSchema.origin_data.origin_contract_address;
+          const nftContract = getContract(
+            TestNfts,
+            res.nFTSchema.origin_data.origin_contract_address || ''
+          );
 
-        const { identity } = data.description;
-        keybase(identity).then(d => {
-          if (Array.isArray(d.them) && d.them.length > 0) {
-            this.$set(this.validator, 'avatar', d.them[0].pictures.primary.url);
-            this.$store.commit('cacheAvatar', {
-              identity,
-              url: d.them[0].pictures.primary.url
-            });
-          }
+          const uri = await nftContract.methods.tokenURI(this.id).call();
+          const ownerOf = await nftContract.methods.ownerOf(this.id).call();
+          const built = axios.get(uri);
+          const [allNfts, owner] = await Promise.all([built, ownerOf]);
+          this.attributes = { ...allNfts.data, owner: owner };
+          this.staticAttributes = allNfts.data.attributes.filter(at =>
+            staticType.includes(at.trait_type)
+          );
+          this.dynamicAttributes = allNfts.data.attributes.filter(
+            at => !staticType.includes(at.trait_type)
+          );
         });
-        this.hexAddress = consensusPubkeyToHexAddress(data.consensus_pubkey);
-        fetch(
-          `${process.env.VUE_APP_API_VALIDATOR}/api/validator/propose-count?proposerAddr=${this.hexAddress}`
-        )
-          .then(data => data.json())
-          .then(resp => {
-            this.proposeTransactions = resp.data;
-          });
-      });
-      this.$http.getValidatorDistribution(this.address).then(res => {
-        this.distribution = res;
-      });
+      }
     },
     pageload(v) {
       this.$http.getTxsBySender(this.accountAddress, v).then(res => {
@@ -570,23 +504,27 @@ export default {
         denom: this.stakingParameter.bond_denom
       });
     },
-    async fetchMetaData() {
-      const staticType = ['Background', 'Moon', 'Plate', 'Tail', 'Whale'];
-      const nftContract = getContract(
-        TestNfts,
-        '0x898bb3b662419e79366046C625A213B83fB4809B' || ''
-      );
-
-      const uri = await nftContract.methods.tokenURI(this.id).call();
-      const ownerOf = await nftContract.methods.ownerOf(this.id).call();
-      const built = axios.get(uri);
-      const [allNfts, owner] = await Promise.all([built, ownerOf]);
-      this.attributes = { ...allNfts.data, owner: owner };
-      this.staticAttributes = allNfts.data.attributes.filter(at =>
-        staticType.includes(at.trait_type)
-      );
-      this.dynamicAttributes = allNfts.data.attributes.filter(
-        at => !staticType.includes(at.trait_type)
+    copy(v) {
+      this.$copyText(v).then(
+        () => {
+          this.$toast({
+            component: ToastificationContent,
+            props: {
+              title: 'Address copied',
+              icon: 'BellIcon'
+            }
+          });
+        },
+        e => {
+          this.$toast({
+            component: ToastificationContent,
+            props: {
+              title: `Failed to copy address! ${e}`,
+              icon: 'BellIcon',
+              variant: 'danger'
+            }
+          });
+        }
       );
     }
   }
@@ -596,6 +534,15 @@ export default {
 <style lang="scss" scoped>
 @import '~@core/scss/base/bootstrap-extended/include';
 @import '~@core/scss/base/components/variables-dark';
+
+.customizer-copy {
+  cursor: pointer;
+  color: $info;
+
+  .dark-layout & {
+    color: $primary;
+  }
+}
 
 .customizer-card {
   color: $secondary;
@@ -611,10 +558,15 @@ export default {
     color: $primary;
   }
 }
+
+.text-sm {
+  font-size: 12px;
+}
+
 .customizer-title {
   color: $info;
   align-items: center;
-  font-size: 22px;
+  font-size: 18px;
   font-weight: 700;
   .dark-layout & {
     color: $primary;
@@ -633,7 +585,7 @@ export default {
 
 .customizer-text {
   color: $info;
-  max-width: 150px;
+  max-width: 400px;
   align-items: center;
   .dark-layout & {
     color: $primary;
@@ -668,6 +620,9 @@ export default {
 
 .text-small {
   font-size: 10px;
+}
+.text-style {
+  font-size: 12px;
 }
 
 .card-proper {

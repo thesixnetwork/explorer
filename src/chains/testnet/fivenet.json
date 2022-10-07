@@ -10,9 +10,10 @@
     "apiTX": [
         "https://six-protocol-get-txs-api-gateway-7kl45r91.an.gateway.dev"
     ],
-    "schema" : ["https://sixnft-api.sixprotocol.net/sixnft/nftmngr/nft_schema/sixnetwork-uat.nftexpo"],
+    "apiUrl": ["http://35.213.145.135:1317"],
+    "schema" : ["http://35.213.145.135:1317/sixnft/nftmngr/nft_schema/"],
     "datachain" : ["https://six-data-chain-backend-backend-api-sixnet-gateway-3hi29er0.an.gateway.dev"],
-    "provider" : "https://public-en.kaikas.io/v1/baobab",
+    "provider" : "https://klaytn-api.fingerlabs.io/",
     "sdk_version": "0.45.0",
     "coin_type": "118",
     "min_tx_fee": "800",

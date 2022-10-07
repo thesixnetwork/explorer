@@ -168,12 +168,16 @@ const router = new VueRouter({
       }
     },
     {
-      path: '/txn-gen2/nft-txs/:id',
+      path: '/txn-gen2/nft-txs/:id/:schema',
       name: 'nftTxs',
       component: () => import('@/views/TransactionNFT.vue'),
       meta: {
         pageTitle: 'NFT Transaction',
         breadcrumb: [
+          {
+            text: 'Transaction Gen2',
+            active: true
+          },
           {
             text: 'NFT Transaction',
             active: true
