@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div v-if="attributes.schema_code">
     <b-row>
       <b-col lg="4" md="12" sm="12" xs="12">
         <b-card>
@@ -319,7 +319,7 @@
         </b-card>
       </b-col>
     </b-row>
-    <b-card>
+    <!--<b-card>
       <p class="font-weight-bold divider-bottom pb-1 style-text">
         Item Activity
       </p>
@@ -352,7 +352,7 @@
         class="mt-1"
         @change="pageload"
       />
-    </b-card>
+    </b-card>-->
   </div>
 </template>
 
@@ -364,9 +364,9 @@ import {
   BCol,
   // BTab,
   // BTabs,
-  BTable,
-  BSpinner,
-  BPagination,
+  // BTable,
+  // BSpinner,
+  // BPagination,
   BAvatar,
   BCollapse,
   VBToggle
@@ -392,9 +392,9 @@ export default {
     BCol,
     // BTab,
     // BTabs,
-    BTable,
-    BSpinner,
-    BPagination,
+    // BTable,
+    // BSpinner,
+    // BPagination,
     BAvatar,
     BCollapse
   },

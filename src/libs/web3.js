@@ -1,4 +1,5 @@
 import Web3 from 'web3';
+import store from '@/store';
 // import { AbiItem } from 'web3-utils';
 // import { ContractOptions } from 'web3-eth-contract';
 import * as crypto from 'crypto';
@@ -9,6 +10,21 @@ import * as crypto from 'crypto';
 const algorithm = 'aes-256-cbc';
 let key;
 let initVector;
+const getSelectedConfig = () => {
+  let chain = store.state.chains.selected;
+  const lschains = localStorage.getItem('chains');
+  if (lschains) {
+    chain = JSON.parse(lschains)[chain.chain_name];
+  }
+  if (!chain.sdk_version) {
+    chain.sdk_version = '0.33';
+  }
+
+  return chain;
+};
+
+const provider = getSelectedConfig().provider;
+
 export const configKey = (_key, _initVector) => {
   key = _key;
   initVector = _initVector;
@@ -32,12 +48,12 @@ const checkInitStage = () => {
 };
 
 const getWeb3 = () => {
-  const web3 = new Web3("https://klaytn-api.fingerlabs.io/" || '');
+  const web3 = new Web3(provider || '');
   return web3;
 };
 
 if (typeof window !== 'undefined') {
-  window.web3 = new Web3("https://klaytn-api.fingerlabs.io/" || '');
+  window.web3 = new Web3(provider || '');
 }
 
 const getContract = (abi, address, contractOptions) => {

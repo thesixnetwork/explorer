@@ -153,7 +153,7 @@
               sm="6"
               xs="6"
             >
-              <router-link :to="`/txn-gen2/nft-txs/${index+1}`">
+              <router-link :to="`/txn-gen2/nft-txs/${index + 1}`">
                 <b-card class="customizer-card">
                   <div class="d-flex justify-content-center mb-2">
                     <b-avatar :size="140" :src="item.image" />
@@ -252,6 +252,13 @@ export default {
         });
       next();
     }
+    if (this.tokenCode !== undefined) {
+      this.$http.getAllTransactions(this.tokenCode).then(res => {
+        this.transactions = res;
+      });
+      this.initial();
+      next();
+    }
   },
   data() {
     const { tokenCode } = this.$route.params;
@@ -269,7 +276,7 @@ export default {
       ],
       nFTSchema: {},
       tokenCode,
-      page_number: 1,
+      page_number: 1
     };
   },
   computed: {
@@ -315,20 +322,33 @@ export default {
   },
   mounted() {
     this.initial();
-    this.fetchMetaData();
-  },
-  beforeRouteUpdate(to, from, next) {
-    const { address } = to.params;
-    if (this.tokenCode !== undefined) {
-      this.$http.getAllTransactions(this.tokenCode).then(res => {
-        this.transactions = res;
-      });
-      next();
-    }
   },
   methods: {
-    initial() {
-      this.$http.getNftSchema(this.tokenCode).then(res => {
+    async initial() {
+      this.$http.getNftSchema(this.tokenCode).then(async res => {
+        const nftContract = getContract(
+          TestNfts,
+          res.nFTSchema.origin_data.origin_contract_address || ''
+        );
+
+        const totalSupply = await nftContract.methods.totalSupply().call();
+        const web3 = new Web3(this.$http.getSelectedConfig().provider || '');
+        const aggregate = [...Array(parseInt(totalSupply))].map((x, index) =>
+          nftContract.methods.tokenURI(parseInt(index + 1)).call()
+        );
+
+        const ownerOf = [...Array(parseInt(totalSupply))].map((x, index) =>
+          nftContract.methods.ownerOf(parseInt(index + 1)).call()
+        );
+        const alloOwnerOf = await Promise.all(ownerOf);
+        const all = await Promise.all(aggregate);
+        const built = all.map(uri => axios.get(uri));
+        const allNfts = await Promise.all(built);
+        const allData = allNfts.map((x, i) => {
+          return { ...x.data, owner: alloOwnerOf[i] };
+        });
+        this.nfts = allData;
+
         this.nFTSchema = res.nFTSchema;
       });
     },
@@ -337,31 +357,6 @@ export default {
       this.$http.getAllTransactions(this.tokenCode, v).then(res => {
         this.transactions = res;
       });
-    },
-    async fetchMetaData() {
-      const nftContract = getContract(
-        TestNfts,
-        '0x898bb3b662419e79366046C625A213B83fB4809B' || ''
-      );
-
-      const totalSupply = await nftContract.methods.totalSupply().call();
-      const web3 = new Web3('https://klaytn-api.fingerlabs.io/' || '');
-      const aggregate = [...Array(parseInt(totalSupply))].map((x, index) =>
-        nftContract.methods.tokenURI(parseInt(index + 1)).call()
-      );
-
-      const ownerOf = [...Array(parseInt(totalSupply))].map((x, index) =>
-        nftContract.methods.ownerOf(parseInt(index + 1)).call()
-      );
-      const alloOwnerOf = await Promise.all(ownerOf);
-      const all = await Promise.all(aggregate);
-      const built = all.map(uri => axios.get(uri));
-      const allNfts = await Promise.all(built);
-      const allData = allNfts.map((x, i) => {
-        return { ...x.data, owner: alloOwnerOf[i] };
-      });
-
-      this.nfts = allData;
     },
     formatHash: abbrAddress,
     copy(v) {

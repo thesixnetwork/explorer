@@ -12,6 +12,7 @@
     ],
     "schema" : ["https://sixnft-api.sixprotocol.net/sixnft/nftmngr/nft_schema/sixnetwork-uat.nftexpo"],
     "datachain" : ["https://six-data-chain-backend-backend-api-sixnet-gateway-3hi29er0.an.gateway.dev"],
+    "provider" : "https://klaytn-api.fingerlabs.io/",
     "sdk_version": "0.45.0",
     "coin_type": "118",
     "min_tx_fee": "800",
