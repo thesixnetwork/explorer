@@ -177,11 +177,13 @@
                 >
                   <b-card-body class="customizer-card">
                     <div class="d-flex justify-content-center mb-1">
-                      <b-img
+                      <b-img-lazy
                         :src="item.image"
+                        :blank-src="item.image"
                         :alt="item.image"
                         height="120px"
                         width="120px"
+                        fluid
                       />
                     </div>
                     <div class="d-flex">
@@ -248,7 +250,7 @@ import {
   BTable,
   BSpinner,
   BPagination,
-  BImg,
+  BImgLazy,
   BBadge
 } from 'bootstrap-vue';
 
@@ -272,7 +274,7 @@ export default {
     BTable,
     BSpinner,
     BPagination,
-    BImg,
+    BImgLazy,
     BBadge
   },
   beforeRouteUpdate(to, from, next) {
@@ -404,7 +406,7 @@ export default {
     },
     pageload(v) {
       this.page_number = v;
-      this.$http.getAllTransactions(this.tokenCode, v).then(res => {
+      this.$http.getAllTransactions(this.tokenCode, v).then(res => {  
         this.transactions = res;
       });
     },
