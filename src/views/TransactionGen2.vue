@@ -162,7 +162,7 @@
                 size="sm"
               />
             </div>
-            <b-row>
+            <b-row v-if="totalPages.length > 0">
               <b-col
                 v-for="(item, index) in totalPages"
                 :key="index"
@@ -203,6 +203,11 @@
                   </b-card-body>
                 </router-link>
               </b-col>
+            </b-row>
+            <b-row v-else>
+              <b-card-body class="text-center">
+                <strong>Loading...</strong>
+              </b-card-body>
             </b-row>
           </b-tab>
         </b-tabs>
@@ -324,10 +329,14 @@ export default {
       }
     },
     totalPages: function() {
-      return this.nfts.slice(
-        Number(this.currentPage - 1) * Number(this.limit),
-        Number(this.currentPage) * Number(this.limit)
-      );
+      if (this.nfts.length > 0) {
+        return this.nfts.slice(
+          Number(this.currentPage - 1) * Number(this.limit),
+          Number(this.currentPage) * Number(this.limit)
+        );
+      } else {
+        return [];
+      }
     }
   },
   created() {
@@ -343,11 +352,13 @@ export default {
     this.initial(this.tokenCode);
   },
   methods: {
-    async initial(tokenCode) {
+    async initial(tc) {
       this.loading = true;
-      if (tokenCode !== undefined) {
-        this.$http.getNftSchema(tokenCode).then(async res => {
+      if (tc !== undefined) {
+        this.$http.getNftSchema(tc).then(async res => {
           if (res.nFTSchema !== undefined) {
+            this.loading = false;
+            this.nFTSchema = res.nFTSchema;
             const webs = new Web3(
               STATUS_CODE[res.nFTSchema.origin_data.origin_chain].PROVIDER || ''
             );
@@ -355,15 +366,9 @@ export default {
               TestNfts,
               res.nFTSchema.origin_data.origin_contract_address || ''
             );
-            // const nftContract = getContract(
-            //   TestNfts,
-            //   res.nFTSchema.origin_data.origin_contract_address || ''.
-            //   STATUS_CODE[res.nFTSchema.origin_data.origin_chain].PROVIDER
-            // );
 
             const totalSupply = await nftContract.methods.totalSupply().call();
             this.totalSupply = totalSupply;
-            // const web3 = new Web3(this.$http.getSelectedConfig().provider || '');
             const aggregate = [
               ...Array(parseInt(totalSupply))
             ].map((x, index) =>
@@ -381,11 +386,10 @@ export default {
               return { ...x.data, owner: alloOwnerOf[i] };
             });
 
-            this.loading = false;
 
             this.nfts = allData;
-            this.nFTSchema = res.nFTSchema;
           } else {
+            this.nfts = [];
             this.loading = false;
             this.nFTSchema = {};
           }

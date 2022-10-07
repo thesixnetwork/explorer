@@ -343,6 +343,13 @@
       />
     </b-card>-->
   </div>
+  <div v-else>
+    <b-card>
+      <h4 class="text-center mb-0">
+        Loading Data 🕵🏻‍♀️
+      </h4>
+    </b-card>
+  </div>
 </template>
 
 <script>
@@ -372,6 +379,7 @@ import { getContract, STATUS_CODE } from '@/libs/web3';
 import TestNfts from '@/abi/TestNfts.json';
 import axios from 'axios';
 import Web3 from 'web3';
+import ToastificationContent from '@core/components/toastification/ToastificationContent.vue';
 
 export default {
   components: {
@@ -409,7 +417,9 @@ export default {
       typeExpand: 'shadow',
       attributes: {},
       staticAttributes: {},
-      dynamicAttributes: {}
+      dynamicAttributes: {},
+      contract_address: '',
+      loading: true
     };
   },
   computed: {},
@@ -421,36 +431,40 @@ export default {
   },
   methods: {
     async initial() {
+      this.loading = true;
       if (this.schema !== undefined) {
         const staticType = ['Background', 'Moon', 'Plate', 'Tail', 'Whale'];
         this.$http.getNftSchema(this.schema).then(async res => {
-          this.contract_address =
-            res.nFTSchema.origin_data.origin_contract_address;
+          if (res.nFTSchema !== undefined) {
+            this.contract_address =
+              res.nFTSchema.origin_data.origin_contract_address;
+            this.loading = false;
 
-          const webs = new Web3(
-            STATUS_CODE[res.nFTSchema.origin_data.origin_chain].PROVIDER || ''
-          );
-          const nftContract = new webs.eth.Contract(
-            TestNfts,
-            res.nFTSchema.origin_data.origin_contract_address || ''
-          );
+            const webs = new Web3(
+              STATUS_CODE[res.nFTSchema.origin_data.origin_chain].PROVIDER || ''
+            );
+            const nftContract = new webs.eth.Contract(
+              TestNfts,
+              res.nFTSchema.origin_data.origin_contract_address || ''
+            );
 
-          // const nftContract = getContract(
-          //   TestNfts,
-          //   res.nFTSchema.origin_data.origin_contract_address || ''
-          // );
-
-          const uri = await nftContract.methods.tokenURI(this.id).call();
-          const ownerOf = await nftContract.methods.ownerOf(this.id).call();
-          const built = axios.get(uri);
-          const [allNfts, owner] = await Promise.all([built, ownerOf]);
-          this.attributes = { ...allNfts.data, owner: owner };
-          this.staticAttributes = allNfts.data.attributes.filter(at =>
-            staticType.includes(at.trait_type)
-          );
-          this.dynamicAttributes = allNfts.data.attributes.filter(
-            at => !staticType.includes(at.trait_type)
-          );
+            const uri = await nftContract.methods.tokenURI(this.id).call();
+            const ownerOf = await nftContract.methods.ownerOf(this.id).call();
+            const built = axios.get(uri);
+            const [allNfts, owner] = await Promise.all([built, ownerOf]);
+            this.attributes = { ...allNfts.data, owner: owner };
+            this.staticAttributes = allNfts.data.attributes.filter(at =>
+              staticType.includes(at.trait_type)
+            );
+            this.dynamicAttributes = allNfts.data.attributes.filter(
+              at => !staticType.includes(at.trait_type)
+            );
+          } else {
+            this.attributes = {};
+            this.staticAttributes = {};
+            this.dynamicAttributes = {};
+            this.contract_address = '';
+          }
         });
       }
     },
