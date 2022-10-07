@@ -109,7 +109,6 @@
               transactions found
             </span>
           </div>
-
           <b-table
             :items="txs"
             :busy="isBusy"
@@ -203,9 +202,11 @@
     </b-card>
   </div>
   <div v-else>
-    <h3 class="text-center">
-      Loading Data 🕵🏻‍♀️
-    </h3>
+    <b-card>
+      <h4 class="text-center mb-0">
+        Loading Data 🕵🏻‍♀️
+      </h4>
+    </b-card>
   </div>
 </template>
 
@@ -276,8 +277,7 @@ export default {
       page_number: 1,
       totalSupply: 0,
       limit: 30,
-      currentPage: 0,
-      contractAddress: ''
+      currentPage: 0
     };
   },
   computed: {
@@ -353,9 +353,7 @@ export default {
           });
 
           this.nfts = allData;
-
           this.nFTSchema = res.nFTSchema;
-          console.log('this.nFTSchema', this.nFTSchema);
         });
       }
     },

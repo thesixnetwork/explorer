@@ -1,10 +1,10 @@
 <template>
   <div>
     <b-card>
-      <h4 class="divider-bottom pb-1 style-text">
+      <h4 class="divider-bottom pb-1 style-text mb-1">
         Transaction Details
       </h4>
-      <div v-if="tx">
+      <div v-if="tx.statusCode === 'V:0001'">
         <b-tabs content-class="mt-1">
           <b-tab title="Overview" active class="pa-0">
             <b-table-simple striped stacked="sm">
@@ -87,16 +87,20 @@
                   </b-td>
                 </b-tr>
                 <b-tr>
-                  <b-td> {{ 'Gas Price' }} </b-td>
-                  <b-td
-                    >{{ tx.data.gas_used }} /
-                    {{ tx.data.gas_wanted || '-' }}</b-td
-                  >
+                  <b-td> {{ 'Gas' }} </b-td>
+                  <b-td>
+                    {{ tx.data.gas_used || '-' }} /
+                    {{ tx.data.gas_wanted || '-' }}
+                  </b-td>
                 </b-tr>
                 <b-tr>
                   <b-td> {{ 'Fee' }} </b-td>
                   <b-td>
-                    {{ tx.data.fee_amount.amount / Math.pow(10, 8) || '-' }}
+                    {{
+                      tx.data.fee_amount.amount / Math.pow(10, 6) ||
+                        '-' ||
+                        formattoken(tx.data.fee_amount.amount)
+                    }}
                   </b-td>
                 </b-tr>
               </tbody>
@@ -105,9 +109,9 @@
         </b-tabs>
       </div>
       <div v-else>
-        <h3 class="text-center">
-          Data not found 🕵🏻‍♀️
-        </h3>
+        <h5 class="text-center mb-0">
+          Loading Data 🕵🏻‍♀️
+        </h5>
       </div>
     </b-card>
   </div>
@@ -150,7 +154,7 @@ export default {
     return {
       isBusy: false,
       tabs: [],
-      tx: { tx: {} }
+      tx: {}
     };
   },
 
