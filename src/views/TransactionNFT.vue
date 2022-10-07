@@ -204,7 +204,7 @@
           </b-card>
 
           <b-card no-body class="mb-0">
-            <b-card-header class="d-block p-1" role="tab">
+            <b-card-header class="p-1 d-block" role="tab">
               <div
                 v-b-toggle="'properties'"
                 variant="info"
@@ -263,7 +263,7 @@
     <b-row class="mb-1">
       <b-col lg="12" md="12" sm="12" xs="12">
         <b-card no-body class="mb-0">
-          <b-card-header header-tag="header" class="p-1" role="tab">
+          <b-card-header class="p-1 d-block" role="tab">
             <div v-b-toggle="'dynamic'" variant="info" class="style-toggle">
               <div class="d-flex align-items-center">
                 <feather-icon
