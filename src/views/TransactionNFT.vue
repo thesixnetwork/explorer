@@ -367,10 +367,7 @@ import {
 import {
   formatToken,
   operatorAddressToAccount,
-  consensusPubkeyToHexAddress,
-  toDay,
-  formatTokenAmount,
-  formatGasAmount
+  consensusPubkeyToHexAddress
 } from '@/libs/utils';
 import { getContract } from '@/libs/web3';
 import TestNfts from '@/abi/TestNfts.json';
@@ -398,19 +395,6 @@ export default {
     const { address } = to.params;
     if (address !== from.params.hash) {
       this.address = address;
-      this.$http
-        .getAuthAccount(this.address)
-        .then(acc => {
-          this.account = acc;
-          this.initial();
-          this.$http.getTxsBySender(this.address).then(res => {
-            this.transactions = res;
-          });
-        })
-        .catch(err => {
-          this.error = err;
-        });
-      next();
     }
   },
   data() {
@@ -422,35 +406,12 @@ export default {
       typeExpand: 'shadow',
       attributes: {},
       staticAttributes: {},
-      dynamicAttributes: {},
-      fields: [
-        { key: 'txnHash', label: 'Txn Hash' },
-        { key: 'method', label: 'Method' },
-        { key: 'age', label: 'Age' },
-        { key: 'by', label: 'By' },
-        { key: 'tokenId', label: 'Token ID' },
-        { key: 'details', label: 'Details' }
-      ]
+      dynamicAttributes: {}
     };
   },
   computed: {},
   created() {
     this.tabs = this.$children;
-    this.$http
-      .getAuthAccount(this.address)
-      .then(acc => {
-        this.account = acc;
-        this.initial();
-        this.$http.getTxsBySender(this.address).then(res => {
-          this.transactions = res;
-        });
-        this.$http.getStakingParameters().then(res => {
-          this.stakingParameters = res;
-        });
-      })
-      .catch(err => {
-        this.error = err;
-      });
   },
   mounted() {
     this.fetchMetaData();

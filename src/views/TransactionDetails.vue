@@ -67,7 +67,9 @@
                     {{ 'Action' }}
                   </b-td>
                   <b-td class="text-truncate">
-                    {{ tx.data.events[0].value.replaceAll('_', ' ') }}
+                    <b-badge variant="light-secondary">
+                      {{ tx.data.events[0].value.replaceAll('_', ' ') }}
+                    </b-badge>
                   </b-td>
                 </b-tr>
                 <b-tr>
@@ -86,11 +88,16 @@
                 </b-tr>
                 <b-tr>
                   <b-td> {{ 'Gas Price' }} </b-td>
-                  <b-td>{{ tx.data.gas_used }} / {{ tx.data.gas_wanted }}</b-td>
+                  <b-td
+                    >{{ tx.data.gas_used }} /
+                    {{ tx.data.gas_wanted || '-' }}</b-td
+                  >
                 </b-tr>
                 <b-tr>
                   <b-td> {{ 'Fee' }} </b-td>
-                  <b-td>{{ tx.data.fee_amount.amount / Math.pow(10, 8) }}</b-td>
+                  <b-td>
+                    {{ tx.data.fee_amount.amount / Math.pow(10, 8) || '-' }}
+                  </b-td>
                 </b-tr>
               </tbody>
             </b-table-simple>

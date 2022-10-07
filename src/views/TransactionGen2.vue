@@ -131,6 +131,11 @@
                 {{ formatHash(data.item.txhash) }}
               </router-link>
             </template>
+            <template #cell(method)="data">
+              <b-badge variant="light-secondary">
+                {{ data.item.method }}
+              </b-badge>
+            </template>
           </b-table>
           <b-pagination
             v-if="Number(transactions.totalPage) > 1"
@@ -214,14 +219,15 @@ import {
   BTable,
   BSpinner,
   BPagination,
-  BImg
+  BImg,
+  BBadge
 } from 'bootstrap-vue';
 
 import { toDay, abbrAddress } from '@/libs/utils';
 import TestNfts from '@/abi/TestNfts.json';
 import { getContract } from '@/libs/web3';
 import axios from 'axios';
-import Multicall from '@dopex-io/web3-multicall';
+// import Multicall from '@dopex-io/web3-multicall';
 import Web3 from 'web3';
 import ToastificationContent from '@core/components/toastification/ToastificationContent.vue';
 import _ from 'lodash';
@@ -237,8 +243,8 @@ export default {
     BTable,
     BSpinner,
     BPagination,
-    BImg
-    // BAvatar
+    BImg,
+    BBadge
   },
   beforeRouteUpdate(to, from, next) {
     const { address } = to.params;
@@ -290,6 +296,8 @@ export default {
           method:
             x.type === '/sixnft.nftmngr.MsgCreateNFTSchema'
               ? 'Create NFT Schema'
+              : x.type === '/sixnft.nftmngr.MsgCreateMetadata'
+              ? 'Create Metadata'
               : x.type,
           age: toDay(x.time_stamp),
           by: abbrAddress(x.decode_tx.creator)
