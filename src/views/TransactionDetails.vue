@@ -4,8 +4,8 @@
       <h4 class="divider-bottom pb-1 style-text mb-1">
         Transaction Details
       </h4>
-      <div v-if="tx.statusCode === 'V:0001'">
-        <b-tabs content-class="mt-1">
+      <div v-if="loading === false">
+        <b-tabs v-if="tx.data" content-class="mt-1">
           <b-tab title="Overview" active class="pa-0">
             <b-table-simple striped stacked="sm">
               <tbody>
@@ -107,6 +107,13 @@
             </b-table-simple>
           </b-tab>
         </b-tabs>
+        <b-card v-else>
+          <div class="flex align-items-center justify-content-center">
+            <span class="text-center mb-0">
+              Data Not found !
+            </span>
+          </div>
+        </b-card>
       </div>
       <div v-else>
         <b-card>
@@ -151,7 +158,9 @@ export default {
     const { address } = to.params;
     const { hash } = this.$route.params.hash;
     if (address !== from.params.txHash) {
+      this.loading = true;
       this.$http.getTransactionByHash(hash).then(res => {
+        this.loading = false;
         this.tx = res;
       });
       next();
@@ -161,13 +170,15 @@ export default {
     return {
       isBusy: false,
       tabs: [],
-      tx: {}
+      tx: {},
+      loading: true
     };
   },
 
   created() {
     this.tabs = this.$children;
     this.$http.getTransactionByHash(this.$route.params.hash).then(res => {
+      this.loading = false;
       this.tx = res;
     });
   },

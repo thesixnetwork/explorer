@@ -235,7 +235,7 @@
                     v-for="item in staticAttributes"
                     :key="item.owner"
                     class="pr-0 pt-1"
-                    lg="2"
+                    lg="3"
                     md="4"
                     sm="6"
                     xs="6"

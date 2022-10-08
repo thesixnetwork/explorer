@@ -155,15 +155,15 @@
             <div class="flex justify-content-end mb-1">
               <b-pagination
                 v-if="Number(totalSupply / limit) > 1"
+                v-model="currentPage"
                 :total-rows="totalSupply"
                 :per-page="limit"
                 :value="currentPage"
-                v-model="currentPage"
                 size="sm"
                 @change="pageCollectionChange"
               />
             </div>
-            <b-row v-if="(totalPages.length > 0 && isCollectionLoader == false)">
+            <b-row v-if="totalPages.length > 0 && isCollectionLoader == false">
               <b-col
                 v-for="(item, index) in totalPages"
                 :key="index"
@@ -174,7 +174,10 @@
                 class="pl-20"
               >
                 <router-link
-                  :to="`/txn-gen2/nft-txs/${index + 1}/${tokenCode}`"
+                  :to="
+                    `/txn-gen2/nft-txs/${(currentPage - 1) * limit +
+                      (index + 1)}/${tokenCode}`
+                  "
                 >
                   <b-card-body class="customizer-card">
                     <div class="d-flex justify-content-center mb-1">
@@ -223,7 +226,7 @@
     <div v-else>
       <b-card>
         <h4 class="text-center mb-0">
-          Data Not found 🕵🏻‍♀️
+          Data Not found !
         </h4>
       </b-card>
     </div>
@@ -257,9 +260,8 @@ import {
 
 import { toDay, abbrAddress } from '@/libs/utils';
 import TestNfts from '@/abi/TestNfts.json';
-import { getContract, STATUS_CODE } from '@/libs/web3';
+import { STATUS_CODE } from '@/libs/web3';
 import axios from 'axios';
-// import Multicall from '@dopex-io/web3-multicall';
 import Web3 from 'web3';
 import ToastificationContent from '@core/components/toastification/ToastificationContent.vue';
 import _ from 'lodash';
@@ -293,7 +295,6 @@ export default {
     return {
       isCollectionLoader: true,
       isBusy: false,
-      txnGen2: [],
       transactions: [],
       tabs: [],
       nfts: [],
@@ -307,7 +308,7 @@ export default {
       tokenCode,
       page_number: 1,
       totalSupply: 0,
-      limit: 18,
+      limit: 20,
       currentPage: 0,
       loading: true
     };
@@ -323,7 +324,10 @@ export default {
               ? 'Create NFT Schema'
               : x.type === '/sixnft.nftmngr.MsgCreateMetadata'
               ? 'Create Metadata'
+              : x.type === '/sixnft.nftmngr.MsgPerformActionByAdmin'
+              ? 'NFT Action'
               : x.type,
+
           age: toDay(x.time_stamp),
           by: abbrAddress(x.decode_tx.creator)
         }));
@@ -341,8 +345,7 @@ export default {
     },
     totalPages: function() {
       if (this.nfts.length > 0) {
-
-        return this.nfts
+        return this.nfts;
       } else {
         return [];
       }
@@ -380,22 +383,23 @@ export default {
             const totalSupply = await nftContract.methods.totalSupply().call();
             this.totalSupply = totalSupply;
 
-            const aggregate = [
-              ...Array(parseInt(this.limit))
-            ].map((x, index) =>
+            const aggregate = [...Array(parseInt(this.limit))].map((x, index) =>
               nftContract.methods.tokenURI(parseInt(index + 1)).call()
             );
 
             const ownerOf = [...Array(parseInt(totalSupply))].map((x, index) =>
               nftContract.methods.ownerOf(parseInt(index + 1)).call()
             );
-            const alloOwnerOfChannel =  Promise.all(ownerOf);
-            const allChannel =  Promise.all(aggregate);
-            const [alloOwnerOf, all] = await Promise.all([alloOwnerOfChannel, allChannel]);
+            const alloOwnerOfChannel = Promise.all(ownerOf);
+            const allChannel = Promise.all(aggregate);
+            const [alloOwnerOf, all] = await Promise.all([
+              alloOwnerOfChannel,
+              allChannel
+            ]);
             const built = all.map(uri => axios.get(uri));
             const allNfts = await Promise.all(built);
             const allData = allNfts.map((x, i) => {
-              return { ...x.data, owner: alloOwnerOf[i] };
+              return { ...x.data, owner: alloOwnerOf[i], id: i };
             });
 
             this.nfts = allData;
@@ -409,49 +413,45 @@ export default {
         });
       }
     },
-    async pageCollectionChange(v){
+    async pageCollectionChange(v) {
       this.isCollectionLoader = true;
-      const pageCollectionsNumber = v
+      const pageCollectionsNumber = v;
       const webs = new Web3(
-              STATUS_CODE[this.nFTSchema.origin_data.origin_chain].PROVIDER || ''
-            );
-      const nftContract = new webs.eth.Contract(
-              TestNfts,
-              this.nFTSchema.origin_data.origin_contract_address || ''
-            );
-            let endId = (pageCollectionsNumber * parseInt(this.limit))
-            if(endId > this.totalSupply)
-              endId = this.totalSupply - 1
-
-
-           const fetchLength = _.range(endId-parseInt(this.limit), endId)
-      const aggregate = 
-          fetchLength
-              // ...Array(parseInt(this.limit))
-            .map((x, index) =>{
-
-             return nftContract.methods.tokenURI(parseInt(x + 1)).call()
-            }
-            );
-      const ownerOf = fetchLength.map((x, index) =>
-              nftContract.methods.ownerOf(parseInt(x + 1)).call()
+        STATUS_CODE[this.nFTSchema.origin_data.origin_chain].PROVIDER || ''
       );
-      const alloOwnerOfChannel =  Promise.all(ownerOf);
-      const allChannel =  Promise.all(aggregate);
-      const [alloOwnerOf, all] = await Promise.all([alloOwnerOfChannel, allChannel]);
+      const nftContract = new webs.eth.Contract(
+        TestNfts,
+        this.nFTSchema.origin_data.origin_contract_address || ''
+      );
+      let endId = pageCollectionsNumber * parseInt(this.limit);
+      if (endId > this.totalSupply) endId = this.totalSupply - 1;
+
+      const fetchLength = _.range(endId - parseInt(this.limit), endId);
+      const aggregate = fetchLength
+        // ...Array(parseInt(this.limit))
+        .map((x, index) => {
+          return nftContract.methods.tokenURI(parseInt(x + 1)).call();
+        });
+      const ownerOf = fetchLength.map((x, index) =>
+        nftContract.methods.ownerOf(parseInt(x + 1)).call()
+      );
+      const alloOwnerOfChannel = Promise.all(ownerOf);
+      const allChannel = Promise.all(aggregate);
+      const [alloOwnerOf, all] = await Promise.all([
+        alloOwnerOfChannel,
+        allChannel
+      ]);
       const built = all.map(uri => axios.get(uri));
       const allNfts = await Promise.all(built);
       const allData = allNfts.map((x, i) => {
-              return { ...x.data, owner: alloOwnerOf[i] };
-            });
-            this.nfts = allData;
-            this.isCollectionLoader = false;
-
+        return { ...x.data, owner: alloOwnerOf[i] };
+      });
+      this.nfts = allData;
+      this.isCollectionLoader = false;
     },
     pageload(v) {
       this.page_number = v;
-      this.$http.getAllTransactions(this.tokenCode, v).then(res => {  
-
+      this.$http.getAllTransactions(this.tokenCode, v).then(res => {
         this.transactions = res;
       });
     },
