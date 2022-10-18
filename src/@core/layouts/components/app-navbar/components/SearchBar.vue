@@ -76,9 +76,27 @@
         class="customizer-input"
         autofocus
         autocomplete="off"
-        @keyup.enter="doQuery"
-        @keyup.esc="escPressed"
+        @keyup="optionSearch"
       />
+
+      <ul v-if="filterData.length > 0" class="suggestion-list">
+        <li
+          class="cursor-pointer"
+          v-for="item in filterData"
+          :key="item.type"
+          :value="item.type"
+          @click="doQuery"
+        >
+          <div>
+            <span>
+              {{ item.type }} </span
+            >-
+            <span>
+              {{ item.name }}
+            </span>
+          </div>
+        </li>
+      </ul>
     </div>
 
     <!-- <div class="mt-2 style-search">
@@ -127,6 +145,12 @@ export default {
           text: 'I dont judge people by their worst mistakes'
         },
         { title: 'Schema code', text: 'I am… inevitable' }
+      ],
+      options: [
+        { type: 'height', name: '' },
+        { type: 'txhash', name: '' },
+        { type: 'addr', name: '' },
+        { type: 'schema', name: '' }
       ]
     };
   },
@@ -134,11 +158,46 @@ export default {
     doSomething(v) {
       console.log('log v', v);
     },
+    optionSearch: function(e) {
+      const height = /^\d+$/;
+      const txhash = /^[A-Z\d]{64}$/;
+      const addr = /^[a-z\d]{2,6}1[a-z\d]{38}$/;
+      const schema = /^[a-z-.]+/;
+      const key = e.target.value;
+
+      if (key !== '') {
+        if (height.test(key)) {
+          this.options
+            .filter(item => item.type === 'height')
+            .forEach(item => (item.name = key));
+        } else if (txhash.test(key)) {
+          this.options
+            .filter(item => item.type === 'txhash')
+            .forEach(item => (item.name = key));
+        } else if (addr.test(key)) {
+          this.options
+            .filter(item => item.type === 'addr')
+            .forEach(item => (item.name = key));
+        } else if (schema.test(key)) {
+          this.options
+            .filter(item => item.type === 'schema')
+            .forEach(item => (item.name = key));
+        } else {
+          this.options
+            .filter(item => item.type)
+            .forEach(item => (item.name = ''));
+        }
+      } else {
+        this.options
+          .filter(item => item.type)
+          .forEach(item => (item.name = ''));
+      }
+    },
     doQuery() {
       const height = /^\d+$/;
       const txhash = /^[A-Z\d]{64}$/;
       const addr = /^[a-z\d]{2,6}1[a-z\d]{38}$/;
-      const schema = /\W/;
+      const schema = /^[a-z-.]+/;
       const key = this.searchQuery;
 
       const c = store.state.chains.selected;
@@ -165,6 +224,7 @@ export default {
           });
         }
       }
+      this.options.filter(item => item.type).forEach(item => (item.name = ''));
       // this.$router.push('/')
     }
   },
@@ -176,6 +236,9 @@ export default {
           search.text.toLowerCase().includes(this.searchValue.toLowerCase())
         );
       });
+    },
+    filterData() {
+      return this.options.filter(v => v.name !== '');
     }
   }
 };
@@ -270,5 +333,31 @@ p {
   border: 1px solid $white;
   border-radius: 12px;
   cursor: pointer;
+}
+
+.suggestion-list {
+  // background-color: #002770;
+  background-color: $info;
+  color: #fff;
+  // border: 1px solid #ddd;
+  list-style: none;
+  display: block;
+  margin: 0;
+  padding: 10px;
+  width: 100%;
+  overflow: hidden;
+  position: absolute;
+  border-radius: 0.357rem;
+  // top: 20px;
+  left: 0;
+  z-index: 2;
+
+  li {
+    line-height: 26px !important;
+  }
+
+  .dark-layout & {
+    background-color: $primary;
+  }
 }
 </style>
