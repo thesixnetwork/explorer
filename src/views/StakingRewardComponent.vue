@@ -66,7 +66,7 @@
       </div>
 
       <!-- Estimated Reward -->
-      <div v-for="d in data.val_commission" :key="d.amount">
+      <!-- <div v-for="d in data.val_commission" :key="d.amount">
         <div class="mb-50">
           <span class="font-weight-bold">
             Estimated Reward
@@ -87,15 +87,15 @@
             <b-media-body>
               <h6 class="transaction-title">
                 xx,xxx
-                <!-- {{ formatDenom(d) }} -->
+                {{ formatDenom(d) }}
               </h6>
             </b-media-body>
           </b-media>
         </div>
-      </div>
+      </div> -->
 
       <!-- Block Validated -->
-      <div v-for="d in data.val_commission" :key="d.amount">
+      <!-- <div v-for="d in data.val_commission" :key="d.amount">
         <div class="mb-50">
           <span class="font-weight-bold">
             Block Validated
@@ -116,12 +116,12 @@
             <b-media-body>
               <h6 class="transaction-title">
                 xx,xxx
-                <!-- {{ formatDenom(d) }} -->
+                {{ formatDenom(d) }}
               </h6>
             </b-media-body>
           </b-media>
         </div>
-      </div>
+      </div> -->
     </b-card-body>
     <!-- <b-card-body class="pt-0">
       <b-button
