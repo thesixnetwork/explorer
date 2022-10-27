@@ -308,7 +308,7 @@ export default {
       tokenCode,
       page_number: 1,
       totalSupply: 0,
-      limit: 20,
+      limit: 30,
       currentPage: 0,
       loading: true
     };
