@@ -180,3 +180,5 @@ export const codeMessage = {
     message: 'FundCommunityPool'
   }
 };
+
+export const staticType = ['Background', 'Moon', 'Plate', 'Tail', 'Whale'];

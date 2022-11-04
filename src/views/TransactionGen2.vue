@@ -281,9 +281,9 @@ export default {
     BBadge
   },
   beforeRouteUpdate(to, from, next) {
-    const { address, tokenCode } = to.params;
-    this.initial(tokenCode);
-    if (tokenCode !== undefined) {
+    const { address, tokenCode, contract } = to.params;
+    this.initial(tokenCode, contract);
+    if (tokenCode !== undefined && tokenCode !== '') {
       this.$http.getAllTransactions(tokenCode).then(res => {
         this.transactions = res;
       });
@@ -291,7 +291,7 @@ export default {
     }
   },
   data() {
-    const { tokenCode } = this.$route.params;
+    const { tokenCode, contract, chain } = this.$route.params;
     return {
       isCollectionLoader: true,
       isBusy: false,
@@ -306,6 +306,7 @@ export default {
       ],
       nFTSchema: {},
       tokenCode,
+      contract,
       page_number: 1,
       totalSupply: 0,
       limit: 20,
@@ -353,21 +354,21 @@ export default {
   },
   created() {
     this.tabs = this.$children;
-    this.initial(this.tokenCode);
-    if (this.tokenCode !== undefined) {
+    // this.initial(this.tokenCode);
+    if (this.tokenCode !== undefined && this.tokenCode !== '') {
       this.$http.getAllTransactions(this.tokenCode).then(res => {
         this.transactions = res;
       });
     }
   },
   mounted() {
-    this.initial(this.tokenCode);
+    this.initial(this.tokenCode, this.contract);
   },
   methods: {
-    async initial(tc) {
+    async initial(tc, contractAddress) {
       this.isCollectionLoader = true;
       this.loading = true;
-      if (tc !== undefined) {
+      if (tc !== undefined && tc !== '') {
         this.$http.getNftSchema(tc).then(async res => {
           if (res.nFTSchema !== undefined) {
             this.loading = false;
@@ -411,49 +412,65 @@ export default {
             this.isCollectionLoader = false;
           }
         });
+      } else if (contractAddress !== undefined && contractAddress !== '') {
+        // this.$http.getSchemaNameByContract(contractAddress).then(res => {
+        //   console.log('-------res-------', res.nFTSchemaByContract);
+        this.loading = false;
+        // });
+      } else {
+        this.loading = false;
       }
     },
     async pageCollectionChange(v) {
-      this.isCollectionLoader = true;
-      const pageCollectionsNumber = v;
-      const webs = new Web3(
-        STATUS_CODE[this.nFTSchema.origin_data.origin_chain].PROVIDER || ''
-      );
-      const nftContract = new webs.eth.Contract(
-        TestNfts,
-        this.nFTSchema.origin_data.origin_contract_address || ''
-      );
-      let endId = pageCollectionsNumber * parseInt(this.limit);
-      if (endId > this.totalSupply) endId = this.totalSupply - 1;
+      if (this.tokenCode !== undefined && this.tokenCode !== '') {
+        this.isCollectionLoader = true;
+        const pageCollectionsNumber = v;
+        const webs = new Web3(
+          STATUS_CODE[this.nFTSchema.origin_data.origin_chain].PROVIDER || ''
+        );
+        const nftContract = new webs.eth.Contract(
+          TestNfts,
+          this.nFTSchema.origin_data.origin_contract_address || ''
+        );
+        let endId = pageCollectionsNumber * parseInt(this.limit);
+        if (endId > this.totalSupply) endId = this.totalSupply - 1;
 
-      const fetchLength = _.range(endId - parseInt(this.limit), endId);
-      const aggregate = fetchLength
-        // ...Array(parseInt(this.limit))
-        .map((x, index) => {
-          return nftContract.methods.tokenURI(parseInt(x + 1)).call();
+        const fetchLength = _.range(endId - parseInt(this.limit), endId);
+        const aggregate = fetchLength
+          // ...Array(parseInt(this.limit))
+          .map((x, index) => {
+            return nftContract.methods.tokenURI(parseInt(x + 1)).call();
+          });
+        const ownerOf = fetchLength.map((x, index) =>
+          nftContract.methods.ownerOf(parseInt(x + 1)).call()
+        );
+        const alloOwnerOfChannel = Promise.all(ownerOf);
+        const allChannel = Promise.all(aggregate);
+        const [alloOwnerOf, all] = await Promise.all([
+          alloOwnerOfChannel,
+          allChannel
+        ]);
+        const built = all.map(uri => axios.get(uri));
+        const allNfts = await Promise.all(built);
+        const allData = allNfts.map((x, i) => {
+          return { ...x.data, owner: alloOwnerOf[i] };
         });
-      const ownerOf = fetchLength.map((x, index) =>
-        nftContract.methods.ownerOf(parseInt(x + 1)).call()
-      );
-      const alloOwnerOfChannel = Promise.all(ownerOf);
-      const allChannel = Promise.all(aggregate);
-      const [alloOwnerOf, all] = await Promise.all([
-        alloOwnerOfChannel,
-        allChannel
-      ]);
-      const built = all.map(uri => axios.get(uri));
-      const allNfts = await Promise.all(built);
-      const allData = allNfts.map((x, i) => {
-        return { ...x.data, owner: alloOwnerOf[i] };
-      });
-      this.nfts = allData;
-      this.isCollectionLoader = false;
+        this.nfts = allData;
+        this.isCollectionLoader = false;
+      } else if (this.contract !== undefined && this.contract !== '') {
+      } else {
+        this.loading = false;
+      }
     },
     pageload(v) {
-      this.page_number = v;
-      this.$http.getAllTransactions(this.tokenCode, v).then(res => {
-        this.transactions = res;
-      });
+      if (this.tokenCode !== undefined && this.tokenCode !== '') {
+        this.page_number = v;
+        this.$http.getAllTransactions(this.tokenCode, v).then(res => {
+          this.transactions = res;
+        });
+      } else {
+        this.loading = false;
+      }
     },
     formatHash: abbrAddress,
     copy(v) {

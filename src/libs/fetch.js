@@ -372,12 +372,26 @@ export default class ChainFetch {
   //   });
   // }
 
-  async getNftSchema(tokenCode) {
+  async getNftSchema(schema) {
     const sixConnector = new SixDataChainConnector();
     sixConnector.apiUrl = this.getSelectedConfig().apiUrl;
     const apiClient = await sixConnector.connectAPIClient();
     try {
-      const res = await apiClient.nftmngrModule.queryNftSchema(tokenCode);
+      const res = await apiClient.nftmngrModule.queryNftSchema(schema);
+      return res.data;
+    } catch (error) {
+      return {};
+    }
+  }
+
+  async getNftSchemaByContract(contract) {
+    const sixConnector = new SixDataChainConnector();
+    sixConnector.apiUrl = this.getSelectedConfig().apiUrl;
+    const apiClient = await sixConnector.connectAPIClient();
+    try {
+      const res = await apiClient.nftmngrModule.queryNftSchemaByContract(
+        contract
+      );
       return res.data;
     } catch (error) {
       return {};
@@ -390,6 +404,12 @@ export default class ChainFetch {
   //     `/api/all-txs-from-address?pageNumber=${page}&address=${sender}&limit=20`
   //   );
   // }
+
+  async getSchemaNameByContract(contract) {
+    return this.getSchemaTransactionByContract(
+      `/thesixnetwork/sixnft/nftmngr/nft_schema_by_contract/${contract}`
+    );
+  }
 
   async getAllTransactions(schemaCode, page = 1) {
     return this.getSchemaTransaction(
@@ -679,6 +699,21 @@ export default class ChainFetch {
     // finalurl = finalurl.replaceAll('v1beta1', this.getEndpointVersion())
     const ret = await fetch(finalurl).then(response => response.json());
     return ret;
+  }
+
+  async getSchemaTransactionByContract(url, config = null) {
+    if (!config) {
+      this.getSelectedConfig();
+    }
+
+    const conf = config || this.config;
+    const finalurl =
+      (Array.isArray([conf.apiUrl])
+        ? conf.apiUrl[this.getApiIndex(config)]
+        : conf.apiUrl) + url;
+    // finalurl = finalurl.replaceAll('v1beta1', this.getEndpointVersion())
+    const res = await fetch(finalurl).then(response => response.json());
+    return res;
   }
 
   async getTx(url, config = null) {

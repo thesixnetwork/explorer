@@ -168,6 +168,20 @@ const router = new VueRouter({
       }
     },
     {
+      path: '/:chain/txn-gen2-contract/:contract',
+      name: 'gen2TxnSeachContract',
+      component: () => import('@/views/TransactionGen2.vue'),
+      meta: {
+        pageTitle: 'Transaction Gen2',
+        breadcrumb: [
+          {
+            text: 'Transaction Gen2',
+            active: true
+          }
+        ]
+      }
+    },
+    {
       path: '/txn-gen2/nft-txs/:id/:schema',
       name: 'nftTxs',
       component: () => import('@/views/TransactionNFT.vue'),

@@ -72,7 +72,7 @@
       <b-form-input
         v-if="showSearchBar"
         v-model="searchQuery"
-        placeholder="Search Height/Transaction/Address/SchemaCode"
+        placeholder="Search Height/Transaction/Address/SchemaCode/Contract"
         class="customizer-input"
         autofocus
         autocomplete="off"
@@ -82,15 +82,16 @@
       <ul v-if="filterData.length > 0" class="suggestion-list">
         <li
           class="cursor-pointer"
-          v-for="item in filterData"
-          :key="item.type"
-          :value="item.type"
-          @click="doQuery"
+          v-for="(item, index) in filterData"
+          :key="index"
+          :value="index"
+          @click="doQuery(item.name)"
         >
+          <span v-if="item.contract !== undefined && item.contract !== ''">
+            Contract: {{ item.contract }}
+          </span>
           <div>
-            <span>
-              {{ item.type }} </span
-            >-
+            <span> {{ item.type }} </span>-
             <span>
               {{ item.name }}
             </span>
@@ -119,6 +120,15 @@ import store from '@/store';
 export default {
   components: {
     BFormInput
+  },
+  props: {
+    initialOptions: [
+      { type: 'height', name: '' },
+      { type: 'txhash', name: '' },
+      { type: 'addr', name: '' },
+      { type: 'schema', name: '' },
+      { type: 'contract', name: '' }
+    ]
   },
   setup() {
     const showSearchBar = ref(true);
@@ -150,7 +160,8 @@ export default {
         { type: 'height', name: '' },
         { type: 'txhash', name: '' },
         { type: 'addr', name: '' },
-        { type: 'schema', name: '' }
+        { type: 'schema', name: '' },
+        { type: 'contract', name: '' }
       ]
     };
   },
@@ -158,10 +169,18 @@ export default {
     doSomething(v) {
       console.log('log v', v);
     },
-    optionSearch: function(e) {
+    optionSearch: async function(e) {
+      this.options = [
+        { type: 'height', name: '' },
+        { type: 'txhash', name: '' },
+        { type: 'addr', name: '' },
+        { type: 'schema', name: '' },
+        { type: 'contract', name: '' }
+      ];
       const height = /^\d+$/;
       const txhash = /^[A-Z\d]{64}$/;
       const addr = /^[a-z\d]{2,6}1[a-z\d]{38}$/;
+      const contract = /^[\d]x[a-zA-Z0-9]{40}$/;
       const schema = /^[a-z-.]+/;
       const key = e.target.value;
 
@@ -182,6 +201,27 @@ export default {
           this.options
             .filter(item => item.type === 'schema')
             .forEach(item => (item.name = key));
+        } else if (contract.test(key)) {
+          const data = await this.$http
+            .getSchemaNameByContract(key)
+            .then(res => {
+              if (res.nFTSchemaByContract !== undefined) {
+                return res.nFTSchemaByContract.schemaCodes;
+              } else {
+                return [];
+              }
+            });
+
+          if (data.length > 0) {
+            this.options = [];
+            data.map((r, i) => {
+              this.options.push({ type: 'schema', name: r, contract: key });
+            });
+          } else {
+            this.options
+              .filter(item => item.type === 'contract')
+              .forEach(item => (item.name = key));
+          }
         } else {
           this.options
             .filter(item => item.type)
@@ -193,15 +233,17 @@ export default {
           .forEach(item => (item.name = ''));
       }
     },
-    doQuery() {
+    doQuery(key) {
       const height = /^\d+$/;
       const txhash = /^[A-Z\d]{64}$/;
       const addr = /^[a-z\d]{2,6}1[a-z\d]{38}$/;
+      const contract = /^[\d]x[a-zA-Z0-9]{40}$/;
       const schema = /^[a-z-.]+/;
-      const key = this.searchQuery;
+      // const key = this.searchQuery;
 
       const c = store.state.chains.selected;
       if (!Object.values(this.$route.params).includes(key)) {
+        this.searchQuery = key;
         if (height.test(key)) {
           this.$router.push({
             name: 'block',
@@ -220,12 +262,24 @@ export default {
         } else if (schema.test(key)) {
           this.$router.push({
             name: 'gen2TxnSeach',
-            params: { chain: c.chain_name, tokenCode: key }
+            params: { chain: c.chain_name, tokenCode: key, contract: '' }
+          });
+        } else if (contract.test(key)) {
+          this.$router.push({
+            name: 'gen2TxnSeachContract',
+            params: { chain: c.chain_name, tokenCode: '', contract: key }
           });
         }
       }
       this.options.filter(item => item.type).forEach(item => (item.name = ''));
       // this.$router.push('/')
+    },
+    async initial() {
+      this.$http.getSchemaNameByContract(contractAddress).then(res => {
+        console.log('-------res-------', res.nFTSchemaByContract);
+        // this.transactions = res;
+        // this.loading = false;
+      });
     }
   },
   computed: {

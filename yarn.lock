@@ -1888,10 +1888,10 @@
   resolved "https://registry.yarnpkg.com/@sindresorhus/is/-/is-4.6.0.tgz#3c7c9c46e678feefe7a2e5bb609d3dbd665ffb3f"
   integrity sha512-t09vSN3MdfsyCHoFcTRCH/iUtG7OJ0CsjzB8cjAmKc/va/kIgeDI/TxsigdncE/4be734m0cvIYwNaV4i2XqAw==
 
-"@sixnetwork/six-data-chain-sdk@^2.1.0":
-  version "2.1.0"
-  resolved "https://registry.yarnpkg.com/@sixnetwork/six-data-chain-sdk/-/six-data-chain-sdk-2.1.0.tgz#2f4f7b31dc18d1737ef02c309783e27160e4443f"
-  integrity sha512-YbXao8/p1iAOAvZkm/TQcZd2smJfJ2JYZuPRixU+7Qu6xf9US4M+kNj7/S4D4S0Ki3um49CQidTF0mBU/G1SBA==
+"@sixnetwork/six-data-chain-sdk@^2.5.1":
+  version "2.5.1"
+  resolved "https://registry.yarnpkg.com/@sixnetwork/six-data-chain-sdk/-/six-data-chain-sdk-2.5.1.tgz#ac365878ee5bdc42655d2c10e2039a33df5a42e7"
+  integrity sha512-jSAsz7zvS7xSWS+5y83OSrL0aZJmRIoBbtnXR9MACehdhfPhjyfGUa0WUCu5Y53IVqaJ2rYYbG7LtRuxeWRMtQ==
   dependencies:
     "@cosmjs/cosmwasm-stargate" "^0.28.13"
     "@cosmjs/launchpad" "0.27.0"

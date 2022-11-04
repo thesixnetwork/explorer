@@ -62,7 +62,7 @@ const getContract = (abi, address, contractOptions) => {
 };
 
 const STATUS_CODE = {
-  GORLI: {
+  GOERLI: {
     PROVIDER: 'https://ethereum-goerli-rpc.allthatnode.com/'
   },
   KLAYTN: {
