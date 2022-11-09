@@ -10,9 +10,9 @@
     "apiTX": [
         "https://six-protocol-get-txs-api-gateway-7kl45r91.an.gateway.dev"
     ],
-    "apiUrl": ["http://sixnft.fivenet.sixprotocol.net:1317"],
-    "schema" : ["http://sixnft.fivenet.sixprotocol.net:1317/sixnft/nftmngr/nft_schema/"],
-    "datachain" : ["https://six-data-chain-backend-backend-api-sixnet-gateway-3hi29er0.an.gateway.dev"],
+    "apiUrl": ["https://api1.fivenet.sixprotocol.net/thesixnetwork"],
+    "schema" : ["https://api1.fivenet.sixprotocol.net/thesixnetwork/sixnft/nftmngr/nft_schema/"],
+    "datachain" : ["https://six-data-chain-backend-api-gateway-7kl45r91.ts.gateway.dev"],
     "provider" : "https://klaytn-api.fingerlabs.io/",
     "sdk_version": "0.45.0",
     "coin_type": "118",

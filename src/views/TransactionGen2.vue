@@ -373,38 +373,64 @@ export default {
           if (res.nFTSchema !== undefined) {
             this.loading = false;
             this.nFTSchema = res.nFTSchema;
-            const webs = new Web3(
-              STATUS_CODE[res.nFTSchema.origin_data.origin_chain].PROVIDER || ''
-            );
-            const nftContract = new webs.eth.Contract(
-              TestNfts,
-              res.nFTSchema.origin_data.origin_contract_address || ''
-            );
+            this.$http
+              .getRpcMapper(res.nFTSchema.origin_data.origin_chain)
+              .then(async rpc => {
+                // const webs = new Web3(
+                //   STATUS_CODE[res.nFTSchema.origin_data.origin_chain]
+                //     .PROVIDER || ''
+                // );
+                if (rpc.statusCode === 'V:0001') {
+                  const webs = new Web3(rpc.data.rpcUrl || '');
+                  const nftContract = new webs.eth.Contract(
+                    TestNfts,
+                    res.nFTSchema.origin_data.origin_contract_address || ''
+                  );
 
-            const totalSupply = await nftContract.methods.totalSupply().call();
-            this.totalSupply = totalSupply;
+                  const totalSupply = await nftContract.methods
+                    .totalSupply()
+                    .call();
+                  this.totalSupply = totalSupply;
 
-            const aggregate = [...Array(parseInt(this.limit))].map((x, index) =>
-              nftContract.methods.tokenURI(parseInt(index + 1)).call()
-            );
+                  if (totalSupply > 30) {
+                    this.currentPage = 0;
+                  } else {
+                    this.currentPage = 1;
+                  }
 
-            const ownerOf = [...Array(parseInt(totalSupply))].map((x, index) =>
-              nftContract.methods.ownerOf(parseInt(index + 1)).call()
-            );
-            const alloOwnerOfChannel = Promise.all(ownerOf);
-            const allChannel = Promise.all(aggregate);
-            const [alloOwnerOf, all] = await Promise.all([
-              alloOwnerOfChannel,
-              allChannel
-            ]);
-            const built = all.map(uri => axios.get(uri));
-            const allNfts = await Promise.all(built);
-            const allData = allNfts.map((x, i) => {
-              return { ...x.data, owner: alloOwnerOf[i], id: i };
-            });
+                  const aggregate = [
+                    ...Array(
+                      totalSupply > 30
+                        ? parseInt(this.limit)
+                        : parseInt(totalSupply)
+                    )
+                  ].map((x, index) =>
+                    nftContract.methods.tokenURI(parseInt(index + 1)).call()
+                  );
 
-            this.nfts = allData;
-            this.isCollectionLoader = false;
+                  const ownerOf = [
+                    ...Array(parseInt(totalSupply))
+                  ].map((x, index) =>
+                    nftContract.methods.ownerOf(parseInt(index + 1)).call()
+                  );
+                  const alloOwnerOfChannel = Promise.all(ownerOf);
+                  const allChannel = Promise.all(aggregate);
+                  const [alloOwnerOf, all] = await Promise.all([
+                    alloOwnerOfChannel,
+                    allChannel
+                  ]);
+                  const built = all.map(uri =>
+                    axios.get(uri + '?rpc=THE_MERGE')
+                  );
+                  const allNfts = await Promise.all(built);
+                  const allData = allNfts.map((x, i) => {
+                    return { ...x.data, owner: alloOwnerOf[i], id: i };
+                  });
+
+                  this.nfts = allData;
+                  this.isCollectionLoader = false;
+                }
+              });
           } else {
             this.nfts = [];
             this.loading = false;
@@ -425,38 +451,43 @@ export default {
       if (this.tokenCode !== undefined && this.tokenCode !== '') {
         this.isCollectionLoader = true;
         const pageCollectionsNumber = v;
-        const webs = new Web3(
-          STATUS_CODE[this.nFTSchema.origin_data.origin_chain].PROVIDER || ''
-        );
-        const nftContract = new webs.eth.Contract(
-          TestNfts,
-          this.nFTSchema.origin_data.origin_contract_address || ''
-        );
-        let endId = pageCollectionsNumber * parseInt(this.limit);
-        if (endId > this.totalSupply) endId = this.totalSupply - 1;
+        this.$http
+          .getRpcMapper(this.nFTSchema.origin_data.origin_chain)
+          .then(async rpc => {
+            if (rpc.statusCode === 'V:0001') {
+              const webs = new Web3(rpc.data.rpcUrl || '');
+              const nftContract = new webs.eth.Contract(
+                TestNfts,
+                this.nFTSchema.origin_data.origin_contract_address || ''
+              );
+              let endId = pageCollectionsNumber * parseInt(this.limit);
+              if (endId > this.totalSupply) endId = this.totalSupply - 1;
 
-        const fetchLength = _.range(endId - parseInt(this.limit), endId);
-        const aggregate = fetchLength
-          // ...Array(parseInt(this.limit))
-          .map((x, index) => {
-            return nftContract.methods.tokenURI(parseInt(x + 1)).call();
+              const fetchLength = _.range(endId - parseInt(this.limit), endId);
+              const aggregate = fetchLength
+                // ...Array(parseInt(this.limit))
+                .map((x, index) => {
+                  return nftContract.methods.tokenURI(parseInt(x + 1)).call();
+                });
+
+              const ownerOf = fetchLength.map((x, index) =>
+                nftContract.methods.ownerOf(parseInt(x + 1)).call()
+              );
+              const alloOwnerOfChannel = Promise.all(ownerOf);
+              const allChannel = Promise.all(aggregate);
+              const [alloOwnerOf, all] = await Promise.all([
+                alloOwnerOfChannel,
+                allChannel
+              ]);
+              const built = all.map(uri => axios.get(uri + '?rpc=THE_MERGE'));
+              const allNfts = await Promise.all(built);
+              const allData = allNfts.map((x, i) => {
+                return { ...x.data, owner: alloOwnerOf[i] };
+              });
+              this.nfts = allData;
+              this.isCollectionLoader = false;
+            }
           });
-        const ownerOf = fetchLength.map((x, index) =>
-          nftContract.methods.ownerOf(parseInt(x + 1)).call()
-        );
-        const alloOwnerOfChannel = Promise.all(ownerOf);
-        const allChannel = Promise.all(aggregate);
-        const [alloOwnerOf, all] = await Promise.all([
-          alloOwnerOfChannel,
-          allChannel
-        ]);
-        const built = all.map(uri => axios.get(uri));
-        const allNfts = await Promise.all(built);
-        const allData = allNfts.map((x, i) => {
-          return { ...x.data, owner: alloOwnerOf[i] };
-        });
-        this.nfts = allData;
-        this.isCollectionLoader = false;
       } else if (this.contract !== undefined && this.contract !== '') {
       } else {
         this.loading = false;

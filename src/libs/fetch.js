@@ -407,7 +407,7 @@ export default class ChainFetch {
 
   async getSchemaNameByContract(contract) {
     return this.getSchemaTransactionByContract(
-      `/thesixnetwork/sixnft/nftmngr/nft_schema_by_contract/${contract}`
+      `/sixnft/nftmngr/nft_schema_by_contract/${contract}`
     );
   }
 
@@ -420,6 +420,12 @@ export default class ChainFetch {
   async getTransactionByHash(txHash) {
     return this.getSchemaTransaction(
       `/api/nft/getTransactionByHash?txhash=${txHash}`
+    );
+  }
+
+  async getRpcMapper(chainName) {
+    return this.getSchemaTransaction(
+      `/api/rpc-mapper?chainName=${chainName}`
     );
   }
 
