@@ -208,13 +208,23 @@
         </b-form-group>
         <div class="csvStyle">
           <b-button
-            v-if="selectedOption === 'transaction'"
+            v-if="selectedOption === 'account_tx'"
             variant="link"
             size="sm"
             class="customizer-button"
-            @click="csvExport(dataCsv)"
+            @click="csvExport(accountTxsCsv)"
           >
-            Export to CSV
+            Account Txs to CSV
+            <feather-icon icon="FileTextIcon" size="16" />
+          </b-button>
+          <b-button
+            v-else-if="selectedOption === 'validator_tx'"
+            variant="link"
+            size="sm"
+            class="customizer-button"
+            @click="csvExport(validatorTxsCsv)"
+          >
+            Validator Txs to CSV
             <feather-icon icon="FileTextIcon" size="16" />
           </b-button>
           <b-button
@@ -222,21 +232,21 @@
             variant="link"
             size="sm"
             class="customizer-button"
-            @click="csvExportPropose(blockCsv)"
+            @click="csvExport(blockCsv)"
           >
-            Export Propose to CSV
+            Propose to CSV
             <feather-icon icon="FileTextIcon" size="16" />
           </b-button>
         </div>
       </div>
       <b-card
-        v-if="selectedOption === 'transaction'"
+        v-if="selectedOption === 'account_tx'"
         no-body
         class="overflow-auto"
       >
         <b-card-body class="pl-0 pr-0 pb-0">
           <b-table
-            :items="txs"
+            :items="accountTxs"
             :busy="isBusy"
             striped
             hover
@@ -277,10 +287,68 @@
             </template>
           </b-table>
           <b-pagination
-            v-if="Number(transactions.page_total) > 1"
-            :total-rows="transactions.total_count"
-            :per-page="transactions.limit"
-            :value="transactions.page_number"
+            v-if="Number(account_txs.page_total) > 1"
+            :total-rows="account_txs.total_count"
+            :per-page="account_txs.limit"
+            :value="account_txs.page_number"
+            align="center"
+            class="mt-1"
+            @change="pageload"
+          />
+        </b-card-body>
+      </b-card>
+      <b-card
+        v-else-if="selectedOption === 'validator_tx'"
+        no-body
+        class="overflow-auto"
+      >
+        <b-card-body class="pl-0 pr-0 pb-0">
+          <b-table
+            :items="validatorTxs"
+            :busy="isBusy"
+            striped
+            hover
+            responsive
+            stacked="sm"
+            :style="{ fontSize: 'smaller' }"
+          >
+            <template #table-busy>
+              <div class="text-center text-secondary my-2">
+                <b-spinner class="align-middle mr-25" />
+                <strong>Loading...</strong>
+              </div>
+            </template>
+            <template #cell(block)="data">
+              <router-link :to="`../blocks/${data.item.block}`">
+                {{ data.item.block }}
+              </router-link>
+            </template>
+            <template #cell(txhash)="data">
+              <router-link
+                :to="`../tx/${data.item.txhash}/account/${accountAddress}`"
+              >
+                {{ formatHash(data.item.txhash) }}
+              </router-link>
+            </template>
+            <template #cell(type)="data">
+              <b-badge variant="light-secondary">
+                {{ data.item.type }}
+              </b-badge>
+            </template>
+            <template #cell(status)="data">
+              <b-badge v-if="data.item.status" variant="light-danger">
+                Failed
+              </b-badge>
+              <b-badge v-else variant="light-success">
+                Success
+              </b-badge>
+            </template>
+          </b-table>
+          <b-pagination
+            v-if="Number(validator_txs.page_total) > 1"
+            :total-rows="validator_txs.total_count"
+            :per-page="validator_txs.limit"
+            :value="validator_txs.page_number"
             align="center"
             class="mt-1"
             @change="pageload"
@@ -332,10 +400,10 @@
             </template>
           </b-table>
           <b-pagination
-            v-if="Number(transactions.page_total) > 1"
-            :total-rows="transactions.total_count"
-            :per-page="transactions.limit"
-            :value="transactions.page_number"
+            v-if="Number(proposeTransactions.page_total) > 1"
+            :total-rows="proposeTransactions.total_count"
+            :per-page="proposeTransactions.limit"
+            :value="proposeTransactions.page_number"
             align="center"
             class="mt-1"
             @change="pageload"
@@ -431,14 +499,16 @@ export default {
       userData: {},
       blocks: Array.from('0'.repeat(100)).map(x => [Boolean(x), Number(x)]),
       distribution: {},
-      transactions: {},
+      account_txs: {},
+      validator_txs: {},
       isBusy: false,
       proposeTransactions: {},
       optionBlock: [
-        { text: 'Transaction', value: 'transaction' },
-        { text: 'Proposal Block', value: 'proposal-block' }
+        { text: 'Account Txs', value: 'account_tx' },
+        { text: 'Validator Txs', value: 'validator_tx' },
+        { text: 'Proposal Block', value: 'proposal_block' }
       ],
-      selectedOption: 'transaction',
+      selectedOption: 'account_tx',
       list_blocks: [
         {
           key: 'date',
@@ -456,10 +526,65 @@ export default {
   },
 
   computed: {
-    txs() {
-      if (this.transactions.txs) {
+    accountTxs() {
+      if (this.account_txs.txs) {
         this.isBusy = false;
-        return this.transactions.txs.map(x => ({
+        return this.account_txs.txs.map(x => ({
+          txhash: x.txhash,
+          type:
+            typeof codeMessage[x.type.split('.').slice(-1)] !== 'undefined'
+              ? x.type.split('.').slice(-1)[0] === 'MsgSend' &&
+                x.decode_tx.fromAddress !== this.address
+                ? 'Receive'
+                : codeMessage[x.type.split('.').slice(-1)].message
+              : x.type,
+          block: Number(x.block_height),
+          value:
+            typeof x.decode_tx.amount !== 'undefined'
+              ? (typeof x.decode_tx.amount.amount !== 'undefined' &&
+                  `${formatTokenAmount(x.decode_tx.amount.amount) +
+                    ' ' +
+                    'SIX'}`) ||
+                (typeof x.decode_tx.amount[0] !== 'undefined' &&
+                  `${formatTokenAmount(x.decode_tx.amount[0].amount) +
+                    ' ' +
+                    'SIX'}`) ||
+                '-'
+              : '-',
+          commission:
+            typeof x.decode_tx.commission !== 'undefined'
+              ? (typeof x.decode_tx.commission.amount !== 'undefined' &&
+                  `${formatTokenAmount(x.decode_tx.commission.amount) +
+                    ' ' +
+                    'SIX'}`) ||
+                (typeof x.decode_tx.commission[0] !== 'undefined' &&
+                  `${formatTokenAmount(x.decode_tx.commission[0].amount) +
+                    ' ' +
+                    'SIX'}`) ||
+                '-'
+              : '-',
+          txnFee: `${formatGasAmount(x.decode_tx.fee_amount) + ' ' + 'SIX'}`,
+          time: toDay(x.time_stamp)
+        }));
+      } else {
+        this.isBusy = true;
+        return [
+          {
+            txhash: '',
+            type: '',
+            block: '',
+            value: '',
+            commission: '',
+            txnFee: '',
+            time: ''
+          }
+        ];
+      }
+    },
+    validatorTxs() {
+      if (this.validator_txs.txs) {
+        this.isBusy = false;
+        return this.validator_txs.txs.map(x => ({
           txhash: x.txhash,
           type:
             typeof codeMessage[x.type.split('.').slice(-1)] !== 'undefined'
@@ -533,9 +658,51 @@ export default {
         ];
       }
     },
-    dataCsv() {
-      if (this.transactions.txs) {
-        return this.transactions.txs.map(x => ({
+    accountTxsCsv() {
+      if (this.account_txs.txs) {
+        return this.account_txs.txs.map(x => ({
+          txhash: x.txhash,
+          type:
+            typeof codeMessage[x.type.split('.').slice(-1)] !== 'undefined'
+              ? x.type.split('.').slice(-1)[0] === 'MsgSend' &&
+                x.decode_tx.fromAddress !== this.address
+                ? 'Receive'
+                : codeMessage[x.type.split('.').slice(-1)].message
+              : x.type,
+          block: Number(x.block_height),
+          value:
+            typeof x.decode_tx.amount !== 'undefined'
+              ? (typeof x.decode_tx.amount.amount !== 'undefined' &&
+                  `${x.decode_tx.amount.amount / Math.pow(10, 6) +
+                    ' ' +
+                    'SIX'}`) ||
+                (typeof x.decode_tx.amount[0] !== 'undefined' &&
+                  `${x.decode_tx.amount[0].amount / Math.pow(10, 6) +
+                    ' ' +
+                    'SIX'}`) ||
+                '-'
+              : '-',
+          commission:
+            typeof x.decode_tx.commission !== 'undefined'
+              ? (typeof x.decode_tx.commission.amount !== 'undefined' &&
+                  `${x.decode_tx.commission.amount / Math.pow(10, 6) +
+                    ' ' +
+                    'SIX'}`) ||
+                (typeof x.decode_tx.commission[0] !== 'undefined' &&
+                  `${x.decode_tx.commission[0].amount / Math.pow(10, 6) +
+                    ' ' +
+                    'SIX'}`) ||
+                '-'
+              : '-',
+          txnFee: `${formatGasAmount(x.decode_tx.fee_amount) + ' ' + 'SIX'}`,
+          time: toDay(x.time_stamp)
+        }));
+      }
+      return [];
+    },
+    validatorTxsCsv() {
+      if (this.validator_txs.txs) {
+        return this.validator_txs.txs.map(x => ({
           txhash: x.txhash,
           type:
             typeof codeMessage[x.type.split('.').slice(-1)] !== 'undefined'
@@ -614,7 +781,10 @@ export default {
         this.validator = data;
         this.processAddress(data.operator_address, data.consensus_pubkey);
         this.$http.getTxsBySender(this.accountAddress).then(res => {
-          this.transactions = res;
+          this.account_txs = res;
+        });
+        this.$http.getTxsBySender(this.operatorAddress).then(res => {
+          this.validator_txs = res;
         });
 
         const { identity } = data.description;
@@ -642,7 +812,10 @@ export default {
     },
     pageload(v) {
       this.$http.getTxsBySender(this.accountAddress, v).then(res => {
-        this.transactions = res;
+        this.account_txs = res;
+      });
+      this.$http.getTxsBySender(this.operatorAddress, v).then(res => {
+        this.validator_txs = res;
       });
     },
     formatHash: abbrAddress,
@@ -654,6 +827,7 @@ export default {
     },
     processAddress(operAddress, consensusPubkey) {
       this.accountAddress = operatorAddressToAccount(operAddress);
+      this.operatorAddress = operAddress;
       this.hexAddress = consensusPubkeyToHexAddress(consensusPubkey);
       this.$http
         .getStakingDelegatorDelegation(this.accountAddress, operAddress)
@@ -722,23 +896,23 @@ export default {
       const data = encodeURI(csvContent);
       const link = document.createElement('a');
       link.setAttribute('href', data);
-      link.setAttribute('download', 'export-transaction-node.csv');
+      link.setAttribute('download', `export-${this.selectedOption}-txs.csv`);
       link.click();
     },
-    csvExportPropose(arrData) {
-      let csvContent = 'data:text/csv;charset=utf-8,';
-      csvContent += [
-        Object.keys(arrData[0]).join(','),
-        ...arrData.map(item => Object.values(item).join(','))
-      ]
-        .join('\n')
-        .replace(/(^\[)|(\]$)/gm, '');
-      const data = encodeURI(csvContent);
-      const link = document.createElement('a');
-      link.setAttribute('href', data);
-      link.setAttribute('download', 'export-validate-propose.csv');
-      link.click();
-    },
+    // csvExportPropose(arrData) {
+    //   let csvContent = 'data:text/csv;charset=utf-8,';
+    //   csvContent += [
+    //     Object.keys(arrData[0]).join(','),
+    //     ...arrData.map(item => Object.values(item).join(','))
+    //   ]
+    //     .join('\n')
+    //     .replace(/(^\[)|(\]$)/gm, '');
+    //   const data = encodeURI(csvContent);
+    //   const link = document.createElement('a');
+    //   link.setAttribute('href', data);
+    //   link.setAttribute('download', 'export-validate-propose.csv');
+    //   link.click();
+    // },
     validatorBlocks() {
       if (this.isInactiveLoaded) return;
       this.isInactiveLoaded = true;
@@ -803,7 +977,7 @@ export default {
   @include media-breakpoint-up(md) {
     text-align: right;
   }
-  @include media-breakpoint-down(sm) {
+  @include media-breakpoint-down(xs) {
     margin-top: 14px;
   }
 }

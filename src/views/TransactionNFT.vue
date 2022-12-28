@@ -474,7 +474,7 @@ export default {
                   const ownerOf = await nftContract.methods
                     .ownerOf(this.id)
                     .call();
-                  const built = axios.get(uri+ '?rpc=THE_MERGE');
+                  const built = axios.get(uri + '?rpc=THE_MERGE');
                   const [allNfts, owner] = await Promise.all([built, ownerOf]);
                   this.attributes = { ...allNfts.data, owner: owner };
                   this.staticAttributes = allNfts.data.attributes.filter(at =>

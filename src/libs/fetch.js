@@ -398,13 +398,6 @@ export default class ChainFetch {
     }
   }
 
-  // async getTxsBySender(sender, page = 1) {
-  //   // return this.get(`/txs?message.sender=${sender}&page=${page}&limit=20`)
-  //   return this.getTx(
-  //     `/api/all-txs-from-address?pageNumber=${page}&address=${sender}&limit=20`
-  //   );
-  // }
-
   async getSchemaNameByContract(contract) {
     return this.getSchemaTransactionByContract(
       `/sixnft/nftmngr/nft_schema_by_contract/${contract}`
@@ -424,9 +417,7 @@ export default class ChainFetch {
   }
 
   async getRpcMapper(chainName) {
-    return this.getSchemaTransaction(
-      `/api/rpc-mapper?chainName=${chainName}`
-    );
+    return this.getSchemaTransaction(`/api/rpc-mapper?chainName=${chainName}`);
   }
 
   async getStakingReward(address, config = null) {
