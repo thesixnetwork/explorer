@@ -77,9 +77,10 @@
         autofocus
         autocomplete="off"
         @keyup="optionSearch"
+        @keyup.enter="doQuery"
       />
 
-      <ul v-if="filterData.length > 0" class="suggestion-list">
+      <ul v-if="filterData.length > 1" class="suggestion-list">
         <li
           class="cursor-pointer"
           v-for="(item, index) in filterData"
@@ -233,13 +234,13 @@ export default {
           .forEach(item => (item.name = ''));
       }
     },
-    doQuery(key) {
+    doQuery: async function(k) {
       const height = /^\d+$/;
       const txhash = /^[A-Z\d]{64}$/;
       const addr = /^[a-z\d]{2,6}1[a-z\d]{38}$/;
       const contract = /^[\d]x[a-zA-Z0-9]{40}$/;
       const schema = /^[a-z-.]+/;
-      // const key = this.searchQuery;
+      const key = k.constructor.name === 'String' ? k : this.searchQuery;
 
       const c = store.state.chains.selected;
       if (!Object.values(this.$route.params).includes(key)) {
@@ -265,10 +266,27 @@ export default {
             params: { chain: c.chain_name, tokenCode: key, contract: '' }
           });
         } else if (contract.test(key)) {
-          this.$router.push({
-            name: 'gen2TxnSeachContract',
-            params: { chain: c.chain_name, tokenCode: '', contract: key }
-          });
+          const data = await this.$http
+            .getSchemaNameByContract(key)
+            .then(res => {
+              if (res.nFTSchemaByContract !== undefined) {
+                return res.nFTSchemaByContract.schemaCodes;
+              } else {
+                return [];
+              }
+            });
+
+          if (data.length > 1) {
+            this.options = [];
+            data.map((r, i) => {
+              this.options.push({ type: 'schema', name: r, contract: key });
+            });
+          } else {
+            this.$router.push({
+              name: 'gen2TxnSeach',
+              params: { chain: c.chain_name, tokenCode: data[0], contract: '' }
+            });
+          }
         }
       }
       this.options.filter(item => item.type).forEach(item => (item.name = ''));
