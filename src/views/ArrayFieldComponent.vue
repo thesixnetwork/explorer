@@ -9,7 +9,7 @@
   >
     <template #cell()="data">
       <span v-if="isTokenField(data.value)">
-        { formatTokens(data.value) }}
+        {{ formatTokens(data.value) }}
       </span>
       <span v-else-if="isHex(data.value)">
         {{ formatHexAddress(data.value) }}

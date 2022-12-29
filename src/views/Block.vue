@@ -11,7 +11,7 @@
     <b-card v-if="block.block.data.txs" title="Transaction">
       <b-table :items="txs" :fields="fields" responsive="sm">
         <template #cell(hash)="data">
-          <router-link :to="`../tx/${data.value}/account/`">
+          <router-link :to="`../tx/${data.value}`">
             {{ data.value }}
           </router-link>
         </template>

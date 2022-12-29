@@ -6,7 +6,7 @@
         {{ data.item.chain.chain_name }}
       </template>
       <template #cell(hash)="data">
-        <router-link :to="`/${data.item.chain.chain_name}/tx/${data.value}/account/`">
+        <router-link :to="`/${data.item.chain.chain_name}/tx/${data.value}`">
           {{ data.value }}
         </router-link>
       </template>

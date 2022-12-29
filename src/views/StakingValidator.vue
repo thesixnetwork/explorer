@@ -266,9 +266,7 @@
               </router-link>
             </template>
             <template #cell(txhash)="data">
-              <router-link
-                :to="`../tx/${data.item.txhash}/account/${accountAddress}`"
-              >
+              <router-link :to="`../tx/${data.item.txhash}`">
                 {{ formatHash(data.item.txhash) }}
               </router-link>
             </template>
@@ -324,9 +322,7 @@
               </router-link>
             </template>
             <template #cell(txhash)="data">
-              <router-link
-                :to="`../tx/${data.item.txhash}/account/${accountAddress}`"
-              >
+              <router-link :to="`../tx/${data.item.txhash}`">
                 {{ formatHash(data.item.txhash) }}
               </router-link>
             </template>
@@ -379,9 +375,7 @@
               </router-link>
             </template>
             <template #cell(txhash)="data">
-              <router-link
-                :to="`../tx/${data.item.txhash}/account/${accountAddress}`"
-              >
+              <router-link :to="`../tx/${data.item.txhash}`">
                 {{ formatHash(data.item.txhash) }}
               </router-link>
             </template>
