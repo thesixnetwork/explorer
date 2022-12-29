@@ -54,6 +54,11 @@
             </b-tab>
           </b-tabs>
         </b-td>
+        <b-td v-else-if="/^6x1[a-z\d]{38}$/.test(value)">
+          <router-link :to="`../account/${value}`">
+            {{ addNewLine(value) }}
+          </router-link>
+        </b-td>
         <b-td v-else class="text-capitalize">
           {{
             addNewLine(value) === '/cosmos.bank.v1beta1.MsgSend'

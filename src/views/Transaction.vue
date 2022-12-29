@@ -107,7 +107,6 @@ export default {
     const { hash } = to.params;
     if (hash !== from.params.hash) {
       this.$http.getTxs(hash).then(res => {
-        console.log('*res*', res);
         this.tx = res;
       });
       next();
@@ -116,7 +115,6 @@ export default {
   created() {
     const { hash } = this.$route.params;
     this.$http.getTxs(hash).then(res => {
-      console.log('*res*', res);
       this.tx = res;
     });
   },
