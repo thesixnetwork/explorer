@@ -190,7 +190,7 @@
             </b-card-header>
             <hr class="m-0" />
             <b-collapse id="properties" visible accordion="properties" role="tabpanel">
-              <b-card-body class="pt-0">
+              <b-card-body v-if="staticAttributes.length > 0" class="pt-0">
                 <b-row>
                   <b-col v-for="item in staticAttributes" :key="item.owner" class="pr-0 pt-1" lg="3" md="4" sm="6"
                     xs="6">
@@ -204,6 +204,11 @@
                     </div>
                   </b-col>
                 </b-row>
+              </b-card-body>
+              <b-card-body v-else class="text-center">
+                <p class="mb-0 font-weight-bold style-text text-sm">
+                  No Results Found.
+                </p>
               </b-card-body>
             </b-collapse>
           </b-card>
@@ -227,7 +232,7 @@
           </b-card-header>
           <hr class="m-0" />
           <b-collapse id="dynamic" visible accordion="dynamic" role="tabpanel">
-            <b-card-body class="pt-0">
+            <b-card-body v-if="dynamicAttributes.length > 0" class="pt-0">
               <b-row>
                 <b-col v-for="item in dynamicAttributes" :key="item.owner" class="pr-0 pt-1" lg="2" md="4" sm="6"
                   xs="6">
@@ -241,6 +246,11 @@
                   </div>
                 </b-col>
               </b-row>
+            </b-card-body>
+            <b-card-body v-else class="text-center">
+              <p class="mb-0 font-weight-bold style-text text-sm">
+                No Results Found.
+              </p>
             </b-card-body>
           </b-collapse>
         </b-card>
