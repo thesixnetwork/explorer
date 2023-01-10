@@ -4,7 +4,10 @@
       <b-col lg="4" md="12" sm="12" xs="12">
         <b-card>
           <div class="d-flex justify-content-center">
-            <b-img :src="attributes.image" :alt="attributes.image" thumbnail />
+            <!-- <b-img :src="attributes.image" :alt="attributes.image" thumbnail /> -->
+            <b-img
+              :src="`${reg.test(attributes.image) ? require('@/assets/images/icons/no-pic.png') : attributes.image}`"
+              :alt="attributes.image" thumbnail />
           </div>
         </b-card>
       </b-col>
@@ -50,27 +53,14 @@
             <b-card-header class="p-1 d-block" role="tab">
               <div v-b-toggle="'details'" variant="info" class="style-toggle">
                 <div class="d-flex align-items-center">
-                  <feather-icon
-                    :icon="'ListIcon'"
-                    size="16"
-                    class="mr-50 customizer-collapse"
-                  />
+                  <feather-icon :icon="'ListIcon'" size="16" class="mr-50 customizer-collapse" />
                   <span class="customizer-collapse">Details</span>
                 </div>
-                <feather-icon
-                  :icon="'ChevronDownIcon'"
-                  size="20"
-                  class="customizer-collapse"
-                />
+                <feather-icon :icon="'ChevronDownIcon'" size="20" class="customizer-collapse" />
               </div>
             </b-card-header>
             <hr class="m-0" />
-            <b-collapse
-              id="details"
-              visible
-              accordion="details"
-              role="tabpanel"
-            >
+            <b-collapse id="details" visible accordion="details" role="tabpanel">
               <b-card-body class="py-0">
                 <b-row class="customizer-overviews divider-bottom">
                   <b-col lg="3">
@@ -83,12 +73,8 @@
                       <span class="text-truncate customizer-text">
                         {{ attributes.owner }}
                       </span>
-                      <feather-icon
-                        :icon="'CopyIcon'"
-                        size="16"
-                        class="ml-25 customizer-copy"
-                        @click="copy(attributes.owner)"
-                      />
+                      <feather-icon :icon="'CopyIcon'" size="16" class="ml-25 customizer-copy"
+                        @click="copy(attributes.owner)" />
                     </div>
                   </b-col>
                 </b-row>
@@ -100,20 +86,12 @@
                   </b-col>
                   <b-col lg="9">
                     <div class="d-flex align-items-center">
-                      <feather-icon
-                        :icon="'CheckCircleIcon'"
-                        size="16"
-                        class="text-success mr-50"
-                      />
+                      <feather-icon :icon="'CheckCircleIcon'" size="16" class="text-success mr-50" />
                       <span class="text-truncate customizer-text">
                         {{ contract_address }}
                       </span>
-                      <feather-icon
-                        :icon="'CopyIcon'"
-                        size="16"
-                        class="ml-25 customizer-copy"
-                        @click="copy(contract_address)"
-                      />
+                      <feather-icon :icon="'CopyIcon'" size="16" class="ml-25 customizer-copy"
+                        @click="copy(contract_address)" />
                     </div>
                   </b-col>
                 </b-row>
@@ -202,44 +180,20 @@
 
           <b-card no-body class="mb-0">
             <b-card-header class="p-1 d-block" role="tab">
-              <div
-                v-b-toggle="'properties'"
-                variant="info"
-                class="style-toggle"
-              >
+              <div v-b-toggle="'properties'" variant="info" class="style-toggle">
                 <div class="d-flex align-items-center">
-                  <feather-icon
-                    :icon="'BoxIcon'"
-                    size="16"
-                    class="mr-50 customizer-collapse"
-                  />
+                  <feather-icon :icon="'BoxIcon'" size="16" class="mr-50 customizer-collapse" />
                   <span class="customizer-collapse">Properties</span>
                 </div>
-                <feather-icon
-                  :icon="'ChevronDownIcon'"
-                  size="20"
-                  class="customizer-collapse"
-                />
+                <feather-icon :icon="'ChevronDownIcon'" size="20" class="customizer-collapse" />
               </div>
             </b-card-header>
             <hr class="m-0" />
-            <b-collapse
-              id="properties"
-              visible
-              accordion="properties"
-              role="tabpanel"
-            >
+            <b-collapse id="properties" visible accordion="properties" role="tabpanel">
               <b-card-body class="pt-0">
                 <b-row>
-                  <b-col
-                    v-for="item in staticAttributes"
-                    :key="item.owner"
-                    class="pr-0 pt-1"
-                    lg="3"
-                    md="4"
-                    sm="6"
-                    xs="6"
-                  >
+                  <b-col v-for="item in staticAttributes" :key="item.owner" class="pr-0 pt-1" lg="3" md="4" sm="6"
+                    xs="6">
                     <div class="text-center card-proper">
                       <p class="mb-0 font-weight-bold style-text">
                         {{ item.trait_type }}
@@ -263,35 +217,20 @@
           <b-card-header class="p-1 d-block" role="tab">
             <div v-b-toggle="'dynamic'" variant="info" class="style-toggle">
               <div class="d-flex align-items-center">
-                <feather-icon
-                  :icon="'BoxIcon'"
-                  size="16"
-                  class="mr-50 customizer-collapse"
-                />
+                <feather-icon :icon="'BoxIcon'" size="16" class="mr-50 customizer-collapse" />
                 <span class="customizer-collapse">
                   Dynamic Attributes ({{ dynamicAttributes.length }})
                 </span>
               </div>
-              <feather-icon
-                :icon="'ChevronDownIcon'"
-                size="20"
-                class="customizer-collapse"
-              />
+              <feather-icon :icon="'ChevronDownIcon'" size="20" class="customizer-collapse" />
             </div>
           </b-card-header>
           <hr class="m-0" />
           <b-collapse id="dynamic" visible accordion="dynamic" role="tabpanel">
             <b-card-body class="pt-0">
               <b-row>
-                <b-col
-                  v-for="item in dynamicAttributes"
-                  :key="item.owner"
-                  class="pr-0 pt-1"
-                  lg="2"
-                  md="4"
-                  sm="6"
-                  xs="6"
-                >
+                <b-col v-for="item in dynamicAttributes" :key="item.owner" class="pr-0 pt-1" lg="2" md="4" sm="6"
+                  xs="6">
                   <div class="text-center card-proper">
                     <p class="mb-0 font-weight-bold style-text text-sm">
                       {{ item.trait_type }}
@@ -421,7 +360,8 @@ export default {
       staticAttributes: {},
       dynamicAttributes: {},
       contract_address: '',
-      loading: true
+      loading: true,
+      reg: /^ipfs:/
     };
   },
   computed: {},
@@ -561,6 +501,7 @@ export default {
   border: 1px solid $light;
   cursor: pointer;
 }
+
 .style-text {
   color: $info;
 
@@ -578,6 +519,7 @@ export default {
   align-items: center;
   font-size: 18px;
   font-weight: 700;
+
   .dark-layout & {
     color: $primary;
   }
@@ -588,6 +530,7 @@ export default {
   align-items: center;
   font-size: 14px;
   font-weight: 700;
+
   .dark-layout & {
     color: $primary;
   }
@@ -597,6 +540,7 @@ export default {
   color: $info;
   max-width: 400px;
   align-items: center;
+
   .dark-layout & {
     color: $primary;
   }
@@ -623,6 +567,7 @@ export default {
 
 .divider-right {
   border-right: 1px solid $light;
+
   .dark-layout & {
     border-right: 0.5px solid $secondary;
   }
@@ -631,6 +576,7 @@ export default {
 .text-small {
   font-size: 10px;
 }
+
 .text-style {
   font-size: 12px;
 }
@@ -639,6 +585,7 @@ export default {
   padding: 10px;
   border: 1px solid $light;
   border-radius: 12px;
+
   .dark-layout & {
     border: 0.5px solid $secondary;
   }
