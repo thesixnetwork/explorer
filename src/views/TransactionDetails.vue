@@ -62,13 +62,13 @@
                     {{ formatTime(tx.data.time_stamp) }}
                   </b-td>
                 </b-tr>
-                <b-tr>
+                <b-tr v-if="tx.data.decode_tx.events">
                   <b-td>
                     {{ 'Action' }}
                   </b-td>
                   <b-td class="text-truncate">
                     <b-badge variant="light-secondary">
-                      {{ tx.data.events[0].value.replaceAll('_', ' ') }}
+                      {{ tx.data.decode_tx.events[0].value.replaceAll('_', ' ') }}
                     </b-badge>
                   </b-td>
                 </b-tr>
@@ -89,17 +89,17 @@
                 <b-tr>
                   <b-td> {{ 'Gas' }} </b-td>
                   <b-td>
-                    {{ tx.data.gas_used || '-' }} /
-                    {{ tx.data.gas_wanted || '-' }}
+                    {{ tx.data.decode_tx.gas_used || '-' }} /
+                    {{ tx.data.decode_tx.gas_wanted || '-' }}
                   </b-td>
                 </b-tr>
                 <b-tr>
                   <b-td> {{ 'Fee' }} </b-td>
                   <b-td>
                     {{
-                      tx.data.fee_amount.amount / Math.pow(10, 6) ||
+                      tx.data.decode_tx.fee_amount.amount / Math.pow(10, 6) ||
                         '-' ||
-                        formattoken(tx.data.fee_amount.amount)
+                        formattoken(tx.data.decode_tx.fee_amount.amount)
                     }}
                   </b-td>
                 </b-tr>
