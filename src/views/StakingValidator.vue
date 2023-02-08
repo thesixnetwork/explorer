@@ -528,7 +528,7 @@ export default {
           type:
             typeof codeMessage[x.type.split('.').slice(-1)] !== 'undefined'
               ? x.type.split('.').slice(-1)[0] === 'MsgSend' &&
-                x.decode_tx.fromAddress !== this.address
+                x.decode_tx.fromAddress !== this.accountAddress
                 ? 'Receive'
                 : codeMessage[x.type.split('.').slice(-1)].message
               : x.type,
@@ -583,7 +583,7 @@ export default {
           type:
             typeof codeMessage[x.type.split('.').slice(-1)] !== 'undefined'
               ? x.type.split('.').slice(-1)[0] === 'MsgSend' &&
-                x.decode_tx.fromAddress !== this.address
+                x.decode_tx.fromAddress !== this.accountAddress
                 ? 'Receive'
                 : codeMessage[x.type.split('.').slice(-1)].message
               : x.type,
@@ -659,7 +659,7 @@ export default {
           type:
             typeof codeMessage[x.type.split('.').slice(-1)] !== 'undefined'
               ? x.type.split('.').slice(-1)[0] === 'MsgSend' &&
-                x.decode_tx.fromAddress !== this.address
+                x.decode_tx.fromAddress !== this.accountAddress
                 ? 'Receive'
                 : codeMessage[x.type.split('.').slice(-1)].message
               : x.type,
@@ -701,7 +701,7 @@ export default {
           type:
             typeof codeMessage[x.type.split('.').slice(-1)] !== 'undefined'
               ? x.type.split('.').slice(-1)[0] === 'MsgSend' &&
-                x.decode_tx.fromAddress !== this.address
+                x.decode_tx.fromAddress !== this.accountAddress
                 ? 'Receive'
                 : codeMessage[x.type.split('.').slice(-1)].message
               : x.type,
