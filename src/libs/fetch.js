@@ -444,6 +444,12 @@ export default class ChainFetch {
     ).then(data => commonProcess(data));
   }
 
+  async getCommunityTax() {
+    return this.get(
+      `/cosmos/distribution/v1beta1/params`
+    ).then(data => commonProcess(data));
+  }
+
   async getStakingDelegations(address, config = null) {
     if (
       compareVersions(

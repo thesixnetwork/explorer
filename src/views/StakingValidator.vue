@@ -487,6 +487,8 @@ export default {
       accountAddress: '-',
       hexAddress: '-',
       stakingPool: {},
+      bankTotals: {},
+      communityTax: {},
       mintInflation: 0,
       stakingParameter: new StakingParameters(),
       validator: new Validator(),
@@ -760,6 +762,12 @@ export default {
     this.$http.getMintingInflation().then(res => {
       this.mintInflation = res;
     });
+    this.$http.getBankTotals().then(res => {
+      this.bankTotals = res;
+    });
+    this.$http.getCommunityTax().then(res => {
+      this.communityTax = res;
+    });
     this.address = this.$route.params.address;
     this.initial();
   },
@@ -836,7 +844,10 @@ export default {
       });
     },
     apr(rate) {
-      return `${percent((1 - rate) * this.mintInflation)} %`;
+      const provision = this.mintInflation * Number(Number(this.bankTotals[0].amount)) / 10 ** 6 || 0
+      const allStakedToken = Number(Number(this.stakingPool.bondedToken)) / 10 ** 6 || 0
+      const annualProfit = (provision / allStakedToken) * (1 - this.communityTax.params.community_tax) * (1 - rate) || 0
+      return `${parseFloat((annualProfit * 100).toFixed(2))} %`;
     },
     fetch_status(item, lastHeight) {
       return this.$http.getBlockByHeight(item[1]).then(res => {
