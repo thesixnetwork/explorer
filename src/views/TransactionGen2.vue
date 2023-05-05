@@ -5,7 +5,9 @@
         <b-col lg="6" md="12" sm="12" xs="12">
           <b-card class="style-card">
             <b-card-body class="p-0">
-              <b-row class="customizer-overviews divider-bottom px-1 pt-0 text-bold">
+              <b-row
+                class="customizer-overviews divider-bottom px-1 pt-0 text-bold"
+              >
                 <h5 class="font-weight-bolder customizer-text">
                   Overview
                 </h5>
@@ -51,7 +53,9 @@
         <b-col lg="6" md="12" sm="12" xs="12">
           <b-card class="style-card">
             <b-card-body v-if="nFTSchema['code']" class="p-0">
-              <b-row class="customizer-overviews divider-bottom px-1 pt-0 text-bold">
+              <b-row
+                class="customizer-overviews divider-bottom px-1 pt-0 text-bold"
+              >
                 <h5 class="font-weight-bolder customizer-text">
                   Profile Summary
                 </h5>
@@ -73,11 +77,16 @@
                 <b-col lg="9" class="text-truncate">
                   <span class="customizer-text text-truncate text-sm-detail">
                     {{ nFTSchema['origin_data']['origin_contract_address'] }}
-                    <feather-icon :icon="'CopyIcon'" size="16" class="ml-25 customizer-copy" @click="
-                      copy(
-                        nFTSchema['origin_data']['origin_contract_address']
-                      )
-                    " />
+                    <feather-icon
+                      :icon="'CopyIcon'"
+                      size="16"
+                      class="ml-25 customizer-copy"
+                      @click="
+                        copy(
+                          nFTSchema['origin_data']['origin_contract_address']
+                        )
+                      "
+                    />
                   </span>
                 </b-col>
               </b-row>
@@ -105,8 +114,16 @@
                 transactions found
               </span>
             </div>
-            <b-table :items="txs" :busy="isBusy" :fields="fields" striped hover responsive="md" stacked="sm"
-              :style="{ fontSize: 'smaller' }">
+            <b-table
+              :items="txs"
+              :busy="isBusy"
+              :fields="fields"
+              striped
+              hover
+              responsive="md"
+              stacked="sm"
+              :style="{ fontSize: 'smaller' }"
+            >
               <template #table-busy>
                 <div class="text-center text-secondary my-2">
                   <b-spinner small class="align-middle mr-50" />
@@ -124,37 +141,74 @@
                 </b-badge>
               </template>
             </b-table>
-            <b-pagination v-if="Number(transactions.data.totalPage) > 1"
-              :total-rows="Number(transactions.data.totalCount)" :per-page="20" :value="page_number" align="center"
-              class="mt-1" @change="pageload" />
+            <b-pagination
+              v-if="Number(transactions.data.totalPage) > 1"
+              :total-rows="Number(transactions.data.totalCount)"
+              :per-page="20"
+              :value="page_number"
+              align="center"
+              class="mt-1"
+              @change="pageload"
+            />
           </b-tab>
           <b-tab title="Collection">
             <div class="flex justify-content-end mb-1">
-              <b-pagination v-if="Number(totalSupply / limit) > 1" v-model="currentPage" :total-rows="totalSupply"
-                :per-page="limit" :value="currentPage" size="sm" @change="pageCollectionChange" />
+              <b-pagination
+                v-if="Number(totalSupply / limit) > 1"
+                v-model="currentPage"
+                :total-rows="totalSupply"
+                :per-page="limit"
+                :value="currentPage"
+                size="sm"
+                @change="pageCollectionChange"
+              />
             </div>
             <b-row v-if="totalPages.length > 0 && isCollectionLoader == false">
-              <b-col v-for="(item, index) in totalPages" :key="index" lg="2" md="4" sm="6" xs="6" class="pl-20">
-                <router-link :to="
-                  `/txn-gen2/nft-txs/${(currentPage - 1) * limit +
-                  (index + 1)}/${tokenCode}`
-                ">
+              <b-col
+                v-for="(item, index) in totalPages"
+                :key="index"
+                lg="2"
+                md="4"
+                sm="6"
+                xs="6"
+                class="pl-20"
+              >
+                <router-link
+                  :to="
+                    `/txn-gen2/nft-txs/${(currentPage - 1) * limit +
+                      (index + 1)}/${tokenCode}`
+                  "
+                >
                   <b-card-body class="customizer-card">
                     <div class="d-flex justify-content-center mb-1">
                       <b-img-lazy
-                        :src="`${reg.test(item.image) ? require('@/assets/images/icons/no-pic.png') : item.image}`"
-                        :blank-src="require('@/assets/images/icons/no-pic.png')" :alt="item.image" height="120px"
-                        width="120px" fluid />
+                        :src="
+                          `${
+                            reg.test(item.image)
+                              ? require('@/assets/images/icons/no-pic.png')
+                              : item.image
+                          }`
+                        "
+                        :blank-src="require('@/assets/images/icons/no-pic.png')"
+                        :alt="item.image"
+                        height="120px"
+                        width="120px"
+                        fluid
+                      />
                     </div>
                     <div class="d-flex">
                       <span class="mr-25 text-xs">Token ID:</span>
-                      <span class="customizer-text text-truncate d-inline-block text-xs">
+                      <span
+                        class="customizer-text text-truncate d-inline-block text-xs"
+                      >
                         {{ item.name }}
                       </span>
                     </div>
                     <div class="d-flex">
                       <span class="mr-25 text-xs">Owner:</span>
-                      <span class="customizer-text text-truncate d-inline-block text-xs">
+                      <span
+                        class="customizer-text text-truncate d-inline-block text-xs"
+                      >
                         {{ item.owner }}
                       </span>
                     </div>
@@ -162,7 +216,10 @@
                 </router-link>
               </b-col>
             </b-row>
-            <b-row v-else class="flex align-items-center justify-content-center">
+            <b-row
+              v-else
+              class="flex align-items-center justify-content-center"
+            >
               <b-spinner small class="align-middle mr-50" />
               <span class="text-center mb-0">
                 Loading ...
@@ -274,10 +331,10 @@ export default {
             x.type === '/sixnft.nftmngr.MsgCreateNFTSchema'
               ? 'Create NFT Schema'
               : x.type === '/sixnft.nftmngr.MsgCreateMetadata'
-                ? 'Create Metadata'
-                : x.type === '/sixnft.nftmngr.MsgPerformActionByAdmin'
-                  ? 'NFT Action'
-                  : x.type,
+              ? 'Create Metadata'
+              : x.type === '/sixnft.nftmngr.MsgPerformActionByAdmin'
+              ? 'NFT Action'
+              : x.type,
 
           age: toDay(x.time_stamp),
           by: abbrAddress(x.decode_tx.creator)
@@ -294,7 +351,7 @@ export default {
         ];
       }
     },
-    totalPages: function () {
+    totalPages: function() {
       if (this.nfts.length > 0) {
         return this.nfts;
       } else {
@@ -394,7 +451,7 @@ export default {
         });
       } else if (contractAddress !== undefined && contractAddress !== '') {
         // this.$http.getSchemaNameByContract(contractAddress).then(res => {
-        //   console.log('-------res-------', res.nFTSchemaByContract);
+
         this.loading = false;
         // });
       } else {

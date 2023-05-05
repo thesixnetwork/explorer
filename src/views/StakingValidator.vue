@@ -809,7 +809,20 @@ export default {
           });
       });
       this.$http.getValidatorDistribution(this.address).then(res => {
-        this.distribution = res;
+        const self =
+          res.self_bond_rewards !== null &&
+          res.self_bond_rewards.filter(val => val.denom === 'usix');
+        const commission =
+          res.val_commission !== null &&
+          res.val_commission.filter(val => val.denom === 'usix');
+
+        const mapObject = {
+          element: res.element,
+          operator_address: res.operator_address,
+          self_bond_rewards: self,
+          val_commission: commission
+        };
+        this.distribution = mapObject;
       });
     },
     pageload(v) {
@@ -844,9 +857,15 @@ export default {
       });
     },
     apr(rate) {
-      const provision = this.mintInflation * Number(Number(this.bankTotals[0].amount)) / 10 ** 6 || 0
-      const allStakedToken = Number(Number(this.stakingPool.bondedToken)) / 10 ** 6 || 0
-      const annualProfit = (provision / allStakedToken) * (1 - this.communityTax.params.community_tax) * (1 - rate) || 0
+      const provision =
+        (this.mintInflation * Number(Number(this.bankTotals[0].amount))) /
+          10 ** 6 || 0;
+      const allStakedToken =
+        Number(Number(this.stakingPool.bondedToken)) / 10 ** 6 || 0;
+      const annualProfit =
+        (provision / allStakedToken) *
+          (1 - this.communityTax.params.community_tax) *
+          (1 - rate) || 0;
       return `${parseFloat((annualProfit * 100).toFixed(2))} %`;
     },
     fetch_status(item, lastHeight) {

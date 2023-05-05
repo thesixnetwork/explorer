@@ -307,11 +307,7 @@ export default {
       // this.$router.push('/')
     },
     async initial() {
-      this.$http.getSchemaNameByContract(contractAddress).then(res => {
-        // console.log('-------res-------', res.nFTSchemaByContract);
-        // this.transactions = res;
-        // this.loading = false;
-      });
+      this.$http.getSchemaNameByContract(contractAddress).then(res => {});
     }
   },
   computed: {

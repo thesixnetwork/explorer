@@ -558,15 +558,19 @@ export default {
 
       if (this.reward.total) {
         total = total.concat(
-          this.reward.total.map(x => {
+          this.reward.total.filter(x => {
             const xh = x;
             xh.type = 'Reward';
             xh.color = 'warning';
             xh.icon = 'TrendingUpIcon';
             xh.currency = this.formatCurrency(xh.amount, xh.denom);
-            sumCurrency += xh.currency;
-            sum += Number(xh.amount);
-            return xh;
+            // sumCurrency += xh.currency;
+            if (xh.denom === 'usix') {
+              sumCurrency += xh.currency;
+              sum += Number(xh.amount);
+            }
+            // sum += Number(xh.amount);
+            return xh.denom === 'usix';
           })
         );
       }
@@ -614,6 +618,7 @@ export default {
           const reward = this.reward.rewards.find(
             r => r.validator_address === e.delegation.validator_address
           );
+
           re.push({
             validator: getStakingValidatorOperator(
               this.$http.config.chain_name,
@@ -698,7 +703,24 @@ export default {
         this.options = array;
       });
       this.$http.getStakingReward(this.address).then(res => {
-        this.reward = res;
+        const amount = res.rewards.map(val => {
+          return val.reward;
+        });
+        const validatorAddress = res.rewards.map(val => {
+          return val.validator_address;
+        });
+        const rewards = amount[0].filter(res => res.denom === 'usix');
+        const mapObject = {
+          rewards: [
+            {
+              reward: rewards,
+              validator_address: validatorAddress[0]
+            }
+          ],
+          total: res.total
+        };
+
+        this.reward = mapObject;
       });
       this.$http.getStakingDelegations(this.address).then(res => {
         this.delegations = res.delegation_responses || res;
