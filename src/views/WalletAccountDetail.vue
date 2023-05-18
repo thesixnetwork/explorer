@@ -533,6 +533,7 @@ export default {
         const xh = x;
         xh.percent = percent(Number(x.amount) / sum);
         xh.amount = xh.denom === "asix" ? Number(fromExponential(Number(x.amount) / 10 ** 18)).toFixed(2) : xh.amount;
+        xh.denom = xh.denom === "asix" ? "six (evm)" : xh.denom;
         return xh;
       });
       return {
@@ -630,10 +631,10 @@ export default {
           bal.result.map((x, i) => {
             array.push({
               name: formatTokenDenom(x.denom),
-              id: x.denom !== "asix" ? this.formatAmount(x.amount) + ' ' + formatTokenDenom(x.denom) 
-              : parseFloat(Number(x.amount) / Math.pow(10, 18)).toFixed(2) 
-              + ' '
-               + "six (evm)"
+              id: x.denom !== "asix" ? this.formatAmount(x.amount) + ' ' + formatTokenDenom(x.denom)
+                : parseFloat(Number(x.amount) / Math.pow(10, 18)).toFixed(2)
+                + ' '
+                + "six (evm)"
             });
           });
         }
@@ -756,6 +757,7 @@ export default {
 <style lang="scss" scoped>
 @import '~@core/scss/base/bootstrap-extended/include';
 @import '~@core/scss/base/components/variables-dark';
+
 .customizer-button {
   background-color: $info;
   color: #fff;
