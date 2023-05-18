@@ -615,7 +615,8 @@ export default class ChainFetch {
   }
 
   static async fetchTokenQuote(symbol) {
-    return ChainFetch.fetchCoinMarketCap(`/quote/${symbol}`);
+    console.log("-symbol-", symbol)
+    return ChainFetch.fetchCoinMarketCap(`/quote/${symbol !== "SIX" ? "SIX": symbol}`);
   }
 
   // Tx Submit

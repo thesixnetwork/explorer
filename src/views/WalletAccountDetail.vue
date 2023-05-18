@@ -6,63 +6,34 @@
           <b-row>
             <b-col lg="3" md="12" sm="12" xs="12" align-self="center">
               <div class="text-center">
-                <vue-qr
-                  :text="address"
-                  :logo-src="iconUrl"
-                  :logo-scale="0.2"
-                  :logo-margin="0.5"
-                  :dot-scale="0.6"
-                  :margin="4"
-                  :size="200"
-                  color-dark="#343a40"
-                  background-color="#FFFFFF00"
-                  :style="{ boxShadow: '0px 6px 10px #00000040' }"
-                />
+                <vue-qr :text="address" :logo-src="iconUrl" :logo-scale="0.2" :logo-margin="0.5" :dot-scale="0.6"
+                  :margin="4" :size="200" color-dark="#343a40" background-color="#FFFFFF00"
+                  :style="{ boxShadow: '0px 6px 10px #00000040' }" />
               </div>
             </b-col>
             <b-col lg="9" md="12" sm="12" xs="12">
               <div v-if="account" class="text-trancate mb-0 mt-1">
-                <div
-                  class="d-flex align-items-center justify-content-between mb-1"
-                >
+                <div class="d-flex align-items-center justify-content-between mb-1">
                   <h5 class="mb-25">
                     Overview
                   </h5>
                   <div class="d-flex align-items-center">
-                    <span
-                      v-b-tooltip.hover.bottom="{ variant: 'secondary' }"
-                      :title="address"
-                      class="customizer-addr mx-25 d-none d-sm-block"
-                    >
+                    <span v-b-tooltip.hover.bottom="{ variant: 'secondary' }" :title="address"
+                      class="customizer-addr mx-25 d-none d-sm-block">
                       {{ address }}
                     </span>
-                    <span
-                      v-b-tooltip.hover.bottom="{ variant: 'secondary' }"
-                      :title="address"
-                      class="customizer-addr mx-25 d-sm-block d-md-none d-lg-none"
-                    >
+                    <span v-b-tooltip.hover.bottom="{ variant: 'secondary' }" :title="address"
+                      class="customizer-addr mx-25 d-sm-block d-md-none d-lg-none">
                       {{ formatAddress(address) }}
                     </span>
-                    <feather-icon
-                      icon="CopyIcon"
-                      size="16"
-                      class="cursor-pointer"
-                      @click="copy()"
-                    />
+                    <feather-icon icon="CopyIcon" size="16" class="cursor-pointer" @click="copy()" />
                   </div>
                 </div>
-                <div
-                  v-for="(token, index) in assetTable.items"
-                  :key="`asset-${index}`"
-                  class="d-flex justify-content-between mb-25"
-                >
+                <div v-for="(token, index) in assetTable.items" :key="`asset-${index}`"
+                  class="d-flex justify-content-between mb-25">
                   <div class="d-flex align-items-center">
                     <b-avatar :variant="`light-${token.color}`" rounded>
-                      <feather-icon
-                        :icon="token.icon"
-                        size="16"
-                        :class="`text-${token.color}`"
-                      />
+                      <feather-icon :icon="token.icon" size="16" :class="`text-${token.color}`" />
                     </b-avatar>
                     <span class="font-weight-bold ml-75 d-none d-md-block">
                       {{ token.type }}
@@ -78,20 +49,11 @@
                 </div>
                 <!--/ tokens -->
                 <!-- Token other -->
-                <div
-                  v-if="options.length > 0"
-                  class="d-flex align-items-center mt-1"
-                >
+                <div v-if="options.length > 0" class="d-flex align-items-center mt-1">
                   <span class="font-weight-bold mr-1">
                     Token:
                   </span>
-                  <v-select
-                    class="style-chooser w-100 p-0"
-                    :options="options"
-                    label="id"
-                    :placement="placement"
-                    select
-                  />
+                  <v-select class="style-chooser w-100 p-0" :options="options" label="id" :placement="placement" select />
                 </div>
                 <div class="text-right border-top mt-1">
                   <h5 class="mt-1 mb-0">
@@ -105,28 +67,15 @@
       </b-card>
 
       <div class="text-right mb-2">
-        <b-button
-          variant="link"
-          size="sm"
-          class="customizer-button"
-          @click="csvExport(dataCsv)"
-        >
+        <b-button variant="link" size="sm" class="customizer-button" @click="csvExport(dataCsv)">
           Export to CSV
           <feather-icon icon="FileTextIcon" size="16" />
         </b-button>
       </div>
 
       <b-card title="Transactions" no-body class="text-truncate overflow-auto">
-        <b-table
-          :items="txs"
-          :busy="isBusy"
-          :fields="list_fields"
-          striped
-          hover
-          responsive="md"
-          stacked="sm"
-          :style="{ fontSize: 'smaller' }"
-        >
+        <b-table :items="txs" :busy="isBusy" :fields="list_fields" striped hover responsive="md" stacked="sm"
+          :style="{ fontSize: 'smaller' }">
           <template #table-busy>
             <div class="text-center text-secondary my-2">
               <b-spinner class="align-middle mr-25" />
@@ -158,21 +107,11 @@
           </template>
         </b-table>
 
-        <b-pagination
-          v-if="Number(transactions.page_total) > 1"
-          :total-rows="transactions.total_count"
-          :per-page="transactions.limit"
-          :value="transactions.page_number"
-          align="center"
-          class="mt-1"
-          @change="pageload"
-        />
+        <b-pagination v-if="Number(transactions.page_total) > 1" :total-rows="transactions.total_count"
+          :per-page="transactions.limit" :value="transactions.page_number" align="center" class="mt-1"
+          @change="pageload" />
       </b-card>
-      <operation-modal
-        :type="operationModalType"
-        :address="address"
-        :validator-address="selectedValidator"
-      />
+      <operation-modal :type="operationModalType" :address="address" :validator-address="selectedValidator" />
       <div id="txevent" />
     </div>
     <div v-else>
@@ -182,16 +121,8 @@
             Account not found 🕵🏻‍♀️
           </h2>
           <span class="mb-2"> Oops! 😖 {{ error }}. </span>
-          <operation-modal
-            :type="operationModalType"
-            :address="address"
-            :validator-address="selectedValidator"
-          />
-          <b-button
-            variant="primary"
-            class="mb-2 btn-sm-block"
-            :to="{ path: '../' }"
-          >
+          <operation-modal :type="operationModalType" :address="address" :validator-address="selectedValidator" />
+          <b-button variant="primary" class="mb-2 btn-sm-block" :to="{ path: '../' }">
             Back to home
           </b-button>
         </div>
@@ -239,6 +170,7 @@ import {
   numberWithCommas,
   toETHAddress
 } from '@/libs/utils';
+import fromExponential from 'from-exponential';
 import { codeMessage } from '@/constants/module';
 // import ObjectFieldComponent from './ObjectFieldComponent.vue';
 import OperationModal from '@/views/components/OperationModal/index.vue';
@@ -399,44 +331,44 @@ export default {
           from: x.decode_tx.fromAddress
             ? abbrAddress(x.decode_tx.fromAddress)
             : x.decode_tx.creator
-            ? abbrAddress(x.decode_tx.creator)
-            : x.decode_tx.delegatorAddress
-            ? abbrAddress(x.decode_tx.delegatorAddress)
-            : x.decode_tx.depositor
-            ? abbrAddress(x.decode_tx.depositor)
-            : x.decode_tx.voter
-            ? abbrAddress(x.decode_tx.voter)
-            : x.decode_tx.relate_addr.length > 0
-            ? abbrAddress(x.decode_tx.relate_addr[0])
-            : '-',
+              ? abbrAddress(x.decode_tx.creator)
+              : x.decode_tx.delegatorAddress
+                ? abbrAddress(x.decode_tx.delegatorAddress)
+                : x.decode_tx.depositor
+                  ? abbrAddress(x.decode_tx.depositor)
+                  : x.decode_tx.voter
+                    ? abbrAddress(x.decode_tx.voter)
+                    : x.decode_tx.relate_addr.length > 0
+                      ? abbrAddress(x.decode_tx.relate_addr[0])
+                      : '-',
           to: x.decode_tx.toAddress
             ? abbrAddress(x.decode_tx.toAddress)
             : x.decode_tx.validatorAddress
-            ? abbrAddress(x.decode_tx.validatorAddress)
-            : '-',
+              ? abbrAddress(x.decode_tx.validatorAddress)
+              : '-',
           value:
             typeof x.decode_tx.amount !== 'undefined'
               ? (typeof x.decode_tx.amount.amount !== 'undefined' &&
-                  `${formatTokenAmount(x.decode_tx.amount.amount) +
-                    ' ' +
-                    'SIX'}`) ||
-                (typeof x.decode_tx.amount[0] !== 'undefined' &&
-                  `${formatTokenAmount(x.decode_tx.amount[0].amount) +
-                    ' ' +
-                    'SIX'}`) ||
-                '-'
+                `${formatTokenAmount(x.decode_tx.amount.amount) +
+                ' ' +
+                'SIX'}`) ||
+              (typeof x.decode_tx.amount[0] !== 'undefined' &&
+                `${formatTokenAmount(x.decode_tx.amount[0].amount) +
+                ' ' +
+                'SIX'}`) ||
+              '-'
               : '-',
           commission:
             typeof x.decode_tx.commission !== 'undefined'
               ? (typeof x.decode_tx.commission.amount !== 'undefined' &&
-                  `${formatTokenAmount(x.decode_tx.commission.amount) +
-                    ' ' +
-                    'SIX'}`) ||
-                (typeof x.decode_tx.commission[0] !== 'undefined' &&
-                  `${formatTokenAmount(x.decode_tx.commission[0].amount) +
-                    ' ' +
-                    'SIX'}`) ||
-                '-'
+                `${formatTokenAmount(x.decode_tx.commission.amount) +
+                ' ' +
+                'SIX'}`) ||
+              (typeof x.decode_tx.commission[0] !== 'undefined' &&
+                `${formatTokenAmount(x.decode_tx.commission[0].amount) +
+                ' ' +
+                'SIX'}`) ||
+              '-'
               : '-',
           txnFee: `${formatGasAmount(x.decode_tx.fee_amount) + ' ' + 'SIX'}`,
           time: toDay(x.time_stamp)
@@ -474,44 +406,44 @@ export default {
           from: x.decode_tx.fromAddress
             ? x.decode_tx.fromAddress
             : x.decode_tx.creator
-            ? x.decode_tx.creator
-            : x.decode_tx.delegatorAddress
-            ? x.decode_tx.delegatorAddress
-            : x.decode_tx.depositor
-            ? x.decode_tx.depositor
-            : x.decode_tx.voter
-            ? x.decode_tx.voter
-            : x.decode_tx.relate_addr.length > 0
-            ? x.decode_tx.relate_addr[0]
-            : '-',
+              ? x.decode_tx.creator
+              : x.decode_tx.delegatorAddress
+                ? x.decode_tx.delegatorAddress
+                : x.decode_tx.depositor
+                  ? x.decode_tx.depositor
+                  : x.decode_tx.voter
+                    ? x.decode_tx.voter
+                    : x.decode_tx.relate_addr.length > 0
+                      ? x.decode_tx.relate_addr[0]
+                      : '-',
           to: x.decode_tx.toAddress
             ? x.decode_tx.toAddress
             : x.decode_tx.validatorAddress
-            ? x.decode_tx.validatorAddress
-            : '-',
+              ? x.decode_tx.validatorAddress
+              : '-',
           value:
             typeof x.decode_tx.amount !== 'undefined'
               ? (typeof x.decode_tx.amount.amount !== 'undefined' &&
-                  `${x.decode_tx.amount.amount / Math.pow(10, 6) +
-                    ' ' +
-                    'SIX'}`) ||
-                (typeof x.decode_tx.amount[0] !== 'undefined' &&
-                  `${x.decode_tx.amount[0].amount / Math.pow(10, 6) +
-                    ' ' +
-                    'SIX'}`) ||
-                '-'
+                `${x.decode_tx.amount.amount / Math.pow(10, 6) +
+                ' ' +
+                'SIX'}`) ||
+              (typeof x.decode_tx.amount[0] !== 'undefined' &&
+                `${x.decode_tx.amount[0].amount / Math.pow(10, 6) +
+                ' ' +
+                'SIX'}`) ||
+              '-'
               : '-',
           commission:
             typeof x.decode_tx.commission !== 'undefined'
               ? (typeof x.decode_tx.commission.amount !== 'undefined' &&
-                  `${x.decode_tx.commission.amount / Math.pow(10, 6) +
-                    ' ' +
-                    'SIX'}`) ||
-                (typeof x.decode_tx.commission[0] !== 'undefined' &&
-                  `${x.decode_tx.commission[0].amount / Math.pow(10, 6) +
-                    ' ' +
-                    'SIX'}`) ||
-                '-'
+                `${x.decode_tx.commission.amount / Math.pow(10, 6) +
+                ' ' +
+                'SIX'}`) ||
+              (typeof x.decode_tx.commission[0] !== 'undefined' &&
+                `${x.decode_tx.commission[0].amount / Math.pow(10, 6) +
+                ' ' +
+                'SIX'}`) ||
+              '-'
               : '-',
           txnFee: `${formatGasAmount(x.decode_tx.fee_amount) + ' ' + 'SIX'}`,
           time: toDay(x.time_stamp)
@@ -600,6 +532,7 @@ export default {
       total = total.map(x => {
         const xh = x;
         xh.percent = percent(Number(x.amount) / sum);
+        xh.amount = xh.denom === "asix" ? Number(fromExponential(Number(x.amount) / 10 ** 18)).toFixed(2) : xh.amount;
         return xh;
       });
       return {
@@ -690,13 +623,17 @@ export default {
       this.$http.getBankAccountBalanceToken(this.address).then(bal => {
         let array = [];
         const filterData = bal.result.filter(x => {
-          return x.denom !== 'usix';
+          // return x.denom === 'usix';
+          return x.denom;
         });
         if (filterData.length > 0) {
           bal.result.map((x, i) => {
             array.push({
               name: formatTokenDenom(x.denom),
-              id: this.formatAmount(x.amount) + ' ' + formatTokenDenom(x.denom)
+              id: x.denom !== "asix" ? this.formatAmount(x.amount) + ' ' + formatTokenDenom(x.denom) 
+              : parseFloat(Number(x.amount) / Math.pow(10, 18)).toFixed(2) 
+              + ' '
+               + "six (evm)"
             });
           });
         }
@@ -709,7 +646,7 @@ export default {
         const validatorAddress = res.rewards.map(val => {
           return val.validator_address;
         });
-        const rewards = amount[0].filter(res => res.denom === 'usix');
+        const rewards = amount[0];
         const mapObject = {
           rewards: [
             {

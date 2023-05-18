@@ -811,10 +811,10 @@ export default {
       this.$http.getValidatorDistribution(this.address).then(res => {
         const self =
           res.self_bond_rewards !== null &&
-          res.self_bond_rewards.filter(val => val.denom === 'usix');
+          res.self_bond_rewards;
         const commission =
           res.val_commission !== null &&
-          res.val_commission.filter(val => val.denom === 'usix');
+          res.val_commission;
 
         const mapObject = {
           element: res.element,

@@ -3,14 +3,7 @@
     <b-card-title>
       Assets
     </b-card-title>
-    <b-table
-      :items="assets"
-      :fields="cfield"
-      hover
-      striped
-      sticky-header="true"
-      responsive="xs"
-    />
+    <b-table :items="assets" :fields="cfield" hover striped sticky-header="true" responsive="xs" />
   </b-card>
 </template>
 
@@ -59,10 +52,11 @@ export default {
     });
     this.$http.getBankTotals().then(res => {
       const toshow = res.sort();
+      // const toshow = res.sort().filter(res => res.denom === "usix");
       this.assets = toshow.reverse().map(x => {
         const xh = x;
-        xh.abbr = formatTokenAmount(x.amount, 0, x.denom);
-        xh.denom = xh.denom === 'usix' ? 'six' : xh.denom;
+        xh.abbr = xh.denom === 'usix' ? formatTokenAmount(x.amount, 0, x.denom) : Number(x.amount) / 10 ** 18;
+        xh.denom = xh.denom === 'usix' ? 'six' : xh.denom === 'asix' ? "six (evm)" : xh.denom;
         return xh;
       });
     });
