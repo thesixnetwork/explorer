@@ -30,7 +30,7 @@
             </b-media-aside>
             <b-media-body>
               <h6 class="transaction-title">
-                {{ formatDenom(d) }}
+                {{ d.denom === "asix" ? `${d.amount} SIX (EVM)`  : formatDenom(d) }}
               </h6>
             </b-media-body>
           </b-media>
@@ -58,7 +58,7 @@
             </b-media-aside>
             <b-media-body>
               <h6 class="transaction-title">
-                {{ formatDenom(d) }}
+                {{ d.denom === "asix" ? `${d.amount} SIX (EVM)` : formatDenom(d) }}
               </h6>
             </b-media-body>
           </b-media>
