@@ -1,37 +1,35 @@
 {
-    "chain_name": "fivenet",
-    "chain_title": "SIX Testnet",
-    "rpc":[
-        "https://rpc1.fivenet.sixprotocol.net"
-    ],
-    "api": [
-        "https://api1.fivenet.sixprotocol.net"
-    ],
-    "apiTX": [
-        "https://six-protocol-get-txs-api-gateway-7kl45r91.an.gateway.dev"
-    ],
-    "apiUrl": ["https://api1.fivenet.sixprotocol.net/thesixnetwork"],
-    "schema" : ["https://api1.fivenet.sixprotocol.net/thesixnetwork/sixnft/nftmngr/nft_schema/"],
-    "datachain" : ["https://six-data-chain-backend-api-gateway-7kl45r91.ts.gateway.dev"],
-    "provider" : "https://klaytn-api.fingerlabs.io/",
-    "sdk_version": "0.45.0",
-    "coin_type": "118",
-    "min_tx_fee": "800",
-    "assets": [
-        {
-            "base": "usix",
-            "symbol": "SIX",
-            "exponent": "6",
-            "coingecko_id": "six-network",
-            "logo": "https://i.imgur.com/W1U8f6z.png"
-        }
-    ],
-    "addr_prefix": "6x",
-    "logo": "https://i.imgur.com/W1U8f6z.png",
-    "gas_price_step": {
-        "low": 1.25,
-        "average": 1.45,
-        "high": 1.65
-    },
-    "features": ["cosmwasm", "ibc-transfer","stargate","no-legacy-stdTx"]
+  "chain_name": "fivenet",
+  "chain_title": "SIX Testnet",
+  "rpc": ["https://rpc1.fivenet.sixprotocol.net"],
+  "api": ["https://api1.fivenet.sixprotocol.net"],
+  "apiTX": ["https://six-protocol-get-txs-api-gateway-7kl45r91.ts.gateway.dev"],
+  "apiUrl": ["https://api1.fivenet.sixprotocol.net/thesixnetwork"],
+  "schema": [
+    "https://api1.fivenet.sixprotocol.net/thesixnetwork/sixnft/nftmngr/nft_schema/"
+  ],
+  "datachain": [
+    "https://six-data-chain-backend-api-gateway-7kl45r91.ts.gateway.dev"
+  ],
+  "provider": "https://klaytn-api.fingerlabs.io/",
+  "sdk_version": "0.45.0",
+  "coin_type": "118",
+  "min_tx_fee": "800",
+  "assets": [
+    {
+      "base": "usix",
+      "symbol": "SIX",
+      "exponent": "6",
+      "coingecko_id": "six-network",
+      "logo": "https://i.imgur.com/W1U8f6z.png"
+    }
+  ],
+  "addr_prefix": "6x",
+  "logo": "https://i.imgur.com/W1U8f6z.png",
+  "gas_price_step": {
+    "low": 1.25,
+    "average": 1.45,
+    "high": 1.65
+  },
+  "features": ["cosmwasm", "ibc-transfer", "stargate", "no-legacy-stdTx"]
 }

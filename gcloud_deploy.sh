@@ -28,7 +28,7 @@ gsutil -m cp -r dist/* ${GCLOUD_STORAGE_NAME}
 _exit_if_fail $?
 
 echo "Clear cache...."
-# gcloud compute url-maps invalidate-cdn-cache ${GCLOUD_LB_NAME} --path '/*' --async
-# _exit_if_fail $?
+gcloud compute url-maps invalidate-cdn-cache ${GCLOUD_LB_NAME} --path '/*' --async
+_exit_if_fail $?
 
 echo "Upload Done!"
